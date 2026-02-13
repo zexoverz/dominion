@@ -100,11 +100,11 @@ CREATE TABLE ops_agent_events (
     step_id UUID REFERENCES ops_mission_steps(id),
     related_agent_id TEXT, -- For relationship/conversation events
     cost_usd DECIMAL(10,4) DEFAULT 0,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    INDEX (created_at DESC) -- For recent activity queries
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX idx_ops_agent_events_agent_id_created_at_DESC ON ops_agent_events (agent_id, created_at DESC);
+CREATE INDEX idx_ops_agent_events_created_at_DESC ON ops_agent_events (created_at DESC);
 CREATE INDEX idx_ops_agent_events_kind_created_at_DESC ON ops_agent_events (kind, created_at DESC);
 CREATE INDEX idx_ops_agent_events_mission_id_created_at_DESC ON ops_agent_events (mission_id, created_at DESC) WHERE mission_id IS NOT NULL;
 CREATE INDEX idx_ops_agent_events_tags ON ops_agent_events USING GIN (tags);
@@ -332,9 +332,9 @@ FROM ops_agent_relationships
 ORDER BY affinity DESC;
 
 -- Indexes for performance
-CREATE INDEX idx_events_recent_by_agent ON ops_agent_events(agent_id, created_at DESC) WHERE created_at > NOW() - INTERVAL '7 days';
+CREATE INDEX idx_events_recent_by_agent ON ops_agent_events(agent_id, created_at DESC);
 CREATE INDEX idx_memory_active ON ops_agent_memory(agent_id, memory_type) WHERE superseded_by IS NULL;
-CREATE INDEX idx_steps_stale ON ops_mission_steps(last_heartbeat_at, status) WHERE status = 'running' AND last_heartbeat_at < NOW() - INTERVAL '30 minutes';
+CREATE INDEX idx_steps_stale ON ops_mission_steps(last_heartbeat_at, status) WHERE status = 'running';
 
 -- Functions for common operations
 CREATE OR REPLACE FUNCTION update_mission_progress()
@@ -379,7 +379,7 @@ BEGIN
     SET status = 'expired' 
     WHERE status = 'pending' AND expires_at < NOW();
     
-    GET DIAGNOSTICS cleaned_count = cleaned_count + ROW_COUNT;
+    GET DIAGNOSTICS cleaned_count = ROW_COUNT;
     
     -- Clean old drift logs (keep last 20 entries per relationship)
     UPDATE ops_agent_relationships 
