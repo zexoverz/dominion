@@ -20,11 +20,12 @@ CREATE TABLE ops_mission_proposals (
     rejection_reason TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     reviewed_at TIMESTAMPTZ,
-    expires_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '24 hours'),
-    INDEX (agent_id, status, created_at),
-    INDEX (status, priority DESC, created_at),
-    INDEX (expires_at) WHERE status = 'pending'
+    expires_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '24 hours')
 );
+
+CREATE INDEX idx_ops_mission_proposals_agent_id_status_created_at ON ops_mission_proposals (agent_id, status, created_at);
+CREATE INDEX idx_ops_mission_proposals_status_priority_DESC_created_at ON ops_mission_proposals (status, priority DESC, created_at);
+CREATE INDEX idx_ops_mission_proposals_expires_at ON ops_mission_proposals (expires_at) WHERE status = 'pending';
 
 -- Approved missions (converted from proposals)
 CREATE TABLE ops_missions (
@@ -42,11 +43,12 @@ CREATE TABLE ops_missions (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     started_at TIMESTAMPTZ,
     completed_at TIMESTAMPTZ,
-    last_activity_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    INDEX (agent_id, status, priority DESC),
-    INDEX (status, last_activity_at),
-    INDEX (created_at DESC)
+    last_activity_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE INDEX idx_ops_missions_agent_id_status_priority_DESC ON ops_missions (agent_id, status, priority DESC);
+CREATE INDEX idx_ops_missions_status_last_activity_at ON ops_missions (status, last_activity_at);
+CREATE INDEX idx_ops_missions_created_at_DESC ON ops_missions (created_at DESC);
 
 -- Individual mission execution steps
 CREATE TABLE ops_mission_steps (
@@ -72,12 +74,13 @@ CREATE TABLE ops_mission_steps (
     started_at TIMESTAMPTZ,
     completed_at TIMESTAMPTZ,
     last_heartbeat_at TIMESTAMPTZ,
-    UNIQUE (mission_id, step_order),
-    INDEX (mission_id, step_order),
-    INDEX (agent_id, status, created_at),
-    INDEX (status, last_heartbeat_at),
-    INDEX (kind, status)
+    UNIQUE (mission_id, step_order)
 );
+
+CREATE INDEX idx_ops_mission_steps_mission_id_step_order ON ops_mission_steps (mission_id, step_order);
+CREATE INDEX idx_ops_mission_steps_agent_id_status_created_at ON ops_mission_steps (agent_id, status, created_at);
+CREATE INDEX idx_ops_mission_steps_status_last_heartbeat_at ON ops_mission_steps (status, last_heartbeat_at);
+CREATE INDEX idx_ops_mission_steps_kind_status ON ops_mission_steps (kind, status);
 
 -- Agent event stream (all agent activities)
 CREATE TABLE ops_agent_events (
@@ -98,12 +101,13 @@ CREATE TABLE ops_agent_events (
     related_agent_id TEXT, -- For relationship/conversation events
     cost_usd DECIMAL(10,4) DEFAULT 0,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    INDEX (agent_id, created_at DESC),
-    INDEX (kind, created_at DESC),
-    INDEX (mission_id, created_at DESC) WHERE mission_id IS NOT NULL,
-    INDEX (tags) USING GIN,
     INDEX (created_at DESC) -- For recent activity queries
 );
+
+CREATE INDEX idx_ops_agent_events_agent_id_created_at_DESC ON ops_agent_events (agent_id, created_at DESC);
+CREATE INDEX idx_ops_agent_events_kind_created_at_DESC ON ops_agent_events (kind, created_at DESC);
+CREATE INDEX idx_ops_agent_events_mission_id_created_at_DESC ON ops_agent_events (mission_id, created_at DESC) WHERE mission_id IS NOT NULL;
+CREATE INDEX idx_ops_agent_events_tags ON ops_agent_events USING GIN (tags);
 
 -- System-wide policy configuration
 CREATE TABLE ops_policy (
@@ -130,13 +134,14 @@ CREATE TABLE ops_agent_memory (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     last_accessed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     access_count INTEGER NOT NULL DEFAULT 1,
-    UNIQUE (agent_id, source_trace_id),
-    INDEX (agent_id, memory_type, confidence DESC),
-    INDEX (agent_id, last_accessed_at DESC),
-    INDEX (tags) USING GIN,
-    INDEX (source_trace_id) WHERE source_trace_id IS NOT NULL,
-    INDEX (superseded_by) WHERE superseded_by IS NOT NULL
+    UNIQUE (agent_id, source_trace_id)
 );
+
+CREATE INDEX idx_ops_agent_memory_agent_id_memory_type_confidence_DESC ON ops_agent_memory (agent_id, memory_type, confidence DESC);
+CREATE INDEX idx_ops_agent_memory_agent_id_last_accessed_at_DESC ON ops_agent_memory (agent_id, last_accessed_at DESC);
+CREATE INDEX idx_ops_agent_memory_tags ON ops_agent_memory USING GIN (tags);
+CREATE INDEX idx_ops_agent_memory_source_trace_id ON ops_agent_memory (source_trace_id) WHERE source_trace_id IS NOT NULL;
+CREATE INDEX idx_ops_agent_memory_superseded_by ON ops_agent_memory (superseded_by) WHERE superseded_by IS NOT NULL;
 
 -- Pairwise relationships between agents (7 generals = 21 relationships)
 CREATE TABLE ops_agent_relationships (
@@ -150,11 +155,12 @@ CREATE TABLE ops_agent_relationships (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CHECK (agent_a < agent_b), -- Ensure consistent ordering
-    UNIQUE (agent_a, agent_b),
-    INDEX (agent_a),
-    INDEX (agent_b),
-    INDEX (affinity DESC)
+    UNIQUE (agent_a, agent_b)
 );
+
+CREATE INDEX idx_ops_agent_relationships_agent_a ON ops_agent_relationships (agent_a);
+CREATE INDEX idx_ops_agent_relationships_agent_b ON ops_agent_relationships (agent_b);
+CREATE INDEX idx_ops_agent_relationships_affinity_DESC ON ops_agent_relationships (affinity DESC);
 
 -- Trigger rules for proactive and reactive behaviors
 CREATE TABLE ops_trigger_rules (
@@ -170,11 +176,12 @@ CREATE TABLE ops_trigger_rules (
     last_fired_at TIMESTAMPTZ,
     fire_count INTEGER NOT NULL DEFAULT 0,
     max_fires_per_day INTEGER DEFAULT NULL, -- NULL = unlimited
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    INDEX (agent_id, is_active),
-    INDEX (trigger_type, is_active),
-    INDEX (last_fired_at) WHERE is_active = true
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE INDEX idx_ops_trigger_rules_agent_id_is_active ON ops_trigger_rules (agent_id, is_active);
+CREATE INDEX idx_ops_trigger_rules_trigger_type_is_active ON ops_trigger_rules (trigger_type, is_active);
+CREATE INDEX idx_ops_trigger_rules_last_fired_at ON ops_trigger_rules (last_fired_at) WHERE is_active = true;
 
 -- Agent reaction queue (for agent-to-agent interactions)
 CREATE TABLE ops_agent_reactions (
@@ -188,12 +195,13 @@ CREATE TABLE ops_agent_reactions (
     status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processed', 'expired')),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     processed_at TIMESTAMPTZ,
-    expires_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '1 hour'),
-    INDEX (to_agent_id, status, created_at),
-    INDEX (from_agent_id, created_at),
-    INDEX (trigger_event_id),
-    INDEX (expires_at) WHERE status = 'pending'
+    expires_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '1 hour')
 );
+
+CREATE INDEX idx_ops_agent_reactions_to_agent_id_status_created_at ON ops_agent_reactions (to_agent_id, status, created_at);
+CREATE INDEX idx_ops_agent_reactions_from_agent_id_created_at ON ops_agent_reactions (from_agent_id, created_at);
+CREATE INDEX idx_ops_agent_reactions_trigger_event_id ON ops_agent_reactions (trigger_event_id);
+CREATE INDEX idx_ops_agent_reactions_expires_at ON ops_agent_reactions (expires_at) WHERE status = 'pending';
 
 -- Roundtable conversation queue and history
 CREATE TABLE ops_roundtable_queue (
@@ -213,12 +221,13 @@ CREATE TABLE ops_roundtable_queue (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     started_at TIMESTAMPTZ,
     completed_at TIMESTAMPTZ,
-    last_activity_at TIMESTAMPTZ,
-    INDEX (status, scheduled_for),
-    INDEX (conversation_id),
-    INDEX (status, last_activity_at),
-    INDEX (created_at DESC)
+    last_activity_at TIMESTAMPTZ
 );
+
+CREATE INDEX idx_ops_roundtable_queue_status_scheduled_for ON ops_roundtable_queue (status, scheduled_for);
+CREATE INDEX idx_ops_roundtable_queue_conversation_id ON ops_roundtable_queue (conversation_id);
+CREATE INDEX idx_ops_roundtable_queue_status_last_activity_at ON ops_roundtable_queue (status, last_activity_at);
+CREATE INDEX idx_ops_roundtable_queue_created_at_DESC ON ops_roundtable_queue (created_at DESC);
 
 -- Agent initiative queue (self-driven proposals)
 CREATE TABLE ops_initiative_queue (
@@ -233,11 +242,12 @@ CREATE TABLE ops_initiative_queue (
     estimated_value TEXT NOT NULL CHECK (estimated_value IN ('low', 'medium', 'high')),
     status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'implemented')),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    reviewed_at TIMESTAMPTZ,
-    INDEX (agent_id, status, confidence DESC),
-    INDEX (status, estimated_value, created_at),
-    INDEX (created_at DESC)
+    reviewed_at TIMESTAMPTZ
 );
+
+CREATE INDEX idx_ops_initiative_queue_agent_id_status_confidence_DESC ON ops_initiative_queue (agent_id, status, confidence DESC);
+CREATE INDEX idx_ops_initiative_queue_status_estimated_value_created_at ON ops_initiative_queue (status, estimated_value, created_at);
+CREATE INDEX idx_ops_initiative_queue_created_at_DESC ON ops_initiative_queue (created_at DESC);
 
 -- Audit log for heartbeat system runs
 CREATE TABLE ops_action_runs (
@@ -252,11 +262,12 @@ CREATE TABLE ops_action_runs (
     cost_usd DECIMAL(10,4) DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'running' CHECK (status IN ('running', 'completed', 'failed', 'timeout')),
     error_message TEXT,
-    details JSONB NOT NULL DEFAULT '{}',
-    INDEX (run_type, started_at DESC),
-    INDEX (agent_id, started_at DESC) WHERE agent_id IS NOT NULL,
-    INDEX (status, started_at DESC)
+    details JSONB NOT NULL DEFAULT '{}'
 );
+
+CREATE INDEX idx_ops_action_runs_run_type_started_at_DESC ON ops_action_runs (run_type, started_at DESC);
+CREATE INDEX idx_ops_action_runs_agent_id_started_at_DESC ON ops_action_runs (agent_id, started_at DESC) WHERE agent_id IS NOT NULL;
+CREATE INDEX idx_ops_action_runs_status_started_at_DESC ON ops_action_runs (status, started_at DESC);
 
 -- Cost tracking and alerting
 CREATE TABLE ops_cost_tracking (
@@ -270,11 +281,12 @@ CREATE TABLE ops_cost_tracking (
     alert_sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (agent_id, date),
-    INDEX (agent_id, date DESC),
-    INDEX (date, cost_usd DESC),
-    INDEX (alert_level, alert_sent_at) WHERE alert_level != 'normal'
+    UNIQUE (agent_id, date)
 );
+
+CREATE INDEX idx_ops_cost_tracking_agent_id_date_DESC ON ops_cost_tracking (agent_id, date DESC);
+CREATE INDEX idx_ops_cost_tracking_date_cost_usd_DESC ON ops_cost_tracking (date, cost_usd DESC);
+CREATE INDEX idx_ops_cost_tracking_alert_level_alert_sent_at ON ops_cost_tracking (alert_level, alert_sent_at) WHERE alert_level != 'normal';
 
 -- Helper views for common queries
 CREATE VIEW v_active_missions AS
@@ -320,9 +332,9 @@ FROM ops_agent_relationships
 ORDER BY affinity DESC;
 
 -- Indexes for performance
-CREATE INDEX CONCURRENTLY idx_events_recent_by_agent ON ops_agent_events(agent_id, created_at DESC) WHERE created_at > NOW() - INTERVAL '7 days';
-CREATE INDEX CONCURRENTLY idx_memory_active ON ops_agent_memory(agent_id, memory_type) WHERE superseded_by IS NULL;
-CREATE INDEX CONCURRENTLY idx_steps_stale ON ops_mission_steps(last_heartbeat_at, status) WHERE status = 'running' AND last_heartbeat_at < NOW() - INTERVAL '30 minutes';
+CREATE INDEX idx_events_recent_by_agent ON ops_agent_events(agent_id, created_at DESC) WHERE created_at > NOW() - INTERVAL '7 days';
+CREATE INDEX idx_memory_active ON ops_agent_memory(agent_id, memory_type) WHERE superseded_by IS NULL;
+CREATE INDEX idx_steps_stale ON ops_mission_steps(last_heartbeat_at, status) WHERE status = 'running' AND last_heartbeat_at < NOW() - INTERVAL '30 minutes';
 
 -- Functions for common operations
 CREATE OR REPLACE FUNCTION update_mission_progress()
