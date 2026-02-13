@@ -1,9 +1,23 @@
-import { generals, missions } from "../../../lib/mock-data";
+"use client";
+
+import { useState, useEffect } from "react";
+import { generals as mockGenerals, missions as mockMissions } from "../../../lib/mock-data";
+import { getGenerals, getGeneral, getMissions } from "../../../lib/api";
 import PixelProgress from "../../../components/PixelProgress";
 import Link from "next/link";
 
 export default function GeneralDetail({ params }: { params: { id: string } }) {
-  const general = generals.find((g) => g.id === params.id);
+  const [generals, setGenerals] = useState(mockGenerals);
+  const [missions, setMissions] = useState(mockMissions);
+  const [generalData, setGeneralData] = useState(() => mockGenerals.find((g) => g.id === params.id));
+
+  useEffect(() => {
+    getGeneral(params.id).then(setGeneralData).catch(() => {});
+    getGenerals().then(setGenerals).catch(() => {});
+    getMissions().then(setMissions).catch(() => {});
+  }, [params.id]);
+
+  const general = generalData || generals.find((g) => g.id === params.id);
   if (!general) {
     return <div className="text-throne-red text-[11px] md:text-[10px]">⚠️ GENERAL NOT FOUND</div>;
   }
@@ -52,7 +66,7 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
                   <span className="uppercase">{trait}</span>
                   <span>{value}</span>
                 </div>
-                <PixelProgress value={value} color={general.color} height={12} segments={20} />
+                <PixelProgress value={value as number} color={general.color} height={12} segments={20} />
               </div>
             ))}
           </div>
@@ -65,15 +79,16 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
             {relationships.map(([id, score]) => {
               const other = generals.find((g) => g.id === id);
               if (!other) return null;
+              const s = score as number;
               return (
                 <div key={id} className="flex items-center gap-2 md:gap-3">
                   <span className="text-lg flex-shrink-0">{other.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between text-[9px] md:text-[8px] text-gray-400 mb-1">
                       <span>{other.name}</span>
-                      <span>{score}/100</span>
+                      <span>{s}/100</span>
                     </div>
-                    <PixelProgress value={score} color={score > 70 ? "#22c55e" : score > 40 ? "#fbbf24" : "#dc2626"} height={8} segments={10} />
+                    <PixelProgress value={s} color={s > 70 ? "#22c55e" : s > 40 ? "#fbbf24" : "#dc2626"} height={8} segments={10} />
                   </div>
                 </div>
               );

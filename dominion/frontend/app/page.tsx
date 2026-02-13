@@ -1,4 +1,8 @@
-import { generals } from "../lib/mock-data";
+"use client";
+
+import { useState, useEffect } from "react";
+import { generals as mockGenerals } from "../lib/mock-data";
+import { getGenerals } from "../lib/api";
 import GeneralCard from "../components/GeneralCard";
 import StatsBar from "../components/StatsBar";
 import AgentActivityFeed from "../components/realtime/AgentActivityFeed";
@@ -8,6 +12,12 @@ import NetworkGraph from "../components/realtime/NetworkGraph";
 import MissionProgressLive from "../components/realtime/MissionProgressLive";
 
 export default function Dashboard() {
+  const [generals, setGenerals] = useState(mockGenerals);
+
+  useEffect(() => {
+    getGenerals().then(setGenerals).catch(() => {});
+  }, []);
+
   const costToday = generals.reduce((sum, g) => sum + g.costToday, 0);
 
   return (

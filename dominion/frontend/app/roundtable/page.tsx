@@ -1,6 +1,18 @@
-import { generals, roundtableMessages } from "../../lib/mock-data";
+"use client";
+
+import { useState, useEffect } from "react";
+import { generals as mockGenerals, roundtableMessages as mockMessages } from "../../lib/mock-data";
+import { getGenerals, getRoundtables } from "../../lib/api";
 
 export default function RoundtablePage() {
+  const [generals, setGenerals] = useState(mockGenerals);
+  const [roundtableMessages, setRoundtableMessages] = useState(mockMessages);
+
+  useEffect(() => {
+    getGenerals().then(setGenerals).catch(() => {});
+    getRoundtables().then(setRoundtableMessages).catch(() => {});
+  }, []);
+
   const getGeneral = (id: string) => generals.find((g) => g.id === id)!;
   const voteEmoji: Record<string, string> = { APPROVE: "✅", REJECT: "❌", ABSTAIN: "⚪" };
 
@@ -40,6 +52,7 @@ export default function RoundtablePage() {
             <div className="flex flex-col gap-3 max-h-[400px] md:max-h-[600px] overflow-auto">
               {roundtableMessages.map((msg) => {
                 const g = getGeneral(msg.generalId);
+                if (!g) return null;
                 return (
                   <div key={msg.id} className="flex gap-2 md:gap-3 p-2 md:p-3 bg-throne-black/50">
                     <div

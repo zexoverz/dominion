@@ -1,7 +1,19 @@
-import { generals, costData, dailyBudget, weeklyBudget, monthlyBudget } from "../../lib/mock-data";
+"use client";
+
+import { useState, useEffect } from "react";
+import { generals as mockGenerals, costData as mockCostData, dailyBudget, weeklyBudget, monthlyBudget } from "../../lib/mock-data";
+import { getGenerals, getCosts } from "../../lib/api";
 import PixelProgress from "../../components/PixelProgress";
 
 export default function CostPage() {
+  const [generals, setGenerals] = useState(mockGenerals);
+  const [costData, setCostData] = useState(mockCostData);
+
+  useEffect(() => {
+    getGenerals().then(setGenerals).catch(() => {});
+    getCosts().then(setCostData).catch(() => {});
+  }, []);
+
   const costToday = generals.reduce((s, g) => s + g.costToday, 0);
   const costWeek = costData.reduce((s, e) => s + e.amount, 0);
   const costMonth = costWeek;

@@ -1,7 +1,17 @@
-import { missions } from "../../lib/mock-data";
+"use client";
+
+import { useState, useEffect } from "react";
+import { missions as mockMissions } from "../../lib/mock-data";
+import { getMissions } from "../../lib/api";
 import QuestCard from "../../components/QuestCard";
 
 export default function MissionsPage() {
+  const [missions, setMissions] = useState(mockMissions);
+
+  useEffect(() => {
+    getMissions().then(setMissions).catch(() => {});
+  }, []);
+
   const grouped = {
     IN_PROGRESS: missions.filter((m) => m.status === "IN_PROGRESS"),
     REVIEW: missions.filter((m) => m.status === "REVIEW"),
