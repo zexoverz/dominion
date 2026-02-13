@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "ui-ux-design": {
+      "version": "1.0.0",
+      "installedAt": 1771010443274
+    },
+    "shadcn-ui": {
+      "version": "1.0.0",
+      "installedAt": 1771010461795
+    },
+    "nextjs": {
+      "version": "1.0.1",
+      "installedAt": 1771010465063
+    }
+  }
+}
