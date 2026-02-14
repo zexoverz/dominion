@@ -8,9 +8,11 @@ Read `/data/workspace/dominion/src/throne-integration/heartbeat-runner.md` for f
 2. Run `bash /data/workspace/dominion/src/throne-integration/auto-review.sh` — auto-approve cheap proposals, create missions, execute
 3. `GET /api/missions?status=active` — check for stalls (>1h no progress)
 4. `GET /api/costs/daily` — warn >$5, alert Faisal >$10
-5. `POST /api/events` — log heartbeat with summary stats
-6. Check `memory/heartbeat-state.json` — if >4h since last proposal gen, generate 1-2 new proposals
-7. If 01:00 UTC and no briefing today → run daily briefing, send to Faisal via Telegram
+5. Check `/data/workspace/dominion/notifications/` — send any queued notifications to Faisal via Telegram (use `message` tool), then delete the file
+6. Run `bash /data/workspace/dominion/src/throne-integration/budget-check.sh` — auto-checks cost thresholds
+7. `POST /api/events` — log heartbeat with summary stats
+8. Check `memory/heartbeat-state.json` — if >4h since last proposal gen, generate 1-2 new proposals
+9. If 01:00 UTC and no briefing today → run daily briefing, send to Faisal via Telegram
 
 ## Rules
 - Minimize token burn: only fetch what's needed, keep responses short
