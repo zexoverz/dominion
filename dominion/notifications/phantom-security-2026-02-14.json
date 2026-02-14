@@ -1,8 +1,0 @@
-{
-  "type": "security_scan",
-  "general": "PHANTOM",
-  "date": "2026-02-14",
-  "summary": "🛡️ PHANTOM Security Scan: 100% health (13/13 passed, 0 failed)",
-  "report": "/data/workspace/dominion/reports/phantom-security-2026-02-14.md",
-  "urgent": false
-}
