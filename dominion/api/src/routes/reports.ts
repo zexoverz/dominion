@@ -15,8 +15,15 @@ interface ReportMeta {
 }
 
 const REPORT_META: Record<string, Omit<ReportMeta, 'slug'>> = {
+  'seer-btc-sentiment-latest': {
+    title: 'BTC Intelligence — Latest',
+    general: 'SEER',
+    emoji: '🔮',
+    date: new Date().toISOString().slice(0, 10),
+    category: 'market-intel',
+  },
   'seer-btc-sentiment-feb2026': {
-    title: 'BTC Sentiment Analysis — Feb 2026',
+    title: 'BTC Sentiment Analysis — Feb 2026 (Archive)',
     general: 'SEER',
     emoji: '🔮',
     date: '2026-02-14',
@@ -65,13 +72,27 @@ router.get('/', (_req, res) => {
     const files = fs.readdirSync(REPORTS_DIR).filter(f => f.endsWith('.md'));
     const reports: ReportMeta[] = files.map(f => {
       const slug = f.replace('.md', '');
-      const meta = REPORT_META[slug] || {
-        title: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-        general: 'THRONE',
-        emoji: '👑',
-        date: '2026-02-14',
-        category: 'general',
-      };
+      // Auto-detect daily BTC reports
+      const dailyMatch = slug.match(/^seer-btc-daily-(\d{4}-\d{2}-\d{2})$/);
+      let meta = REPORT_META[slug];
+      if (!meta && dailyMatch) {
+        meta = {
+          title: `BTC Daily Intelligence — ${dailyMatch[1]}`,
+          general: 'SEER',
+          emoji: '🔮',
+          date: dailyMatch[1],
+          category: 'market-intel',
+        };
+      }
+      if (!meta) {
+        meta = {
+          title: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          general: 'THRONE',
+          emoji: '👑',
+          date: '2026-02-14',
+          category: 'general',
+        };
+      }
       return { slug, ...meta };
     });
     reports.sort((a, b) => b.date.localeCompare(a.date));
