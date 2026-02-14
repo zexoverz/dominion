@@ -1,0 +1,22 @@
+{
+  "daily_limit_usd": 5.00,
+  "model_tiers": {
+    "default": "anthropic/claude-sonnet-4",
+    "budget": "anthropic/claude-haiku-3",
+    "premium": "anthropic/claude-sonnet-4"
+  },
+  "general_models": {
+    "seer": "budget",
+    "phantom": "budget",
+    "wraith-eye": "budget",
+    "grimoire": "premium",
+    "echo": "default",
+    "mammon": "budget",
+    "throne": "premium"
+  },
+  "auto_pause_at_usd": 5.00,
+  "warning_at_usd": 3.00,
+  "optimization_mode": "normal",
+  "today_spend_usd": 0.4500,
+  "updated_at": "2026-02-14T15:49:16Z"
+}

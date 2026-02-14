@@ -45,6 +45,32 @@ except Exception as e:
 
 log "Mission: $TITLE (agent: $AGENT_ID)"
 
+# Read budget config for model recommendation
+BUDGET_CONFIG="/data/workspace/dominion/missions/budget-config.json"
+RECOMMENDED_MODEL=""
+if [ -f "$BUDGET_CONFIG" ]; then
+  RECOMMENDED_MODEL=$(python3 -c "
+import json
+with open('$BUDGET_CONFIG') as f:
+    cfg = json.load(f)
+agent = '${AGENT_ID}'.lower().replace('_','-')
+tier = cfg.get('general_models', {}).get(agent, 'default')
+if tier == 'paused':
+    print('PAUSED')
+else:
+    model = cfg.get('model_tiers', {}).get(tier, 'anthropic/claude-sonnet-4')
+    print(model)
+" 2>/dev/null || echo "")
+  if [ "$RECOMMENDED_MODEL" = "PAUSED" ]; then
+    log "⚠️ Agent $AGENT_ID is PAUSED by budget optimizer — skipping"
+    curl -sf -X POST "$API/events" \
+      -H "Content-Type: application/json" \
+      -d "{\"type\":\"mission.budget_paused\",\"source\":\"mammon\",\"agent_id\":\"$AGENT_ID\",\"mission_id\":\"$MISSION_ID\",\"message\":\"Mission paused by budget optimizer\"}" >/dev/null 2>&1 || true
+    exit 0
+  fi
+  [ -n "$RECOMMENDED_MODEL" ] && log "Budget model recommendation: $RECOMMENDED_MODEL"
+fi
+
 # Log mission started event
 curl -sf -X POST "$API/events" \
   -H "Content-Type: application/json" \
@@ -149,8 +175,14 @@ curl -sf -X PATCH '$API/missions/$MISSION_ID' -H 'Content-Type: application/json
     ;;
 esac
 
-# Write prompt file
-echo "$PROMPT" > "$PROMPT_FILE"
+# Write prompt file with model recommendation
+if [ -n "$RECOMMENDED_MODEL" ]; then
+  echo "# RECOMMENDED_MODEL: $RECOMMENDED_MODEL" > "$PROMPT_FILE"
+  echo "" >> "$PROMPT_FILE"
+  echo "$PROMPT" >> "$PROMPT_FILE"
+else
+  echo "$PROMPT" > "$PROMPT_FILE"
+fi
 log "Prompt written to $PROMPT_FILE"
 
 # Create trigger file for THRONE heartbeat to pick up
