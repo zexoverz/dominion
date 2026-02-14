@@ -1,5 +1,5 @@
 export type GeneralStatus = "ACTIVE" | "IDLE" | "OFFLINE";
-export type MissionStatus = "PROPOSED" | "IN_PROGRESS" | "REVIEW" | "COMPLETE";
+export type MissionStatus = "PROPOSED" | "IN_PROGRESS" | "REVIEW" | "COMPLETE" | "active" | "completed" | "pending" | "review";
 export type MissionPriority = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
 export type Vote = "APPROVE" | "REJECT" | "ABSTAIN" | null;
 

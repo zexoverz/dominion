@@ -1,3 +1,4 @@
+// Dominion API client — v2 (fixed /api/ prefix Feb 14 2026)
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://dominion-api-production.up.railway.app';
 
 async function fetchAPI<T>(path: string): Promise<T> {
