@@ -12,11 +12,14 @@ export default function CostPage() {
 
   useEffect(() => {
     getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
-    getCosts().then(setCostData).catch(() => {});
+    getCosts().then((d) => {
+      // API returns {daily, weekly, monthly} object, not array — don't replace mock array
+      if (Array.isArray(d)) setCostData(d);
+    }).catch(() => {});
   }, []);
 
-  const costToday = generals.reduce((s, g) => s + g.costToday, 0);
-  const costWeek = costData.reduce((s, e) => s + e.amount, 0);
+  const costToday = generals.reduce((s, g) => s + (g.costToday ?? 0), 0);
+  const costWeek = Array.isArray(costData) ? costData.reduce((s, e) => s + (e.amount ?? 0), 0) : 0;
   const costMonth = costWeek;
 
   const todayByGeneral = generals

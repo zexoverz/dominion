@@ -77,7 +77,17 @@ export default function LogsPage() {
   const fetchEvents = useCallback(async () => {
     try {
       const data = await getEvents();
-      if (data && data.length > 0) setEvents(data);
+      if (data && data.length > 0) {
+        // Normalize API events to match frontend shape
+        const normalized = data.map((e: any) => ({
+          id: e.id,
+          agentId: (e.agentId || e.agent_id || "").toLowerCase(),
+          type: e.type || e.kind?.split("_")[0] || "system",
+          description: e.description || e.title || e.summary || "",
+          timestamp: e.timestamp || e.created_at || "",
+        }));
+        setEvents(normalized);
+      }
     } catch { /* keep mock */ }
   }, []);
 
