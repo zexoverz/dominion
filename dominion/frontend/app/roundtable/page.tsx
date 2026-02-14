@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { generals as mockGenerals, roundtableMessages as mockMessages } from "../../lib/mock-data";
 import { getGenerals, getRoundtables } from "../../lib/api";
+import { mergeGenerals } from "../../lib/merge-generals";
 import { getGeneralSprite, SpriteState } from "../../components/sprites";
 
 export default function RoundtablePage() {
@@ -10,7 +11,7 @@ export default function RoundtablePage() {
   const [roundtableMessages, setRoundtableMessages] = useState(mockMessages);
 
   useEffect(() => {
-    getGenerals().then(setGenerals).catch(() => {});
+    getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
     getRoundtables().then(setRoundtableMessages).catch(() => {});
   }, []);
 

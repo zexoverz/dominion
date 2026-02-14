@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { generals as mockGenerals, costData as mockCostData, dailyBudget, weeklyBudget, monthlyBudget } from "../../lib/mock-data";
 import { getGenerals, getCosts } from "../../lib/api";
+import { mergeGenerals } from "../../lib/merge-generals";
 import PixelProgress from "../../components/PixelProgress";
 
 export default function CostPage() {
@@ -10,7 +11,7 @@ export default function CostPage() {
   const [costData, setCostData] = useState(mockCostData);
 
   useEffect(() => {
-    getGenerals().then(setGenerals).catch(() => {});
+    getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
     getCosts().then(setCostData).catch(() => {});
   }, []);
 

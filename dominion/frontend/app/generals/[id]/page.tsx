@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { generals as mockGenerals, missions as mockMissions } from "../../../lib/mock-data";
 import { getGenerals, getGeneral, getMissions } from "../../../lib/api";
+import { mergeGenerals } from "../../../lib/merge-generals";
 import PixelProgress from "../../../components/PixelProgress";
 import SpriteStage from "../../../components/sprites/SpriteStage";
 import { SpriteState } from "../../../components/sprites";
@@ -16,8 +17,11 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
   const spriteStates: SpriteState[] = ['idle', 'working', 'thinking', 'walking', 'talking', 'celebrating'];
 
   useEffect(() => {
-    getGeneral(params.id).then(setGeneralData).catch(() => {});
-    getGenerals().then(setGenerals).catch(() => {});
+    getGeneral(params.id).then((d) => {
+      // Only use API data if it has UI fields, otherwise keep mock
+      if (d?.personality) setGeneralData(d);
+    }).catch(() => {});
+    getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
     getMissions().then(setMissions).catch(() => {});
   }, [params.id]);
 

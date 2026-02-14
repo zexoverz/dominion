@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { generals as mockGenerals } from "../lib/mock-data";
 import { getGenerals } from "../lib/api";
+import { mergeGenerals } from "../lib/merge-generals";
 import GeneralCard from "../components/GeneralCard";
 import StatsBar from "../components/StatsBar";
 import SpriteStage from "../components/sprites/SpriteStage";
@@ -19,7 +20,9 @@ export default function Dashboard() {
   const activity = useActivity();
 
   useEffect(() => {
-    getGenerals().then(setGenerals).catch(() => {});
+    getGenerals()
+      .then((data) => setGenerals(mergeGenerals(data)))
+      .catch(() => {});
   }, []);
 
   const costToday = generals.reduce((sum, g) => sum + g.costToday, 0);
