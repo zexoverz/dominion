@@ -33,6 +33,10 @@ export async function getCosts() {
   return fetchAPI<any[]>('/api/costs');
 }
 
+export async function getDailyCosts() {
+  return fetchAPI<any[]>('/api/costs/daily');
+}
+
 export async function getEvents() {
   return fetchAPI<any[]>('/api/events');
 }

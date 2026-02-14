@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { generals as mockGenerals } from "../lib/mock-data";
-import { getGenerals } from "../lib/api";
+import { getGenerals, getMissions, getDailyCosts } from "../lib/api";
 import { mergeGenerals } from "../lib/merge-generals";
 import GeneralCard from "../components/GeneralCard";
 import StatsBar from "../components/StatsBar";
@@ -17,15 +17,24 @@ import { useActivity } from "../lib/use-activity";
 
 export default function Dashboard() {
   const [generals, setGenerals] = useState(mockGenerals);
+  const [liveMissions, setLiveMissions] = useState<any[]>([]);
+  const [costToday, setCostToday] = useState(() => mockGenerals.reduce((sum, g) => sum + g.costToday, 0));
   const activity = useActivity();
 
   useEffect(() => {
     getGenerals()
       .then((data) => setGenerals(mergeGenerals(data)))
       .catch(() => {});
+    getMissions()
+      .then((data) => setLiveMissions(data || []))
+      .catch(() => {});
+    getDailyCosts()
+      .then((data) => {
+        const total = (data || []).reduce((s: number, c: any) => s + parseFloat(c.cost_usd || "0"), 0);
+        if (total > 0) setCostToday(total);
+      })
+      .catch(() => {});
   }, []);
-
-  const costToday = generals.reduce((sum, g) => sum + g.costToday, 0);
 
   return (
     <div className="max-w-full overflow-hidden">
@@ -126,17 +135,31 @@ export default function Dashboard() {
         <div className="lg:col-span-1">
           <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">⚡ COMMAND CENTER</h2>
           <AgentActivityFeed className="mb-4 h-[320px]" />
-          <MissionProgressLive
-            missionName="Deploy the Watchtower"
-            initialProgress={65}
-            color="#fbbf24"
-            className="mb-4"
-          />
-          <MissionProgressLive
-            missionName="Shadow Protocol Alpha"
-            initialProgress={90}
-            color="#94a3b8"
-          />
+          {liveMissions.length > 0 ? (
+            liveMissions.slice(0, 3).map((m: any) => (
+              <MissionProgressLive
+                key={m.id}
+                missionName={m.title || "Unknown Mission"}
+                initialProgress={m.progress_pct ?? (m.status === "completed" ? 100 : 0)}
+                color={m.status === "completed" ? "#22c55e" : "#fbbf24"}
+                className="mb-4"
+              />
+            ))
+          ) : (
+            <>
+              <MissionProgressLive
+                missionName="Deploy the Watchtower"
+                initialProgress={65}
+                color="#fbbf24"
+                className="mb-4"
+              />
+              <MissionProgressLive
+                missionName="Shadow Protocol Alpha"
+                initialProgress={90}
+                color="#94a3b8"
+              />
+            </>
+          )}
         </div>
       </div>
 
