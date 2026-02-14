@@ -134,7 +134,7 @@ fi
 # --- Step 3: Execute missions ---
 if [ "$MISSIONS_CREATED" -gt 0 ] || [ "$APPROVED" -gt 0 ]; then
   log "Triggering mission execution..."
-  bash "$SCRIPT_DIR/check-and-execute.sh" 2>&1 | while read -r line; do log "  $line"; done || true
+  bash "$SCRIPT_DIR/ai-check-and-execute.sh" 2>&1 | while read -r line; do log "  $line"; done || true
 fi
 
 # --- Step 4: Log summary event ---
