@@ -1,352 +1,446 @@
 # GRIMOIRE Report: ETHJKT Phase 2 Week 4-5 Gap Completion Design
 
-> Generated: 2026-02-14 | Analyst: GRIMOIRE, Knowledge General of the Dominion
+> Generated: 2026-02-14 | Updated: 2026-02-14 | Analyst: GRIMOIRE, Knowledge General of the Dominion
+> ⚠️ CORRECTED: Phase 0-2 is PURE WEB2. No blockchain, no wagmi, no wallet connection. dApp integration starts in Phase 3.
 
 ---
 
 ## Executive Summary
 
-Phase 2 currently has 3 weeks (HTML/CSS/jQuery → React → Advanced React). Based on analysis of all existing repos, workshop projects, and curriculum patterns, this report designs **Week 4 (Web3 Frontend Integration)** and **Week 5 (Fullstack dApp Capstone)** to complete the phase.
+Phase 2 currently has 3 weeks (HTML/CSS/jQuery → React → Advanced React). This report designs **Week 4 (State Management + API Integration)** and **Week 5 (Fullstack Web App Capstone)** to complete the phase.
+
+These weeks bridge Phase 1 (backend: Node/Express/PostgreSQL) with Phase 2 (frontend: React) into a complete fullstack Web2 experience, preparing students for Phase 3's blockchain/dApp integration.
 
 Key references studied:
 - `phase-2-week1-frontend-basic` — HTML/CSS/jQuery, DOM, AJAX, Vercel deploy
 - `phase-2-week2-reactjs` — React basics, hooks, Router, Tailwind
 - `phase-2-week3-frontend-advance` — Vite, core hooks, TanStack, Cypress, Redux, Stripe, Clerk
-- `tugwar-game-ui` — React + Wagmi + RainbowKit + Vite (Monad Testnet)
-- `simple-defi-ui` — React + TypeScript + Ethers.js (Lisk Sepolia)
-- `erc20-factory-ui` — React + Vite + Web3 wallet connection
+- Phase 1 backend repos — Express, PostgreSQL, REST APIs, authentication
 
 ---
 
-## Phase 2 Week 4: `phase-2-week4-web3-frontend`
+## Phase 2 Week 4: `phase-2-week4-state-api`
 
 ### README.md Design (Indonesian, Wizard Theme)
 
 ```markdown
-# Week4-Web3-Frontend-Integration 🧙‍♂️⛓️
+# Week4-State-Management-API-Integration 🧙‍♂️🔗
 
-Welcome to week 4, Etherean! Selamat sudah melewati 3 minggu phase 2. Kalian
-sudah jago bikin website React yang kenceng dan rapih. Sekarang saatnya kita
-masuk ke dunia Web3 — dimana website kalian bisa konek langsung ke blockchain!
+Selamat datang di Week 4, Etherean! Kalian sudah melewati 3 minggu penuh
+di Tower of Illusions — dari HTML mentah sampai Advanced React. Tapi semua
+yang kalian bangun sejauh ini... masih "kosong". Data dummy, state lokal,
+tidak ada koneksi ke dunia luar.
 
-Di week ini kalian akan belajar cara menghubungkan React app kalian ke smart
-contract yang ada di blockchain. Bayangkan React kalian sebagai "tongkat sihir"
-dan blockchain sebagai "buku mantra" — kalian butuh jembatan untuk membaca dan
-menulis mantra-mantra itu. Jembatan itu namanya **wagmi** dan **viem**.
+Minggu ini tongkat sihir kalian akan belajar mantra baru: **menghubungkan
+frontend ke backend**. Bayangkan frontend kalian sebagai wajah sang penyihir
+yang tampan, dan backend sebagai perpustakaan mantra di menara belakang.
+Selama ini kalian cuma melihat wajahnya — sekarang kalian akan membuka
+pintu ke perpustakaan itu.
 
-Kalian juga akan belajar **RainbowKit** — UI kit yang bikin proses connect
-wallet jadi gampang banget. Tinggal plug and play, user bisa langsung konek
-MetaMask, WalletConnect, dan wallet lainnya.
+Kalian akan belajar:
+- **State Management** yang proper — React Context, Zustand, kapan pakai apa
+- **Data Fetching** — React Query / SWR, atau fetch + useEffect patterns
+- **REST API Integration** — konek React app ke Express API dari Phase 1
+- **Authentication UI** — login, register, JWT flow, protected routes
+- **Error Handling & Loading States** — UX yang professional
 
-Setelah itu kalian akan belajar:
-- Cara **membaca data** dari smart contract (balances, NFT metadata, pool info)
-- Cara **menulis transaksi** ke blockchain (transfer token, mint NFT, vote)
-- Cara **mendengarkan event** dari smart contract secara real-time
-- Cara handle **multi-chain** — switch network, detect wrong chain
-
-Intinya setelah week ini kalian bukan cuma frontend developer, tapi sudah jadi
-**Web3 Frontend Developer**! 🚀
+Setelah week ini, frontend kalian bukan lagi boneka tanpa nyawa — dia sudah
+hidup, bisa baca dan tulis data dari server! 🚀
 
 ## Week 4 Study Material (Berurutan)
 
-- [Introduction to Web3 Frontend](study-material/intro-web3-frontend.md)
-- [Setting Up wagmi v2 + viem](study-material/wagmi-viem-setup.md)
-- [RainbowKit: Wallet Connection Made Easy](study-material/rainbowkit.md)
-- [Logic Nolep: Wallet Dashboard](study-material/ln-wallet-dashboard.md)
-- [Reading Smart Contracts: useReadContract](study-material/reading-contracts.md)
-- [Writing Transactions: useWriteContract](study-material/writing-contracts.md)
-- [Contract Events & Real-time Updates](study-material/contract-events.md)
-- [Logic Nolep: Token Explorer dApp](study-material/ln-token-explorer.md)
-- [Multi-chain Support & Network Switching](study-material/multichain.md)
-- [Soft Skills: Technical Writing for Web3](study-material/sk-technical-writing.md)
+- [State Management Patterns](study-material/state-management.md)
+- [React Context Deep Dive](study-material/react-context.md)
+- [Zustand: Lightweight State Management](study-material/zustand.md)
+- [Data Fetching Patterns](study-material/data-fetching.md)
+- [React Query / TanStack Query for API](study-material/react-query-api.md)
+- [Logic Nolep: Data Dashboard](study-material/ln-data-dashboard.md)
+- [REST API Integration](study-material/rest-api-integration.md)
+- [Authentication Flows: JWT + Login/Register UI](study-material/auth-flows.md)
+- [Environment Variables & Error Handling](study-material/env-error-handling.md)
+- [Logic Nolep: Authenticated CRUD App](study-material/ln-authenticated-crud.md)
+- [Soft Skills: API Documentation Reading](study-material/sk-api-docs.md)
 - [Group Project Week4](study-material/gp-week4.md)
+
+## Cara Pengerjaan
+
+1. Fork repo ini ke akun GitHub pribadi kalian
+2. Clone hasil fork ke local
+3. Kerjakan setiap study material secara berurutan
+4. Push ke repo fork kalian
+5. Buat Pull Request ke repo utama untuk submission
+
+## Peraturan
+
+- Deadline setiap Logic Nolep: lihat jadwal di channel Discord
+- Wajib push minimal 1 commit per hari selama week ini
+- Code harus clean, typed (TypeScript), dan well-commented
+- Semua submission via Pull Request
 ```
 
 ### Study Materials Detail
 
-#### 1. `intro-web3-frontend.md`
-- What is a dApp vs traditional web app
-- Architecture: React → wagmi/viem → RPC Provider → Blockchain
-- Key concepts: wallets, providers, signers, ABI, contract addresses
-- Comparison: ethers.js vs viem (why viem is the modern choice)
+#### 1. `state-management.md`
+- Masalah prop drilling dan kenapa butuh state management
+- Perbandingan solusi: React Context vs Zustand vs Redux Toolkit
+- Kapan pakai apa: local state, shared state, global state, server state
+- Mental model: "state yang dekat, simpan dekat; state yang jauh, angkat naik"
 - **Links:**
-  - https://viem.sh/docs/introduction
-  - https://wagmi.sh/react/getting-started
-  - https://ethereum.org/en/developers/docs/dapps/
+  - https://react.dev/learn/managing-state
+  - https://react.dev/learn/scaling-up-with-reducer-and-context
 
-#### 2. `wagmi-viem-setup.md`
-- Installing wagmi v2, viem, @tanstack/react-query
-- Creating wagmi config (chains, transports, connectors)
-- WagmiProvider + QueryClientProvider setup
-- Understanding chain definitions (mainnet, sepolia, monad testnet, lisk sepolia)
-- Environment variables: RPC URLs, WalletConnect Project ID
-- **Hands-on:** Set up a fresh Vite + React + TypeScript project with wagmi
+#### 2. `react-context.md`
+- `createContext`, `useContext`, Provider pattern
+- Building a Theme context (light/dark mode)
+- Building an Auth context (user data, login status)
+- Avoiding unnecessary re-renders with context splitting
+- Limitations of Context for frequent updates
+- **Hands-on:** Buat ThemeProvider + AuthProvider untuk aplikasi sederhana
 
-#### 3. `rainbowkit.md`
-- Installing @rainbow-me/rainbowkit
-- RainbowKitProvider + ConnectButton
-- Customizing themes and accent colors
-- Custom connect button component
-- Handling connection states (connected, disconnecting, reconnecting)
-- **Hands-on:** Add wallet connection to the wagmi project
+#### 3. `zustand.md`
+- Installing dan setup Zustand
+- Creating stores: state + actions dalam satu tempat
+- Selectors untuk avoid re-renders
+- Middleware: persist (localStorage), devtools
+- Comparison: kapan Context cukup, kapan butuh Zustand
+- **Hands-on:** Buat shopping cart store dengan Zustand (add, remove, update quantity, persist ke localStorage)
+- **Links:**
+  - https://zustand-demo.pmnd.rs/
+  - https://github.com/pmndrs/zustand
 
-#### 4. `ln-wallet-dashboard.md` — Logic Nolep
-**Scenario:** Buat "Wallet Dashboard" yang menampilkan:
-- Connected wallet address (truncated + copy button)
-- ETH balance (native token)
-- Network info (chain name, chain ID, block number)
-- Recent transactions from wallet (using viem public client)
-- Switch network button (Sepolia ↔ Monad Testnet)
-- Responsive design with Tailwind
+#### 4. `data-fetching.md`
+- The classic: fetch + useEffect + useState pattern
+- Problems with manual fetching: loading, error, cache, race conditions
+- Introduction to server state vs client state
+- Why dedicated data fetching libraries exist
+- **Hands-on:** Fetch data dari JSONPlaceholder API dengan manual pattern, rasakan pain-nya
 
-**Requirements:**
-- Gunakan `useAccount`, `useBalance`, `useChainId`, `useSwitchChain`
-- Handle semua state: disconnected, connecting, wrong network
-- Deploy ke Vercel
+#### 5. `react-query-api.md`
+- TanStack Query (React Query) setup dengan real APIs
+- `useQuery` — fetching + caching + background refetch
+- `useMutation` — POST/PUT/DELETE requests
+- Query invalidation — auto-refetch setelah mutation
+- Loading, error, and stale states
+- Pagination dan infinite scroll patterns
+- **Hands-on:** Build a post list that fetches from API, with create/edit/delete mutations
+- **Links:**
+  - https://tanstack.com/query/latest/docs/react/overview
 
-#### 5. `reading-contracts.md`
-- ABI: what it is, how to import it, type-safe ABIs with wagmi
-- `useReadContract` — reading single values (balanceOf, name, symbol, totalSupply)
-- `useReadContracts` — batched multicall reads
-- Refetch strategies: polling, manual refetch, on block
-- Formatting: `formatEther`, `formatUnits` from viem
-- **Hands-on:** Read ERC20 token data from a deployed contract
-
-#### 6. `writing-contracts.md`
-- `useWriteContract` — sending transactions
-- `useWaitForTransactionReceipt` — waiting for confirmation
-- Transaction lifecycle: preparing → signing → pending → confirmed
-- Error handling: user rejected, insufficient funds, gas estimation failed
-- Optimistic UI updates with TanStack Query invalidation
-- **Hands-on:** Build a simple token transfer form
-
-#### 7. `contract-events.md`
-- `useWatchContractEvent` — subscribing to contract events
-- Parsing event logs with viem
-- Building real-time feeds (e.g., live transfer log)
-- Combining events with TanStack Query for cached + live data
-- **Hands-on:** Build a live event feed for an ERC20 contract
-
-#### 8. `ln-token-explorer.md` — Logic Nolep
-**Scenario:** Buat "Token Explorer dApp" yang memungkinkan user untuk:
-- Connect wallet via RainbowKit
-- Input contract address ERC20 apa saja
-- Menampilkan: name, symbol, decimals, totalSupply, user balance
-- Transfer token ke address lain (form: recipient + amount)
-- Live feed: tampilkan Transfer events real-time
-- History: tampilkan 10 transfer events terakhir
+#### 6. `ln-data-dashboard.md` — Logic Nolep
+**Scenario:** Buat "Data Dashboard" yang fetches dan displays data dari public API:
+- Gunakan API publik (JSONPlaceholder, atau REQ|RES API)
+- Dashboard menampilkan: user list, post list, comment list
+- Sidebar navigation antar halaman
+- Search dan filter functionality
+- Loading skeletons (bukan spinner doang!)
+- Error states yang informatif
+- Zustand store untuk UI state (sidebar open/close, active filters)
+- React Query untuk semua data fetching
+- Responsive design dengan Tailwind
 
 **Requirements:**
-- Gunakan wagmi hooks: `useReadContract`, `useReadContracts`, `useWriteContract`, `useWaitForTransactionReceipt`, `useWatchContractEvent`
-- Type-safe ABI (import dari file .ts)
-- Loading states, error handling, toast notifications
-- Responsive + dark mode support
+- TypeScript strict mode
+- Minimum 3 halaman dengan React Router
+- Zustand untuk UI state
+- React Query untuk server state
+- Loading skeletons + error boundaries
 - Deploy ke Vercel
 
-#### 9. `multichain.md`
-- Configuring multiple chains in wagmi config
-- `useSwitchChain` hook
-- Chain-specific contract addresses (address mapping per chain)
-- Detecting wrong network and prompting switch
-- Custom chain definitions (for Monad, Lisk, etc.)
-- **Hands-on:** Make the Token Explorer support Sepolia + Monad Testnet
+#### 7. `rest-api-integration.md`
+- Connecting React frontend to Express/Hono backend
+- CORS: apa itu dan cara setup di backend
+- Axios vs fetch: pros and cons
+- Creating an API client/service layer (abstraction)
+- Base URL configuration per environment
+- Request/response interceptors (auth headers, error handling)
+- **Hands-on:** Setup API client yang reusable, konek ke backend dari Phase 1
 
-#### 10. `sk-technical-writing.md` — Soft Skills
-- Writing clear README.md for dApp projects
-- Documenting smart contract interfaces for frontend devs
-- Writing deployment guides
-- Creating architecture diagrams
+#### 8. `auth-flows.md`
+- JWT authentication flow: register → login → store token → send with requests
+- Building Login page: form, validation, API call, redirect
+- Building Register page: form, validation, API call, redirect
+- Storing JWT: localStorage vs httpOnly cookie (tradeoffs)
+- Auth context/store: currentUser, isAuthenticated, login(), logout()
+- Protected routes: redirect ke login jika belum auth
+- Auto-refresh token (optional advanced topic)
+- **Hands-on:** Buat complete auth flow: register, login, protected dashboard page
 
-#### 11. `gp-week4.md` — Group Project
-**Project: NFT Gallery dApp**
-- Tim 3-4 orang
-- Connect wallet, display NFTs owned by connected wallet
-- Use `useReadContracts` multicall for batch metadata reads
-- Grid/list view toggle, NFT detail modal
-- Filter by collection
+#### 9. `env-error-handling.md`
+- Environment variables di Vite: `import.meta.env`
+- `.env`, `.env.local`, `.env.production` — kapan pakai apa
+- Error boundaries di React (class component fallback)
+- Toast notifications untuk user feedback (react-hot-toast / sonner)
+- Retry logic untuk failed requests
+- Graceful degradation: apa yang ditampilkan saat API down
+- **Hands-on:** Setup environment variables + global error handling
+
+#### 10. `ln-authenticated-crud.md` — Logic Nolep
+**Scenario:** Buat "Task Manager" yang terkoneksi ke REST API:
+- Register + Login (JWT auth)
+- Protected dashboard (redirect jika belum login)
+- CRUD tasks: create, read, update, delete
+- Task status: todo, in-progress, done (drag atau click to change)
+- Filter by status, search by title
+- Optimistic updates (UI update dulu, API menyusul)
+- Proper error handling (token expired, network error, validation error)
+
+**Requirements:**
+- Backend: gunakan backend dari Phase 1, atau sediakan mock API
+- Auth context/store dengan Zustand
+- React Query untuk semua CRUD operations
+- Toast notifications untuk feedback
+- TypeScript strict
+- Responsive
 - Deploy ke Vercel
-- **Submission:** PR ke repo group project + presentasi demo
+
+#### 11. `sk-api-docs.md` — Soft Skills
+- Cara membaca API documentation (Swagger/OpenAPI)
+- Cara test API dengan Postman/Insomnia sebelum coding frontend
+- Menulis API request/response documentation untuk tim
+- Communication: cara minta endpoint baru ke backend developer
+
+#### 12. `gp-week4.md` — Group Project
+**Project: Connect to Phase 1 Backend**
+- Tim 3-4 orang (idealnya gabung dengan tim Phase 1 yang buat backend)
+- Konek React frontend ke REST API yang dibangun di Phase 1
+- Implementasi: auth flow + minimal 2 CRUD resources
+- State management: Zustand + React Query
+- Proper loading/error states
+- Deploy: frontend ke Vercel, backend pastikan masih running di Railway/Render
+- **Submission:** PR ke repo group project + presentasi demo 5 menit
 
 ### Week 4 — Final Assignment
-Submit PR dengan Token Explorer dApp yang sudah complete + deployed ke Vercel. Include:
+Submit PR dengan "Authenticated CRUD App" (Logic Nolep terakhir) yang sudah complete + deployed ke Vercel. Include:
 - Source code (clean, typed, well-structured)
-- README with setup instructions
+- README with: setup instructions, API documentation, screenshots
 - Live URL (Vercel deployment)
-- Screenshot/recording demonstrating all features
+- Screenshot/recording demonstrating auth flow + CRUD operations
 
 ---
 
-## Phase 2 Week 5: `phase-2-week5-fullstack-dapp`
+## Phase 2 Week 5: `phase-2-week5-fullstack-capstone`
 
 ### README.md Design (Indonesian, Wizard Theme)
 
 ```markdown
-# Week5-Fullstack-dApp-Capstone 🧙‍♂️🏆
+# Week5-Fullstack-Web-App-Capstone 🧙‍♂️🏆
 
-Selamat datang di week terakhir Phase 2, Etherean! Ini adalah puncak dari
-perjalanan kalian di Tower of Illusions. Selama 4 minggu kalian sudah belajar
-dari HTML dasar sampai Web3 frontend integration. Sekarang saatnya kalian
-membuktikan semua skill itu dalam satu proyek besar: **Fullstack dApp Capstone**.
+Ini dia, Etherean — minggu terakhir Phase 2! Puncak dari Tower of Illusions!
 
-Di week ini kalian akan membangun dApp end-to-end — dari frontend React yang
-konek ke smart contract, terintegrasi dengan backend API, dan di-deploy ke
-production. Ini bukan latihan lagi, ini adalah **final project** yang bisa
-kalian tunjukkan ke dunia sebagai portfolio Web3 developer kalian.
+Selama 9 minggu (Phase 1 + Phase 2), kalian sudah belajar dari nol:
+- Phase 1: Backend — Node.js, Express, PostgreSQL, REST API, deployment
+- Phase 2 Week 1-3: Frontend — HTML/CSS, React, Advanced React
+- Phase 2 Week 4: Integration — State management, API connection, auth
 
-Kalian akan belajar:
-- **IPFS & Decentralized Storage** — upload file/metadata ke Pinata
-- **Backend + Blockchain Integration** — API yang baca data on-chain
-- **Environment Management** — manage contract addresses, RPC URLs per network
-- **Frontend Testing** — mock contract interactions untuk testing
-- **Deployment Pipeline** — Vercel untuk frontend, testnet untuk contracts
-- **Presentation & Demo** — showcase project kalian secara professional
+Sekarang saatnya semua itu DIGABUNG menjadi satu aplikasi web yang utuh.
+Ini bukan latihan lagi — ini adalah **portfolio project** kalian yang pertama.
+Project yang bisa kalian tunjukkan ke recruiter, ke teman, ke dunia.
 
-Ini adalah ujian terakhir sebelum kalian masuk ke **Tower of Chains (Phase 3)**
-dimana kalian akan belajar menulis smart contract sendiri. Buktikan bahwa kalian
-layak menjadi seorang Fullstack Web3 Developer! 🚀
+Minggu ini kalian akan:
+- **Merencanakan** project dari nol (wireframe, feature list, tech stack)
+- **Membangun** fullstack app lengkap (React + Express + PostgreSQL)
+- **Men-deploy** ke production (Vercel + Railway)
+- **Menulis test** (unit + integration)
+- **Menyiapkan portfolio** (GitHub README yang keren, deployed demo)
+- **Presentasi** di Demo Day! (10 menit per tim/individu)
+
+Ini adalah ujian terakhir sebelum kalian memasuki **Tower of Chains (Phase 3)**
+dimana kalian akan belajar blockchain dan smart contract. Buktikan bahwa kalian
+sudah jadi **Fullstack Web Developer** yang sesungguhnya! 🚀
 
 ## Week 5 Study Material (Berurutan)
 
-- [IPFS & Decentralized Storage](study-material/ipfs-storage.md)
-- [Backend Integration for dApps](study-material/backend-integration.md)
-- [Logic Nolep: NFT Minter with IPFS](study-material/ln-nft-minter.md)
-- [Environment & Deployment Management](study-material/env-deployment.md)
-- [Frontend Testing with Contract Mocks](study-material/testing-web3.md)
-- [Logic Nolep: Voting dApp](study-material/ln-voting-dapp.md)
+- [Project Planning & Wireframing](study-material/project-planning.md)
+- [Fullstack Architecture Patterns](study-material/fullstack-architecture.md)
+- [Logic Nolep: Mini Fullstack App](study-material/ln-mini-fullstack.md)
+- [Testing Fundamentals](study-material/testing-fundamentals.md)
+- [Deployment Pipeline](study-material/deployment-pipeline.md)
+- [Logic Nolep: Deploy & Test](study-material/ln-deploy-test.md)
 - [Soft Skills: Demo Day Preparation](study-material/sk-demo-day.md)
+- [Portfolio Preparation](study-material/portfolio-prep.md)
 - [Capstone Project Guidelines](study-material/capstone-project.md)
+
+## Cara Pengerjaan
+
+1. Fork repo ini ke akun GitHub pribadi kalian
+2. Clone hasil fork ke local
+3. Ikuti study material sebagai guide
+4. Capstone project bisa individual atau tim (max 4 orang)
+5. Submit via Pull Request + presentasi di Demo Day
 ```
 
 ### Study Materials Detail
 
-#### 1. `ipfs-storage.md`
-- What is IPFS? Content-addressed storage
-- Pinata SDK: uploading files and JSON metadata
-- Generating metadata URIs for NFTs
-- web3.storage as alternative
-- **Hands-on:** Upload an image + JSON metadata to Pinata, get IPFS URI
+#### 1. `project-planning.md`
+- Dari ide ke implementasi: brainstorming → feature list → MVP scope
+- User stories: "Sebagai [user], saya ingin [action], supaya [benefit]"
+- Wireframing tools: Excalidraw, Figma (basics)
+- Database schema design (review dari Phase 1)
+- API endpoint planning (REST conventions)
+- Project timeline: how to break down 1 week into milestones
+- **Hands-on:** Buat wireframe + feature list untuk capstone project
 - **Links:**
-  - https://docs.pinata.cloud/
-  - https://docs.ipfs.tech/
-  - https://nft.storage/
+  - https://excalidraw.com/
+  - https://www.figma.com/
 
-#### 2. `backend-integration.md`
-- When you need a backend alongside your dApp (indexing, caching, auth)
-- Using Phase 1 skills: Express/Hono API that reads blockchain data via viem
-- Caching contract reads on backend to reduce RPC calls
-- Webhook patterns: listening to events server-side
-- **Hands-on:** Build a simple API that returns token holder data from on-chain reads
+#### 2. `fullstack-architecture.md`
+- Monorepo vs separate repos (frontend + backend)
+- Frontend ↔ Backend communication patterns
+- Project structure best practices (both frontend and backend)
+- Shared types between frontend and backend (TypeScript)
+- Authentication flow end-to-end (register → login → protected routes → API auth middleware)
+- File upload patterns (multer on backend, FormData on frontend)
+- **Hands-on:** Setup monorepo structure untuk capstone project
 
-#### 3. `ln-nft-minter.md` — Logic Nolep
-**Scenario:** Buat "NFT Minter dApp" lengkap:
-- Connect wallet via RainbowKit
-- Upload image to IPFS via Pinata
-- Fill metadata form (name, description, attributes)
-- Upload metadata JSON to IPFS
-- Mint NFT by calling contract's `mint(tokenURI)` function
-- Display minted NFTs in gallery view
-- Show transaction status (pending, confirmed, failed)
-
-**Requirements:**
-- Gunakan wagmi + viem untuk contract interaction
-- Pinata SDK untuk IPFS upload
-- TanStack Query untuk state management
-- Toast notifications untuk transaction status
-- Fully typed TypeScript
-- Deploy ke Vercel (connect to Sepolia or Monad Testnet)
-
-#### 4. `env-deployment.md`
-- Environment variables strategy: `.env.local`, `.env.production`
-- Contract address mapping per chain/environment
-- Vercel environment configuration
-- CI/CD basics: GitHub Actions for auto-deploy
-- Custom domain setup on Vercel
-- **Hands-on:** Configure multi-environment deployment for NFT Minter
-
-#### 5. `testing-web3.md`
-- Vitest setup for React + wagmi
-- Mocking wagmi hooks with `@wagmi/test`
-- Testing contract reads/writes without real blockchain
-- Cypress E2E with injected wallet (using Synpress or manual mock)
-- **Hands-on:** Write 5 unit tests + 2 E2E tests for the NFT Minter
-
-#### 6. `ln-voting-dapp.md` — Logic Nolep
-**Scenario:** Buat "Decentralized Voting dApp":
-- Admin bisa create proposal (judul + deskripsi + deadline)
-- User bisa vote (1 wallet = 1 vote per proposal)
-- Real-time vote count update via contract events
-- Results visualization (bar chart/progress bar)
-- Proposal list with status (active, ended)
-- Backend API: cache proposal list + vote counts untuk fast loading
+#### 3. `ln-mini-fullstack.md` — Logic Nolep
+**Scenario:** Buat "Notes App" fullstack dalam 2 hari:
+- **Backend:** Express + PostgreSQL
+  - CRUD endpoints: GET /notes, POST /notes, PUT /notes/:id, DELETE /notes/:id
+  - Auth: register, login, JWT middleware
+  - Each user only sees their own notes
+- **Frontend:** React + Vite + Tailwind
+  - Login/Register pages
+  - Notes list with create, edit, delete
+  - Markdown support (render markdown in notes)
+  - React Query + Zustand
+- **Deploy:** Frontend ke Vercel, Backend ke Railway
 
 **Requirements:**
-- Frontend: React + Vite + wagmi + RainbowKit
-- Backend: Hono/Express API with viem for blockchain reads
-- Smart contract interaction (read proposals, cast vote, get results)
-- TanStack Query for async state
-- Minimum 3 unit tests
-- Deploy frontend ke Vercel, backend ke Railway/Render
-- **Interact with a pre-deployed Voting contract** (address provided)
+- TypeScript di kedua sisi
+- Proper error handling
+- Loading states
+- Responsive design
+- Deployed dan bisa diakses publik
+
+#### 4. `testing-fundamentals.md`
+- Kenapa testing penting (confidence, refactoring, documentation)
+- Unit tests dengan Vitest: testing functions, hooks, components
+- React Testing Library: render, screen, fireEvent, waitFor
+- Integration tests: testing API endpoints dengan Supertest
+- Test structure: Arrange → Act → Assert
+- Mocking: API calls, modules, timers
+- **Hands-on:** Tulis 5 unit tests + 2 integration tests untuk Notes App
+- **Links:**
+  - https://vitest.dev/
+  - https://testing-library.com/docs/react-testing-library/intro/
+
+#### 5. `deployment-pipeline.md`
+- Vercel deployment untuk React frontend (connect GitHub, auto-deploy)
+- Railway deployment untuk Express backend (connect GitHub, environment variables)
+- PostgreSQL on Railway (provisioning, connection string)
+- Environment variables management (production vs development)
+- Custom domain setup (optional)
+- CI/CD basics: GitHub Actions untuk auto-run tests on PR
+- Monitoring basics: checking logs, uptime
+- **Hands-on:** Deploy the Notes App end-to-end
+
+#### 6. `ln-deploy-test.md` — Logic Nolep
+**Scenario:** Ambil Notes App dari LN sebelumnya dan:
+- Tulis minimum 8 tests (mix of unit + integration)
+- Setup GitHub Actions: run tests on every PR
+- Deploy ke production (Vercel + Railway)
+- Buat proper README.md dengan:
+  - Project description
+  - Tech stack badges
+  - Screenshot
+  - Setup instructions (local development)
+  - Live URL
+  - API documentation (endpoints list)
+
+**Requirements:**
+- All tests passing
+- GitHub Actions green badge
+- Live URL accessible
+- README complete dan professional
 
 #### 7. `sk-demo-day.md` — Soft Skills
-- Structuring a 10-minute project demo
+- Structuring a 10-minute project demo:
+  1. Problem statement (1 min)
+  2. Solution overview (1 min)
+  3. Live demo (5 min)
+  4. Technical architecture (2 min)
+  5. Lessons learned (1 min)
 - Live demo best practices (have a backup recording!)
-- Explaining technical architecture to non-technical audience
 - Handling Q&A confidently
-- Portfolio presentation: GitHub README, live demo URL, architecture diagram
+- Body language dan public speaking tips
+- **Hands-on:** Buat slide deck 10 slide untuk capstone presentation
 
-#### 8. `capstone-project.md` — Final Capstone
+#### 8. `portfolio-prep.md`
+- GitHub profile README (how to make it stand out)
+- Project README template yang professional
+- Clean commit history (squash messy commits)
+- Deployed demo yang actually works
+- LinkedIn update: add project, skills, description
+- Personal website / portfolio page (optional, bisa pakai template)
+- **Hands-on:** Polish GitHub profile + project README
+
+#### 9. `capstone-project.md` — Final Capstone
 **Pilih salah satu project atau propose sendiri (dengan approval mentor):**
 
-**Option A: Simple DEX Interface**
-- Token swap UI (pilih pair, input amount, execute swap)
-- Liquidity pool info dashboard
-- Transaction history
-- Interact with pre-deployed AMM contract
+**Option A: E-Commerce Store**
+- Product listing with categories and search
+- Shopping cart (add, remove, update quantity)
+- User auth (register, login, profile)
+- Checkout flow (order summary, order history)
+- Admin panel: manage products (CRUD)
+- Backend: Express + PostgreSQL
 
-**Option B: NFT Marketplace**
-- Browse listed NFTs
-- Buy NFT (connect wallet + send transaction)
-- List own NFT for sale
-- Transaction status tracking
-- IPFS for NFT images
+**Option B: Social Media / Forum**
+- User registration and profiles
+- Create posts with text and images
+- Like and comment on posts
+- Follow/unfollow users
+- News feed (posts from followed users)
+- Backend: Express + PostgreSQL
 
-**Option C: DAO Dashboard**
-- View proposals
-- Create new proposal
-- Vote on proposals
-- Delegate voting power
-- Results visualization
+**Option C: Project Management Tool**
+- Create projects with multiple boards
+- Kanban board with drag-and-drop cards
+- Assign tasks to team members
+- Due dates and status tracking
+- Team invitation system
+- Backend: Express + PostgreSQL
 
-**Option D: Custom Project (Propose)**
-- Must include: wallet connection, contract reads, contract writes, deployment
+**Option D: Content Management System (CMS)**
+- Rich text editor for creating articles
+- Categories and tags
+- Public blog view (SEO-friendly)
+- Admin dashboard with analytics
+- User roles (admin, editor, viewer)
+- Backend: Express + PostgreSQL
+
+**Option E: Custom Project (Propose)**
+- Must include: auth, CRUD, minimum 3 database tables, deployment
 - Submit proposal to mentor for approval within 2 days
 
 **Capstone Requirements (All Options):**
-- ✅ React + Vite + TypeScript
-- ✅ wagmi v2 + viem + RainbowKit
-- ✅ TanStack Query for async state
-- ✅ Tailwind CSS
-- ✅ At least 1 backend endpoint (optional: more)
-- ✅ Deployed to Vercel (frontend) + testnet (contract interaction)
-- ✅ README.md with: overview, architecture diagram, setup guide, live URL
-- ✅ Minimum 5 tests (unit or E2E)
-- ✅ 10-minute presentation + live demo
+- ✅ React + Vite + TypeScript (frontend)
+- ✅ Express/Hono + TypeScript (backend)
+- ✅ PostgreSQL (database)
+- ✅ JWT Authentication
+- ✅ React Query + Zustand for state management
+- ✅ Tailwind CSS for styling
+- ✅ Responsive design (mobile + desktop)
+- ✅ Deployed: Vercel (frontend) + Railway (backend + database)
+- ✅ README.md with: overview, screenshots, setup guide, live URL, API docs
+- ✅ Minimum 8 tests (unit or integration)
+- ✅ GitHub Actions: tests run on PR
+- ✅ 10-minute presentation + live demo at Demo Day
 
 **Submission:**
 - PR ke repo capstone project
-- Include live URL
+- Include live URL (both frontend and backend)
 - Presentasi di Demo Day (jadwal ditentukan mentor)
 
 **Grading Criteria:**
 | Criteria | Weight |
 |----------|--------|
-| Functionality (features work) | 30% |
-| Code Quality (typed, clean, structured) | 25% |
-| UI/UX (responsive, polished) | 15% |
-| Testing | 10% |
-| Documentation (README, comments) | 10% |
-| Presentation | 10% |
+| Functionality (features work end-to-end) | 30% |
+| Code Quality (typed, clean, structured, both FE+BE) | 25% |
+| UI/UX (responsive, polished, good loading/error states) | 15% |
+| Testing (meaningful tests, CI passing) | 10% |
+| Documentation (README, API docs, comments) | 10% |
+| Presentation (demo, communication, Q&A) | 10% |
 
 ---
 
@@ -354,50 +448,39 @@ layak menjadi seorang Fullstack Web3 Developer! 🚀
 
 ### Repo Structure
 Create two new repos matching the naming convention:
-- `Ethereum-Jakarta/phase-2-week4-web3-frontend`
-- `Ethereum-Jakarta/phase-2-week5-fullstack-dapp`
-
-### Pre-deployed Contracts Needed
-Week 4-5 relies on students interacting with existing contracts:
-1. **ERC20 Token** on Sepolia + Monad Testnet (for Token Explorer)
-2. **ERC721 NFT** with `mint(tokenURI)` (for NFT Minter)
-3. **Voting Contract** (for Voting dApp LN)
-4. **AMM/DEX Contract** (for capstone Option A, can reuse `simple-defi` contracts)
-
-These should be deployed by ETHJKT team and addresses provided in each LN.
-
-### Starter Templates
-Each LN should include a starter template in the repo:
-```
-study-material/
-├── ln-wallet-dashboard.md
-├── ln-wallet-dashboard-starter/    ← Vite + React + wagmi boilerplate
-│   ├── package.json
-│   ├── src/
-│   └── ...
-```
+- `Ethereum-Jakarta/phase-2-week4-state-api`
+- `Ethereum-Jakarta/phase-2-week5-fullstack-capstone`
 
 ### Technology Stack Summary
 | Tool | Version | Purpose |
 |------|---------|---------|
-| wagmi | v2.x | React hooks for Ethereum |
-| viem | v2.x | TypeScript Ethereum client |
-| @rainbow-me/rainbowkit | v2.x | Wallet connection UI |
-| @tanstack/react-query | v5.x | Async state management |
+| React | v18+ | UI framework |
 | Vite | v5.x | Build tool |
+| TypeScript | v5.x | Type safety |
 | Tailwind CSS | v3.x | Styling |
-| Vitest | latest | Unit testing |
-| Pinata SDK | latest | IPFS uploads |
+| Zustand | v4.x | Client state management |
+| TanStack Query | v5.x | Server state / data fetching |
+| React Router | v6.x | Client-side routing |
+| Express/Hono | latest | Backend API |
+| PostgreSQL | v15+ | Database |
+| Prisma/Drizzle | latest | ORM (from Phase 1) |
+| Vitest | latest | Unit/integration testing |
+| React Testing Library | latest | Component testing |
+| Vercel | — | Frontend deployment |
+| Railway | — | Backend + DB deployment |
 
 ### Progression Flow
 ```
-Week 3 (Advanced React) 
-  → Week 4 (Web3 Frontend — connect wallet, read/write contracts)
-    → Week 5 (Fullstack dApp — IPFS, backend, testing, capstone)
-      → Phase 3 (Smart Contract Development — write your own contracts)
+Phase 1 (Backend: Node/Express/PostgreSQL/REST API)
+  → Phase 2 Week 1 (HTML/CSS/jQuery)
+    → Phase 2 Week 2 (React Basics)
+      → Phase 2 Week 3 (Advanced React)
+        → Week 4 (State Management + API Integration — CONNECT FE to BE)
+          → Week 5 (Fullstack Capstone — BUILD complete web app)
+            → Phase 3 (Blockchain & Smart Contracts — Web3 starts here!)
 ```
 
-This creates a natural bridge: students learn to **use** contracts before learning to **write** them in Phase 3.
+Week 4-5 bridges Phase 1 backend skills with Phase 2 frontend skills into complete fullstack Web2 applications. Web3/blockchain integration begins in Phase 3.
 
 ---
 
@@ -405,10 +488,10 @@ This creates a natural bridge: students learn to **use** contracts before learni
 
 | Week | Title | Key Skills | Logic Nolep | Group/Final Project |
 |------|-------|------------|-------------|-------------------|
-| **4** | Web3 Frontend Integration | wagmi v2, viem, RainbowKit, useReadContract, useWriteContract, events, multi-chain | Wallet Dashboard, Token Explorer | NFT Gallery dApp |
-| **5** | Fullstack dApp Capstone | IPFS/Pinata, backend+blockchain, testing, deployment, presentation | NFT Minter, Voting dApp | Capstone (DEX/Marketplace/DAO/Custom) |
+| **4** | State Management + API Integration | React Context, Zustand, React Query, REST API integration, JWT auth, error handling | Data Dashboard, Authenticated CRUD App | Connect to Phase 1 Backend |
+| **5** | Fullstack Web App Capstone | Project planning, fullstack architecture, testing, deployment, portfolio prep | Mini Fullstack App, Deploy & Test | Capstone (E-Commerce/Forum/PM Tool/CMS/Custom) |
 
-With these two weeks, Phase 2 becomes a complete 5-week journey from HTML basics to fullstack dApp development, perfectly setting up students for Phase 3's smart contract development.
+With these two weeks, Phase 2 becomes a complete 5-week journey from HTML basics to fullstack Web2 development, perfectly bridging Phase 1 backend skills and preparing students for Phase 3's blockchain & smart contract development.
 
 ---
 
