@@ -1,7 +1,0 @@
-{
-  "type": "mission-complete",
-  "message": "Test notification from THRONE \ud83c\udff0",
-  "formatted": "\u2694\ufe0f\u2705 *QUEST COMPLETE*\\n\\nTest notification from THRONE \ud83c\udff0",
-  "priority": "normal",
-  "created_at": "2026-02-14T09:55:33Z"
-}

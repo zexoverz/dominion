@@ -128,7 +128,7 @@ export default function LogsPage() {
             <select
               value={agentFilter}
               onChange={(e) => { setAgentFilter(e.target.value); setPage(0); }}
-              className="bg-rpg-panelDark text-rpg-border font-pixel text-[9px] border-2 border-rpg-borderMid px-2 py-1 outline-none focus:border-throne-gold"
+              className="bg-rpg-panelDark text-rpg-border font-pixel text-[9px] border-2 border-rpg-borderMid px-2 py-1 min-h-[44px] outline-none focus:border-throne-gold"
             >
               {AGENTS.map((a) => (
                 <option key={a.id} value={a.id}>{a.emoji} {a.label}</option>
@@ -140,7 +140,7 @@ export default function LogsPage() {
             <select
               value={typeFilter}
               onChange={(e) => { setTypeFilter(e.target.value); setPage(0); }}
-              className="bg-rpg-panelDark text-rpg-border font-pixel text-[9px] border-2 border-rpg-borderMid px-2 py-1 outline-none focus:border-throne-gold"
+              className="bg-rpg-panelDark text-rpg-border font-pixel text-[9px] border-2 border-rpg-borderMid px-2 py-1 min-h-[44px] outline-none focus:border-throne-gold"
             >
               {EVENT_TYPES.map((t) => (
                 <option key={t} value={t}>{t === "ALL" ? "📜 ALL TYPES" : `${eventTypeIcon(t)} ${t.toUpperCase()}`}</option>
@@ -164,17 +164,20 @@ export default function LogsPage() {
               return (
                 <div
                   key={ev.id || i}
-                  className="flex items-start gap-3 px-2 py-2 hover:bg-rpg-borderDark/20 border-b border-rpg-borderDark/30 last:border-b-0"
+                  className="px-2 py-2 hover:bg-rpg-borderDark/20 border-b border-rpg-borderDark/30 last:border-b-0"
                 >
-                  <span className="font-pixel text-[7px] text-rpg-borderMid whitespace-nowrap min-w-[90px]">
-                    {formatTimestamp(ev.timestamp)}
-                  </span>
-                  <span className="text-sm min-w-[20px]">{agent.emoji}</span>
-                  <span className="font-pixel text-[8px] text-rpg-border min-w-[60px]">{agent.label}</span>
-                  <span className={`font-pixel text-[7px] min-w-[60px] ${eventTypeColor(ev.type)}`}>
-                    {eventTypeIcon(ev.type)} {ev.type?.toUpperCase()}
-                  </span>
-                  <span className="text-[10px] text-rpg-border font-body flex-1">{ev.description}</span>
+                  {/* Mobile: stacked layout */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-sm">{agent.emoji}</span>
+                    <span className="font-pixel text-[8px] text-rpg-border">{agent.label}</span>
+                    <span className={`font-pixel text-[7px] ${eventTypeColor(ev.type)}`}>
+                      {eventTypeIcon(ev.type)} {ev.type?.toUpperCase()}
+                    </span>
+                    <span className="font-pixel text-[7px] text-rpg-borderMid ml-auto whitespace-nowrap">
+                      {formatTimestamp(ev.timestamp)}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-rpg-border font-body break-words">{ev.description}</p>
                 </div>
               );
             })}
@@ -187,7 +190,7 @@ export default function LogsPage() {
             <button
               onClick={() => setPage((p) => Math.max(0, p - 1))}
               disabled={page === 0}
-              className="font-pixel text-[8px] text-throne-gold disabled:text-rpg-borderMid disabled:cursor-default cursor-pointer px-2 py-1 border border-rpg-borderMid hover:border-throne-gold disabled:hover:border-rpg-borderMid"
+              className="font-pixel text-[8px] text-throne-gold disabled:text-rpg-borderMid disabled:cursor-default cursor-pointer px-3 min-h-[44px] border border-rpg-borderMid hover:border-throne-gold disabled:hover:border-rpg-borderMid flex items-center"
             >
               ◀ PREV
             </button>
@@ -197,7 +200,7 @@ export default function LogsPage() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
               disabled={page >= totalPages - 1}
-              className="font-pixel text-[8px] text-throne-gold disabled:text-rpg-borderMid disabled:cursor-default cursor-pointer px-2 py-1 border border-rpg-borderMid hover:border-throne-gold disabled:hover:border-rpg-borderMid"
+              className="font-pixel text-[8px] text-throne-gold disabled:text-rpg-borderMid disabled:cursor-default cursor-pointer px-3 min-h-[44px] border border-rpg-borderMid hover:border-throne-gold disabled:hover:border-rpg-borderMid flex items-center"
             >
               NEXT ▶
             </button>

@@ -66,7 +66,7 @@ export default function ReportsPage() {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`font-pixel text-[8px] px-3 py-1.5 border transition-colors min-h-[32px] cursor-pointer ${
+              className={`font-pixel text-[8px] px-3 py-1.5 border transition-colors min-h-[44px] cursor-pointer ${
                 filter === cat
                   ? "text-throne-gold border-throne-gold bg-throne-gold/10"
                   : "text-rpg-borderMid border-rpg-borderDark hover:text-rpg-border hover:border-rpg-border"

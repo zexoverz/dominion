@@ -96,26 +96,46 @@ export default function Sidebar() {
       </nav>
 
       {/* Mobile bottom nav — RPG command bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-rpg-panel border-t-3 border-rpg-border flex justify-around items-center px-1 py-0 safe-bottom"
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-rpg-panel safe-bottom"
         style={{ borderTop: '3px solid #8b7355' }}>
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link key={item.href} href={item.href} className="flex-1" onClick={() => handleClick(item.href)}>
-              <div
-                className={`flex flex-col items-center justify-center min-h-[56px] py-2 px-1 ${
-                  isActive
-                    ? "text-throne-gold bg-rpg-borderDark/30"
-                    : "text-rpg-borderMid"
-                }`}
-              >
-                {isActive && <span className="text-[6px] font-pixel rpg-cursor mb-0.5">▶</span>}
-                <span className="text-xl mb-0.5">{item.icon}</span>
-                <span className="text-[7px] font-pixel leading-tight">{item.shortLabel}</span>
-              </div>
-            </Link>
-          );
-        })}
+        <div className="grid grid-cols-4 w-full">
+          {navItems.slice(0, 4).map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link key={item.href} href={item.href} onClick={() => handleClick(item.href)}>
+                <div
+                  className={`flex flex-col items-center justify-center min-h-[48px] py-1 px-0.5 ${
+                    isActive
+                      ? "text-throne-gold bg-rpg-borderDark/30"
+                      : "text-rpg-borderMid"
+                  }`}
+                >
+                  <span className="text-lg mb-0.5">{item.icon}</span>
+                  <span className="text-[6px] font-pixel leading-tight">{item.shortLabel}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="grid grid-cols-4 w-full border-t border-rpg-borderDark/50">
+          {navItems.slice(4).map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link key={item.href} href={item.href} onClick={() => handleClick(item.href)}>
+                <div
+                  className={`flex flex-col items-center justify-center min-h-[48px] py-1 px-0.5 ${
+                    isActive
+                      ? "text-throne-gold bg-rpg-borderDark/30"
+                      : "text-rpg-borderMid"
+                  }`}
+                >
+                  <span className="text-lg mb-0.5">{item.icon}</span>
+                  <span className="text-[6px] font-pixel leading-tight">{item.shortLabel}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
     </>
   );
