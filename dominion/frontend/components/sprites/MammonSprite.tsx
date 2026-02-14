@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 
 interface SpriteProps {
@@ -6,234 +7,295 @@ interface SpriteProps {
   className?: string;
 }
 
-const P = 2;
-
 const MammonSprite: React.FC<SpriteProps> = ({ size = 96, state = 'idle', className }) => {
   const [frame, setFrame] = useState(0);
 
   useEffect(() => {
-    const speed = state === 'working' ? 200 : 350;
+    const speed = state === 'working' ? 160 : state === 'celebrating' ? 180 : 320;
     const iv = setInterval(() => setFrame(f => (f + 1) % 8), speed);
     return () => clearInterval(iv);
   }, [state]);
 
-  const celebY = state === 'celebrating' ? (frame < 4 ? 0 : -3) : 0;
-  const breathe = state === 'idle' ? [0, 0, 0.5, 0.5, 0, 0, -0.5, -0.5][frame] : 0;
-  const yOff = celebY;
+  const blink = frame === 3;
+  const celebY = state === 'celebrating' ? [0, -1, -2, -2, -1, 0, 0, 0][frame] : 0;
+  const breathe = state === 'idle' ? [0, 0.2, 0.4, 0.6, 0.4, 0.2, 0, 0][frame] : 0;
+  const yOff = celebY + breathe;
 
-  const gold = '#FFD700';
-  const goldHi = '#FFF176';
-  const goldMid = '#FFC107';
-  const goldDark = '#DAA520';
-  const goldDeep = '#B8860B';
-  const scaleLight = '#FFE082';
-  const scaleDark = '#FFB300';
-  const vest = '#B71C1C';
-  const vestMid = '#C62828';
-  const vestDark = '#7F0000';
-  const vestHi = '#D32F2F';
-  const skin = '#FFB74D';
-  const skinShade = '#F57C00';
-  const skinHi = '#FFCC80';
-  const monocle = '#E8EAF6';
-  const monocleRim = '#9FA8DA';
-  const brown = '#5D4037';
-  const bootBrown = '#4E342E';
-  const white = '#FAFAFA';
+  const pal: Record<string, string> = {
+    // Gold scales
+    GS5: '#FFF8C4', GS4: '#FFD700', GS3: '#DAA520', GS2: '#B8860B', GS1: '#8B6914',
+    // Red/burgundy (vest)
+    R5: '#EF9A9A', R4: '#EF5350', R3: '#C62828', R2: '#8E1616', R1: '#5D0F0F',
+    // White (shirt)
+    W4: '#FFFFFF', W3: '#F5F5F5', W2: '#E0E0E0', W1: '#BDBDBD',
+    // Skin/scales base
+    SK5: '#FFE082', SK4: '#FFD54F', SK3: '#FFC107', SK2: '#FFA000', SK1: '#E65100',
+    // Horn
+    H3: '#D7CCC8', H2: '#BCAAA4', H1: '#8D6E63',
+    // Eye
+    E4: '#FF5252', E3: '#D32F2F', E2: '#B71C1C',
+    // Monocle
+    MO: '#E0E0E0', MOF: '#90CAF9', MOC: '#9E9E9E',
+    // Coin gold
+    C5: '#FFF9C4', C4: '#FFD700', C3: '#DAA520', C2: '#B8860B',
+    // Dark
+    K: '#0A0A0A', KD: '#2A1A00',
+    // Tail
+    T4: '#DAA520', T3: '#B8860B', T2: '#8B6914', T1: '#6B5010',
+    // Tooth
+    TH: '#F5F5F5',
+    // Abacus
+    AB: '#5D4037', ABB: '#E53935',
+  };
 
-  const px = (x: number, y: number, c: string, w = 1, h = 1) => (
-    <rect key={`${x}-${y}-${w}-${h}`} x={x * P} y={y * P + yOff + breathe} width={w * P} height={h * P} fill={c} />
+  const p = (x: number, y: number, c: string, w = 1, h = 1) => (
+    <rect key={`${x},${y},${c},${w}`} x={x} y={y + yOff} width={w} height={h} fill={c} />
   );
 
   const pixels: React.ReactNode[] = [];
 
-  // === HEAD (stocky dragon, wider) ===
-  // Horns
-  pixels.push(px(16, 3, goldDark), px(17, 3, goldMid), px(17, 4, goldDark));
-  pixels.push(px(29, 3, goldDark), px(28, 3, goldMid), px(28, 4, goldDark));
+  // ===== HORNS (rows 4-8) =====
+  pixels.push(p(25, 4, pal.H1)); pixels.push(p(26, 5, pal.H2)); pixels.push(p(27, 6, pal.H3));
+  pixels.push(p(37, 4, pal.H1)); pixels.push(p(36, 5, pal.H2)); pixels.push(p(35, 6, pal.H3));
 
-  // Head top
-  for (let x = 18; x <= 28; x++) pixels.push(px(x, 4, x % 2 === 0 ? goldMid : scaleLight));
-  // Head sides & face
-  for (let y = 5; y <= 8; y++) {
-    for (let x = 17; x <= 29; x++) {
-      // Scale pattern (checkerboard)
+  // ===== HEAD: Dragon face (rows 6-16) =====
+  // Rounded wide head
+  for (let y = 6; y <= 16; y++) {
+    const halfW = y < 8 ? 5 : y < 11 ? 7 : y < 14 ? 6 : 5;
+    const cx = 31;
+    for (let x = cx - halfW; x <= cx + halfW; x++) {
+      // Checkerboard scales on head
       const isScale = (x + y) % 2 === 0;
-      const isEdge = x === 17 || x === 29;
-      if (isEdge) pixels.push(px(x, y, goldDark));
-      else pixels.push(px(x, y, isScale ? goldMid : scaleLight));
-    }
-  }
-  // Lighter belly/front
-  for (let x = 20; x <= 26; x++) {
-    pixels.push(px(x, 7, skinHi));
-    pixels.push(px(x, 8, skin));
-  }
-
-  // Brow ridge
-  pixels.push(px(18, 5, goldDeep), px(19, 5, goldDeep), px(20, 5, goldDeep));
-  pixels.push(px(26, 5, goldDeep), px(27, 5, goldDeep), px(28, 5, goldDeep));
-
-  // Eyes
-  const blink = frame === 5;
-  if (!blink) {
-    pixels.push(px(19, 6, '#FFF', 2, 1), px(20, 6, goldDark)); // left eye
-    pixels.push(px(26, 6, goldDark), px(27, 6, '#FFF', 2, 1)); // right eye
-    pixels.push(px(20, 7, '#1A1A1A'), px(27, 7, '#1A1A1A')); // pupils
-  } else {
-    pixels.push(px(19, 7, goldDeep, 2, 1), px(26, 7, goldDeep, 2, 1));
-  }
-
-  // === MONOCLE (right eye, with chain) ===
-  pixels.push(px(25, 5, monocleRim), px(26, 5, monocleRim), px(27, 5, monocleRim), px(28, 5, monocleRim));
-  pixels.push(px(25, 6, monocleRim), px(28, 6, monocleRim));
-  pixels.push(px(25, 7, monocleRim), px(28, 7, monocleRim));
-  pixels.push(px(25, 8, monocleRim), px(26, 8, monocleRim), px(27, 8, monocleRim), px(28, 8, monocleRim));
-  // Monocle glass
-  pixels.push(px(26, 6, monocle), px(27, 6, monocle), px(26, 7, monocle), px(27, 7, monocle));
-  // Chain
-  pixels.push(px(29, 8, monocleRim), px(29, 9, goldDark), px(30, 10, goldDark), px(30, 11, goldDark));
-
-  // Snout
-  for (let x = 20; x <= 26; x++) pixels.push(px(x, 9, skin));
-  pixels.push(px(21, 9, skinShade), px(25, 9, skinShade)); // nostrils
-
-  // Mouth
-  if (state === 'talking' && frame % 2 === 0) {
-    pixels.push(px(21, 10, '#BF360C', 5, 1));
-    pixels.push(px(22, 10, '#E64A19'));
-  } else {
-    pixels.push(px(21, 10, skinShade, 5, 1));
-  }
-
-  // Neck (thick)
-  for (let x = 20; x <= 26; x++) {
-    pixels.push(px(x, 11, (x + 11) % 2 === 0 ? goldMid : scaleLight));
-  }
-
-  // === TORSO (stout, with vest) ===
-  // Wide body
-  for (let y = 12; y < 21; y++) {
-    const w = y < 14 ? 14 : 16;
-    const sx = Math.floor(23 - w / 2);
-    for (let x = sx; x < sx + w; x++) {
-      const isOuter = x < sx + 2 || x > sx + w - 3;
-      const isMid = x < sx + 3 || x > sx + w - 4;
-      if (isOuter) {
-        // Scaled dragon arms/sides
-        pixels.push(px(x, y, (x + y) % 2 === 0 ? goldMid : scaleDark));
-      } else if (isMid) {
-        pixels.push(px(x, y, vestDark));
+      const dist = Math.abs(x - cx);
+      const isEdge = x === cx - halfW || x === cx + halfW;
+      if (isEdge) {
+        pixels.push(p(x, y, pal.GS1));
       } else {
-        // Vest body
-        const vestShade = Math.abs(x - 23) < 2 ? vestHi : (y % 2 === 0 ? vest : vestMid);
-        pixels.push(px(x, y, vestShade));
+        pixels.push(p(x, y, isScale ? pal.GS3 : pal.GS4));
       }
     }
   }
 
-  // Vest buttons (gold)
-  pixels.push(px(23, 13, goldHi), px(23, 15, gold), px(23, 17, goldHi), px(23, 19, gold));
+  // Short snout (extends forward slightly)
+  pixels.push(p(27, 14, pal.GS3, 8, 1));
+  pixels.push(p(28, 15, pal.GS2, 6, 1));
+  pixels.push(p(29, 16, pal.SK2, 4, 1));
 
-  // Vest lapels (V-shape)
-  pixels.push(px(20, 12, vestDark), px(21, 13, vestDark), px(22, 14, vestDark));
-  pixels.push(px(26, 12, vestDark), px(25, 13, vestDark), px(24, 14, vestDark));
+  // Nostrils
+  pixels.push(p(29, 15, pal.K)); pixels.push(p(32, 15, pal.K));
 
-  // Belly roundness (lighter vest center)
-  for (let y = 15; y <= 18; y++) {
-    pixels.push(px(22, y, vestHi), px(24, y, vestHi));
+  // Small sharp teeth
+  pixels.push(p(28, 16, pal.TH)); pixels.push(p(30, 16, pal.TH)); pixels.push(p(32, 16, pal.TH)); pixels.push(p(34, 16, pal.TH));
+
+  // Eyes
+  const eyeGleam = state === 'working' ? pal.C5 : pal.E3;
+  if (!blink) {
+    // Left eye
+    pixels.push(p(26, 9, pal.K)); pixels.push(p(27, 9, '#FFFFFF')); pixels.push(p(28, 9, pal.E3)); pixels.push(p(29, 9, pal.K));
+    pixels.push(p(27, 10, pal.E4)); pixels.push(p(28, 10, pal.GS4)); // gold pupil
+    // Right eye
+    pixels.push(p(33, 9, pal.K)); pixels.push(p(34, 9, pal.E3)); pixels.push(p(35, 9, '#FFFFFF')); pixels.push(p(36, 9, pal.K));
+    pixels.push(p(34, 10, pal.GS4)); pixels.push(p(35, 10, pal.E4)); // gold pupil
+
+    // Monocle on right eye
+    pixels.push(p(32, 8, pal.MO)); pixels.push(p(33, 8, pal.MOF)); pixels.push(p(34, 8, pal.MOF));
+    pixels.push(p(35, 8, pal.MOF)); pixels.push(p(36, 8, pal.MO));
+    pixels.push(p(32, 9, pal.MO)); pixels.push(p(37, 9, pal.MO));
+    pixels.push(p(32, 10, pal.MO)); pixels.push(p(37, 10, pal.MO));
+    pixels.push(p(33, 11, pal.MO)); pixels.push(p(34, 11, pal.MOF)); pixels.push(p(35, 11, pal.MOF)); pixels.push(p(36, 11, pal.MO));
+    // Monocle chain going to vest
+    pixels.push(p(37, 11, pal.MOC)); pixels.push(p(37, 12, pal.MOC)); pixels.push(p(38, 13, pal.MOC));
+    pixels.push(p(38, 14, pal.MOC)); pixels.push(p(38, 15, pal.MOC));
+  } else {
+    pixels.push(p(26, 10, pal.K, 4, 1)); pixels.push(p(33, 10, pal.K, 4, 1));
   }
 
-  // Belt
-  for (let x = 17; x <= 29; x++) pixels.push(px(x, 20, goldDark));
-  pixels.push(px(22, 20, goldHi), px(23, 20, gold), px(24, 20, goldHi)); // ornate buckle
+  // Satisfied/smug expression
+  if (state === 'talking' && frame % 2 === 0) {
+    pixels.push(p(29, 14, pal.K, 4, 1)); // open mouth
+    pixels.push(p(28, 15, pal.TH)); pixels.push(p(33, 15, pal.TH));
+  }
 
-  // Tail
-  pixels.push(px(31, 18, goldMid), px(32, 17, scaleDark), px(33, 16, goldMid), px(34, 16, goldDark));
-  pixels.push(px(34, 15, scaleDark)); // tail tip
+  // ===== NECK (row 17) =====
+  pixels.push(p(28, 17, pal.GS3, 6, 1));
 
-  // === ARMS ===
+  // ===== WHITE SHIRT COLLAR (row 18) =====
+  pixels.push(p(26, 18, pal.W3, 10, 1));
+  pixels.push(p(25, 18, pal.W2)); pixels.push(p(36, 18, pal.W2));
+  // Collar points
+  pixels.push(p(27, 19, pal.W4)); pixels.push(p(35, 19, pal.W4));
+
+  // ===== RED/BURGUNDY VEST (rows 19-36) =====
+  for (let y = 19; y <= 36; y++) {
+    // Stocky wide body
+    const halfW = y < 24 ? 8 : y < 30 ? 10 : y < 34 ? 11 : 10;
+    const cx = 31;
+    for (let x = cx - halfW; x <= cx + halfW; x++) {
+      const dist = Math.abs(x - cx);
+      const isEdge = x === cx - halfW || x === cx + halfW;
+      if (isEdge) {
+        pixels.push(p(x, y, pal.R1));
+      } else if (dist <= 1) {
+        // Center seam
+        pixels.push(p(x, y, pal.R2));
+      } else {
+        const shade = dist <= 4 ? pal.R3 : dist <= 7 ? pal.R2 : pal.R1;
+        pixels.push(p(x, y, shade));
+      }
+    }
+  }
+
+  // Gold buttons (4)
+  for (let i = 0; i < 4; i++) {
+    const by = 21 + i * 4;
+    pixels.push(p(31, by, pal.GS4)); pixels.push(p(32, by, pal.GS5));
+  }
+
+  // Vest pocket (monocle chain ends here)
+  pixels.push(p(37, 20, pal.R1, 2, 2));
+  pixels.push(p(38, 20, pal.GS3)); // chain end
+
+  // Slightly rounded belly
+  for (let y = 28; y <= 33; y++) {
+    const bulge = y < 31 ? 1 : 0;
+    pixels.push(p(31 - 5 - bulge, y, pal.R4));
+    pixels.push(p(31 + 5 + bulge, y, pal.R4));
+  }
+
+  // ===== ARMS with scales (rows 19-30) =====
+  // Left arm
+  for (let y = 19; y <= 28; y++) {
+    const ax = 22 - Math.round((y - 19) * 0.3);
+    const isScale = (ax + y) % 2 === 0;
+    pixels.push(p(ax, y, isScale ? pal.GS3 : pal.GS4));
+    pixels.push(p(ax + 1, y, isScale ? pal.GS4 : pal.GS3));
+  }
+  // Right arm
+  for (let y = 19; y <= 28; y++) {
+    const ax = 40 + Math.round((y - 19) * 0.3);
+    const isScale = (ax + y) % 2 === 0;
+    pixels.push(p(ax, y, isScale ? pal.GS3 : pal.GS4));
+    pixels.push(p(ax - 1, y, isScale ? pal.GS4 : pal.GS3));
+  }
+
+  // Hands
   if (state === 'working') {
     // Holding abacus
-    pixels.push(px(14, 14, goldMid), px(13, 15, scaleDark), px(13, 16, skin), px(12, 17, skinShade));
-    pixels.push(px(32, 14, goldMid), px(33, 15, scaleDark), px(33, 16, skin), px(34, 17, skinShade));
+    pixels.push(p(19, 29, pal.GS4, 2, 1)); pixels.push(p(43, 29, pal.GS4, 2, 1));
     // Abacus frame
-    for (let y = 15; y <= 19; y++) { pixels.push(px(11, y, brown)); pixels.push(px(35, y, brown)); }
-    pixels.push(px(11, 15, brown, 25, 1)); // top
-    pixels.push(px(11, 19, brown, 25, 1)); // bottom
-    pixels.push(px(11, 17, brown, 25, 1)); // middle bar
-    // Beads (animated)
-    const beadShift = frame % 4;
-    for (let i = 0; i < 6; i++) {
-      const bx = 13 + i * 3 + (i === beadShift ? 1 : 0);
-      pixels.push(px(bx, 16, gold), px(bx + 1, 16, goldDark));
-      pixels.push(px(bx + (i % 2), 18, goldMid), px(bx + 1 - (i % 2), 18, goldHi));
+    pixels.push(p(17, 28, pal.AB, 1, 8));
+    pixels.push(p(45, 28, pal.AB, 1, 8));
+    pixels.push(p(18, 28, pal.AB, 27, 1));
+    pixels.push(p(18, 35, pal.AB, 27, 1));
+    // Abacus rods and beads
+    for (let rod = 0; rod < 5; rod++) {
+      const rx = 20 + rod * 5;
+      pixels.push(p(rx, 29, pal.AB, 1, 6));
+      // Beads (animated sliding)
+      const beadPos = (frame + rod) % 4;
+      pixels.push(p(rx, 29 + beadPos, pal.ABB, 1, 1));
+      pixels.push(p(rx, 30 + beadPos, pal.C4, 1, 1));
     }
-  } else if (state === 'thinking') {
-    pixels.push(px(32, 12, goldMid), px(29, 9, skin));
-    pixels.push(px(14, 14, goldMid), px(13, 15, skin));
-    if (frame > 3) pixels.push(px(32, 4, gold), px(34, 2, goldDark));
-  } else if (state === 'celebrating') {
-    pixels.push(px(14, 10, goldMid), px(13, 9, skin));
-    pixels.push(px(32, 10, goldMid), px(33, 9, skin));
-  } else if (state === 'walking') {
-    const swing = frame % 2;
-    pixels.push(px(14, 14 - swing, goldMid), px(13, 15 - swing, skin));
-    pixels.push(px(32, 14 + swing, goldMid), px(33, 15 + swing, skin));
-  } else {
-    // Idle: one hand adjusting monocle
-    const polishF = frame % 4;
-    if (polishF < 2) {
-      pixels.push(px(32, 13, goldMid), px(33, 12, scaleDark), px(33, 11, skin));
+  } else if (state === 'idle') {
+    // Polishing monocle (hand near face)
+    const polishPhase = frame % 4;
+    if (polishPhase < 2) {
+      pixels.push(p(40, 10, pal.GS4)); pixels.push(p(41, 10, pal.GS3));
     } else {
-      pixels.push(px(32, 14, goldMid), px(32, 15, scaleDark), px(32, 16, skin));
+      pixels.push(p(39, 11, pal.GS4)); pixels.push(p(40, 11, pal.GS3));
     }
-    pixels.push(px(14, 14, goldMid), px(14, 15, scaleDark), px(14, 16, skin));
-  }
-
-  // === LEGS (stout, wide) ===
-  const wf = frame % 2;
-  if (state === 'walking') {
-    pixels.push(px(17 + wf, 21, goldMid, 5, 1), px(17 + wf, 22, scaleDark, 5, 1), px(17 + wf, 23, scaleDark, 5, 1), px(17 + wf, 24, bootBrown, 5, 1));
-    pixels.push(px(24 - wf, 21, goldMid, 5, 1), px(24 - wf, 22, scaleDark, 5, 1), px(24 - wf, 23, scaleDark, 5, 1), px(24 - wf, 24, bootBrown, 5, 1));
+    pixels.push(p(19, 29, pal.GS4, 2, 1));
   } else {
-    pixels.push(px(17, 21, goldMid, 5, 1), px(24, 21, goldMid, 5, 1));
-    pixels.push(px(17, 22, scaleDark, 5, 1), px(24, 22, scaleDark, 5, 1));
-    pixels.push(px(17, 23, goldDark, 5, 1), px(24, 23, goldDark, 5, 1));
-    pixels.push(px(17, 24, bootBrown, 5, 1), px(24, 24, bootBrown, 5, 1));
-    // Boot buckle
-    pixels.push(px(19, 24, goldDark), px(26, 24, goldDark));
+    pixels.push(p(19, 29, pal.GS4, 2, 1)); pixels.push(p(43, 29, pal.GS4, 2, 1));
   }
 
-  // === FLOATING COINS ===
-  const coinData = [
-    { x: 9 + (frame % 4), y: 7, spin: frame % 3 },
-    { x: 34 - (frame % 4), y: 11, spin: (frame + 1) % 3 },
-    { x: 11 + ((frame + 2) % 4), y: 18, spin: (frame + 2) % 3 },
-    { x: 33 - ((frame + 2) % 4), y: 5, spin: frame % 3 },
-  ];
+  // ===== DRAGON LEGS with scales (rows 37-48) =====
+  for (let y = 37; y <= 46; y++) {
+    // Left leg
+    for (let x = 25; x <= 29; x++) {
+      const isScale = (x + y) % 2 === 0;
+      pixels.push(p(x, y, isScale ? pal.GS3 : pal.GS2));
+    }
+    // Right leg
+    for (let x = 33; x <= 37; x++) {
+      const isScale = (x + y) % 2 === 0;
+      pixels.push(p(x, y, isScale ? pal.GS3 : pal.GS2));
+    }
+  }
+  // Clawed feet
+  pixels.push(p(24, 47, pal.GS1, 7, 2)); pixels.push(p(32, 47, pal.GS1, 7, 2));
+  pixels.push(p(24, 47, pal.K)); pixels.push(p(26, 47, pal.K)); pixels.push(p(28, 47, pal.K)); // claws
+  pixels.push(p(32, 47, pal.K)); pixels.push(p(34, 47, pal.K)); pixels.push(p(36, 47, pal.K));
+
+  if (state === 'walking') {
+    const wf = frame % 4;
+    if (wf < 2) {
+      pixels.push(p(25, 45, pal.GS2, 5, 2)); pixels.push(p(35, 43, pal.GS2, 5, 2));
+    } else {
+      pixels.push(p(25, 43, pal.GS2, 5, 2)); pixels.push(p(35, 45, pal.GS2, 5, 2));
+    }
+  }
+
+  // ===== TAIL (curls behind) =====
+  const tailWave = Math.sin(frame * 0.6) * 1.5;
+  for (let i = 0; i < 8; i++) {
+    const tx = 42 + i + Math.round(Math.sin((i + frame * 0.8) * 0.7) * tailWave);
+    const ty = 38 + Math.round(Math.sin(i * 0.5) * 2);
+    if (tx < 64 && ty < 64) {
+      const isScale = (tx + ty) % 2 === 0;
+      pixels.push(p(tx, ty, isScale ? pal.T3 : pal.T4));
+      pixels.push(p(tx, ty + 1, isScale ? pal.T2 : pal.T3));
+    }
+  }
+
+  // ===== FLOATING COINS (3-5) =====
+  const coinCount = 5;
+  const coinSpeed = state === 'working' ? 0.6 : 0.25;
+  const coinR = state === 'working' ? 16 : 12;
+
+  for (let i = 0; i < coinCount; i++) {
+    const angle = frame * coinSpeed + i * (Math.PI * 2 / coinCount);
+    const cx = Math.round(31 + Math.cos(angle) * coinR);
+    const cy = Math.round(20 + Math.sin(angle) * coinR * 0.4);
+    if (cx >= 1 && cx < 62 && cy >= 1 && cy < 62) {
+      // Coin: 3x3 circle with detail
+      pixels.push(p(cx, cy, pal.C3)); pixels.push(p(cx + 1, cy, pal.C4)); pixels.push(p(cx + 2, cy, pal.C3));
+      pixels.push(p(cx, cy + 1, pal.C4)); pixels.push(p(cx + 1, cy + 1, pal.C5)); pixels.push(p(cx + 2, cy + 1, pal.C2));
+      pixels.push(p(cx, cy + 2, pal.C2)); pixels.push(p(cx + 1, cy + 2, pal.C3)); pixels.push(p(cx + 2, cy + 2, pal.C2));
+      // $ symbol
+      pixels.push(p(cx + 1, cy + 1, pal.C2));
+    }
+  }
+
+  // ===== GLOW EFFECTS =====
+  const glows: React.ReactNode[] = [];
+
+  // Eye gleam
+  if (!blink) {
+    glows.push(<circle key="el" cx={28} cy={9.5 + yOff} r={1.5} fill={eyeGleam} opacity={0.3} />);
+    glows.push(<circle key="er" cx={35} cy={9.5 + yOff} r={1.5} fill={eyeGleam} opacity={0.3} />);
+  }
+
+  // Monocle glint
+  if (!blink && frame % 4 === 0) {
+    glows.push(<circle key="mg" cx={35} cy={9.5 + yOff} r={3} fill="#FFFFFF" opacity={0.15} />);
+  }
+
+  // Coin glows
+  for (let i = 0; i < coinCount; i++) {
+    const angle = frame * coinSpeed + i * (Math.PI * 2 / coinCount);
+    const cx = 31 + Math.cos(angle) * coinR + 1;
+    const cy = 20 + Math.sin(angle) * coinR * 0.4 + 1;
+    if (cx >= 1 && cx < 63 && cy >= 1 && cy < 63) {
+      glows.push(<circle key={`cg${i}`} cx={cx} cy={cy + yOff} r={2} fill={pal.C4} opacity={0.15} />);
+    }
+  }
 
   return (
-    <svg width={size} height={size} viewBox="0 0 96 96" className={className} style={{ imageRendering: 'pixelated' }}>
-      <rect width="96" height="96" fill="transparent" />
+    <svg width={size} height={size} viewBox="0 0 64 64" className={className} style={{ imageRendering: 'pixelated' }}>
+      <rect width="64" height="64" fill="transparent" />
       {pixels}
-      {/* Floating coins with detail */}
-      {coinData.map((c, i) => {
-        const coinW = c.spin === 0 ? 2 : c.spin === 1 ? 1.5 : 1;
-        return (
-          <React.Fragment key={`coin-${i}`}>
-            <ellipse cx={(c.x + 1) * P} cy={(c.y + 0.5) * P + yOff} rx={coinW * P} ry={P} fill={gold} />
-            <ellipse cx={(c.x + 1) * P} cy={(c.y + 0.5) * P + yOff} rx={coinW * P * 0.5} ry={P * 0.5} fill={goldDark} />
-            {coinW > 1.5 && (
-              <text x={(c.x + 0.7) * P} y={(c.y + 0.8) * P + yOff} fontSize={P * 0.8} fill={goldDeep} fontWeight="bold">$</text>
-            )}
-          </React.Fragment>
-        );
-      })}
-      {/* Monocle glint */}
-      {frame % 4 === 0 && (
-        <rect x={26 * P} y={6 * P + yOff + breathe} width={P * 0.5} height={P * 0.5} fill="white" opacity={0.8} />
-      )}
+      {glows}
     </svg>
   );
 };

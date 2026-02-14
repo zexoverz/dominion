@@ -153,7 +153,7 @@ const CastleRoom: React.FC = () => {
         className="w-full overflow-auto"
         style={{ maxHeight: "calc(100vh - 120px)", minHeight: 400 }}
       >
-        <div style={{ minWidth: 800, maxWidth: 1000, margin: "0 auto", aspectRatio: "800/600" }}>
+        <div style={{ minWidth: 800, maxWidth: 1100, margin: "0 auto", aspectRatio: "900/650" }}>
           <RoomRenderer>
             {generals.map((g) => (
               <GeneralInRoom

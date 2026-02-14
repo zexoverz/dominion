@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect, useMemo } from 'react';
 
 interface SpriteProps {
   size?: number;
@@ -6,270 +7,345 @@ interface SpriteProps {
   className?: string;
 }
 
-const P = 2;
-
 const ThroneSprite: React.FC<SpriteProps> = ({ size = 96, state = 'idle', className }) => {
   const [frame, setFrame] = useState(0);
 
   useEffect(() => {
-    const speed = state === 'working' ? 200 : state === 'walking' ? 250 : state === 'celebrating' ? 180 : 400;
+    const speed = state === 'working' ? 180 : state === 'walking' ? 220 : state === 'celebrating' ? 160 : 350;
     const iv = setInterval(() => setFrame(f => (f + 1) % 8), speed);
     return () => clearInterval(iv);
   }, [state]);
 
   const blink = frame === 5;
-  const walkFrame = frame % 2;
-  const talkOpen = frame % 2 === 0;
-  const celebrateJump = frame < 4 ? 0 : -4;
-  const breathe = frame % 4 < 2 ? 0 : 0.5;
+  const breathe = state === 'idle' ? [0, 0, 0.3, 0.3, 0.5, 0.5, 0.3, 0][frame] : 0;
+  const celebJump = state === 'celebrating' ? [0, -1, -2, -3, -3, -2, -1, 0][frame] : 0;
+  const walkBob = state === 'walking' ? [0, -0.5, 0, 0.5, 0, -0.5, 0, 0.5][frame] : 0;
+  const yOff = breathe + celebJump + walkBob;
 
-  const yOff = state === 'celebrating' ? celebrateJump : 0;
-  const bodyY = state === 'idle' ? breathe : 0;
+  // Rich palette - 5 shades per color family
+  const pal: Record<string, string> = {
+    // Gold (crown, trim)
+    G5: '#FFF8C4', G4: '#FFD700', G3: '#DAA520', G2: '#B8860B', G1: '#8B6914',
+    // Purple (robes)
+    P5: '#C084FC', P4: '#9B59B6', P3: '#7B2FB0', P2: '#5B21B6', P1: '#3B0764',
+    // Cape purple
+    C5: '#D8B4FE', C4: '#A855F7', C3: '#7E22CE', C2: '#581C87', C1: '#3B0764',
+    // Skin
+    S5: '#FAEBD7', S4: '#F2D2A9', S3: '#D4A574', S2: '#B8864E', S1: '#8B6434',
+    // Hair
+    H3: '#3D2352', H2: '#2C1840', H1: '#1A0E2E',
+    // Red (jewels)
+    R4: '#FF6B6B', R3: '#E53935', R2: '#B71C1C', R1: '#7F0000',
+    // Boot
+    B3: '#6D4C41', B2: '#3E2723', B1: '#1B0E08',
+    // Dark/outline
+    K: '#0A0A0A', W: '#FFFFFF', WD: '#E0E0E0',
+    // Eye gold glow
+    E4: '#FFFDE7', E3: '#FFD700', E2: '#FFC107', E1: '#FF8F00',
+    // Scepter orb
+    O4: '#E1BEE7', O3: '#CE93D8', O2: '#AB47BC', O1: '#7B1FA2',
+    // Blue jewel
+    J3: '#5C6BC0', J2: '#3949AB', J1: '#1A237E',
+    // Silver filigree
+    F3: '#E0E0E0', F2: '#BDBDBD', F1: '#9E9E9E',
+  };
 
-  // Rich color palette
-  const skin = '#F2D2A9';
-  const skinShade = '#D4A574';
-  const skinHi = '#FAEBD7';
-  const purple = '#7B2FB0';
-  const purpleMid = '#6B2FA0';
-  const darkPurple = '#4A1D6E';
-  const deepPurple = '#2E0854';
-  const lightPurple = '#9B59B6';
-  const gold = '#FFD700';
-  const goldHi = '#FFF8A0';
-  const goldMid = '#DAA520';
-  const goldDark = '#B8860B';
-  const red = '#E53935';
-  const redDark = '#B71C1C';
-  const capePrimary = '#7B1FA2';
-  const capeShade = '#4A148C';
-  const capeHi = '#AB47BC';
-  const hair = '#2C1810';
-  const boot = '#3E2723';
-  const bootHi = '#5D4037';
-
-  // Crown glimmer rotates
-  const glimmerPos = frame % 5;
-  const eyeColor = frame % 3 === 0 ? '#FFD700' : frame % 3 === 1 ? '#FFF8C4' : '#FFE44D';
-
-  const px = (x: number, y: number, c: string, w = 1, h = 1) => (
-    <rect key={`${x}-${y}-${w}-${h}`} x={x * P} y={(y * P) + yOff + bodyY} width={w * P} height={h * P} fill={c} />
+  const p = (x: number, y: number, c: string, w = 1, h = 1) => (
+    <rect key={`${x},${y},${c}`} x={x} y={y + yOff} width={w} height={h} fill={c} />
   );
+
+  // Row-drawing helper: each char in `data` maps to palette via map
+  const row = (y: number, x0: number, data: string, map: string[]) => {
+    const result: React.ReactNode[] = [];
+    for (let i = 0; i < data.length; i++) {
+      const idx = data[i];
+      if (idx !== '.') {
+        const ci = parseInt(idx, 36);
+        if (!isNaN(ci) && map[ci]) {
+          result.push(<rect key={`r${y}-${x0 + i}`} x={x0 + i} y={y + yOff} width={1} height={1} fill={map[ci]} />);
+        }
+      }
+    }
+    return result;
+  };
 
   const pixels: React.ReactNode[] = [];
 
-  // === CROWN (3D with jewels) ===
-  // Crown points (5 tines)
-  pixels.push(px(19, 2, gold), px(21, 2, gold), px(23, 2, goldHi), px(25, 2, gold), px(27, 2, gold));
-  pixels.push(px(19, 3, goldMid), px(20, 3, gold), px(21, 3, goldHi), px(22, 3, gold), px(23, 3, gold), px(24, 3, gold), px(25, 3, goldHi), px(26, 3, gold), px(27, 3, goldMid));
-  // Crown band
-  for (let x = 18; x <= 28; x++) pixels.push(px(x, 4, x === 18 || x === 28 ? goldDark : gold));
-  for (let x = 18; x <= 28; x++) pixels.push(px(x, 5, x === 18 || x === 28 ? goldDark : goldMid));
-  // Crown jewels
-  pixels.push(px(20, 4, red), px(23, 4, '#4169E1'), px(26, 4, red));
-  pixels.push(px(20, 5, redDark), px(23, 5, '#27408B'), px(26, 5, redDark));
-  // Glimmer highlight
-  const glimX = [19, 21, 23, 25, 27][glimmerPos];
-  pixels.push(px(glimX, 2, goldHi));
+  // ===== CROWN (rows 2-9) =====
+  // Crown palette: 0=G5 1=G4 2=G3 3=G2 4=G1 5=R3 6=R2 7=J2 8=J1 9=F3 a=F2 b=R4 c=G1
+  const crownPal = [pal.G5, pal.G4, pal.G3, pal.G2, pal.G1, pal.R3, pal.R2, pal.J2, pal.J1, pal.F3, pal.F2, pal.R4, pal.G1];
+  // 5-pointed crown with filigree
+  //                          crown tips
+  pixels.push(...row(2, 24, '..1...1...1...1...1', crownPal)); // 5 tines
+  pixels.push(...row(3, 23, '.01.0101.010.0101.01', crownPal));
+  pixels.push(...row(4, 22, '41121112111211121114', crownPal));
+  pixels.push(...row(5, 22, '32211b52117821152233', crownPal));
+  pixels.push(...row(6, 22, '43322262228122622344', crownPal));
+  pixels.push(...row(7, 23, '4333333333333333334', crownPal));
+  // Crown glimmer
+  const glimX = [25, 28, 31, 34, 37][frame % 5];
+  pixels.push(p(glimX, 3, pal.G5));
+  pixels.push(p(glimX, 4, '#FFFFFF88'));
 
-  // === HAIR ===
-  for (let x = 19; x <= 27; x++) pixels.push(px(x, 6, hair));
-  pixels.push(px(18, 7, hair), px(28, 7, hair));
+  // ===== HAIR under crown (rows 7-9) =====
+  const hairPal = [pal.H1, pal.H2, pal.H3];
+  pixels.push(...row(8, 22, '01222222222222222210', hairPal));
+  pixels.push(...row(9, 21, '.01222222222222222210', hairPal));
+  // Hair flowing behind (left and right)
+  pixels.push(...row(10, 20, '00', hairPal));
+  pixels.push(...row(10, 42, '00', hairPal));
+  for (let y = 11; y <= 18; y++) {
+    pixels.push(p(19 + (y % 2), y, pal.H1));
+    pixels.push(p(43 - (y % 2), y, pal.H1));
+  }
 
-  // === HEAD (8 wide for detail) ===
-  for (let x = 19; x <= 27; x++) pixels.push(px(x, 7, skin));
-  for (let x = 18; x <= 28; x++) pixels.push(px(x, 8, x === 18 || x === 28 ? skinShade : skin));
-  for (let x = 18; x <= 28; x++) pixels.push(px(x, 9, x === 18 || x === 28 ? skinShade : skin));
-  for (let x = 19; x <= 27; x++) pixels.push(px(x, 10, skin));
-  for (let x = 20; x <= 26; x++) pixels.push(px(x, 11, x === 20 || x === 26 ? skinShade : skin));
+  // ===== HEAD (rows 9-16) =====
+  const skinPal = [pal.S1, pal.S2, pal.S3, pal.S4, pal.S5, pal.K];
+  pixels.push(...row(9, 23, '.233333333333333332', skinPal));
+  pixels.push(...row(10, 22, '.23444444444444444432', skinPal));
+  pixels.push(...row(11, 22, '234444444444444444432', skinPal));
+  pixels.push(...row(12, 22, '234444444444444444432', skinPal));
+  pixels.push(...row(13, 22, '234444444444444444432', skinPal));
+  pixels.push(...row(14, 22, '.23444444444444444432', skinPal));
+  pixels.push(...row(15, 23, '.2344444444444444432', skinPal));
+  pixels.push(...row(16, 24, '.234444444444444432', skinPal));
 
-  // Brow line
-  pixels.push(px(20, 7, skinShade), px(21, 7, skinShade), px(25, 7, skinShade), px(26, 7, skinShade));
+  // Eyebrows (stern, thin)
+  pixels.push(p(26, 11, pal.S1, 3, 1)); // left brow
+  pixels.push(p(34, 11, pal.S1, 3, 1)); // right brow
 
-  // Eyes with detail
+  // Eyes with detail (golden glow)
+  const eyeColor = [pal.E3, pal.E4, pal.E3, pal.E2, pal.E3, pal.E3, pal.E4, pal.E2][frame];
   if (!blink) {
-    pixels.push(px(20, 8, '#FFF', 2, 1), px(25, 8, '#FFF', 2, 1)); // whites
-    pixels.push(px(21, 8, eyeColor), px(26, 8, eyeColor)); // iris
-    pixels.push(px(21, 9, '#1A1A1A'), px(26, 9, '#1A1A1A')); // pupils
-    pixels.push(px(20, 9, skinShade), px(22, 9, skinShade), px(25, 9, skinShade), px(27, 9, skinShade)); // lower lid
+    // Left eye
+    pixels.push(p(26, 12, pal.K)); pixels.push(p(27, 12, '#FFFFFF')); pixels.push(p(28, 12, eyeColor)); pixels.push(p(29, 12, pal.K));
+    pixels.push(p(26, 13, pal.S2)); pixels.push(p(27, 13, eyeColor)); pixels.push(p(28, 13, pal.K)); pixels.push(p(29, 13, pal.S2));
+    // Right eye
+    pixels.push(p(33, 12, pal.K)); pixels.push(p(34, 12, eyeColor)); pixels.push(p(35, 12, '#FFFFFF')); pixels.push(p(36, 12, pal.K));
+    pixels.push(p(33, 13, pal.S2)); pixels.push(p(34, 13, pal.K)); pixels.push(p(35, 13, eyeColor)); pixels.push(p(36, 13, pal.S2));
   } else {
-    pixels.push(px(20, 9, '#1A1A1A', 3, 1), px(25, 9, '#1A1A1A', 3, 1));
+    pixels.push(p(26, 13, pal.K, 4, 1));
+    pixels.push(p(33, 13, pal.K, 4, 1));
   }
 
   // Nose
-  pixels.push(px(23, 9, skinShade), px(23, 10, skinShade));
+  pixels.push(p(31, 13, pal.S3)); pixels.push(p(31, 14, pal.S2)); pixels.push(p(32, 14, pal.S3));
 
-  // Mouth
-  if (state === 'talking' && talkOpen) {
-    pixels.push(px(22, 11, '#8B4513', 3, 1));
+  // Mouth / jaw
+  const mouthOpen = state === 'talking' && frame % 2 === 0;
+  if (mouthOpen) {
+    pixels.push(p(29, 15, pal.S2)); pixels.push(p(30, 15, pal.R2, 3, 1)); pixels.push(p(33, 15, pal.S2));
   } else {
-    pixels.push(px(22, 11, '#C4956A', 3, 1));
+    pixels.push(p(29, 15, pal.S2)); pixels.push(p(30, 15, pal.S1, 3, 1)); pixels.push(p(33, 15, pal.S2));
   }
+  // Strong jaw line
+  pixels.push(p(24, 16, pal.S1)); pixels.push(p(25, 16, pal.S2, 12, 1)); pixels.push(p(37, 16, pal.S1));
 
-  // Stern expression - slight frown lines
-  pixels.push(px(19, 8, skinShade), px(27, 8, skinShade));
+  // ===== NECK (row 17) =====
+  pixels.push(p(29, 17, pal.S3, 5, 1));
+  pixels.push(p(28, 17, pal.S2)); pixels.push(p(34, 17, pal.S2));
 
-  // Neck
-  pixels.push(px(22, 12, skin), px(23, 12, skin), px(24, 12, skin));
-  pixels.push(px(21, 12, skinShade), px(25, 12, skinShade));
+  // ===== COLLAR (row 18) =====
+  pixels.push(...row(18, 22, '..12333333333333333321', [pal.G1, pal.G2, pal.G3, pal.G4, pal.G5]));
 
-  // === TORSO - Royal robes with gold trim ===
-  // Collar
-  pixels.push(px(19, 13, gold), px(20, 13, goldMid), px(21, 13, purple), px(22, 13, purple), px(23, 13, purple), px(24, 13, purple), px(25, 13, purple), px(26, 13, goldMid), px(27, 13, gold));
-
-  // Main robe body
-  for (let y = 14; y < 21; y++) {
-    const w = y < 16 ? 12 : 14;
-    const sx = Math.floor(23 - w / 2);
-    for (let x = sx; x < sx + w; x++) {
-      if (x === sx || x === sx + w - 1) pixels.push(px(x, y, gold));
-      else if (x === sx + 1 || x === sx + w - 2) pixels.push(px(x, y, goldMid));
+  // ===== ROBES (rows 19-42) =====
+  for (let y = 19; y <= 42; y++) {
+    const halfW = y < 25 ? 9 : y < 30 ? 10 : y < 36 ? 11 : 12;
+    const cx = 31;
+    for (let x = cx - halfW; x <= cx + halfW; x++) {
+      const dist = Math.abs(x - cx);
+      const isEdge = x === cx - halfW || x === cx + halfW;
+      const isNearEdge = x === cx - halfW + 1 || x === cx + halfW - 1;
+      if (isEdge) pixels.push(p(x, y, pal.G2));
+      else if (isNearEdge) pixels.push(p(x, y, pal.G3));
       else {
-        // Shading: center lighter
-        const distFromCenter = Math.abs(x - 23);
-        pixels.push(px(x, y, distFromCenter > 3 ? darkPurple : distFromCenter > 1 ? purpleMid : purple));
+        // 4-shade gradient from center outward
+        const shade = dist <= 2 ? pal.P4 : dist <= 5 ? pal.P3 : dist <= 7 ? pal.P2 : pal.P1;
+        // Dithering for gradient transitions
+        const dither = (x + y) % 2 === 0;
+        const finalShade = dist === 3 && dither ? pal.P4 : dist === 6 && dither ? pal.P3 : shade;
+        pixels.push(p(x, y, finalShade));
       }
     }
   }
 
-  // Royal crest on chest
-  pixels.push(px(22, 15, goldHi), px(23, 15, gold), px(24, 15, goldHi));
-  pixels.push(px(23, 16, gold));
-
-  // Gold belt with ornate buckle
-  for (let x = 17; x < 30; x++) pixels.push(px(x, 18, goldDark));
-  for (let x = 17; x < 30; x++) pixels.push(px(x, 19, goldMid));
-  pixels.push(px(22, 18, red), px(23, 18, gold), px(24, 18, red));
-  pixels.push(px(22, 19, goldHi), px(23, 19, redDark), px(24, 19, goldHi));
-
-  // === CAPE (flowing, 2-tone purple with shading) ===
-  for (let y = 13; y < 26; y++) {
-    const capeWidth = y < 16 ? 1 : y < 20 ? 2 : 3;
-    const capeShading = y % 2 === 0 ? capePrimary : capeShade;
-    const hi = y % 3 === 0 ? capeHi : capePrimary;
-    // Left cape
-    for (let i = 0; i < capeWidth; i++) {
-      pixels.push(px(16 - i, y, i === 0 ? hi : capeShading));
-    }
-    // Right cape
-    for (let i = 0; i < capeWidth; i++) {
-      pixels.push(px(30 + i, y, i === 0 ? hi : capeShading));
-    }
-  }
-  // Cape flow animation
-  if (state === 'idle') {
-    const phase = frame % 4;
-    if (phase < 2) {
-      pixels.push(px(13, 24, capeShade), px(13, 25, capeHi));
-      pixels.push(px(33, 24, capeShade), px(33, 25, capeHi));
+  // Gold embroidered center line
+  for (let y = 19; y <= 42; y++) {
+    if (y % 3 === 0) {
+      pixels.push(p(31, y, pal.G3));
     } else {
-      pixels.push(px(14, 24, capeShade), px(14, 25, capeHi));
-      pixels.push(px(32, 24, capeShade), px(32, 25, capeHi));
+      pixels.push(p(31, y, pal.G2));
     }
   }
-  // Cape bottom edge
-  for (let x = 14; x < 17; x++) pixels.push(px(x, 26, capeShade));
-  for (let x = 30; x < 33; x++) pixels.push(px(x, 26, capeShade));
 
-  // === ARMS ===
-  if (state === 'working') {
-    // Right arm raised with scepter
-    pixels.push(px(29, 14, purple), px(30, 13, purple), px(31, 12, purpleMid), px(32, 11, skin), px(32, 10, skin));
-    // Scepter extended upward
-    pixels.push(px(33, 5, goldHi), px(33, 6, gold), px(33, 7, goldMid), px(33, 8, goldDark));
-    for (let y = 9; y <= 11; y++) pixels.push(px(33, y, goldDark));
-    // Scepter orb with energy
-    pixels.push(px(32, 4, '#FF6F00'), px(33, 4, red), px(34, 4, '#FF6F00'));
-    pixels.push(px(33, 3, '#FFAB00'));
-    // Energy particles
-    const ePhase = frame % 4;
-    pixels.push(px(31 + ePhase, 2, goldHi));
-    pixels.push(px(35 - ePhase, 3, '#FF6F00'));
-    if (frame % 2 === 0) {
-      pixels.push(px(31, 1, red));
-      pixels.push(px(35, 5, gold));
+  // Royal crest on chest
+  pixels.push(p(30, 22, pal.G4)); pixels.push(p(31, 22, pal.G5)); pixels.push(p(32, 22, pal.G4));
+  pixels.push(p(29, 23, pal.G3)); pixels.push(p(31, 23, pal.R3)); pixels.push(p(33, 23, pal.G3));
+  pixels.push(p(30, 24, pal.G4)); pixels.push(p(31, 24, pal.G5)); pixels.push(p(32, 24, pal.G4));
+
+  // Gold belt with ornate buckle (rows 30-32)
+  for (let x = 20; x <= 42; x++) {
+    pixels.push(p(x, 30, pal.G2));
+    pixels.push(p(x, 31, pal.G3));
+    pixels.push(p(x, 32, pal.G1));
+  }
+  // Buckle
+  pixels.push(p(29, 30, pal.G4)); pixels.push(p(30, 30, pal.G5)); pixels.push(p(31, 30, pal.R3)); pixels.push(p(32, 30, pal.G5)); pixels.push(p(33, 30, pal.G4));
+  pixels.push(p(29, 31, pal.G3)); pixels.push(p(30, 31, pal.R3)); pixels.push(p(31, 31, pal.R4)); pixels.push(p(32, 31, pal.R3)); pixels.push(p(33, 31, pal.G3));
+  pixels.push(p(29, 32, pal.G2)); pixels.push(p(30, 32, pal.G3)); pixels.push(p(31, 32, pal.G4)); pixels.push(p(32, 32, pal.G3)); pixels.push(p(33, 32, pal.G2));
+
+  // Robe fold detail (vertical lines for wrinkle/fabric feel)
+  for (let y = 33; y <= 42; y++) {
+    if (y % 2 === 0) {
+      pixels.push(p(26, y, pal.P1)); pixels.push(p(36, y, pal.P1));
     }
-    // Left arm down
-    pixels.push(px(16, 14, purple), px(15, 15, purpleMid), px(14, 16, skin));
+    if (y % 3 === 0) {
+      pixels.push(p(28, y, pal.P2)); pixels.push(p(34, y, pal.P2));
+    }
+  }
+
+  // Gold hem at bottom
+  for (let x = 19; x <= 43; x++) {
+    pixels.push(p(x, 43, pal.G2));
+    pixels.push(p(x, 44, pal.G3));
+  }
+
+  // ===== CAPE (flowing on both sides) =====
+  for (let y = 18; y <= 48; y++) {
+    const capeW = y < 22 ? 2 : y < 30 ? 3 : y < 38 ? 4 : 5;
+    const capeAnim = state === 'idle' ? Math.sin((frame + y * 0.3) * 0.8) * 0.8 : state === 'working' ? Math.sin((frame + y * 0.2) * 1.2) * 1.5 : 0;
+    const baseLeft = 20 - capeW + Math.round(capeAnim);
+    const baseRight = 42 + Math.round(-capeAnim);
+
+    for (let i = 0; i < capeW; i++) {
+      const shade = i === 0 ? pal.C5 : i === 1 ? pal.C4 : i === 2 ? pal.C3 : pal.C2;
+      pixels.push(p(baseLeft + i, y, shade));
+      pixels.push(p(baseRight + capeW - 1 - i, y, shade));
+    }
+    // Gold edge
+    pixels.push(p(baseLeft, y, pal.G3));
+    pixels.push(p(baseRight + capeW - 1, y, pal.G3));
+  }
+
+  // ===== ARMS =====
+  const armPurple = [pal.P1, pal.P2, pal.P3, pal.P4];
+  if (state === 'working') {
+    // Right arm raised high with scepter
+    for (let y = 19; y >= 10; y--) {
+      const ax = 42 + Math.round((19 - y) * 0.4);
+      pixels.push(p(ax, y, pal.P3));
+      pixels.push(p(ax + 1, y, pal.P2));
+    }
+    pixels.push(p(46, 10, pal.S4)); pixels.push(p(47, 10, pal.S3)); // hand
+    // Scepter
+    for (let y = 2; y <= 10; y++) pixels.push(p(48, y, y % 2 === 0 ? pal.G3 : pal.G4));
+    // Spiral detail
+    pixels.push(p(47, 6, pal.G2)); pixels.push(p(49, 8, pal.G2));
+    // Scepter orb (glowing purple)
+    pixels.push(p(47, 0, pal.O3)); pixels.push(p(48, 0, pal.O4)); pixels.push(p(49, 0, pal.O3));
+    pixels.push(p(47, 1, pal.O4)); pixels.push(p(48, 1, '#E1BEE7')); pixels.push(p(49, 1, pal.O4));
+    pixels.push(p(47, 2, pal.O3)); pixels.push(p(48, 2, pal.O2)); pixels.push(p(49, 2, pal.O3));
+    // Energy particles
+    const ep = frame % 4;
+    pixels.push(p(46 + ep, -1 + (ep % 2), pal.P5));
+    pixels.push(p(50 - ep, ep, pal.O4));
+    if (frame % 2 === 0) pixels.push(p(45, 0, pal.G5));
+    // Left arm at side
+    pixels.push(p(20, 22, pal.P3)); pixels.push(p(19, 24, pal.P2)); pixels.push(p(18, 26, pal.S4));
   } else if (state === 'thinking') {
-    pixels.push(px(29, 14, purple), px(29, 13, purple), px(27, 11, skin)); // hand near chin
-    pixels.push(px(16, 14, purple), px(15, 15, purpleMid), px(14, 14, gold));
-    for (let y = 6; y < 15; y++) pixels.push(px(14, y, goldDark)); // scepter held left
-    pixels.push(px(14, 5, red)); // scepter gem
-    if (frame % 2 === 0) pixels.push(px(29, 5, goldHi));
-    if (frame % 4 < 2) pixels.push(px(31, 3, '#FFD70088'));
+    // Right hand to chin
+    pixels.push(p(42, 19, pal.P3)); pixels.push(p(42, 18, pal.P2)); pixels.push(p(41, 17, pal.P3));
+    pixels.push(p(38, 15, pal.S4)); pixels.push(p(39, 15, pal.S3)); // hand near face
+    // Left arm holds scepter
+    pixels.push(p(20, 22, pal.P3)); pixels.push(p(19, 24, pal.P2)); pixels.push(p(18, 26, pal.S4));
+    for (let y = 5; y <= 26; y++) pixels.push(p(17, y, y % 2 === 0 ? pal.G3 : pal.G4));
+    pixels.push(p(16, 4, pal.O3)); pixels.push(p(17, 4, pal.O4)); pixels.push(p(18, 4, pal.O3));
+    pixels.push(p(17, 3, pal.O2));
+    // Thought sparkle
+    if (frame % 3 === 0) pixels.push(p(44, 8, pal.G5));
+    if (frame % 3 === 1) pixels.push(p(46, 6, pal.G4));
   } else if (state === 'celebrating') {
-    pixels.push(px(29, 11, purple), px(30, 10, purpleMid), px(31, 9, skin));
-    pixels.push(px(16, 11, purple), px(15, 10, purpleMid), px(14, 9, skin));
-    pixels.push(px(32, 8, gold), px(32, 7, gold), px(32, 6, red)); // scepter in air
+    // Both arms raised
+    pixels.push(p(42, 16, pal.P3)); pixels.push(p(43, 14, pal.P2)); pixels.push(p(44, 12, pal.S4));
+    pixels.push(p(20, 16, pal.P3)); pixels.push(p(19, 14, pal.P2)); pixels.push(p(18, 12, pal.S4));
+    // Scepter in right hand, high
+    for (let y = 4; y <= 12; y++) pixels.push(p(45, y, pal.G4));
+    pixels.push(p(44, 3, pal.O3)); pixels.push(p(45, 3, pal.O4)); pixels.push(p(46, 3, pal.O3));
     // Sparkles
     if (frame % 2 === 0) {
-      pixels.push(px(12, 7, goldHi), px(34, 6, goldHi), px(10, 5, gold));
+      pixels.push(p(15, 8, pal.G5)); pixels.push(p(48, 5, pal.G5));
+      pixels.push(p(12, 12, pal.G4)); pixels.push(p(50, 8, pal.G4));
+    }
+    if (frame % 3 === 0) {
+      pixels.push(p(16, 4, pal.G5)); pixels.push(p(47, 2, pal.R4));
     }
   } else if (state === 'walking') {
-    pixels.push(px(29, 14, purple), px(30, 15, skin));
-    pixels.push(px(16, 15, purple), px(15, 16, skin));
-    // Scepter at side
-    for (let y = 12; y <= 18; y++) pixels.push(px(31, y, goldDark));
-    pixels.push(px(31, 11, red));
-  } else {
-    // Idle: scepter in right hand
-    pixels.push(px(29, 14, purple), px(29, 15, purpleMid), px(29, 16, skin));
-    // Scepter
-    for (let y = 7; y <= 16; y++) pixels.push(px(30, y, y < 10 ? gold : goldDark));
-    pixels.push(px(30, 6, red), px(29, 5, goldHi), px(31, 5, goldHi), px(30, 5, '#FF6F00'));
+    // Arms swinging opposite to legs
+    const armSwing = frame % 2;
+    // Right arm
+    pixels.push(p(42, 20 + armSwing, pal.P3)); pixels.push(p(43, 23 + armSwing, pal.P2)); pixels.push(p(43, 26 + armSwing, pal.S4));
     // Left arm
-    pixels.push(px(16, 14, purple), px(16, 15, purpleMid), px(16, 16, skin));
+    pixels.push(p(20, 20 - armSwing, pal.P3)); pixels.push(p(19, 23 - armSwing, pal.P2)); pixels.push(p(19, 26 - armSwing, pal.S4));
+    // Scepter in right hand
+    for (let y = 14; y <= 26 + armSwing; y++) pixels.push(p(44, y, pal.G4));
+    pixels.push(p(43, 13, pal.O3)); pixels.push(p(44, 13, pal.O4)); pixels.push(p(45, 13, pal.O3));
+  } else {
+    // Idle: scepter in right hand, at rest
+    pixels.push(p(42, 20, pal.P3)); pixels.push(p(42, 22, pal.P2)); pixels.push(p(43, 24, pal.S4));
+    // Scepter
+    for (let y = 8; y <= 24; y++) pixels.push(p(44, y, y % 2 === 0 ? pal.G3 : pal.G4));
+    pixels.push(p(44, 7, pal.G5));
+    // Scepter orb
+    pixels.push(p(43, 5, pal.O3)); pixels.push(p(44, 5, pal.O4)); pixels.push(p(45, 5, pal.O3));
+    pixels.push(p(43, 6, pal.O2)); pixels.push(p(44, 6, '#E1BEE7')); pixels.push(p(45, 6, pal.O2));
+    pixels.push(p(44, 4, pal.O1));
+    // Left arm
+    pixels.push(p(20, 20, pal.P3)); pixels.push(p(20, 22, pal.P2)); pixels.push(p(19, 24, pal.S4));
   }
 
-  // === LEGS / ROBE BOTTOM ===
+  // ===== BOOTS (rows 45-48) =====
   if (state === 'walking') {
-    if (walkFrame === 0) {
-      pixels.push(px(19, 21, darkPurple, 4, 1), px(19, 22, deepPurple, 4, 1), px(19, 23, deepPurple, 4, 1));
-      pixels.push(px(19, 24, boot, 4, 1));
-      pixels.push(px(24, 21, darkPurple, 4, 1), px(25, 22, deepPurple, 4, 1), px(26, 23, deepPurple, 4, 1));
-      pixels.push(px(26, 24, boot, 4, 1));
-    } else {
-      pixels.push(px(19, 21, darkPurple, 4, 1), px(18, 22, deepPurple, 4, 1), px(17, 23, deepPurple, 4, 1));
-      pixels.push(px(17, 24, boot, 4, 1));
-      pixels.push(px(24, 21, darkPurple, 4, 1), px(24, 22, deepPurple, 4, 1), px(24, 23, deepPurple, 4, 1));
-      pixels.push(px(24, 24, boot, 4, 1));
-    }
+    const wf = frame % 4;
+    const lx = wf < 2 ? 26 : 28;
+    const rx = wf < 2 ? 34 : 32;
+    pixels.push(p(lx, 45, pal.B2, 4, 1)); pixels.push(p(lx, 46, pal.B1, 4, 1));
+    pixels.push(p(lx, 45, pal.B3)); // boot highlight
+    pixels.push(p(lx, 46, pal.G2)); // gold trim
+    pixels.push(p(rx, 45, pal.B2, 4, 1)); pixels.push(p(rx, 46, pal.B1, 4, 1));
+    pixels.push(p(rx, 45, pal.B3));
+    pixels.push(p(rx, 46, pal.G2));
   } else {
-    // Flowing robe bottom
-    for (let x = 17; x < 30; x++) {
-      const shade = (x + frame) % 3 === 0 ? purpleMid : darkPurple;
-      pixels.push(px(x, 21, shade));
-    }
-    for (let x = 18; x < 29; x++) pixels.push(px(x, 22, deepPurple));
-    for (let x = 18; x < 29; x++) pixels.push(px(x, 23, deepPurple));
-    // Gold robe hem
-    for (let x = 18; x < 29; x++) pixels.push(px(x, 24, goldDark));
-    // Boots peeking
-    pixels.push(px(19, 25, boot, 3, 1), px(25, 25, boot, 3, 1));
-    pixels.push(px(19, 25, bootHi), px(25, 25, bootHi));
+    // Standing boots peeking under robe
+    pixels.push(p(25, 45, pal.B3)); pixels.push(p(26, 45, pal.B2, 3, 1)); pixels.push(p(29, 45, pal.B1));
+    pixels.push(p(25, 46, pal.G2)); pixels.push(p(26, 46, pal.B1, 3, 1)); pixels.push(p(29, 46, pal.B1));
+    pixels.push(p(33, 45, pal.B3)); pixels.push(p(34, 45, pal.B2, 3, 1)); pixels.push(p(37, 45, pal.B1));
+    pixels.push(p(33, 46, pal.G2)); pixels.push(p(34, 46, pal.B1, 3, 1)); pixels.push(p(37, 46, pal.B1));
+  }
+
+  // ===== GLOW EFFECTS =====
+  const glows: React.ReactNode[] = [];
+  // Eye glow
+  if (!blink) {
+    glows.push(<circle key="el" cx={28} cy={12.5 + yOff} r={2.5} fill={eyeColor} opacity={0.3} />);
+    glows.push(<circle key="er" cx={35} cy={12.5 + yOff} r={2.5} fill={eyeColor} opacity={0.3} />);
+  }
+  // Crown glow
+  glows.push(<rect key="cg" x={22} y={4 + yOff} width={19} height={4} fill={pal.G5} opacity={0.06} rx={1} />);
+  // Working: scepter energy
+  if (state === 'working') {
+    glows.push(<circle key="so1" cx={48} cy={1 + yOff} r={5} fill={pal.O4} opacity={0.3} />);
+    glows.push(<circle key="so2" cx={48} cy={1 + yOff} r={9} fill={pal.P5} opacity={0.1} />);
+  }
+  // Idle: scepter orb glow
+  if (state === 'idle') {
+    glows.push(<circle key="soi" cx={44.5} cy={5.5 + yOff} r={3} fill={pal.O4} opacity={0.2} />);
   }
 
   return (
-    <svg width={size} height={size} viewBox="0 0 96 96" className={className} style={{ imageRendering: 'pixelated' }}>
-      <rect width="96" height="96" fill="transparent" />
+    <svg width={size} height={size} viewBox="0 0 64 64" className={className} style={{ imageRendering: 'pixelated' }}>
+      <rect width="64" height="64" fill="transparent" />
       {pixels}
-      {/* Eye glow */}
-      {!blink && (
-        <>
-          <circle cx={21 * P + P / 2} cy={8 * P + P / 2 + yOff + bodyY} r={3} fill={eyeColor} opacity={0.35} />
-          <circle cx={26 * P + P / 2} cy={8 * P + P / 2 + yOff + bodyY} r={3} fill={eyeColor} opacity={0.35} />
-        </>
-      )}
-      {/* Crown glow */}
-      <rect x={18 * P} y={4 * P + yOff + bodyY} width={11 * P} height={2 * P} fill={goldHi} opacity={0.08} />
-      {/* Working: energy particles from scepter */}
-      {state === 'working' && (
-        <>
-          <circle cx={33 * P + P / 2} cy={4 * P + yOff + bodyY} r={6} fill={red} opacity={0.3} />
-          <circle cx={33 * P + P / 2} cy={4 * P + yOff + bodyY} r={10} fill={'#FF6F00'} opacity={0.12} />
-        </>
-      )}
+      {glows}
     </svg>
   );
 };

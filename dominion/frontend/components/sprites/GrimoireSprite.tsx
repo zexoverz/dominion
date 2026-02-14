@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 
 interface SpriteProps {
@@ -6,197 +7,223 @@ interface SpriteProps {
   className?: string;
 }
 
-const P = 2;
-
 const GrimoireSprite: React.FC<SpriteProps> = ({ size = 96, state = 'idle', className }) => {
   const [frame, setFrame] = useState(0);
 
   useEffect(() => {
-    const speed = state === 'working' ? 180 : 350;
+    const speed = state === 'working' ? 140 : state === 'celebrating' ? 170 : 300;
     const iv = setInterval(() => setFrame(f => (f + 1) % 8), speed);
     return () => clearInterval(iv);
   }, [state]);
 
-  const celebY = state === 'celebrating' ? (frame < 4 ? 0 : -4) : 0;
-  const bobY = state === 'idle' ? [0, 0, 0.5, 0.5, 0, 0, -0.5, -0.5][frame] : 0;
-  const yOff = celebY + bobY;
+  const celebY = state === 'celebrating' ? [0, -1, -2, -3, -2, -1, 0, 0][frame] : 0;
+  const breathe = state === 'idle' ? [0, 0.2, 0.4, 0.2, 0, -0.2, -0.4, -0.2][frame] : 0;
+  const yOff = celebY + breathe;
 
-  const parchLight = '#EFEBE9';
-  const parchment = '#D7CCC8';
-  const parchMid = '#BCAAA4';
-  const parchDark = '#A1887F';
-  const brown = '#5D4037';
-  const darkBrown = '#3E2723';
-  const deepBrown = '#2C1A0E';
-  const amber = '#FF8F00';
-  const amberBright = '#FFB300';
-  const amberDim = '#E65100';
-  const pageBg = '#FAF3E0';
-  const runeGlow = [amberBright, amber, amberDim, amber, amberBright, amber, amberDim, amber][frame];
-  const pageFlip = state === 'working' ? frame % 2 : 0;
+  const pal: Record<string, string> = {
+    // Parchment/paper (body)
+    P5: '#FFF8E1', P4: '#FFECB3', P3: '#FFE082', P2: '#DCC27C', P1: '#B8A060',
+    // Dark parchment/leather
+    L4: '#A1887F', L3: '#8D6E63', L2: '#6D4C41', L1: '#4E342E',
+    // Amber/gold (eyes, runes)
+    A5: '#FFECB3', A4: '#FFD54F', A3: '#FFC107', A2: '#FF8F00', A1: '#E65100',
+    // Ink
+    I: '#1A1A1A', ID: '#333333',
+    // Book colors (orbiting books)
+    BR: '#8D6E63', RD: '#E53935', GN: '#43A047', BL: '#1E88E5', GD: '#FFC107',
+    // Rune glow
+    R4: '#FFE082', R3: '#FFD54F', R2: '#FFC107', R1: '#FF8F00',
+    K: '#0A0A0A',
+  };
 
-  const px = (x: number, y: number, c: string, w = 1, h = 1) => (
-    <rect key={`${x}-${y}-${w}-${h}`} x={x * P} y={y * P + yOff} width={w * P} height={h * P} fill={c} />
+  const p = (x: number, y: number, c: string, w = 1, h = 1) => (
+    <rect key={`${x},${y},${c},${w},${h}`} x={x} y={y + yOff} width={w} height={h} fill={c} />
   );
 
   const pixels: React.ReactNode[] = [];
 
-  // === BOOK HEAD (detailed with spine, pages, cover) ===
-  // Book cover top
-  for (let x = 17; x <= 29; x++) pixels.push(px(x, 3, darkBrown));
-  // Left page spread
-  for (let y = 4; y <= 9; y++) {
-    for (let x = 17; x <= 22; x++) {
-      if (x === 17) pixels.push(px(x, y, brown));
-      else if (x === 18) pixels.push(px(x, y, parchMid));
-      else pixels.push(px(x, y, y % 2 === 0 ? pageBg : parchLight));
+  // ===== HEAD: Open book (rows 2-14) =====
+  // Book spine on top
+  pixels.push(p(30, 2, pal.L2, 2, 1));
+  pixels.push(p(29, 3, pal.L3, 4, 1));
+  pixels.push(p(28, 4, pal.L2, 6, 1));
+
+  // Pages spread to sides (left page)
+  for (let y = 5; y <= 13; y++) {
+    const pageW = y < 8 ? 8 : y < 11 ? 10 : 8;
+    const sx = 31 - pageW;
+    for (let x = sx; x <= 30; x++) {
+      const fromSpine = 30 - x;
+      const shade = fromSpine < 2 ? pal.P2 : fromSpine < 5 ? pal.P3 : fromSpine < 8 ? pal.P4 : pal.P5;
+      pixels.push(p(x, y, shade));
     }
   }
-  // Right page spread
-  for (let y = 4; y <= 9; y++) {
-    for (let x = 24; x <= 29; x++) {
-      if (x === 29) pixels.push(px(x, y, brown));
-      else if (x === 28) pixels.push(px(x, y, parchMid));
-      else pixels.push(px(x, y, y % 2 === 0 ? pageBg : parchLight));
+  // Right page
+  for (let y = 5; y <= 13; y++) {
+    const pageW = y < 8 ? 8 : y < 11 ? 10 : 8;
+    const ex = 31 + pageW;
+    for (let x = 32; x <= ex; x++) {
+      const fromSpine = x - 32;
+      const shade = fromSpine < 2 ? pal.P2 : fromSpine < 5 ? pal.P3 : fromSpine < 8 ? pal.P4 : pal.P5;
+      pixels.push(p(x, y, shade));
     }
   }
-  // Spine (center)
-  for (let y = 3; y <= 10; y++) {
-    pixels.push(px(22, y, deepBrown), px(23, y, darkBrown), px(24, y, deepBrown));
-  }
-  // Book cover bottom
-  for (let x = 17; x <= 29; x++) pixels.push(px(x, 10, darkBrown));
-
-  // Page text lines (tiny detail)
-  pixels.push(px(19, 5, parchDark, 3, 1), px(25, 5, parchDark, 3, 1));
-  pixels.push(px(19, 7, parchDark, 2, 1), px(25, 7, parchDark, 2, 1));
-  pixels.push(px(19, 9, parchDark, 3, 1), px(25, 9, parchDark, 2, 1));
-
-  // Page flip animation when working
-  if (state === 'working' && pageFlip) {
-    pixels.push(px(22, 5, pageBg), px(22, 6, parchLight), px(22, 7, pageBg));
+  // Spine line
+  for (let y = 4; y <= 13; y++) {
+    pixels.push(p(30, y, pal.L2)); pixels.push(p(31, y, pal.L1)); pixels.push(p(32, y, pal.L2));
   }
 
-  // === EYES (glowing amber, peering from pages) ===
-  const blink = frame === 5;
-  if (!blink) {
-    // Left eye
-    pixels.push(px(19, 6, '#1A1A1A'), px(20, 6, amber), px(21, 6, '#1A1A1A'));
-    pixels.push(px(20, 7, amberDim));
-    // Right eye
-    pixels.push(px(25, 6, '#1A1A1A'), px(26, 6, amber), px(27, 6, '#1A1A1A'));
-    pixels.push(px(26, 7, amberDim));
+  // Page edges (leather binding)
+  for (let y = 5; y <= 13; y++) {
+    const pageW = y < 8 ? 8 : y < 11 ? 10 : 8;
+    pixels.push(p(31 - pageW, y, pal.L3));
+    pixels.push(p(31 + pageW, y, pal.L3));
+  }
+  // Bottom of book
+  pixels.push(p(23, 14, pal.L2, 16, 1));
+
+  // Eyes peeking from between pages
+  const eyeColor = [pal.A3, pal.A4, pal.A5, pal.A4, pal.A3, pal.A2, pal.A3, pal.A4][frame];
+  pixels.push(p(27, 9, eyeColor)); pixels.push(p(28, 9, pal.A5)); pixels.push(p(29, 9, pal.K)); // left eye
+  pixels.push(p(33, 9, pal.K)); pixels.push(p(34, 9, pal.A5)); pixels.push(p(35, 9, eyeColor)); // right eye
+
+  // Small runes on visible pages
+  const pageFlip = state === 'working' ? frame % 2 : 0;
+  if (pageFlip === 0) {
+    pixels.push(p(25, 7, pal.R2)); pixels.push(p(26, 8, pal.R1)); pixels.push(p(24, 10, pal.R2));
+    pixels.push(p(36, 7, pal.R2)); pixels.push(p(37, 8, pal.R1)); pixels.push(p(38, 10, pal.R2));
   } else {
-    pixels.push(px(19, 7, darkBrown, 3, 1), px(25, 7, darkBrown, 3, 1));
+    pixels.push(p(25, 8, pal.R1)); pixels.push(p(27, 7, pal.R2)); pixels.push(p(24, 11, pal.R1));
+    pixels.push(p(37, 7, pal.R1)); pixels.push(p(35, 8, pal.R2)); pixels.push(p(38, 11, pal.R1));
   }
 
-  // Mouth (text on page that moves)
-  if (state === 'talking' && frame % 2 === 0) {
-    pixels.push(px(19, 9, amberDim, 3, 1), px(25, 9, amberDim, 3, 1));
-  }
-
-  // === BODY (layered pages/parchment) ===
-  for (let y = 11; y < 22; y++) {
-    const w = y < 14 ? 10 : 12;
-    const sx = Math.floor(23 - w / 2);
-    for (let x = sx; x < sx + w; x++) {
-      const isEdge = x === sx || x === sx + w - 1;
-      const isInner = x === sx + 1 || x === sx + w - 2;
-      // Layered page texture
-      const layerColor = (y + x) % 3 === 0 ? parchLight :
-                         (y + x) % 3 === 1 ? parchment : parchMid;
-      if (isEdge) pixels.push(px(x, y, parchDark));
-      else if (isInner) pixels.push(px(x, y, parchMid));
-      else pixels.push(px(x, y, layerColor));
+  // ===== BODY: Layered parchment (rows 15-42) =====
+  for (let y = 15; y <= 42; y++) {
+    const halfW = y < 20 ? 6 : y < 28 ? 7 : y < 35 ? 8 : 7;
+    const cx = 31;
+    for (let x = cx - halfW; x <= cx + halfW; x++) {
+      // Layer different tan/cream shades
+      const layer = (y + x) % 4;
+      const shade = layer === 0 ? pal.P5 : layer === 1 ? pal.P4 : layer === 2 ? pal.P3 : pal.P2;
+      const isEdge = x === cx - halfW || x === cx + halfW;
+      pixels.push(p(x, y, isEdge ? pal.L3 : shade));
+    }
+    // Page-fold detail (vertical lines)
+    if (y % 3 === 0) {
+      pixels.push(p(cx - 3, y, pal.P1)); pixels.push(p(cx + 3, y, pal.P1));
     }
   }
 
-  // Page fold details on body
-  pixels.push(px(20, 12, parchDark), px(26, 12, parchDark));
-  pixels.push(px(19, 15, parchDark), px(27, 15, parchDark));
-  pixels.push(px(20, 18, parchDark), px(26, 18, parchDark));
+  // ===== ARMS: Rolled scroll/paper (rows 17-30) =====
+  const armBaseL = state === 'working' ? 19 : state === 'celebrating' ? 18 : 22;
+  const armBaseR = state === 'working' ? 43 : state === 'celebrating' ? 44 : 40;
 
-  // Text lines on body
-  for (let y = 13; y <= 19; y += 2) {
-    pixels.push(px(21, y, parchDark, 5, 1));
+  // Left arm
+  for (let y = 17; y <= 28; y++) {
+    const ax = armBaseL + Math.round((y - 17) * (state === 'working' ? -0.3 : state === 'celebrating' ? -0.5 : -0.15));
+    pixels.push(p(ax, y, pal.P3));
+    pixels.push(p(ax + 1, y, pal.P4));
+    // Scroll roll detail
+    if (y % 2 === 0) pixels.push(p(ax, y, pal.P2));
+  }
+  // Right arm
+  for (let y = 17; y <= 28; y++) {
+    const ax = armBaseR + Math.round((y - 17) * (state === 'working' ? 0.3 : state === 'celebrating' ? 0.5 : 0.15));
+    pixels.push(p(ax, y, pal.P4));
+    pixels.push(p(ax - 1, y, pal.P3));
+    if (y % 2 === 0) pixels.push(p(ax, y, pal.P2));
   }
 
-  // === RUNES on body (glowing amber symbols) ===
-  const runePositions = [[20, 13], [26, 14], [21, 16], [25, 17], [22, 19], [24, 20]];
-  runePositions.forEach(([rx, ry], i) => {
-    const active = state === 'working' || (i + frame) % 4 === 0;
-    if (active) pixels.push(px(rx, ry, runeGlow));
-  });
-
-  // === ARMS (paper/parchment) ===
-  if (state === 'working') {
-    // Arms outstretched, channeling
-    pixels.push(px(16, 13, parchMid), px(15, 14, parchDark), px(14, 14, parchment), px(13, 15, parchLight));
-    pixels.push(px(30, 13, parchMid), px(31, 14, parchDark), px(32, 14, parchment), px(33, 15, parchLight));
-    // Paper hands spreading
-    pixels.push(px(12, 15, parchMid), px(13, 14, parchDark));
-    pixels.push(px(34, 15, parchMid), px(33, 14, parchDark));
-  } else if (state === 'thinking') {
-    pixels.push(px(30, 12, parchment), px(28, 10, parchMid));
-    pixels.push(px(16, 14, parchment), px(15, 15, parchDark));
-    if (frame > 3) pixels.push(px(31, 4, amber), px(33, 2, amberDim));
-  } else if (state === 'celebrating') {
-    pixels.push(px(16, 10, parchment), px(15, 9, parchMid));
-    pixels.push(px(30, 10, parchment), px(31, 9, parchMid));
-  } else if (state === 'walking') {
-    const swing = frame % 2;
-    pixels.push(px(16, 14 - swing, parchMid), px(15, 15 - swing, parchDark));
-    pixels.push(px(30, 14 + swing, parchMid), px(31, 15 + swing, parchDark));
-  } else {
-    pixels.push(px(16, 13, parchMid), px(16, 14, parchDark), px(16, 15, parchment), px(16, 16, parchMid));
-    pixels.push(px(30, 13, parchMid), px(30, 14, parchDark), px(30, 15, parchment), px(30, 16, parchMid));
-  }
-
-  // === LEGS (stacked pages) ===
-  const walkF = frame % 2;
-  if (state === 'walking') {
-    const lx = walkF === 0 ? 19 : 21;
-    const rx = walkF === 0 ? 25 : 23;
-    pixels.push(px(lx, 22, parchDark, 3, 1), px(lx, 23, parchment, 3, 1), px(lx, 24, parchMid, 3, 1), px(lx, 25, brown, 3, 1));
-    pixels.push(px(rx, 22, parchDark, 3, 1), px(rx, 23, parchment, 3, 1), px(rx, 24, parchMid, 3, 1), px(rx, 25, brown, 3, 1));
-  } else {
-    for (let x = 17; x <= 29; x++) pixels.push(px(x, 22, parchDark));
-    pixels.push(px(19, 23, parchment, 4, 1), px(24, 23, parchment, 4, 1));
-    pixels.push(px(19, 24, parchMid, 4, 1), px(24, 24, parchMid, 4, 1));
-    pixels.push(px(19, 25, brown, 4, 1), px(24, 25, brown, 4, 1));
-  }
-
-  // === FLOATING BOOKS/PAGES (3-4 orbiting) ===
-  const orbitSpeed = state === 'working' ? frame * 2 : frame;
-  const bookPositions = [
-    { x: 11 + Math.round(2 * Math.sin(orbitSpeed * 0.8)), y: 7 + Math.round(Math.cos(orbitSpeed * 0.8)) },
-    { x: 33 - Math.round(2 * Math.sin(orbitSpeed * 0.8 + 2)), y: 10 + Math.round(Math.cos(orbitSpeed * 0.8 + 2)) },
-    { x: 9 + Math.round(1.5 * Math.sin(orbitSpeed * 0.8 + 4)), y: 16 + Math.round(Math.cos(orbitSpeed * 0.8 + 4)) },
-    { x: 35 - Math.round(1.5 * Math.sin(orbitSpeed * 0.8 + 6)), y: 14 + Math.round(Math.cos(orbitSpeed * 0.8 + 6)) },
+  // Ink drip from hands
+  const inkDrips = [
+    [armBaseL - 1, 29 + (frame % 4)],
+    [armBaseR + 1, 30 + ((frame + 2) % 4)],
   ];
+  if (state !== 'walking') {
+    inkDrips.forEach(([ix, iy], i) => {
+      if (iy < 36) {
+        pixels.push(p(ix, iy, pal.I));
+        if (iy + 2 < 38) pixels.push(p(ix, iy + 2, pal.ID));
+      }
+    });
+  }
+
+  // ===== LEGS (rows 43-48) =====
+  if (state === 'walking') {
+    const wf = frame % 4;
+    const lx = wf < 2 ? 27 : 29;
+    const rx = wf < 2 ? 34 : 32;
+    pixels.push(p(lx, 43, pal.P2, 3, 2)); pixels.push(p(lx, 45, pal.L3, 3, 2));
+    pixels.push(p(rx, 43, pal.P2, 3, 2)); pixels.push(p(rx, 45, pal.L3, 3, 2));
+  } else {
+    pixels.push(p(27, 43, pal.P2, 3, 2)); pixels.push(p(27, 45, pal.L3, 3, 2));
+    pixels.push(p(33, 43, pal.P2, 3, 2)); pixels.push(p(33, 45, pal.L3, 3, 2));
+  }
+
+  // ===== ORBITING BOOKS (5 small books) =====
+  const bookColors = [pal.BR, pal.RD, pal.GN, pal.BL, pal.GD];
+  const orbitSpeed = state === 'working' ? 0.8 : state === 'celebrating' ? 0.6 : 0.3;
+  const orbitR = state === 'working' ? 18 : 15;
+
+  for (let i = 0; i < 5; i++) {
+    const angle = (frame * orbitSpeed + i * (Math.PI * 2 / 5));
+    const bx = Math.round(31 + Math.cos(angle) * orbitR);
+    const by = Math.round(28 + Math.sin(angle) * orbitR * 0.5);
+    if (bx >= 0 && bx < 62 && by >= 0 && by < 62) {
+      // Small book (2x3 or 3x2 based on position)
+      const isOpen = state === 'working' && i === Math.floor(frame / 2) % 5;
+      if (isOpen) {
+        pixels.push(p(bx, by, bookColors[i], 3, 1));
+        pixels.push(p(bx, by + 1, pal.P5, 3, 1)); // open pages
+      } else {
+        pixels.push(p(bx, by, bookColors[i], 2, 2));
+        pixels.push(p(bx, by, pal.P5)); // page edge
+      }
+    }
+  }
+
+  // ===== FLOATING RUNES (6-8 glowing amber/gold) =====
+  const runeSymbols = 8;
+  const runeOrbitR = state === 'working' ? 22 : 18;
+  const runeSpeed = state === 'working' ? 0.5 : 0.2;
+
+  for (let i = 0; i < runeSymbols; i++) {
+    const angle = (frame * runeSpeed + i * (Math.PI * 2 / runeSymbols)) + Math.PI / 4;
+    const rx = Math.round(31 + Math.cos(angle) * runeOrbitR);
+    const ry = Math.round(26 + Math.sin(angle) * runeOrbitR * 0.6);
+    if (rx >= 1 && rx < 63 && ry >= 1 && ry < 63) {
+      const runeColor = (i + frame) % 3 === 0 ? pal.R4 : (i + frame) % 3 === 1 ? pal.R3 : pal.R2;
+      pixels.push(p(rx, ry, runeColor));
+    }
+  }
+
+  // ===== GLOW EFFECTS =====
+  const glows: React.ReactNode[] = [];
+
+  // Eye glow
+  glows.push(<circle key="el" cx={28} cy={9.5 + yOff} r={2} fill={eyeColor} opacity={0.3} />);
+  glows.push(<circle key="er" cx={35} cy={9.5 + yOff} r={2} fill={eyeColor} opacity={0.3} />);
+
+  // Rune ambient glow
+  for (let i = 0; i < runeSymbols; i++) {
+    const angle = (frame * runeSpeed + i * (Math.PI * 2 / runeSymbols)) + Math.PI / 4;
+    const rx = 31 + Math.cos(angle) * runeOrbitR;
+    const ry = 26 + Math.sin(angle) * runeOrbitR * 0.6;
+    if (rx >= 1 && rx < 63 && ry >= 1 && ry < 63) {
+      glows.push(<circle key={`rg${i}`} cx={rx + 0.5} cy={ry + 0.5 + yOff} r={1.5} fill={pal.A3} opacity={0.2} />);
+    }
+  }
+
+  // Working: intense book glow
+  if (state === 'working') {
+    glows.push(<circle key="bg" cx={31} cy={8 + yOff} r={8} fill={pal.A4} opacity={0.08} />);
+  }
 
   return (
-    <svg width={size} height={size} viewBox="0 0 96 96" className={className} style={{ imageRendering: 'pixelated' }}>
-      <rect width="96" height="96" fill="transparent" />
+    <svg width={size} height={size} viewBox="0 0 64 64" className={className} style={{ imageRendering: 'pixelated' }}>
+      <rect width="64" height="64" fill="transparent" />
       {pixels}
-      {/* Floating mini-books */}
-      {bookPositions.map((b, i) => (
-        <g key={`book-${i}`} transform={`rotate(${i * 25 + frame * (state === 'working' ? 15 : 5)}, ${(b.x + 1.5) * P}, ${(b.y + 1) * P + yOff})`}>
-          <rect x={b.x * P} y={b.y * P + yOff} width={3 * P} height={2 * P} fill={i % 2 === 0 ? brown : darkBrown} rx={1} />
-          <rect x={(b.x + 0.5) * P} y={(b.y + 0.3) * P + yOff} width={2 * P} height={1.4 * P} fill={pageBg} />
-        </g>
-      ))}
-      {/* Eye glow */}
-      {!blink && (
-        <>
-          <circle cx={20 * P + P / 2} cy={6 * P + P / 2 + yOff} r={4} fill={amber} opacity={0.3} />
-          <circle cx={26 * P + P / 2} cy={6 * P + P / 2 + yOff} r={4} fill={amber} opacity={0.3} />
-        </>
-      )}
-      {/* Working: rune circle glow */}
-      {state === 'working' && (
-        <circle cx={23 * P} cy={16 * P + yOff} r={14} fill={amber} opacity={0.1} />
-      )}
+      {glows}
     </svg>
   );
 };
