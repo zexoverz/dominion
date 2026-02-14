@@ -12,7 +12,7 @@ Read `/data/workspace/dominion/src/throne-integration/heartbeat-runner.md` for f
 5. Check `/data/workspace/dominion/notifications/` — send any queued notifications to Faisal via Telegram (use `message` tool), then delete the file
 6. Run `bash /data/workspace/dominion/src/throne-integration/budget-check.sh` — auto-checks cost thresholds
 7. `POST /api/events` — log heartbeat with summary stats
-8. Check `memory/heartbeat-state.json` — if >4h since last proposal gen, generate 1-2 new proposals
+8. Check `memory/heartbeat-state.json` — if >4h since last proposal gen, run `bash /data/workspace/dominion/src/throne-integration/strategic-planner.sh` to auto-generate smart proposals
 9. If 01:00 UTC and no briefing today → run daily briefing, send to Faisal via Telegram
 
 ## Rules

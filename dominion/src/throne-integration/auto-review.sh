@@ -156,4 +156,8 @@ if [ "$SKIPPED" -gt 0 ]; then
     --message "$SKIPPED proposal(s) need manual approval (cost ≥ \$1). Check the dashboard." || true
 fi
 
+# --- Step 6: Check collaboration chains for follow-up triggers ---
+log "Checking collaboration chains..."
+bash "$SCRIPT_DIR/collaboration-chains.sh" 2>&1 | while read -r line; do log "  $line"; done || log "WARNING: Collaboration chains check failed"
+
 log "Done."
