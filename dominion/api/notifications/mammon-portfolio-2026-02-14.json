@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-02-14T14:46:20Z",
+  "agent": "MAMMON",
+  "type": "portfolio_update",
+  "priority": "normal",
+  "summary": "💰 Portfolio: 0.489207 BTC ($34067) | BTC: $69638 | Drawdown: -36.1% | Wedding: 100.0% | Target: 9.8% to 5 BTC",
+  "data": {
+    "btc_price_usd": 69638,
+    "total_btc": "0.489207",
+    "portfolio_usd": 34067,
+    "portfolio_idr": 573452679,
+    "wedding_progress_pct": "100.0",
+    "btc_target_pct": "9.8",
+    "drawdown_pct": "36.1"
+  }
+}
