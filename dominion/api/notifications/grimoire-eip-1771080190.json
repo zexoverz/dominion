@@ -1,0 +1,9 @@
+{
+  "source": "grimoire-eip-tracker",
+  "timestamp": "2026-02-14T14:43:10+00:00",
+  "priority": "normal",
+  "title": "📜 GRIMOIRE EIP Tracker — 2026-02-14",
+  "body": "New EIP report generated.\n\nTop highlights:\n• #883: Update ERC-7821: Remove Call Struct from Specification
+• #852: Update ERC-7786: Extend ERC 7786 to support PULL communication mode
+• #944: Update ERC-3009: fix erc3009 typo\n\nFull report: reports/grimoire-eip-tracker-2026-02-14.md"
+}
