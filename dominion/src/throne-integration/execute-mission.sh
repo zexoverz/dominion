@@ -5,6 +5,7 @@ set -euo pipefail
 # Usage: ./execute-mission.sh <mission_id>
 
 API="https://dominion-api-production.up.railway.app/api"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPORTS_DIR="/data/workspace/dominion/reports"
 API_REPORTS_DIR="/data/workspace/dominion/api/reports"
 MISSION_ID="${1:?Usage: execute-mission.sh <mission_id>}"
@@ -402,3 +403,7 @@ complete_mission
 post_event "$AGENT_ID" "mission.completed" "Mission Completed: $TITLE" "Report: $REPORT_FILE"
 
 log "✅ Mission $MISSION_ID completed. Report: $REPORT_FILE"
+
+# Notify on completion
+bash "$SCRIPT_DIR/notify.sh" --type mission-complete \
+  --message "Mission *${TITLE}* (${AGENT_ID}) completed.\nReport: ${REPORT_FILE}" || true

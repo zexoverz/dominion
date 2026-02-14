@@ -136,4 +136,15 @@ curl -sf -X POST "$API/events" \
   -H "Content-Type: application/json" \
   -d "{\"type\":\"auto_review\",\"source\":\"throne\",\"data\":{\"approved\":$APPROVED,\"skipped\":$SKIPPED,\"missions_created\":$MISSIONS_CREATED,\"errors\":$ERRORS},\"message\":\"$SUMMARY\"}" >/dev/null 2>&1 || log "WARNING: Failed to log event"
 
+# --- Step 5: Send notifications for significant events ---
+if [ "$APPROVED" -gt 0 ] || [ "$MISSIONS_CREATED" -gt 0 ] || [ "$SKIPPED" -gt 0 ]; then
+  NOTIF_MSG="Approved: $APPROVED proposals | Created: $MISSIONS_CREATED missions | Skipped (needs human): $SKIPPED | Errors: $ERRORS"
+  bash "$SCRIPT_DIR/notify.sh" --type auto-review-summary --message "$NOTIF_MSG" || log "WARNING: Failed to queue notification"
+fi
+
+if [ "$SKIPPED" -gt 0 ]; then
+  bash "$SCRIPT_DIR/notify.sh" --type proposal-needs-approval --priority high \
+    --message "$SKIPPED proposal(s) need manual approval (cost ≥ \$1). Check the dashboard." || true
+fi
+
 log "Done."
