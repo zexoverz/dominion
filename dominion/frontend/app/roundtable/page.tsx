@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { generals as mockGenerals, roundtableMessages as mockMessages } from "../../lib/mock-data";
 import { getGenerals, getRoundtables } from "../../lib/api";
+import { getGeneralSprite, SpriteState } from "../../components/sprites";
 
 export default function RoundtablePage() {
   const [generals, setGenerals] = useState(mockGenerals);
@@ -30,12 +31,16 @@ export default function RoundtablePage() {
             <p className="text-[8px] font-pixel text-throne-gold mb-3 md:mb-4 text-center text-rpg-shadow">⚜️ SEATED</p>
             <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
               {generals.map((g) => (
-                <div key={g.id} className="flex items-center gap-2 flex-shrink-0">
-                  <div
-                    className="w-10 h-10 md:w-8 md:h-8 flex items-center justify-center text-lg"
-                    style={{ backgroundColor: g.bgColor, border: `1px solid ${g.color}44` }}
-                  >
-                    {g.emoji}
+                <div key={g.id} className="flex items-center gap-2 flex-shrink-0" style={{ opacity: g.status === 'OFFLINE' ? 0.4 : 1 }}>
+                  <div className="flex-shrink-0">
+                    {getGeneralSprite(g.id, g.status === 'ACTIVE' ? 'thinking' : 'idle', 48) || (
+                      <div
+                        className="w-10 h-10 flex items-center justify-center text-lg"
+                        style={{ backgroundColor: g.bgColor, border: `1px solid ${g.color}44` }}
+                      >
+                        {g.emoji}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <p className="text-[8px] font-pixel whitespace-nowrap text-rpg-shadow" style={{ color: g.color }}>{g.name}</p>
@@ -60,11 +65,15 @@ export default function RoundtablePage() {
                     background: 'linear-gradient(90deg, rgba(16,16,42,0.8), rgba(10,10,30,0.5))',
                     borderLeft: `3px solid ${g.color}66`,
                   }}>
-                    <div
-                      className="w-8 h-8 flex items-center justify-center text-lg flex-shrink-0"
-                      style={{ backgroundColor: g.bgColor, border: `1px solid ${g.color}33` }}
-                    >
-                      {g.emoji}
+                    <div className="flex-shrink-0">
+                      {getGeneralSprite(g.id, 'talking', 48) || (
+                        <div
+                          className="w-8 h-8 flex items-center justify-center text-lg"
+                          style={{ backgroundColor: g.bgColor, border: `1px solid ${g.color}33` }}
+                        >
+                          {g.emoji}
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">

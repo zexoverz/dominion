@@ -5,6 +5,8 @@ import { generals as mockGenerals } from "../lib/mock-data";
 import { getGenerals } from "../lib/api";
 import GeneralCard from "../components/GeneralCard";
 import StatsBar from "../components/StatsBar";
+import SpriteStage from "../components/sprites/SpriteStage";
+import { getGeneralSprite } from "../components/sprites";
 import AgentActivityFeed from "../components/realtime/AgentActivityFeed";
 import SystemPulse from "../components/realtime/SystemPulse";
 import CostTicker from "../components/realtime/CostTicker";
@@ -54,21 +56,38 @@ export default function Dashboard() {
           ⚔️ PHASE 1 ⚔️
         </h2>
         <p className="font-pixel text-[8px] text-throne-goldDark mt-1 tracking-wider">THE FIRST THREE</p>
-        <div className="flex justify-center gap-6 mt-4">
+        <div className="flex justify-center gap-6 mt-4 items-end">
           {generals.slice(0, 3).map((g) => (
             <div key={g.id} className="text-center">
-              <span className="text-2xl" style={{ filter: 'drop-shadow(0 0 4px rgba(251,191,36,0.3))' }}>{g.emoji}</span>
+              {getGeneralSprite(g.id, g.status === 'ACTIVE' ? 'working' : 'idle', 56) || (
+                <span className="text-2xl">{g.emoji}</span>
+              )}
               <p className="font-pixel text-[7px] mt-1 text-rpg-shadow" style={{ color: g.color }}>{g.name}</p>
             </div>
           ))}
           <div className="border-l-2 border-rpg-borderDark hidden md:block" />
           {generals.slice(3).map((g) => (
             <div key={g.id} className="text-center opacity-25 grayscale hidden md:block">
-              <span className="text-2xl">{g.emoji}</span>
+              {getGeneralSprite(g.id, 'idle', 48) || (
+                <span className="text-2xl">{g.emoji}</span>
+              )}
               <p className="font-pixel text-[7px] mt-1 text-rpg-borderMid">{g.name}</p>
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ═══ FEATURED GENERAL ═══ */}
+      <div className="rpg-panel p-4 mb-6 flex flex-col items-center">
+        <p className="font-pixel text-[8px] text-rpg-borderMid mb-3 tracking-widest">— SUPREME COMMANDER —</p>
+        <SpriteStage
+          generalId="throne"
+          name="THRONE"
+          state="working"
+          actionText="Orchestrating Phase 1 deployment"
+          status="online"
+          size={128}
+        />
       </div>
 
       {/* ═══ MAIN CONTENT ═══ */}

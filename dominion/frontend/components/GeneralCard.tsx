@@ -2,6 +2,13 @@
 
 import Link from "next/link";
 import { General } from "../lib/mock-data";
+import { getGeneralSprite, SpriteState } from "./sprites";
+
+const statusToSpriteState: Record<string, SpriteState> = {
+  ACTIVE: "working",
+  IDLE: "idle",
+  OFFLINE: "idle",
+};
 
 const statusLabels: Record<string, { label: string; color: string }> = {
   ACTIVE: { label: "ACTIVE", color: "#22c55e" },
@@ -24,20 +31,24 @@ export default function GeneralCard({ general }: { general: General }) {
           !isPhase1 ? "opacity-50 grayscale-[30%]" : ""
         }`}
       >
-        {/* Character name bar */}
+        {/* Character sprite + name bar */}
         <div
-          className="px-3 py-2 border-b-2 flex items-center justify-between"
+          className="px-3 py-3 border-b-2 flex items-center gap-3"
           style={{ borderColor: general.color + '44', background: general.bgColor }}
         >
-          <div className="flex items-center gap-2">
-            <span className="text-lg">{general.emoji}</span>
-            <span className="font-pixel text-[9px] text-rpg-shadow" style={{ color: general.color }}>
+          <div className="flex-shrink-0" style={{ opacity: general.status === 'OFFLINE' ? 0.4 : 1 }}>
+            {getGeneralSprite(general.id, statusToSpriteState[general.status] || 'idle', 72) || (
+              <span className="text-4xl">{general.emoji}</span>
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <span className="font-pixel text-[9px] text-rpg-shadow block" style={{ color: general.color }}>
               {general.name}
             </span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className={`w-2 h-2 status-${general.status.toLowerCase()}`} />
-            <span className="text-[8px] font-body" style={{ color: st.color }}>{st.label}</span>
+            <div className="flex items-center gap-1.5 mt-1">
+              <div className={`w-2 h-2 status-${general.status.toLowerCase()}`} />
+              <span className="text-[8px] font-body" style={{ color: st.color }}>{st.label}</span>
+            </div>
           </div>
         </div>
 

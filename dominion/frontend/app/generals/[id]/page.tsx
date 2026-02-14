@@ -4,12 +4,16 @@ import { useState, useEffect } from "react";
 import { generals as mockGenerals, missions as mockMissions } from "../../../lib/mock-data";
 import { getGenerals, getGeneral, getMissions } from "../../../lib/api";
 import PixelProgress from "../../../components/PixelProgress";
+import SpriteStage from "../../../components/sprites/SpriteStage";
+import { SpriteState } from "../../../components/sprites";
 import Link from "next/link";
 
 export default function GeneralDetail({ params }: { params: { id: string } }) {
   const [generals, setGenerals] = useState(mockGenerals);
   const [missions, setMissions] = useState(mockMissions);
   const [generalData, setGeneralData] = useState(() => mockGenerals.find((g) => g.id === params.id));
+  const [spriteState, setSpriteState] = useState<SpriteState>('idle');
+  const spriteStates: SpriteState[] = ['idle', 'working', 'thinking', 'walking', 'talking', 'celebrating'];
 
   useEffect(() => {
     getGeneral(params.id).then(setGeneralData).catch(() => {});
@@ -34,17 +38,33 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
 
       {/* Character Header — RPG status screen style */}
       <div className="rpg-panel p-4 md:p-6 mb-6">
-        <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-6">
-          <div
-            className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center text-4xl md:text-5xl flex-shrink-0"
-            style={{
-              backgroundColor: general.bgColor,
-              border: `3px solid ${general.color}`,
-              boxShadow: `0 0 16px ${general.color}44`,
-            }}
-          >
-            {general.emoji}
+        <div className="flex flex-col items-center mb-4">
+          <SpriteStage
+            generalId={general.id}
+            name={general.name}
+            state={spriteState}
+            actionText={general.currentMission || `${spriteState}...`}
+            status={general.status === 'ACTIVE' ? 'online' : general.status === 'IDLE' ? 'idle' : 'offline'}
+            size={192}
+          />
+          {/* Animation state selector */}
+          <div className="flex flex-wrap gap-2 mt-4 justify-center">
+            {spriteStates.map((s) => (
+              <button
+                key={s}
+                onClick={() => setSpriteState(s)}
+                className={`font-pixel text-[8px] px-3 py-1.5 border transition-colors min-h-[32px] ${
+                  spriteState === s
+                    ? 'text-throne-gold border-throne-gold bg-throne-gold/10'
+                    : 'text-rpg-borderMid border-rpg-borderDark hover:text-rpg-border hover:border-rpg-border'
+                }`}
+              >
+                {s.toUpperCase()}
+              </button>
+            ))}
           </div>
+        </div>
+        <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-6">
           <div className="min-w-0 flex-1">
             <h1 className="font-pixel text-[14px] md:text-[16px] mb-1 text-rpg-shadow break-words" style={{ color: general.color }}>
               {general.emoji} {general.name}
