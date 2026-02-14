@@ -6,7 +6,8 @@ Read `/data/workspace/dominion/src/throne-integration/heartbeat-runner.md` for f
 ## Quick Cycle (every heartbeat)
 1. `GET https://dominion-api-production.up.railway.app/` — if down, log & report
 2. Run `bash /data/workspace/dominion/src/throne-integration/auto-review.sh` — auto-approve cheap proposals, create missions, execute
-3. `GET /api/missions?status=active` — check for stalls (>1h no progress)
+3. Run `bash /data/workspace/dominion/src/throne-integration/dispatch-missions.sh` — read output JSON lines. For each, spawn a sub-agent with `sessions_spawn` using the prompt from the prompt_file. Use model `anthropic/claude-sonnet-4` and the label from output.
+4. `GET /api/missions?status=active` — check for stalls (>1h no progress)
 4. `GET /api/costs/daily` — warn >$5, alert Faisal >$10
 5. Check `/data/workspace/dominion/notifications/` — send any queued notifications to Faisal via Telegram (use `message` tool), then delete the file
 6. Run `bash /data/workspace/dominion/src/throne-integration/budget-check.sh` — auto-checks cost thresholds
