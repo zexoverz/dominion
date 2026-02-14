@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const db_1 = __importDefault(require("../db"));
+const event_bus_1 = __importDefault(require("../event-bus"));
 const router = (0, express_1.Router)();
 // GET /api/events
 router.get('/', async (req, res) => {
@@ -34,7 +35,9 @@ router.post('/', async (req, res) => {
         }
         const result = await db_1.default.query(`INSERT INTO ops_agent_events (agent_id, kind, title, summary, details, tags, mission_id, step_id, related_agent_id, cost_usd)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`, [agent_id, kind, title, summary || null, JSON.stringify(details || {}), tags || [], mission_id || null, step_id || null, related_agent_id || null, cost_usd || 0]);
-        res.status(201).json(result.rows[0]);
+        const row = result.rows[0];
+        event_bus_1.default.emit('new-event', row);
+        res.status(201).json(row);
     }
     catch (err) {
         console.error('POST /api/events error:', err);

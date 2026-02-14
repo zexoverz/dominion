@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const db_1 = __importDefault(require("../db"));
+const event_bus_1 = __importDefault(require("../event-bus"));
 const router = (0, express_1.Router)();
 // GET /api/costs — summary
 router.get('/', async (_req, res) => {
@@ -51,7 +52,9 @@ router.post('/', async (req, res) => {
          operation_counts = ops_cost_tracking.operation_counts || EXCLUDED.operation_counts,
          updated_at = NOW()
        RETURNING *`, [agent_id, tokens_used || 0, cost_usd || 0, JSON.stringify(operation_counts || {})]);
-        res.status(201).json(result.rows[0]);
+        const row = result.rows[0];
+        event_bus_1.default.emit('cost-update', row);
+        res.status(201).json(row);
     }
     catch (err) {
         console.error('POST /api/costs error:', err);

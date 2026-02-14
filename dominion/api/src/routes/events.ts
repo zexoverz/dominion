@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import pool from '../db';
+import eventBus from '../event-bus';
 
 const router = Router();
 
@@ -37,7 +38,9 @@ router.post('/', async (req, res) => {
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
       [agent_id, kind, title, summary || null, JSON.stringify(details || {}), tags || [], mission_id || null, step_id || null, related_agent_id || null, cost_usd || 0]
     );
-    res.status(201).json(result.rows[0]);
+    const row = result.rows[0];
+    eventBus.emit('new-event', row);
+    res.status(201).json(row);
   } catch (err) {
     console.error('POST /api/events error:', err);
     res.status(500).json({ error: 'Internal server error' });

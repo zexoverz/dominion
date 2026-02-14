@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const db_1 = __importDefault(require("../db"));
+const event_bus_1 = __importDefault(require("../event-bus"));
 const router = (0, express_1.Router)();
 // GET /api/proposals
 router.get('/', async (req, res) => {
@@ -34,7 +35,9 @@ router.post('/', async (req, res) => {
         }
         const result = await db_1.default.query(`INSERT INTO ops_mission_proposals (agent_id, title, description, priority, estimated_cost_usd, proposed_steps, metadata)
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [agent_id, title, description, priority || 50, estimated_cost_usd || 0, JSON.stringify(proposed_steps || []), JSON.stringify(metadata || {})]);
-        res.status(201).json(result.rows[0]);
+        const row = result.rows[0];
+        event_bus_1.default.emit('proposal-update', row);
+        res.status(201).json(row);
     }
     catch (err) {
         console.error('POST /api/proposals error:', err);
@@ -53,7 +56,9 @@ router.patch('/:id', async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Proposal not found' });
         }
-        res.json(result.rows[0]);
+        const updated = result.rows[0];
+        event_bus_1.default.emit('proposal-update', updated);
+        res.json(updated);
     }
     catch (err) {
         console.error('PATCH /api/proposals/:id error:', err);

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import pool from '../db';
+import eventBus from '../event-bus';
 
 const router = Router();
 
@@ -37,7 +38,9 @@ router.post('/', async (req, res) => {
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
       [agent_id, title, description, priority || 50, estimated_cost_usd || 0, JSON.stringify(proposed_steps || []), JSON.stringify(metadata || {})]
     );
-    res.status(201).json(result.rows[0]);
+    const row = result.rows[0];
+    eventBus.emit('proposal-update', row);
+    res.status(201).json(row);
   } catch (err) {
     console.error('POST /api/proposals error:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -60,7 +63,9 @@ router.patch('/:id', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Proposal not found' });
     }
-    res.json(result.rows[0]);
+    const updated = result.rows[0];
+    eventBus.emit('proposal-update', updated);
+    res.json(updated);
   } catch (err) {
     console.error('PATCH /api/proposals/:id error:', err);
     res.status(500).json({ error: 'Internal server error' });

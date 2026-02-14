@@ -12,9 +12,11 @@ import SystemPulse from "../components/realtime/SystemPulse";
 import CostTicker from "../components/realtime/CostTicker";
 import NetworkGraph from "../components/realtime/NetworkGraph";
 import MissionProgressLive from "../components/realtime/MissionProgressLive";
+import { useActivity } from "../lib/use-activity";
 
 export default function Dashboard() {
   const [generals, setGenerals] = useState(mockGenerals);
+  const activity = useActivity();
 
   useEffect(() => {
     getGenerals().then(setGenerals).catch(() => {});
@@ -40,6 +42,21 @@ export default function Dashboard() {
           <SystemPulse />
           <CostTicker initialCost={costToday} />
         </div>
+        {(activity.eventCount > 0 || activity.missionCount > 0) && (
+          <div className="flex items-center justify-center gap-6 mt-3">
+            <span className="font-pixel text-[8px] text-seer-blue">
+              📡 {activity.eventCount} events
+            </span>
+            <span className="font-pixel text-[8px] text-throne-gold">
+              ⚔️ {activity.missionCount} missions
+            </span>
+            {activity.lastUpdate && (
+              <span className="font-pixel text-[7px] text-rpg-borderMid">
+                Updated {Math.round((Date.now() - activity.lastUpdate) / 1000)}s ago
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* ═══ HUD STATS BAR ═══ */}
@@ -119,6 +136,24 @@ export default function Dashboard() {
           />
         </div>
       </div>
+
+      {/* ═══ LIVE INTEL ═══ */}
+      {activity.events.length > 0 && (
+        <div className="rpg-panel p-4 mb-6">
+          <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">📡 LIVE INTEL FEED</h2>
+          <div className="space-y-2">
+            {activity.events.slice(0, 3).map((evt, i) => (
+              <div key={evt.id || i} className="flex items-start gap-2 text-[10px] font-body">
+                <span>{evt.emoji || '⚡'}</span>
+                <span className="text-rpg-text flex-1">{evt.message}</span>
+                <span className="text-rpg-borderMid text-[8px] whitespace-nowrap">
+                  {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ═══ NETWORK GRAPH ═══ */}
       <div className="mb-6">

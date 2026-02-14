@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import pool from '../db';
+import eventBus from '../event-bus';
 
 const router = Router();
 
@@ -78,7 +79,9 @@ router.post('/', async (req, res) => {
       );
     }
 
-    res.status(201).json(result.rows[0]);
+    const mission = result.rows[0];
+    eventBus.emit('mission-update', mission);
+    res.status(201).json(mission);
   } catch (err) {
     console.error('POST /api/missions error:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -121,7 +124,9 @@ router.patch('/:id', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Mission not found' });
     }
-    res.json(result.rows[0]);
+    const updated = result.rows[0];
+    eventBus.emit('mission-update', updated);
+    res.json(updated);
   } catch (err) {
     console.error('PATCH /api/missions/:id error:', err);
     res.status(500).json({ error: 'Internal server error' });

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const db_1 = __importDefault(require("../db"));
+const event_bus_1 = __importDefault(require("../event-bus"));
 const router = (0, express_1.Router)();
 // GET /api/missions
 router.get('/', async (req, res) => {
@@ -66,7 +67,9 @@ router.post('/', async (req, res) => {
             await db_1.default.query(`INSERT INTO ops_mission_steps (mission_id, agent_id, step_order, kind, title, description, input_data)
          VALUES ($1, $2, $3, $4, $5, $6, $7)`, [result.rows[0].id, p.agent_id, i + 1, s.kind || 'execute_command', s.title || `Step ${i + 1}`, s.description || '', JSON.stringify(s.input_data || {})]);
         }
-        res.status(201).json(result.rows[0]);
+        const mission = result.rows[0];
+        event_bus_1.default.emit('mission-update', mission);
+        res.status(201).json(mission);
     }
     catch (err) {
         console.error('POST /api/missions error:', err);
@@ -105,7 +108,9 @@ router.patch('/:id', async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Mission not found' });
         }
-        res.json(result.rows[0]);
+        const updated = result.rows[0];
+        event_bus_1.default.emit('mission-update', updated);
+        res.json(updated);
     }
     catch (err) {
         console.error('PATCH /api/missions/:id error:', err);

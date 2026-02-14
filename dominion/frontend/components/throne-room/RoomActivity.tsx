@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { GeneralRoomState } from "./GeneralInRoom";
 import { SpriteState } from "../sprites";
+import { RealEvent } from "../../lib/use-activity";
 
 const ROUND_TABLE = { x: 400, y: 370 };
 
@@ -78,11 +79,60 @@ interface UseRoomActivityOptions {
   generals: GeneralRoomState[];
   setGenerals: React.Dispatch<React.SetStateAction<GeneralRoomState[]>>;
   addEvent: (emoji: string, text: string) => void;
+  realEvents?: RealEvent[];
 }
 
-export function useRoomActivity({ generals, setGenerals, addEvent }: UseRoomActivityOptions) {
+// Map general IDs from API events to room general IDs
+const GENERAL_ID_MAP: Record<string, string> = {
+  THRONE: 'throne',
+  SEER: 'seer',
+  PHANTOM: 'phantom',
+  GRIMOIRE: 'grimoire',
+  ECHO: 'echo',
+  MAMMON: 'mammon',
+  'WRAITH-EYE': 'wraith-eye',
+};
+
+export function useRoomActivity({ generals, setGenerals, addEvent, realEvents }: UseRoomActivityOptions) {
   const generalsRef = useRef(generals);
   generalsRef.current = generals;
+  const processedEventsRef = useRef<Set<string>>(new Set());
+
+  // Process real events — trigger general animations when new events come in
+  useEffect(() => {
+    if (!realEvents || realEvents.length === 0) return;
+    
+    for (const evt of realEvents.slice(0, 5)) {
+      if (processedEventsRef.current.has(evt.id)) continue;
+      processedEventsRef.current.add(evt.id);
+
+      // Trigger the relevant general to animate
+      const generalId = evt.generalId ? GENERAL_ID_MAP[evt.generalId] || evt.generalId.toLowerCase() : null;
+      if (generalId) {
+        const offset = { x: (Math.random() - 0.5) * 80, y: (Math.random() - 0.5) * 30 };
+        setGenerals((prev) =>
+          prev.map((gen) =>
+            gen.id === generalId
+              ? {
+                  ...gen,
+                  targetPosition: { x: ROUND_TABLE.x + offset.x, y: ROUND_TABLE.y + offset.y },
+                  currentState: "walking" as SpriteState,
+                  currentActivity: evt.message,
+                }
+              : gen
+          )
+        );
+      }
+
+      addEvent(evt.emoji || '⚡', evt.message);
+    }
+
+    // Keep processed set from growing unbounded
+    if (processedEventsRef.current.size > 200) {
+      const arr = Array.from(processedEventsRef.current);
+      processedEventsRef.current = new Set(arr.slice(-100));
+    }
+  }, [realEvents, setGenerals, addEvent]);
 
   const triggerAction = useCallback(() => {
     const gens = generalsRef.current;
