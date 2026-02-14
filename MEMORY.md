@@ -34,7 +34,15 @@
 - ALL 3 PHASES COMPLETE — all 7 generals operational
 - 18,000+ lines of code, 80+ files, 9 frontend routes
 - First live mission completed: SEER Bitcoin DeFi Analysis
-- Cron jobs: daily briefing, weekly security, weekly finance
+- Cron jobs: daily briefing, weekly security, weekly finance, daily BTC intelligence (08:00 WIB)
+- Full autonomous pipeline: Proposal → Roundtable Debate → Auto-Approve → Mission → Execute → Report → Notify
+- SEER Bloomberg mode: live BTC price, F&G index, news headlines, war chest triggers
+- MAMMON weekly financial tracker: DCA, wedding fund, war chest, fire sale theory
+- PHANTOM security scans: 13-point API/SSL/CORS health checks
+- Roundtable debates: generals discuss proposals in character before voting
+- Notification system: queued JSON files, dispatched by heartbeat via Telegram
+- 13+ reports in Intel page (auto-detected by date pattern)
+- All frontend pages wired to real API data (no more mock-only)
 
 ## Investment Master Plan (v2.0 — source of truth)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
