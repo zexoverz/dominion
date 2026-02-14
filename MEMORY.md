@@ -43,6 +43,12 @@
 - Notification system: queued JSON files, dispatched by heartbeat via Telegram
 - 13+ reports in Intel page (auto-detected by date pattern)
 - All frontend pages wired to real API data (no more mock-only)
+- Phase A (Smart): AI-powered mission execution + roundtable debates via Claude sub-agents
+- Phase B (Useful): daily briefing, WRAITH-EYE monitoring, EIP tracker, portfolio tracker
+- Phase C (Beautiful): throne room speech bubbles, general lore profiles, BTC ticker, treasury charts
+- ETHJKT curriculum: Phase 2 gaps identified (Week 4-5), Phase 3 designed (hackathon-ready)
+- "Logic Nolep" → "Arcane Quest" rebrand pushed to 7 live ETHJKT repos
+- 33 checkpoints shipped in single async session (Feb 14, 2026)
 
 ## Investment Master Plan (v2.0 — source of truth)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
