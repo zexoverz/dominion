@@ -10,6 +10,7 @@ import costsRouter from './routes/costs';
 import eventsRouter from './routes/events';
 import relationshipsRouter from './routes/relationships';
 import streamRouter from './routes/stream';
+import reportsRouter from './routes/reports';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
@@ -31,6 +32,7 @@ app.use('/api/costs', costsRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/relationships', relationshipsRouter);
 app.use('/api/stream', streamRouter);
+app.use('/api/reports', reportsRouter);
 
 app.listen(PORT, () => {
   console.log(`Dominion API running on port ${PORT}`);

@@ -61,6 +61,14 @@ export async function patchMission(id: string, data: Record<string, any>) {
   return res.json();
 }
 
+export async function getReports() {
+  return fetchAPI<any[]>('/api/reports');
+}
+
+export async function getReport(slug: string) {
+  return fetchAPI<any>(`/api/reports/${slug}`);
+}
+
 export async function createProposal(data: Record<string, any>) {
   const res = await fetch(`${API_BASE}/api/proposals`, {
     method: 'POST',

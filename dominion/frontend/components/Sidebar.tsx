@@ -11,7 +11,8 @@ const navItems = [
   { href: "/roundtable", label: "ROUNDTABLE", shortLabel: "ROUND", icon: "🏰" },
   { href: "/cost", label: "TREASURY", shortLabel: "GOLD", icon: "💰" },
   { href: "/admin", label: "COMMAND", shortLabel: "CMD", icon: "⚔️" },
-  { href: "/logs", label: "LOG", shortLabel: "LOG", icon: "📜" },
+  { href: "/reports", label: "INTEL", shortLabel: "INTEL", icon: "📜" },
+  { href: "/logs", label: "LOG", shortLabel: "LOG", icon: "📋" },
 ];
 
 export default function Sidebar() {
