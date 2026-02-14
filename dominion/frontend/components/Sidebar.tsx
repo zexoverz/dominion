@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navItems = [
+  { href: "/throne-room", label: "CASTLE VIEW", shortLabel: "CASTLE", icon: "🏰" },
   { href: "/", label: "THRONE ROOM", shortLabel: "THRONE", icon: "👑" },
   { href: "/missions", label: "MISSIONS", shortLabel: "QUEST", icon: "⚔️" },
   { href: "/roundtable", label: "ROUNDTABLE", shortLabel: "ROUND", icon: "🏰" },

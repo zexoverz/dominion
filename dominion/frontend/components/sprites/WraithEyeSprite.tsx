@@ -13,130 +13,191 @@ const WraithEyeSprite: React.FC<SpriteProps> = ({ size = 96, state = 'idle', cla
 
   useEffect(() => {
     const speed = state === 'working' ? 200 : 400;
-    const iv = setInterval(() => setFrame(f => (f + 1) % 4), speed);
+    const iv = setInterval(() => setFrame(f => (f + 1) % 8), speed);
     return () => clearInterval(iv);
   }, [state]);
 
-  const celebY = state === 'celebrating' ? (frame < 2 ? 0 : -3) : 0;
-  const yOff = celebY;
+  const celebY = state === 'celebrating' ? (frame < 4 ? 0 : -3) : 0;
+  const hoverY = state === 'idle' ? [0, -0.5, -1, -1, -0.5, 0, 0.5, 0.5][frame] : 0;
+  const yOff = celebY + hoverY;
 
+  const black = '#0D0D0D';
+  const voidBlack = '#050510';
   const darkPurple = '#1A0033';
   const purple = '#4A148C';
-  const black = '#0D0D0D';
+  const purpleMid = '#6A1B9A';
+  const purpleDim = '#2E0854';
+  const shadow = '#1A1A2E';
+  const shadowMid = '#252540';
+  const shadowLight = '#30305A';
   const red = '#D50000';
   const redBright = '#FF1744';
+  const redHot = '#FF5252';
   const redDim = '#B71C1C';
-  const shadow = '#1A1A2E';
+  const redDeep = '#7F0000';
+  const crimson = '#C62828';
 
   const px = (x: number, y: number, c: string, w = 1, h = 1) => (
-    <rect key={`${x}-${y}-${c}`} x={x * P} y={y * P + yOff} width={w * P} height={h * P} fill={c} />
+    <rect key={`${x}-${y}-${w}-${h}`} x={x * P} y={y * P + yOff} width={w * P} height={h * P} fill={c} />
   );
 
   const pixels: React.ReactNode[] = [];
 
-  // Hood (tall, pointed)
-  pixels.push(px(22, 2, black), px(23, 2, black));
-  for (let x = 21; x < 25; x++) pixels.push(px(x, 3, darkPurple));
-  for (let x = 20; x < 26; x++) pixels.push(px(x, 4, darkPurple));
-  for (let x = 19; x < 27; x++) pixels.push(px(x, 5, black));
-  for (let x = 18; x < 28; x++) pixels.push(px(x, 6, black));
+  // === TALL POINTED HOOD ===
+  pixels.push(px(22, 0, darkPurple), px(23, 0, darkPurple));
+  pixels.push(px(21, 1, darkPurple), px(22, 1, black), px(23, 1, black), px(24, 1, darkPurple));
+  for (let x = 20; x <= 25; x++) pixels.push(px(x, 2, x === 20 || x === 25 ? darkPurple : black));
+  for (let x = 19; x <= 26; x++) pixels.push(px(x, 3, x === 19 || x === 26 ? purpleDim : black));
+  for (let x = 18; x <= 27; x++) pixels.push(px(x, 4, x === 18 || x === 27 ? purple : x === 19 || x === 26 ? purpleDim : black));
+  for (let x = 17; x <= 28; x++) pixels.push(px(x, 5, x === 17 || x === 28 ? purple : x === 18 || x === 27 ? purpleDim : black));
 
-  // The Eye (massive, where face should be)
-  for (let x = 18; x < 28; x++) pixels.push(px(x, 7, shadow));
-  for (let x = 18; x < 28; x++) pixels.push(px(x, 8, shadow));
-  for (let x = 18; x < 28; x++) pixels.push(px(x, 9, shadow));
-  for (let x = 19; x < 27; x++) pixels.push(px(x, 10, shadow));
-
-  // Eye white
-  pixels.push(px(20, 7, '#2C2C2C', 6, 1));
-  pixels.push(px(19, 8, '#3A3A3A', 8, 1));
-  pixels.push(px(20, 9, '#2C2C2C', 6, 1));
-
-  // Iris (moves based on state/frame)
-  const eyeXShift = state === 'idle' ? (frame < 2 ? 0 : frame === 2 ? 1 : -1) : 0;
-  const irisX = 22 + eyeXShift;
-  pixels.push(px(irisX, 7, red, 2, 1));
-  pixels.push(px(irisX - 1, 8, red), px(irisX, 8, redBright), px(irisX + 1, 8, redBright), px(irisX + 2, 8, red));
-  pixels.push(px(irisX, 9, red, 2, 1));
-  // Pupil
-  pixels.push(px(irisX, 8, '#1A1A1A'), px(irisX + 1, 8, '#1A1A1A'));
-
-  // Working: scanning laser
-  if (state === 'working') {
-    const laserY = 7 + (frame % 3);
-    for (let x = 10; x < 36; x++) {
-      pixels.push(px(x, laserY, red));
+  // === THE EYE (massive, detailed iris) ===
+  // Eye socket (dark shadow area)
+  for (let y = 6; y <= 11; y++) {
+    for (let x = 17; x <= 29; x++) {
+      const dist = Math.abs(x - 23) + Math.abs(y - 8.5) * 0.8;
+      if (dist > 6) pixels.push(px(x, y, black));
+      else if (dist > 5) pixels.push(px(x, y, shadow));
+      else if (dist > 4) pixels.push(px(x, y, shadowMid));
+      else pixels.push(px(x, y, shadowLight));
     }
   }
 
-  // Mouth area (just shadow, this character has no mouth)
+  // Eye white/sclera (angular, menacing shape)
+  for (let x = 19; x <= 27; x++) pixels.push(px(x, 7, '#2C2C2C'));
+  for (let x = 18; x <= 28; x++) pixels.push(px(x, 8, x === 18 || x === 28 ? '#252525' : '#3A3A3A'));
+  for (let x = 18; x <= 28; x++) pixels.push(px(x, 9, x === 18 || x === 28 ? '#252525' : '#3A3A3A'));
+  for (let x = 19; x <= 27; x++) pixels.push(px(x, 10, '#2C2C2C'));
+
+  // Iris (concentric rings of red, pupil moves)
+  const eyeXShift = state === 'idle' ?
+    [0, 0, 1, 1, 0, 0, -1, -1][frame] :
+    state === 'working' ? [0, 1, 0, -1, 0, 1, 0, -1][frame] : 0;
+  const eyeYShift = state === 'idle' && frame > 5 ? 1 : 0;
+  const iX = 22 + eyeXShift;
+  const iY = 8 + eyeYShift;
+
+  // Outer iris ring
+  pixels.push(px(iX - 1, iY - 1, redDeep), px(iX, iY - 1, redDim), px(iX + 1, iY - 1, redDim), px(iX + 2, iY - 1, redDeep));
+  pixels.push(px(iX - 2, iY, redDeep), px(iX - 1, iY, crimson), px(iX + 2, iY, crimson), px(iX + 3, iY, redDeep));
+  pixels.push(px(iX - 2, iY + 1, redDeep), px(iX - 1, iY + 1, crimson), px(iX + 2, iY + 1, crimson), px(iX + 3, iY + 1, redDeep));
+  pixels.push(px(iX - 1, iY + 2, redDeep), px(iX, iY + 2, redDim), px(iX + 1, iY + 2, redDim), px(iX + 2, iY + 2, redDeep));
+
+  // Inner iris ring
+  pixels.push(px(iX, iY, red), px(iX + 1, iY, redBright));
+  pixels.push(px(iX, iY + 1, redBright), px(iX + 1, iY + 1, red));
+
+  // Pupil (slit-like)
+  pixels.push(px(iX, iY, voidBlack), px(iX + 1, iY, voidBlack));
+  pixels.push(px(iX, iY + 1, '#111'), px(iX + 1, iY + 1, '#111'));
+  // Pupil highlight
+  pixels.push(px(iX + 1, iY, '#3A0000'));
+
+  // Talking: eye pulses
   if (state === 'talking') {
-    // Eye pulses instead
-    pixels.push(px(irisX, 8, frame % 2 === 0 ? redBright : red));
+    const pulse = frame % 2 === 0;
+    pixels.push(px(iX, iY, pulse ? redHot : red), px(iX + 1, iY, pulse ? redHot : redBright));
   }
 
-  // Cloak body (tall and narrow)
-  for (let y = 11; y < 22; y++) {
-    const width = y < 14 ? 10 : y < 18 ? 12 : 14;
-    const startX = Math.floor(23 - width / 2);
-    for (let x = startX; x < startX + width; x++) {
-      const edge = x === startX || x === startX + width - 1;
-      pixels.push(px(x, y, edge ? purple : black));
+  // === CLOAK BODY (tall, flowing into shadow) ===
+  for (let y = 12; y < 24; y++) {
+    const w = y < 14 ? 12 : y < 17 ? 14 : y < 20 ? 16 : 18;
+    const sx = Math.floor(23 - w / 2);
+    for (let x = sx; x < sx + w; x++) {
+      const distFromEdge = Math.min(x - sx, sx + w - 1 - x);
+      if (distFromEdge === 0) pixels.push(px(x, y, purple));
+      else if (distFromEdge === 1) pixels.push(px(x, y, purpleDim));
+      else if (distFromEdge === 2) pixels.push(px(x, y, darkPurple));
+      else pixels.push(px(x, y, black));
     }
   }
 
-  // Arms (shadow tendrils)
+  // Shadow fade at bottom (smoke effect via dithering)
+  for (let y = 24; y <= 26; y++) {
+    for (let x = 14; x <= 32; x++) {
+      const fade = (x + y + frame) % 3 === 0;
+      if (fade) pixels.push(px(x, y, y === 24 ? purpleDim : y === 25 ? darkPurple : '#0A0015'));
+    }
+  }
+
+  // === TENDRILS (shadow appendages, wave independently) ===
+  // Left tendrils (2 with different phase)
+  const t1Phase = frame;
+  const t2Phase = (frame + 3) % 8;
+  const t3Phase = (frame + 5) % 8;
+
+  // Tendril 1 (left upper)
+  const t1x = [15, 14, 13, 12, 13, 14, 15, 16][t1Phase];
+  pixels.push(px(t1x, 15, purple), px(t1x - 1, 16, purpleDim), px(t1x - 2, 17, darkPurple));
+
+  // Tendril 2 (left lower)
+  const t2x = [14, 13, 12, 11, 12, 13, 14, 15][t2Phase];
+  pixels.push(px(t2x, 19, purple), px(t2x - 1, 20, purpleDim), px(t2x - 2, 21, darkPurple), px(t2x - 3, 22, '#0A0015'));
+
+  // Tendril 3 (right upper)
+  const t3rx = [31, 32, 33, 34, 33, 32, 31, 30][t1Phase];
+  pixels.push(px(t3rx, 15, purple), px(t3rx + 1, 16, purpleDim), px(t3rx + 2, 17, darkPurple));
+
+  // Tendril 4 (right lower)
+  const t4rx = [32, 33, 34, 35, 34, 33, 32, 31][t2Phase];
+  pixels.push(px(t4rx, 19, purple), px(t4rx + 1, 20, purpleDim), px(t4rx + 2, 21, darkPurple), px(t4rx + 3, 22, '#0A0015'));
+
+  // Tendril 5 (center bottom)
+  const t5y = [23, 24, 25, 24, 23, 24, 25, 24][t3Phase];
+  pixels.push(px(21, t5y, darkPurple), px(22, t5y + 1, '#0A0015'));
+  pixels.push(px(25, t5y, darkPurple), px(24, t5y + 1, '#0A0015'));
+
+  // === WORKING: SCANNING BEAM ===
   if (state === 'working') {
-    // Tendrils spreading
-    for (let i = 0; i < 4; i++) {
-      const tx = 15 - i * 2 - (frame % 2);
-      pixels.push(px(tx, 14 + i, purple));
-      pixels.push(px(31 + i * 2 + (frame % 2), 14 + i, purple));
+    const beamAngle = frame % 8;
+    const beamY = 6 + beamAngle;
+    // Thin red scanning line
+    for (let x = 5; x < 42; x++) {
+      const dist = Math.abs(x - 23);
+      const alpha = dist > 15 ? 0.1 : dist > 10 ? 0.3 : dist > 5 ? 0.6 : 0.9;
+      // Just use bright/dim rects
+      if (dist < 5) pixels.push(px(x, beamY, redBright));
+      else if (dist < 10) pixels.push(px(x, beamY, red));
+      else if (dist < 15) pixels.push(px(x, beamY, redDim));
     }
-  } else if (state === 'thinking') {
-    pixels.push(px(16, 13, purple), px(15, 14, darkPurple));
-    pixels.push(px(29, 12, purple));
-    if (frame > 1) pixels.push(px(31, 4, red), px(33, 2, redDim));
-  } else if (state === 'celebrating') {
-    pixels.push(px(15, 10, purple), px(14, 9, darkPurple));
-    pixels.push(px(30, 10, purple), px(31, 9, darkPurple));
-  } else {
-    pixels.push(px(16, 13, purple), px(15, 14, purple), px(14, 15, darkPurple));
-    pixels.push(px(29, 13, purple), px(30, 14, purple), px(31, 15, darkPurple));
   }
 
-  // Base / shadow tendrils
-  const tendrilWave = frame % 2 === 0;
-  for (let x = 16; x < 30; x++) pixels.push(px(x, 22, purple));
+  // === THINKING ===
+  if (state === 'thinking') {
+    if (frame > 3) {
+      pixels.push(px(31, 4, redDim), px(33, 2, '#7F000088'));
+    }
+  }
+
+  // === CELEBRATING ===
+  if (state === 'celebrating') {
+    // Tendrils go up
+    pixels.push(px(15, 9, purple), px(14, 8, purpleDim));
+    pixels.push(px(31, 9, purple), px(32, 8, purpleDim));
+  }
+
+  // === WALKING ===
   if (state === 'walking') {
+    // Shift tendrils more dramatically
     const wf = frame % 2;
-    pixels.push(px(17 - wf, 23, darkPurple, 6, 1), px(23 + wf, 23, darkPurple, 6, 1));
-  } else {
-    pixels.push(px(16, 23, darkPurple, 5, 1), px(25, 23, darkPurple, 5, 1));
+    pixels.push(px(16 - wf, 24, purple, 7, 1), px(23 + wf, 24, purple, 7, 1));
   }
-
-  // Shadow tendrils at base
-  const tendrilPositions = [
-    { x: tendrilWave ? 13 : 14, y: 23 },
-    { x: tendrilWave ? 32 : 31, y: 23 },
-    { x: tendrilWave ? 11 : 12, y: 22 },
-    { x: tendrilWave ? 34 : 33, y: 22 },
-  ];
 
   return (
     <svg width={size} height={size} viewBox="0 0 96 96" className={className} style={{ imageRendering: 'pixelated' }}>
       <rect width="96" height="96" fill="transparent" />
       {pixels}
-      {/* Tendrils */}
-      {tendrilPositions.map((t, i) => (
-        <rect key={`tendril-${i}`} x={t.x * P} y={t.y * P + yOff} width={2 * P} height={P} fill={purple} opacity={0.6} />
-      ))}
-      {/* Eye glow */}
-      <circle cx={(irisX + 1) * P} cy={8 * P + P / 2 + yOff} r={8} fill={red} opacity={0.25} />
-      {/* Scanning glow */}
+      {/* Eye glow (ominous) */}
+      <circle cx={(iX + 1) * P} cy={(iY + 0.5) * P + yOff} r={10} fill={red} opacity={0.2} />
+      <circle cx={(iX + 1) * P} cy={(iY + 0.5) * P + yOff} r={6} fill={redBright} opacity={0.15} />
+      {/* Working: beam sweep glow */}
       {state === 'working' && (
-        <rect x={10 * P} y={(7 + frame % 3) * P + yOff} width={26 * P} height={P} fill={red} opacity={0.2} />
+        <rect x={5 * P} y={(6 + frame % 8) * P + yOff} width={37 * P} height={P} fill={red} opacity={0.15} />
       )}
+      {/* Shadow aura */}
+      <ellipse cx={23 * P} cy={20 * P + yOff} rx={12 * P} ry={6 * P} fill={darkPurple} opacity={0.12} />
+      {/* Pupil inner glow */}
+      <circle cx={(iX + 0.5) * P + P / 2} cy={(iY + 0.5) * P + yOff} r={2} fill={redHot} opacity={0.3} />
     </svg>
   );
 };
