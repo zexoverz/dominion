@@ -7,11 +7,22 @@ const config: Config = {
     "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    borderRadius: {
+      none: '0',
+      DEFAULT: '0',
+      sm: '0',
+      md: '0',
+      lg: '0',
+      xl: '0',
+      '2xl': '0',
+      '3xl': '0',
+      full: '0',
+    },
     extend: {
       colors: {
         throne: {
           black: "#0a0a0f",
-          dark: "#12121a",
+          dark: "#10102a",
           purple: "#1a1028",
           deepPurple: "#2d1b4e",
           violet: "#6b21a8",
@@ -25,18 +36,31 @@ const config: Config = {
           cyan: "#06b6d4",
           pink: "#ec4899",
         },
+        rpg: {
+          border: "#8b7355",
+          borderMid: "#5a4a3a",
+          borderDark: "#2a1f15",
+          panel: "#10102a",
+          bg: "#0c0c18",
+          parchment: "#1a1510",
+          hp: "#22c55e",
+          mp: "#3b82f6",
+          exp: "#fbbf24",
+        },
       },
       fontFamily: {
         pixel: ['"Press Start 2P"', "monospace"],
+        body: ['"Courier New"', 'Consolas', 'monospace'],
       },
       animation: {
-        blink: "blink 1s step-start infinite",
+        blink: "blink 0.8s step-end infinite",
         glow: "glow 2s ease-in-out infinite alternate",
         float: "float 3s ease-in-out infinite",
-        scanline: "scanline 8s linear infinite",
+        "chapter-appear": "chapter-appear 1.5s ease-out forwards",
       },
       keyframes: {
         blink: {
+          "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
         },
         glow: {
@@ -47,9 +71,10 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-4px)" },
         },
-        scanline: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(100%)" },
+        "chapter-appear": {
+          "0%": { opacity: "0", letterSpacing: "12px" },
+          "50%": { opacity: "1", letterSpacing: "6px" },
+          "100%": { opacity: "1", letterSpacing: "4px" },
         },
       },
       boxShadow: {

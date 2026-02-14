@@ -92,7 +92,7 @@ export default function NetworkGraph({ className = "" }: { className?: string })
   const getNode = (id: string) => NODES.find((n) => n.id === id)!;
 
   return (
-    <div className={`pixel-border-thin bg-throne-dark p-3 ${className}`}>
+    <div className={`rpg-panel p-3 ${className}`}>
       <div className="flex items-center gap-2 mb-2">
         <span className="text-[9px] text-throne-gold">🌐 NETWORK TOPOLOGY</span>
         <span className={`text-[7px] ml-auto ${rtPulse ? "text-throne-green" : "text-gray-600"}`}>

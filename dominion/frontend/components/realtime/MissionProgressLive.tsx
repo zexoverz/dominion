@@ -49,9 +49,9 @@ export default function MissionProgressLive({
   }, []);
 
   return (
-    <div className={`pixel-border-thin bg-throne-dark p-3 ${className}`}>
+    <div className={`rpg-panel p-3 ${className}`}>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[8px] text-throne-gold">⚔️ {missionName}</span>
+        <span className="text-[8px] font-pixel text-throne-gold text-rpg-shadow">⚔️ {missionName}</span>
         <span className="text-[9px] font-bold" style={{ color }}>{Math.floor(progress)}%</span>
       </div>
 

@@ -102,9 +102,9 @@ export default function LiveCodeStream({ className = "" }: { className?: string 
   };
 
   return (
-    <div className={`pixel-border-thin bg-black/90 p-3 font-mono ${className}`}>
+    <div className={`rpg-panel bg-black/90 p-3 font-mono ${className}`}>
       <div className="flex items-center gap-2 mb-2 border-b border-green-900/50 pb-2">
-        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+        <div className="w-2 h-2 bg-green-500  animate-pulse" />
         <span className="text-[8px] text-green-500">👻 PHANTOM — LIVE CODE STREAM</span>
         <span className="text-[7px] text-green-800 ml-auto">shadow-executor.ts</span>
       </div>

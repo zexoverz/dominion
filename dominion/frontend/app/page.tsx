@@ -22,60 +22,70 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-full overflow-hidden">
-      {/* Header */}
-      <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div>
-          <h1 className="text-[12px] md:text-[14px] text-throne-gold text-glow-gold mb-2">
-            👑 THE DOMINION OF LORD ZEXO
-          </h1>
-          <p className="text-[9px] md:text-[8px] text-gray-500">
-            Command your generals. Conquer the unknown.
-          </p>
-        </div>
-        <div className="flex items-center gap-4">
+      {/* ═══ TITLE SCREEN ═══ */}
+      <div className="rpg-panel mb-6 text-center py-6">
+        <p className="font-pixel text-[8px] text-rpg-borderMid mb-2 tracking-widest">— WELCOME TO —</p>
+        <h1 className="font-pixel text-[16px] md:text-[20px] text-throne-gold text-glow-gold mb-3 chapter-title">
+          👑 THE DOMINION
+        </h1>
+        <p className="font-pixel text-[8px] text-rpg-border tracking-wider">
+          of LORD ZEXO
+        </p>
+        <p className="text-[9px] font-body text-rpg-borderMid mt-3">
+          Command your generals. Conquer the unknown.
+        </p>
+        <div className="flex items-center justify-center gap-4 mt-4">
           <SystemPulse />
           <CostTicker initialCost={costToday} />
         </div>
       </div>
 
-      {/* Stats */}
+      {/* ═══ HUD STATS BAR ═══ */}
       <StatsBar />
 
-      {/* Phase Banner */}
-      <div className="pixel-border-gold bg-throne-purple/30 p-3 md:p-4 mb-6 text-center overflow-x-auto">
-        <p className="text-[9px] md:text-[8px] text-throne-goldLight mb-2">⚔️ PHASE 1: THE FIRST THREE ⚔️</p>
-        <div className="flex justify-center gap-4 md:gap-6 flex-wrap">
+      {/* ═══ CHAPTER TITLE: PHASE 1 ═══ */}
+      <div className="mb-6 text-center py-4" style={{
+        background: 'linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.08) 20%, rgba(251,191,36,0.12) 50%, rgba(251,191,36,0.08) 80%, transparent 100%)',
+        borderTop: '2px solid #5a4a3a',
+        borderBottom: '2px solid #5a4a3a',
+      }}>
+        <p className="font-pixel text-[7px] text-rpg-borderMid mb-1 tracking-[6px]">CHAPTER</p>
+        <h2 className="font-pixel text-[14px] text-throne-gold text-glow-gold chapter-title">
+          ⚔️ PHASE 1 ⚔️
+        </h2>
+        <p className="font-pixel text-[8px] text-throne-goldDark mt-1 tracking-wider">THE FIRST THREE</p>
+        <div className="flex justify-center gap-6 mt-4">
           {generals.slice(0, 3).map((g) => (
             <div key={g.id} className="text-center">
-              <span className="text-2xl">{g.emoji}</span>
-              <p className="text-[8px] mt-1" style={{ color: g.color }}>{g.name}</p>
+              <span className="text-2xl" style={{ filter: 'drop-shadow(0 0 4px rgba(251,191,36,0.3))' }}>{g.emoji}</span>
+              <p className="font-pixel text-[7px] mt-1 text-rpg-shadow" style={{ color: g.color }}>{g.name}</p>
             </div>
           ))}
-          <div className="hidden md:block border-l-2 border-throne-purple" />
+          <div className="border-l-2 border-rpg-borderDark hidden md:block" />
           {generals.slice(3).map((g) => (
-            <div key={g.id} className="text-center opacity-30">
+            <div key={g.id} className="text-center opacity-25 grayscale hidden md:block">
               <span className="text-2xl">{g.emoji}</span>
-              <p className="text-[8px] mt-1 text-gray-600">{g.name}</p>
+              <p className="font-pixel text-[7px] mt-1 text-rpg-borderMid">{g.name}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Main content grid */}
+      {/* ═══ MAIN CONTENT ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-        {/* Generals Grid - 2 cols */}
+        {/* Generals Grid */}
         <div className="lg:col-span-2">
-          <h2 className="text-[11px] md:text-[10px] text-gray-400 mb-4">📋 THE GENERALS</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
+          <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">📋 THE GENERALS</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {generals.map((g) => (
               <GeneralCard key={g.id} general={g} />
             ))}
           </div>
         </div>
 
-        {/* Activity Feed sidebar */}
+        {/* Command Center sidebar */}
         <div className="lg:col-span-1">
-          <h2 className="text-[11px] md:text-[10px] text-gray-400 mb-4">⚡ COMMAND CENTER</h2>
+          <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">⚡ COMMAND CENTER</h2>
           <AgentActivityFeed className="mb-4 h-[320px]" />
           <MissionProgressLive
             missionName="Deploy the Watchtower"
@@ -91,9 +101,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Network Graph */}
+      {/* ═══ NETWORK GRAPH ═══ */}
       <div className="mb-6">
-        <h2 className="text-[11px] md:text-[10px] text-gray-400 mb-4">🌐 GENERAL NETWORK</h2>
+        <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">🌐 GENERAL NETWORK</h2>
         <NetworkGraph className="max-w-2xl" />
       </div>
     </div>

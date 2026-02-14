@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 
 export const metadata: Metadata = {
   title: "The Dominion of Lord Zexo",
-  description: "AI Multi-Agent Command Dashboard",
+  description: "AI Multi-Agent Command Dashboard — SNES RPG Edition",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -7,9 +7,8 @@ interface PixelBorderProps {
 }
 
 export default function PixelBorder({ children, className = "", variant = "default" }: PixelBorderProps) {
-  const borderClass = variant === "gold" ? "pixel-border-gold" : variant === "thin" ? "pixel-border-thin" : "pixel-border";
   return (
-    <div className={`${borderClass} bg-throne-dark p-4 ${className}`}>
+    <div className={`rpg-panel ${className}`}>
       {children}
     </div>
   );

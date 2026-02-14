@@ -43,11 +43,11 @@ export default function AgentThinkingBubble({ className = "", color = "#fbbf24",
   return (
     <div className={`relative ${className}`}>
       {/* Thought bubble trail */}
-      <div className="absolute -top-2 left-3 w-1.5 h-1.5 rounded-full bg-throne-purple opacity-60" />
-      <div className="absolute -top-4 left-5 w-2 h-2 rounded-full bg-throne-purple opacity-80" />
+      <div className="absolute -top-2 left-3 w-1.5 h-1.5  bg-throne-purple opacity-60" />
+      <div className="absolute -top-4 left-5 w-2 h-2  bg-throne-purple opacity-80" />
       {/* Main bubble */}
       <div
-        className="pixel-border-thin bg-throne-dark/95 px-3 py-2 relative"
+        className="rpg-panel/95 px-3 py-2 relative"
         style={{
           boxShadow: `0 0 12px ${color}33, 0 0 24px ${color}11`,
           animation: "thinkPulse 2s ease-in-out infinite",

@@ -6,44 +6,39 @@
 :root {
   --throne-black: #0a0a0f;
   --throne-gold: #fbbf24;
+  --throne-dark: #12121a;
+  --throne-purple: #1a1028;
+  --rpg-border-light: #8b7355;
+  --rpg-border-mid: #5a4a3a;
+  --rpg-border-dark: #2a1f15;
+  --rpg-bg: #0c0c18;
+  --rpg-panel: #10102a;
 }
 
 * {
   image-rendering: pixelated;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 0 !important;
 }
 
 body {
-  background-color: var(--throne-black);
-  color: #e2e8f0;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
-  line-height: 1.8;
+  background-color: var(--rpg-bg);
+  color: #c8c0b0;
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Ensure minimum readable font size for Press Start 2P */
-@media (max-width: 767px) {
-  body {
-    font-size: 10px;
-  }
+/* Heading font */
+h1, h2, h3, h4, h5, h6,
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
 }
 
-/* Safe area for bottom nav on notched devices */
-.safe-bottom {
-  padding-bottom: max(8px, env(safe-area-inset-bottom));
-}
-
-/* Hide scrollbar utility */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Scanline overlay */
+/* ════════════════════════════════════
+   SCANLINE OVERLAY
+   ════════════════════════════════════ */
 .scanlines::after {
   content: '';
   position: fixed;
@@ -56,95 +51,323 @@ body {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
+    transparent 1px,
+    rgba(0, 0, 0, 0.12) 1px,
+    rgba(0, 0, 0, 0.12) 2px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* ════════════════════════════════════
+   CRT CURVATURE (subtle)
+   ════════════════════════════════════ */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.35) 100%
   );
 }
 
-/* Pixel border utility */
+/* ════════════════════════════════════
+   DARK STONE TEXTURE BACKGROUND
+   ════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(45deg, rgba(20, 15, 30, 0.3) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(20, 15, 30, 0.3) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(20, 15, 30, 0.3) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(20, 15, 30, 0.3) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+  opacity: 0.5;
+}
+
+/* ════════════════════════════════════
+   RPG DIALOG BOX / FF-STYLE PANEL
+   Double-border like SNES RPG menus
+   ════════════════════════════════════ */
+.rpg-panel {
+  background: linear-gradient(180deg, #10102a 0%, #0a0a1e 100%);
+  border: 3px solid #8b7355;
+  outline: 3px solid #2a1f15;
+  outline-offset: -6px;
+  padding: 16px;
+  position: relative;
+}
+
+.rpg-panel::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(139, 115, 85, 0.3);
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════
+   PIXEL BORDERS (box-shadow based)
+   ════════════════════════════════════ */
 .pixel-border {
   box-shadow:
-    0 -4px 0 0 #1a1028,
-    0 4px 0 0 #1a1028,
-    -4px 0 0 0 #1a1028,
-    4px 0 0 0 #1a1028,
-    -4px -4px 0 0 #1a1028,
-    4px -4px 0 0 #1a1028,
-    -4px 4px 0 0 #1a1028,
-    4px 4px 0 0 #1a1028;
+    -4px 0 0 0 #8b7355,
+    4px 0 0 0 #8b7355,
+    0 -4px 0 0 #8b7355,
+    0 4px 0 0 #8b7355,
+    -4px -4px 0 0 #5a4a3a,
+    4px -4px 0 0 #5a4a3a,
+    -4px 4px 0 0 #5a4a3a,
+    4px 4px 0 0 #5a4a3a;
 }
 
 .pixel-border-gold {
   box-shadow:
-    0 -2px 0 0 #b8860b,
-    0 2px 0 0 #b8860b,
-    -2px 0 0 0 #b8860b,
-    2px 0 0 0 #b8860b,
-    0 -4px 0 0 #fbbf24,
-    0 4px 0 0 #fbbf24,
-    -4px 0 0 0 #fbbf24,
-    4px 0 0 0 #fbbf24;
+    -3px 0 0 0 #fbbf24,
+    3px 0 0 0 #fbbf24,
+    0 -3px 0 0 #fbbf24,
+    0 3px 0 0 #fbbf24,
+    -3px -3px 0 0 #b8860b,
+    3px -3px 0 0 #b8860b,
+    -3px 3px 0 0 #b8860b,
+    3px 3px 0 0 #b8860b,
+    -6px 0 0 0 #b8860b,
+    6px 0 0 0 #b8860b,
+    0 -6px 0 0 #b8860b,
+    0 6px 0 0 #b8860b;
 }
 
 .pixel-border-thin {
   box-shadow:
-    0 -2px 0 0 #2d1b4e,
-    0 2px 0 0 #2d1b4e,
-    -2px 0 0 0 #2d1b4e,
-    2px 0 0 0 #2d1b4e;
+    -2px 0 0 0 #5a4a3a,
+    2px 0 0 0 #5a4a3a,
+    0 -2px 0 0 #5a4a3a,
+    0 2px 0 0 #5a4a3a,
+    -2px -2px 0 0 #3a2a1a,
+    2px -2px 0 0 #3a2a1a,
+    -2px 2px 0 0 #3a2a1a,
+    2px 2px 0 0 #3a2a1a;
 }
 
-/* Gold glow text */
+/* ════════════════════════════════════
+   GOLD GLOW TEXT
+   ════════════════════════════════════ */
 .text-glow-gold {
-  text-shadow: 0 0 8px #fbbf24, 0 0 16px #fbbf2466, 0 0 32px #fbbf2433;
+  text-shadow:
+    0 0 4px #fbbf24,
+    0 0 8px #fbbf2488,
+    0 0 16px #fbbf2444,
+    2px 2px 0px #b8860b;
 }
 
 .text-glow-purple {
-  text-shadow: 0 0 8px #a78bfa, 0 0 16px #a78bfa66;
+  text-shadow: 0 0 6px #a78bfa, 0 0 12px #a78bfa44;
 }
 
-/* Scrollbar styling */
+/* RPG text dropshadow for all pixel headings */
+.text-rpg-shadow {
+  text-shadow: 2px 2px 0px #000, -1px -1px 0px #000;
+}
+
+/* ════════════════════════════════════
+   8-BIT SCROLLBAR
+   ════════════════════════════════════ */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
+  height: 12px;
 }
 ::-webkit-scrollbar-track {
   background: #0a0a0f;
+  border-left: 2px solid #5a4a3a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2d1b4e;
+  background: linear-gradient(180deg, #8b7355, #5a4a3a);
+  border: 2px solid #2a1f15;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b21a8;
+  background: linear-gradient(180deg, #fbbf24, #8b7355);
+}
+::-webkit-scrollbar-corner {
+  background: #0a0a0f;
 }
 
-/* Blinking cursor */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #5a4a3a #0a0a0f;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ════════════════════════════════════
+   BLINKING CURSOR
+   ════════════════════════════════════ */
 @keyframes blink {
+  0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-/* Status dot */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.rpg-cursor {
+  animation: cursor-blink 0.8s step-end infinite;
+}
+
+/* ════════════════════════════════════
+   STATUS DOTS
+   ════════════════════════════════════ */
 .status-active {
   background: #22c55e;
-  box-shadow: 0 0 6px #22c55e, 0 0 12px #22c55e66;
+  box-shadow: 0 0 4px #22c55e, 0 0 8px #22c55e66;
   animation: blink 1.5s step-start infinite;
 }
 .status-idle {
   background: #fbbf24;
-  box-shadow: 0 0 6px #fbbf24;
+  box-shadow: 0 0 4px #fbbf24;
 }
 .status-offline {
   background: #64748b;
 }
 
-/* Quest scroll */
+/* ════════════════════════════════════
+   QUEST SCROLL
+   ════════════════════════════════════ */
 .quest-scroll {
-  background: linear-gradient(180deg, #1a1028 0%, #12121a 50%, #1a1028 100%);
-  border-top: 4px solid #2d1b4e;
-  border-bottom: 4px solid #2d1b4e;
+  background:
+    linear-gradient(180deg,
+      #1a1510 0%,
+      #15120e 4%,
+      #12100c 8%,
+      #100e0a 50%,
+      #12100c 92%,
+      #15120e 96%,
+      #1a1510 100%
+    );
+  border: 3px solid #5a4a3a;
+  position: relative;
 }
 
-/* HP bar segments */
-.hp-segment {
-  transition: background-color 0.3s;
+.quest-scroll::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #8b7355 0px,
+    #8b7355 4px,
+    #5a4a3a 4px,
+    #5a4a3a 8px
+  );
 }
+
+.quest-scroll::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #8b7355 0px,
+    #8b7355 4px,
+    #5a4a3a 4px,
+    #5a4a3a 8px
+  );
+}
+
+/* ════════════════════════════════════
+   HP / MP / EXP BARS
+   ════════════════════════════════════ */
+.hp-bar {
+  background: #1a0a0a;
+  border: 2px solid #5a4a3a;
+  position: relative;
+  overflow: hidden;
+}
+
+.hp-bar-fill {
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.hp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ════════════════════════════════════
+   RPG MENU ITEM HOVER
+   ════════════════════════════════════ */
+.rpg-menu-item {
+  position: relative;
+  transition: background-color 0.1s step-end;
+}
+
+.rpg-menu-item:hover {
+  background: rgba(139, 115, 85, 0.15);
+}
+
+.rpg-menu-item:active {
+  background: rgba(251, 191, 36, 0.2);
+  transform: scale(0.98);
+}
+
+/* ════════════════════════════════════
+   CHAPTER TITLE ANIMATION
+   ════════════════════════════════════ */
+@keyframes chapter-appear {
+  0% { opacity: 0; letter-spacing: 12px; }
+  50% { opacity: 1; letter-spacing: 6px; }
+  100% { opacity: 1; letter-spacing: 4px; }
+}
+
+.chapter-title {
+  animation: chapter-appear 1.5s ease-out forwards;
+  letter-spacing: 4px;
+}
+
+/* ════════════════════════════════════
+   SAFE AREA
+   ════════════════════════════════════ */
+.safe-bottom {
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+
+/* ════════════════════════════════════
+   PIXEL STAR RATING
+   ════════════════════════════════════ */
+.star-filled { color: #fbbf24; text-shadow: 0 0 4px #fbbf2466; }
+.star-empty { color: #3a2a1a; }

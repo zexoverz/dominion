@@ -109,9 +109,9 @@ export default function AgentActivityFeed({ className = "" }: { className?: stri
   }, [entries]);
 
   return (
-    <div className={`pixel-border-thin bg-throne-dark p-3 flex flex-col ${className}`}>
+    <div className={`rpg-panel p-3 flex flex-col ${className}`}>
       <div className="flex items-center gap-2 mb-3">
-        <div className="w-2 h-2 bg-throne-green rounded-full animate-pulse" />
+        <div className="w-2 h-2 bg-throne-green  animate-pulse" />
         <h3 className="text-[9px] text-throne-gold">⚡ LIVE ACTIVITY FEED</h3>
       </div>
       <div ref={feedRef} className="flex-1 overflow-y-auto space-y-2 max-h-[300px] scrollbar-thin">

@@ -41,7 +41,7 @@ export default function SystemPulse({ className = "" }: { className?: string }) 
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className={`w-2.5 h-2.5 rounded-full transition-all duration-100 ${beat ? "bg-throne-green scale-125" : "bg-throne-green/60 scale-100"}`}
+      <div className={`w-2.5 h-2.5  transition-all duration-100 ${beat ? "bg-throne-green scale-125" : "bg-throne-green/60 scale-100"}`}
         style={{ boxShadow: beat ? "0 0 8px #22c55e, 0 0 16px #22c55e66" : "none" }}
       />
       <svg width="60" height="24" viewBox="0 0 60 24" className="overflow-visible">

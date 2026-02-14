@@ -4,17 +4,16 @@
 Faisal is sleeping (~03:00-10:00 WIB). Continue Phase 1 autonomously.
 
 ### Checklist
-- [ ] Check if sub-agents finished (mobile-responsive, character-designs, realtime-animations)
-- [ ] If done: merge, fix build errors, redeploy frontend to Railway
-- [ ] Set up PostgreSQL service on Railway (railway add --database postgres)
-- [ ] Run schema.sql + seed.sql against the DB
-- [ ] Build backend API service (src/api/) — Express + pg, REST endpoints for generals/missions/proposals/roundtables/costs
-- [ ] Deploy backend API to Railway as new service
-- [ ] Wire frontend to backend API (update mock-data.ts → real fetch calls)
+- [x] Check if sub-agents finished (mobile-responsive, character-designs, realtime-animations)
+- [x] Merged, fixed build errors, redeployed frontend to Railway
+- [x] Set up PostgreSQL service on Railway
+- [x] Ran schema.sql + seed.sql against the DB (13 tables + 3 views)
+- [x] Built backend API service (Express + pg, 7 route modules)
+- [x] Deployed backend API to Railway (dominion-api service)
+- [x] Wired frontend to backend API (mock data fallback)
+- [x] Git commit + push all changes
 - [ ] Final pixel art restyle if needed
-- [ ] Redeploy everything
-- [ ] Send Telegram checkpoint to Faisal when done
-- [ ] Git commit + push all changes
+- [ ] Send Telegram checkpoint to Faisal when he wakes (~10:00 WIB / 03:00 UTC)
 
 ### Rules
 - Don't message Faisal until he wakes up (~10:00 WIB / 03:00 UTC)
