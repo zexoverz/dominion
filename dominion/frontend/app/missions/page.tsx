@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import { missions as mockMissions } from "../../lib/mock-data";
 import { getMissions } from "../../lib/api";
+import { mergeMissions } from "../../lib/merge-missions";
 import QuestCard from "../../components/QuestCard";
 
 export default function MissionsPage() {
   const [missions, setMissions] = useState(mockMissions);
 
   useEffect(() => {
-    getMissions().then(setMissions).catch(() => {});
+    getMissions().then((d) => setMissions(mergeMissions(d))).catch(() => {});
   }, []);
 
   const grouped = {

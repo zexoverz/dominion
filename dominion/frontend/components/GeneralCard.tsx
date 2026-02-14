@@ -18,11 +18,12 @@ const statusLabels: Record<string, { label: string; color: string }> = {
 
 export default function GeneralCard({ general }: { general: General }) {
   const st = statusLabels[general.status] || statusLabels.OFFLINE;
-  const isPhase1 = general.phase === 1;
+  const isPhase1 = (general.phase ?? 0) >= 1;
 
-  // Simulate HP/MP from personality stats
-  const hp = Math.round((general.personality.loyalty + general.personality.wisdom) / 2);
-  const mp = Math.round((general.personality.creativity + general.personality.strategy) / 2);
+  // Simulate HP/MP from personality stats (safe defaults)
+  const p = general.personality || { loyalty: 50, wisdom: 50, creativity: 50, strategy: 50 };
+  const hp = Math.round(((p.loyalty || 50) + (p.wisdom || 50)) / 2);
+  const mp = Math.round(((p.creativity || 50) + (p.strategy || 50)) / 2);
 
   return (
     <Link href={`/generals/${general.id}`}>
@@ -34,7 +35,7 @@ export default function GeneralCard({ general }: { general: General }) {
         {/* Character sprite + name bar */}
         <div
           className="px-3 py-3 border-b-2 flex items-center gap-3"
-          style={{ borderColor: general.color + '44', background: general.bgColor }}
+          style={{ borderColor: (general.color || '#888') + '44', background: general.bgColor || '#1a1028' }}
         >
           <div className="flex-shrink-0" style={{ opacity: general.status === 'OFFLINE' ? 0.4 : 1 }}>
             {getGeneralSprite(general.id, statusToSpriteState[general.status] || 'idle', 72) || (
@@ -87,7 +88,7 @@ export default function GeneralCard({ general }: { general: General }) {
               {general.model}
             </span>
             <span className="text-[8px] font-body text-throne-goldDark">
-              💰 {general.costToday.toFixed(2)}g
+              💰 {(general.costToday ?? 0).toFixed(2)}g
             </span>
           </div>
 

@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { getProposals, getMissions, getGenerals, getCosts, patchProposal, patchMission, createProposal } from "../../lib/api";
 import { generals as mockGenerals, missions as mockMissions, dailyBudget } from "../../lib/mock-data";
+import { mergeGenerals } from "../../lib/merge-generals";
+import { mergeMissions } from "../../lib/merge-missions";
 
 const QUICK_COMMANDS = [
   {
@@ -107,8 +109,8 @@ export default function AdminPage() {
     try {
       const [p, m, g] = await Promise.all([getProposals(), getMissions(), getGenerals()]);
       setProposals(p);
-      setMissions(m);
-      setGenerals(g);
+      setMissions(mergeMissions(m));
+      setGenerals(mergeGenerals(g));
     } catch {
       // use mock data on failure
     }
@@ -224,7 +226,7 @@ export default function AdminPage() {
         ) : (
           <div className="flex flex-col gap-3">
             {pendingProposals.map((p) => {
-              const agent = generals.find((g) => g.id === p.assignedTo);
+              const agent = generals.find((g) => g.id === (p.assignedTo || p.agent_id?.toLowerCase()));
               return (
                 <div key={p.id} className="rpg-panel p-3">
                   <div className="flex items-start justify-between gap-2">
@@ -288,7 +290,7 @@ export default function AdminPage() {
         ) : (
           <div className="flex flex-col gap-3">
             {activeMissions.map((m) => {
-              const agent = generals.find((g) => g.id === m.assignedTo);
+              const agent = generals.find((g) => g.id === (m.assignedTo || (m as any).agent_id?.toLowerCase()));
               return (
                 <div key={m.id} className="rpg-panel p-3">
                   <div className="flex items-center justify-between mb-2">

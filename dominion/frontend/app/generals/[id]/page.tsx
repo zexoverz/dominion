@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { generals as mockGenerals, missions as mockMissions } from "../../../lib/mock-data";
 import { getGenerals, getGeneral, getMissions } from "../../../lib/api";
 import { mergeGenerals } from "../../../lib/merge-generals";
+import { mergeMissions } from "../../../lib/merge-missions";
 import PixelProgress from "../../../components/PixelProgress";
 import SpriteStage from "../../../components/sprites/SpriteStage";
 import { SpriteState } from "../../../components/sprites";
@@ -22,7 +23,7 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
       if (d?.personality) setGeneralData(d);
     }).catch(() => {});
     getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
-    getMissions().then(setMissions).catch(() => {});
+    getMissions().then((d) => setMissions(mergeMissions(d))).catch(() => {});
   }, [params.id]);
 
   const general = generalData || generals.find((g) => g.id === params.id);
@@ -30,9 +31,9 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
     return <div className="font-pixel text-[10px] text-throne-red">⚠️ GENERAL NOT FOUND</div>;
   }
 
-  const generalMissions = missions.filter((m) => m.assignedTo === general.id);
-  const personality = Object.entries(general.personality);
-  const relationships = Object.entries(general.relationships);
+  const generalMissions = missions.filter((m) => m.assignedTo === general.id || m.assignedTo === general.id?.toLowerCase());
+  const personality = Object.entries(general.personality || {});
+  const relationships = Object.entries(general.relationships || {});
 
   return (
     <div className="max-w-full overflow-hidden">
@@ -78,7 +79,7 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
               <span className={`w-3 h-3 status-${general.status.toLowerCase()}`} />
               <span className="font-pixel text-[8px] text-rpg-border">{general.status}</span>
               <span className="font-pixel text-[8px] px-2 py-0.5 bg-rpg-borderDark/30 text-throne-goldLight border border-rpg-borderDark">{general.model}</span>
-              <span className="font-pixel text-[8px] text-rpg-borderMid">Phase {general.phase}</span>
+              <span className="font-pixel text-[8px] text-rpg-borderMid">Phase {general.phase ?? 1}</span>
             </div>
             <p className="font-body text-[9px] text-rpg-border max-w-lg break-words leading-relaxed">{general.description}</p>
           </div>
@@ -96,7 +97,7 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
                   <span className="uppercase">{trait}</span>
                   <span className="text-throne-goldLight">{value}</span>
                 </div>
-                <PixelProgress value={value as number} color={general.color} height={12} segments={20} />
+                <PixelProgress value={value as number} color={general.color || "#fbbf24"} height={12} segments={20} />
               </div>
             ))}
           </div>
@@ -159,8 +160,8 @@ export default function GeneralDetail({ params }: { params: { id: string } }) {
           <h2 className="font-pixel text-[10px] text-throne-gold mb-4 text-rpg-shadow">📊 VITAL SIGNS</h2>
           <div className="flex flex-wrap gap-6 md:gap-8">
             {[
-              { label: "TOTAL QUESTS", value: general.totalMissions.toString() },
-              { label: "GOLD TODAY", value: `${general.costToday.toFixed(2)}g` },
+              { label: "TOTAL QUESTS", value: (general.totalMissions ?? 0).toString() },
+              { label: "GOLD TODAY", value: `${(general.costToday ?? 0).toFixed(2)}g` },
               { label: "MODEL", value: general.model },
             ].map((s) => (
               <div key={s.label}>

@@ -26,7 +26,7 @@ const statusLabels: Record<string, string> = {
 
 export default function QuestCard({ mission }: { mission: Mission }) {
   const general = generals.find((g) => g.id === mission.assignedTo);
-  const pColor = priorityColors[mission.priority];
+  const pColor = priorityColors[mission.priority] || "#fbbf24";
   const stars = priorityStars[mission.priority] || 1;
 
   return (
