@@ -5,7 +5,7 @@ Read `/data/workspace/dominion/src/throne-integration/heartbeat-runner.md` for f
 
 ## Quick Cycle (every heartbeat)
 1. `GET https://dominion-api-production.up.railway.app/` — if down, log & report
-2. `GET /api/proposals?status=pending` — auto-approve if cost < $1
+2. Run `bash /data/workspace/dominion/src/throne-integration/auto-review.sh` — auto-approve cheap proposals, create missions, execute
 3. `GET /api/missions?status=active` — check for stalls (>1h no progress)
 4. `GET /api/costs/daily` — warn >$5, alert Faisal >$10
 5. `POST /api/events` — log heartbeat with summary stats
