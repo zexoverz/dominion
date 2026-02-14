@@ -13,10 +13,10 @@ export default function MissionsPage() {
   }, []);
 
   const grouped = {
-    IN_PROGRESS: missions.filter((m) => m.status === "IN_PROGRESS"),
-    REVIEW: missions.filter((m) => m.status === "REVIEW"),
-    PROPOSED: missions.filter((m) => m.status === "PROPOSED"),
-    COMPLETE: missions.filter((m) => m.status === "COMPLETE"),
+    IN_PROGRESS: missions.filter((m) => m.status === "active" || m.status === "IN_PROGRESS"),
+    REVIEW: missions.filter((m) => m.status === "review" || m.status === "REVIEW"),
+    PROPOSED: missions.filter((m) => m.status === "pending" || m.status === "PROPOSED"),
+    COMPLETE: missions.filter((m) => m.status === "completed" || m.status === "COMPLETE"),
   };
 
   return (

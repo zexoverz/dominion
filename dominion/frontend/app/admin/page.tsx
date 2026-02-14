@@ -120,7 +120,7 @@ export default function AdminPage() {
   const costToday = generals.reduce((s, g) => s + g.costToday, 0);
   const activeAgents = generals.filter((g) => g.status === "ACTIVE").length;
   const pendingProposals = proposals.filter((p) => p.status === "pending" || p.status === "PROPOSED");
-  const activeMissions = missions.filter((m) => m.status === "IN_PROGRESS" || m.status === "REVIEW");
+  const activeMissions = missions.filter((m) => m.status === "active" || m.status === "IN_PROGRESS" || m.status === "REVIEW");
 
   const handleProposalAction = async (id: string, status: string) => {
     setActionLoading(id);

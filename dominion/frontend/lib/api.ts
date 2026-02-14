@@ -9,39 +9,39 @@ async function fetchAPI<T>(path: string): Promise<T> {
 }
 
 export async function getGenerals() {
-  return fetchAPI<any[]>('/generals');
+  return fetchAPI<any[]>('/api/generals');
 }
 
 export async function getGeneral(id: string) {
-  return fetchAPI<any>(`/generals/${id}`);
+  return fetchAPI<any>(`/api/generals/${id}`);
 }
 
 export async function getMissions() {
-  return fetchAPI<any[]>('/missions');
+  return fetchAPI<any[]>('/api/missions');
 }
 
 export async function getProposals() {
-  return fetchAPI<any[]>('/proposals');
+  return fetchAPI<any[]>('/api/proposals');
 }
 
 export async function getRoundtables() {
-  return fetchAPI<any[]>('/roundtables');
+  return fetchAPI<any[]>('/api/roundtables');
 }
 
 export async function getCosts() {
-  return fetchAPI<any[]>('/costs');
+  return fetchAPI<any[]>('/api/costs');
 }
 
 export async function getEvents() {
-  return fetchAPI<any[]>('/events');
+  return fetchAPI<any[]>('/api/events');
 }
 
 export async function getRelationships() {
-  return fetchAPI<any[]>('/relationships');
+  return fetchAPI<any[]>('/api/relationships');
 }
 
 export async function patchProposal(id: string, data: Record<string, any>) {
-  const res = await fetch(`${API_BASE}/proposals/${id}`, {
+  const res = await fetch(`${API_BASE}/api/proposals/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -51,7 +51,7 @@ export async function patchProposal(id: string, data: Record<string, any>) {
 }
 
 export async function patchMission(id: string, data: Record<string, any>) {
-  const res = await fetch(`${API_BASE}/missions/${id}`, {
+  const res = await fetch(`${API_BASE}/api/missions/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -61,7 +61,7 @@ export async function patchMission(id: string, data: Record<string, any>) {
 }
 
 export async function createProposal(data: Record<string, any>) {
-  const res = await fetch(`${API_BASE}/proposals`, {
+  const res = await fetch(`${API_BASE}/api/proposals`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

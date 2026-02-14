@@ -30,6 +30,14 @@
 ## The Dominion Project
 - 7 AI generals system based on Voxyz_ai multi-agent architecture
 - Closed loop: Proposals → Missions → Steps → Events → back
-- Deploy on Railway, frontend gamified
-- Phase 1: THRONE + SEER + PHANTOM
-- Estimated cost: $60-70/month
+- Deployed on Railway (project: handsome-mercy), 4 services: OpenClaw, frontend, API, PostgreSQL
+- ALL 3 PHASES COMPLETE — all 7 generals operational
+- 18,000+ lines of code, 80+ files, 9 frontend routes
+- First live mission completed: SEER Bitcoin DeFi Analysis
+- Cron jobs: daily briefing, weekly security, weekly finance
+
+## Key Lessons
+- Use Sonnet for sub-agents (Opus rate limits too tight)
+- Don't spawn 6+ agents rapidly — space them out
+- Railway: put build deps in regular dependencies (devDeps skip in production)
+- PostgreSQL: no MySQL INDEX() syntax, no CONCURRENTLY in transactions
