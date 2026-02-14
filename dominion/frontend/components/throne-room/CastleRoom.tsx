@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import RoomRenderer from "./RoomRenderer";
 import GeneralInRoom, { GeneralRoomState } from "./GeneralInRoom";
 import ActivityPopup from "./ActivityPopup";
 import { useRoomActivity, ActivityEvent } from "./RoomActivity";
+import { useActivity, RealEvent } from "../../lib/use-activity";
 import { SpriteState } from "../sprites";
 
 const STATION_POSITIONS: Record<string, { x: number; y: number }> = {
@@ -97,12 +98,59 @@ const GENERALS_INIT: GeneralRoomState[] = [
   },
 ];
 
+const GENERAL_EMOJI: Record<string, string> = {
+  THRONE: "👑", SEER: "🔮", PHANTOM: "👻", GRIMOIRE: "📜",
+  ECHO: "🔊", MAMMON: "💰", "WRAITH-EYE": "👁️",
+};
+
+const KIND_EMOJI: Record<string, string> = {
+  mission_completed: "✅", step_completed: "⚙️", trigger_fired: "⚡",
+  heartbeat: "💓", cost_alert: "💸", error: "❌",
+};
+
 let eventId = 0;
 
 const CastleRoom: React.FC = () => {
   const [generals, setGenerals] = useState<GeneralRoomState[]>(GENERALS_INIT);
   const [selectedGeneral, setSelectedGeneral] = useState<string | null>(null);
   const [events, setEvents] = useState<ActivityEvent[]>([]);
+  const activity = useActivity();
+
+  // Transform API events + missions into RealEvent[] for the room activity system
+  const realEvents: RealEvent[] = useMemo(() => {
+    const mapped: RealEvent[] = [];
+
+    // Map API events
+    for (const evt of activity.events.slice(0, 15)) {
+      const agentId = evt.generalId || (evt as any).agent_id || "";
+      const upperAgent = agentId.toUpperCase();
+      mapped.push({
+        id: evt.id || `evt-${mapped.length}`,
+        type: evt.type || (evt as any).kind || "event",
+        generalId: upperAgent,
+        emoji: evt.emoji || KIND_EMOJI[(evt as any).kind] || GENERAL_EMOJI[upperAgent] || "⚡",
+        message: evt.message || (evt as any).title || "Activity detected",
+        timestamp: evt.timestamp || (evt as any).created_at || new Date().toISOString(),
+      });
+    }
+
+    // Map active missions as activity
+    for (const m of activity.missions) {
+      const agentId = ((m as any).agent_id || m.assignedGeneral || "").toUpperCase();
+      if ((m as any).status === "active" || m.status === "active") {
+        mapped.push({
+          id: `mission-${m.id}`,
+          type: "mission_active",
+          generalId: agentId,
+          emoji: "🎯",
+          message: `${agentId} working on: ${m.title}`,
+          timestamp: (m as any).last_activity_at || (m as any).created_at || new Date().toISOString(),
+        });
+      }
+    }
+
+    return mapped;
+  }, [activity.events, activity.missions]);
 
   const addEvent = useCallback((emoji: string, text: string) => {
     setEvents((prev) => {
@@ -111,7 +159,7 @@ const CastleRoom: React.FC = () => {
     });
   }, []);
 
-  useRoomActivity({ generals, setGenerals, addEvent });
+  useRoomActivity({ generals, setGenerals, addEvent, realEvents });
 
   const selectedGen = selectedGeneral ? generals.find((g) => g.id === selectedGeneral) : null;
 
@@ -175,7 +223,18 @@ const CastleRoom: React.FC = () => {
           padding: "30px 16px 12px",
         }}
       >
-        <p className="font-pixel text-[7px] text-rpg-border mb-2">ACTIVITY LOG</p>
+        <div className="flex items-center gap-2 mb-2">
+          <p className="font-pixel text-[7px] text-rpg-border">ACTIVITY LOG</p>
+          {activity.lastUpdate && (
+            <span className="font-pixel text-[5px] text-green-400 flex items-center gap-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              LIVE — {activity.eventCount} events
+            </span>
+          )}
+          {activity.loading && (
+            <span className="font-pixel text-[5px] text-rpg-borderMid">connecting...</span>
+          )}
+        </div>
         <div className="space-y-1 max-h-[100px] overflow-y-auto">
           {events.slice(0, 5).map((e) => (
             <div key={e.id} className="flex items-center gap-2">
