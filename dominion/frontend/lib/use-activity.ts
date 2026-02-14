@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getEvents, getMissions, getGenerals } from "./api";
+import { useSSE, SSEEvent } from "./use-sse";
 
 export interface RealEvent {
   id: string;
@@ -44,6 +45,7 @@ export function useActivity(): ActivityData {
   const [loading, setLoading] = useState(true);
   const [lastUpdate, setLastUpdate] = useState<number | null>(null);
   const mountedRef = useRef(true);
+  const sseConnectedRef = useRef(false);
 
   const fetchEvents = useCallback(async () => {
     try {
@@ -85,16 +87,48 @@ export function useActivity(): ActivityData {
     }
   }, []);
 
+  // SSE: on any event, re-fetch the relevant data immediately
+  const handleSSE = useCallback(
+    (event: SSEEvent) => {
+      if (!mountedRef.current) return;
+
+      if (event.type === "connected") {
+        sseConnectedRef.current = true;
+        return;
+      }
+
+      // Re-fetch based on event type; fall back to fetching everything
+      const t = event.type;
+      if (t.includes("event") || t.includes("activity")) {
+        fetchEvents();
+      } else if (t.includes("mission")) {
+        fetchMissions();
+      } else if (t.includes("general")) {
+        fetchGenerals();
+      } else {
+        // Unknown event type — refresh all
+        fetchEvents();
+        fetchMissions();
+        fetchGenerals();
+      }
+    },
+    [fetchEvents, fetchMissions, fetchGenerals]
+  );
+
+  useSSE({ onEvent: handleSSE });
+
   // Initial fetch
   useEffect(() => {
     mountedRef.current = true;
     fetchEvents();
     fetchMissions();
     fetchGenerals();
-    return () => { mountedRef.current = false; };
+    return () => {
+      mountedRef.current = false;
+    };
   }, [fetchEvents, fetchMissions, fetchGenerals]);
 
-  // Poll events every 5s
+  // Poll events every 5s (fallback when SSE disconnects, harmless when SSE works)
   useEffect(() => {
     const iv = setInterval(fetchEvents, 5000);
     return () => clearInterval(iv);
