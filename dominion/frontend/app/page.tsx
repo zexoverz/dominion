@@ -14,6 +14,8 @@ import CostTicker from "../components/realtime/CostTicker";
 import NetworkGraph from "../components/realtime/NetworkGraph";
 import MissionProgressLive from "../components/realtime/MissionProgressLive";
 import { useActivity } from "../lib/use-activity";
+import BtcTicker from "../components/BtcTicker";
+import GeneralsMiniGrid from "../components/GeneralsMiniGrid";
 
 export default function Dashboard() {
   const [generals, setGenerals] = useState(mockGenerals);
@@ -38,6 +40,9 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-full overflow-hidden">
+      {/* ═══ BTC MARKET ORACLE ═══ */}
+      <BtcTicker />
+
       {/* ═══ TITLE SCREEN ═══ */}
       <div className="rpg-panel mb-6 text-center py-6">
         <p className="font-pixel text-[8px] text-rpg-borderMid mb-2 tracking-widest">— WELCOME TO —</p>
@@ -73,6 +78,9 @@ export default function Dashboard() {
 
       {/* ═══ HUD STATS BAR ═══ */}
       <StatsBar />
+
+      {/* ═══ GENERALS MINI GRID ═══ */}
+      <GeneralsMiniGrid generals={generals} />
 
       {/* ═══ CHAPTER TITLE: PHASE 1 ═══ */}
       <div className="mb-6 text-center py-4" style={{
@@ -119,6 +127,12 @@ export default function Dashboard() {
         />
       </div>
 
+      {/* ═══ ACTIVITY FEED (PROMINENT) ═══ */}
+      <div className="rpg-panel p-4 mb-6">
+        <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">📡 LIVE ACTIVITY</h2>
+        <AgentActivityFeed className="h-[280px] md:h-[320px]" />
+      </div>
+
       {/* ═══ MAIN CONTENT ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
         {/* Generals Grid */}
@@ -134,7 +148,6 @@ export default function Dashboard() {
         {/* Command Center sidebar */}
         <div className="lg:col-span-1">
           <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">⚡ COMMAND CENTER</h2>
-          <AgentActivityFeed className="mb-4 h-[320px]" />
           {liveMissions.length > 0 ? (
             liveMissions.slice(0, 3).map((m: any) => (
               <MissionProgressLive
