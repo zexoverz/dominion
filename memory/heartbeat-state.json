@@ -1,0 +1,12 @@
+{
+  "lastChecks": {
+    "api_health": null,
+    "proposals": null,
+    "missions": null,
+    "costs": null,
+    "briefing": null,
+    "proposal_gen": null
+  },
+  "lastBriefingDate": null,
+  "consecutiveApiFailures": 0
+}
