@@ -54,11 +54,11 @@ hidup, bisa baca dan tulis data dari server! 🚀
 - [Zustand: Lightweight State Management](study-material/zustand.md)
 - [Data Fetching Patterns](study-material/data-fetching.md)
 - [React Query / TanStack Query for API](study-material/react-query-api.md)
-- [Logic Nolep: Data Dashboard](study-material/ln-data-dashboard.md)
+- [Arcane Quest: Data Dashboard](study-material/ln-data-dashboard.md)
 - [REST API Integration](study-material/rest-api-integration.md)
 - [Authentication Flows: JWT + Login/Register UI](study-material/auth-flows.md)
 - [Environment Variables & Error Handling](study-material/env-error-handling.md)
-- [Logic Nolep: Authenticated CRUD App](study-material/ln-authenticated-crud.md)
+- [Arcane Quest: Authenticated CRUD App](study-material/ln-authenticated-crud.md)
 - [Soft Skills: API Documentation Reading](study-material/sk-api-docs.md)
 - [Group Project Week4](study-material/gp-week4.md)
 
@@ -72,7 +72,7 @@ hidup, bisa baca dan tulis data dari server! 🚀
 
 ## Peraturan
 
-- Deadline setiap Logic Nolep: lihat jadwal di channel Discord
+- Deadline setiap Arcane Quest: lihat jadwal di channel Discord
 - Wajib push minimal 1 commit per hari selama week ini
 - Code harus clean, typed (TypeScript), dan well-commented
 - Semua submission via Pull Request
@@ -126,7 +126,7 @@ hidup, bisa baca dan tulis data dari server! 🚀
 - **Links:**
   - https://tanstack.com/query/latest/docs/react/overview
 
-#### 6. `ln-data-dashboard.md` — Logic Nolep
+#### 6. `ln-data-dashboard.md` — Arcane Quest
 **Scenario:** Buat "Data Dashboard" yang fetches dan displays data dari public API:
 - Gunakan API publik (JSONPlaceholder, atau REQ|RES API)
 - Dashboard menampilkan: user list, post list, comment list
@@ -174,7 +174,7 @@ hidup, bisa baca dan tulis data dari server! 🚀
 - Graceful degradation: apa yang ditampilkan saat API down
 - **Hands-on:** Setup environment variables + global error handling
 
-#### 10. `ln-authenticated-crud.md` — Logic Nolep
+#### 10. `ln-authenticated-crud.md` — Arcane Quest
 **Scenario:** Buat "Task Manager" yang terkoneksi ke REST API:
 - Register + Login (JWT auth)
 - Protected dashboard (redirect jika belum login)
@@ -210,7 +210,7 @@ hidup, bisa baca dan tulis data dari server! 🚀
 - **Submission:** PR ke repo group project + presentasi demo 5 menit
 
 ### Week 4 — Final Assignment
-Submit PR dengan "Authenticated CRUD App" (Logic Nolep terakhir) yang sudah complete + deployed ke Vercel. Include:
+Submit PR dengan "Authenticated CRUD App" (Arcane Quest terakhir) yang sudah complete + deployed ke Vercel. Include:
 - Source code (clean, typed, well-structured)
 - README with: setup instructions, API documentation, screenshots
 - Live URL (Vercel deployment)
@@ -252,10 +252,10 @@ sudah jadi **Fullstack Web Developer** yang sesungguhnya! 🚀
 
 - [Project Planning & Wireframing](study-material/project-planning.md)
 - [Fullstack Architecture Patterns](study-material/fullstack-architecture.md)
-- [Logic Nolep: Mini Fullstack App](study-material/ln-mini-fullstack.md)
+- [Arcane Quest: Mini Fullstack App](study-material/ln-mini-fullstack.md)
 - [Testing Fundamentals](study-material/testing-fundamentals.md)
 - [Deployment Pipeline](study-material/deployment-pipeline.md)
-- [Logic Nolep: Deploy & Test](study-material/ln-deploy-test.md)
+- [Arcane Quest: Deploy & Test](study-material/ln-deploy-test.md)
 - [Soft Skills: Demo Day Preparation](study-material/sk-demo-day.md)
 - [Portfolio Preparation](study-material/portfolio-prep.md)
 - [Capstone Project Guidelines](study-material/capstone-project.md)
@@ -292,7 +292,7 @@ sudah jadi **Fullstack Web Developer** yang sesungguhnya! 🚀
 - File upload patterns (multer on backend, FormData on frontend)
 - **Hands-on:** Setup monorepo structure untuk capstone project
 
-#### 3. `ln-mini-fullstack.md` — Logic Nolep
+#### 3. `ln-mini-fullstack.md` — Arcane Quest
 **Scenario:** Buat "Notes App" fullstack dalam 2 hari:
 - **Backend:** Express + PostgreSQL
   - CRUD endpoints: GET /notes, POST /notes, PUT /notes/:id, DELETE /notes/:id
@@ -334,8 +334,8 @@ sudah jadi **Fullstack Web Developer** yang sesungguhnya! 🚀
 - Monitoring basics: checking logs, uptime
 - **Hands-on:** Deploy the Notes App end-to-end
 
-#### 6. `ln-deploy-test.md` — Logic Nolep
-**Scenario:** Ambil Notes App dari LN sebelumnya dan:
+#### 6. `ln-deploy-test.md` — Arcane Quest
+**Scenario:** Ambil Notes App dari AQ sebelumnya dan:
 - Tulis minimum 8 tests (mix of unit + integration)
 - Setup GitHub Actions: run tests on every PR
 - Deploy ke production (Vercel + Railway)
@@ -486,7 +486,7 @@ Week 4-5 bridges Phase 1 backend skills with Phase 2 frontend skills into comple
 
 ## Summary
 
-| Week | Title | Key Skills | Logic Nolep | Group/Final Project |
+| Week | Title | Key Skills | Arcane Quest | Group/Final Project |
 |------|-------|------------|-------------|-------------------|
 | **4** | State Management + API Integration | React Context, Zustand, React Query, REST API integration, JWT auth, error handling | Data Dashboard, Authenticated CRUD App | Connect to Phase 1 Backend |
 | **5** | Fullstack Web App Capstone | Project planning, fullstack architecture, testing, deployment, portfolio prep | Mini Fullstack App, Deploy & Test | Capstone (E-Commerce/Forum/PM Tool/CMS/Custom) |

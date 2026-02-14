@@ -29,11 +29,11 @@
 
 | Week | Repo | Topics | Exercises |
 |------|------|--------|-----------|
-| Week 1 | `phase-1-week1-enhance-logic` | OOP, time complexity, searching algorithms, sorting algorithms, graph algorithms, Dijkstra's, Huffman coding, hashing, process.argv | "Logic Nolep" challenges for each topic |
-| Week 2 | `phase-1-week2-backend-fundamental` | Backend fundamentals, MVC, Linux/WSL, Node.js modules, async JS, internal modules, JSON, CLI apps (Chalk) | LN: Encrypt/Decrypt, Async, Hospital Interface, CLI Game, CLI Chess |
-| Week 3 | `phase-1-week3-backend-database` | SQL (SQLite), NoSQL (MongoDB), database design, race conditions, cloud databases, Express.js intro | LN: Warehouse SQL, Warehouse NoSQL, Database Design, Address Book |
-| Week 4 | `phase-1-week4-backend-api` | Prisma ORM, Mongoose ODM, code standardization, logging (Winston), middleware, JWT, Helmet, CORS, Joi validation, Swagger docs | LN: Prisma Todo, Mongoose Todo, Inventory System |
-| Week 5 | `phase-1-week5-backend-advance` | TypeScript, Bun.js, Elysia vs Hono, Drizzle ORM, WebSocket, Microservices (sync + async), Payment Gateway (Stripe) | LN: Chat Room, Movie Reservation (microservices + Stripe), Group Project |
+| Week 1 | `phase-1-week1-enhance-logic` | OOP, time complexity, searching algorithms, sorting algorithms, graph algorithms, Dijkstra's, Huffman coding, hashing, process.argv | "Arcane Quest" challenges for each topic |
+| Week 2 | `phase-1-week2-backend-fundamental` | Backend fundamentals, MVC, Linux/WSL, Node.js modules, async JS, internal modules, JSON, CLI apps (Chalk) | AQ: Encrypt/Decrypt, Async, Hospital Interface, CLI Game, CLI Chess |
+| Week 3 | `phase-1-week3-backend-database` | SQL (SQLite), NoSQL (MongoDB), database design, race conditions, cloud databases, Express.js intro | AQ: Warehouse SQL, Warehouse NoSQL, Database Design, Address Book |
+| Week 4 | `phase-1-week4-backend-api` | Prisma ORM, Mongoose ODM, code standardization, logging (Winston), middleware, JWT, Helmet, CORS, Joi validation, Swagger docs | AQ: Prisma Todo, Mongoose Todo, Inventory System |
+| Week 5 | `phase-1-week5-backend-advance` | TypeScript, Bun.js, Elysia vs Hono, Drizzle ORM, WebSocket, Microservices (sync + async), Payment Gateway (Stripe) | AQ: Chat Room, Movie Reservation (microservices + Stripe), Group Project |
 
 ### 🗼 Phase 2: Tower of Illusions — Frontend Development
 
@@ -42,9 +42,9 @@
 
 | Week | Repo | Topics | Exercises |
 |------|------|--------|-----------|
-| Week 1 | `phase-2-week1-frontend-basic` | HTML, CSS, Flexbox, jQuery, DOM manipulation, AJAX, LocalStorage, Vercel deployment, **soft skills: presentation** | LN: Pet Shop, Inventory AJAX, Group Project Week1 |
-| Week 2 | `phase-2-week2-reactjs` | React basics, Virtual DOM, components, hooks, lifecycle, React Router, state management intro | Study materials + LN challenges |
-| Week 3 | `phase-2-week3-frontend-advance` | Vite, core hooks (useRef, useContext, useCallback, useMemo), advanced patterns, TanStack (Query, Router, Table, Form), Cypress testing, Redux, Stripe, Clerk auth | Study materials + LN challenges |
+| Week 1 | `phase-2-week1-frontend-basic` | HTML, CSS, Flexbox, jQuery, DOM manipulation, AJAX, LocalStorage, Vercel deployment, **soft skills: presentation** | AQ: Pet Shop, Inventory AJAX, Group Project Week1 |
+| Week 2 | `phase-2-week2-reactjs` | React basics, Virtual DOM, components, hooks, lifecycle, React Router, state management intro | Study materials + AQ challenges |
+| Week 3 | `phase-2-week3-frontend-advance` | Vite, core hooks (useRef, useContext, useCallback, useMemo), advanced patterns, TanStack (Query, Router, Table, Form), Cypress testing, Redux, Stripe, Clerk auth | Study materials + AQ challenges |
 
 ### 📦 Practice & Project Repos
 
@@ -91,12 +91,12 @@
 3. **Theming:** Harry Potter / wizard / sorcery metaphor throughout:
    - Students = "Etherean"
    - Quizzes = "Arcane Quest"
-   - Hard challenges = "Logic Nolep" (LN)
+   - Hard challenges = "Arcane Quest" (AQ) — hands-on coding challenges
    - Phases = "Towers" (Foundation, Shadows, Illusions, Chains)
 4. **Structure per week:**
    - README.md with topic overview + motivational intro
    - `study-materials/` or `study_material/` folder with markdown lessons (part1.md, part2.md, etc.)
-   - `quiz/` or `logic_nolep/` folder with coding challenges
+   - `quiz/` or `arcane_quest/` folder with coding challenges
    - Weekly exam ("Ujian") at the end
 5. **Progressive difficulty:** Each week builds on the last with explicit links to next week
 6. **Gates:** Phase transitions require completion evidence (Codewars kyu 6, live code, PR reviews)
@@ -105,9 +105,9 @@
 9. **Soft skills:** Phase 2 adds presentation skills — not just code
 10. **Real deployments:** Students deploy to Vercel (Phase 2), testnets (workshops)
 
-### Exercise Format — "Logic Nolep" (LN)
+### Exercise Format — "Arcane Quest" (AQ)
 
-The signature exercise format. Each LN:
+The signature exercise format. Each AQ:
 - Has a themed scenario (Hospital, Warehouse, Chess, Inventory, etc.)
 - Requires building a complete mini-project, not just solving algorithm puzzles
 - Escalates from console apps → CLI apps → backend APIs → full frontends
@@ -149,8 +149,8 @@ Phase 2 covers HTML/CSS/jQuery → React basics → React advanced. But comparin
 - Writing transactions (useWriteContract)
 - Event listening and real-time updates
 - Chain switching and network management
-- **LN: Build a Token Dashboard** — connect wallet, display balances, transfer tokens
-- **LN: Build an NFT Gallery** — read NFT metadata, display collection
+- **AQ: Build a Token Dashboard** — connect wallet, display balances, transfer tokens
+- **AQ: Build an NFT Gallery** — read NFT metadata, display collection
 
 #### Phase 2 Week 5: `phase-2-week5-fullstack-dapp`
 - Connecting frontend to backend API + smart contract
@@ -200,9 +200,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 7 | Writing your first test with `forge test` | [Cyfrin Updraft — Foundry Fundamentals](https://updraft.cyfrin.io/courses/foundry) |
 | 8 | Deploying to local anvil + testnet | [Foundry Book — Deploying](https://book.getfoundry.sh/forge/deploying) |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: On-Chain Registry 📜**
+**AQ: On-Chain Registry 📜**
 > Build a smart contract "Buku Sihir" (Spell Book) — an on-chain registry where users can register their wizard name, store a list of spells, and look up other wizards. Requirements:
 > - Register with a unique wizard name (revert if taken)
 > - Add spells to your profile (max 10)
@@ -236,9 +236,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 6 | Token economics basics: supply, mint, burn, allowances | [Patrick Collins — ERC-20 Deep Dive](https://www.youtube.com/watch?v=umepbfKp5rI) |
 | 7 | Merkle proofs for whitelists | [Solidity by Example — Merkle Tree](https://solidity-by-example.org/app/merkle-tree/) |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Token Forge ⚒️**
+**AQ: Token Forge ⚒️**
 > Create your own ERC-20 token "EthereanCoin" with:
 > - Configurable name, symbol, initial supply
 > - Minting (owner only) and burning (any holder)
@@ -246,7 +246,7 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 > - 15+ tests including fuzz tests for transfer amounts
 > - Deploy to testnet
 
-**LN: NFT Koleksi Sihir 🖼️**
+**AQ: NFT Koleksi Sihir 🖼️**
 > Build an NFT collection "Etherean Artifacts" with:
 > - Max supply of 100
 > - Whitelist minting via Merkle proof (first 24h)
@@ -278,9 +278,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 5 | Price oracles: Chainlink integration | [Chainlink Docs — Data Feeds](https://docs.chain.link/data-feeds) |
 | 6 | Connecting contracts to React frontend (from Phase 2) | Reference: `simple-defi-ui`, `tugwar-game-ui` repos |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Staking dApp — Etherean Vault 🏦**
+**AQ: Staking dApp — Etherean Vault 🏦**
 > Build a complete staking dApp (contract + frontend):
 > - Users stake ERC-20 tokens, rewards accrue per second
 > - Claim rewards, unstake, emergency withdraw
@@ -311,12 +311,12 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 6 | Gas optimization: storage packing, calldata vs memory, unchecked blocks | [RareSkills — Gas Optimization](https://www.rareskills.io/post/gas-optimization) |
 | 7 | Common patterns: checks-effects-interactions, pull over push, ReentrancyGuard | [Solidity Patterns](https://fravoll.github.io/solidity-patterns/) |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Bug Hunter 🐛**
+**AQ: Bug Hunter 🐛**
 > Receive 5 intentionally vulnerable contracts (inspired by Damn Vulnerable DeFi). For each: write an exploit test, fix the vulnerability, run Slither, write an audit report.
 
-**LN: Gas Wizard ⛽**
+**AQ: Gas Wizard ⛽**
 > Optimize an unoptimized contract from ~50,000 gas to under 30,000 gas per core function. Document every optimization with `forge test --gas-report`.
 
 #### Arcane Quest
@@ -347,11 +347,11 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 - Present in 5 min + 3 min Q&A
 - Judged on: Innovation (25%), Technical (30%), Completeness (20%), Presentation (15%), Code Quality (10%)
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Portfolio Assembly 📂** — Update GitHub profile, pin best repos, write blog post, prepare 10 interview answers.
+**AQ: Portfolio Assembly 📂** — Update GitHub profile, pin best repos, write blog post, prepare 10 interview answers.
 
-**LN: Hackathon Project 🚀** — The hackathon simulation project itself.
+**AQ: Hackathon Project 🚀** — The hackathon simulation project itself.
 
 #### Final Demo Day 🎪
 - Team presentations, community voting

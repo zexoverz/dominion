@@ -40,9 +40,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 7 | Writing your first test with `forge test` | [Cyfrin Updraft — Foundry Fundamentals](https://updraft.cyfrin.io/courses/foundry) |
 | 8 | Deploying to local anvil + testnet | [Foundry Book — Deploying](https://book.getfoundry.sh/forge/deploying) |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: On-Chain Registry 📜**
+**AQ: On-Chain Registry 📜**
 > Build a smart contract "Buku Sihir" (Spell Book) — an on-chain registry where users can register their wizard name, store a list of spells, and look up other wizards. Requirements:
 > - Register with a unique wizard name (revert if taken)
 > - Add spells to your profile (max 10)
@@ -76,9 +76,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 6 | Token economics basics: supply, mint, burn, allowances | [Patrick Collins — ERC-20 Deep Dive](https://www.youtube.com/watch?v=umepbfKp5rI) |
 | 7 | Merkle proofs for whitelists | [Solidity by Example — Merkle Tree](https://solidity-by-example.org/app/merkle-tree/) |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Token Forge ⚒️**
+**AQ: Token Forge ⚒️**
 > Create your own ERC-20 token "EthereanCoin" with:
 > - Configurable name, symbol, initial supply
 > - Minting (owner only) and burning (any holder)
@@ -88,7 +88,7 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 >
 > **Submit:** PR with contract, tests, deployment tx hash.
 
-**LN: NFT Koleksi Sihir 🖼️**
+**AQ: NFT Koleksi Sihir 🖼️**
 > Build an NFT collection "Etherean Artifacts" with:
 > - Max supply of 100
 > - Whitelist minting via Merkle proof (first 24h)
@@ -122,9 +122,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 5 | Price oracles: Chainlink integration | [Chainlink Docs — Data Feeds](https://docs.chain.link/data-feeds) |
 | 6 | Connecting contracts to React frontend (from Phase 2) | Reference: `simple-defi-ui`, `tugwar-game-ui` repos |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Staking dApp — Etherean Vault 🏦**
+**AQ: Staking dApp — Etherean Vault 🏦**
 > Build a complete staking dApp (contract + frontend):
 >
 > **Smart Contract:**
@@ -169,9 +169,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 | 6 | Gas optimization: storage packing, calldata vs memory, unchecked blocks, short-circuit | [RareSkills — Gas Optimization](https://www.rareskills.io/post/gas-optimization) |
 | 7 | Common patterns: checks-effects-interactions, pull over push, ReentrancyGuard | [Solidity Patterns](https://fravoll.github.io/solidity-patterns/) |
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Bug Hunter 🐛**
+**AQ: Bug Hunter 🐛**
 > You'll receive 5 intentionally vulnerable contracts (inspired by [Damn Vulnerable DeFi](https://www.damnvulnerabledefi.xyz/)):
 > 1. A vault with reentrancy vulnerability
 > 2. A token sale with precision loss
@@ -187,7 +187,7 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 >
 > **Submit:** PR with exploit tests, fixed contracts, Slither reports, and audit notes.
 
-**LN: Gas Wizard ⛽**
+**AQ: Gas Wizard ⛽**
 > You'll receive an unoptimized contract (~50,000 gas per core function). Optimize it to under 30,000 gas:
 > - Apply storage packing
 > - Use calldata where possible
@@ -241,9 +241,9 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 - 🌍 Impact certificate — verifiable impact/donation tracking on-chain
 - 🔐 Dead man's switch — automated inheritance/recovery system
 
-#### Logic Nolep
+#### Arcane Quest
 
-**LN: Portfolio Assembly 📂**
+**AQ: Portfolio Assembly 📂**
 > Create your Web3 developer portfolio:
 > 1. Update GitHub profile README with your Web3 journey
 > 2. Pin your best 6 repos (mix of Phase 1-3 projects)
@@ -263,7 +263,7 @@ Phase 3 transforms students from fullstack Web2 developers into **employable Web
 >
 > **Submit:** PR with updated GitHub profile link, blog post link, and interview answer document.
 
-**LN: Hackathon Project 🚀**
+**AQ: Hackathon Project 🚀**
 > Your hackathon simulation project. Judged on:
 > - **Innovation** (25%) — is it a real problem with a novel solution?
 > - **Technical execution** (30%) — contracts well-tested? frontend functional?
