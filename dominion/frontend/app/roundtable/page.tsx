@@ -12,7 +12,26 @@ export default function RoundtablePage() {
 
   useEffect(() => {
     getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
-    getRoundtables().then(setRoundtableMessages).catch(() => {});
+    getRoundtables().then((data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        // Flatten API roundtable conversation_logs into message format
+        const msgs: any[] = [];
+        for (const rt of data) {
+          for (const log of (rt.conversation_log || [])) {
+            msgs.push({
+              id: `${rt.id}-${log.turn}`,
+              generalId: (log.speaker || "").toLowerCase(),
+              message: log.message || "",
+              timestamp: log.timestamp
+                ? new Date(log.timestamp).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })
+                : "",
+              vote: log.vote || null,
+            });
+          }
+        }
+        if (msgs.length > 0) setRoundtableMessages(msgs);
+      }
+    }).catch(() => {});
   }, []);
 
   const getGeneral = (id: string) => generals.find((g) => g.id === id)!;
