@@ -163,140 +163,223 @@ Phase 2 covers HTML/CSS/jQuery → React basics → React advanced. But comparin
 
 ---
 
-## 4. Phase 3 Proposal: Tower of Chains — Web3 & Smart Contract Development
+## 4. Phase 3 Redesign: Tower of Chains — Smart Contract Development (Hackathon & Job Ready)
+
+> ⚠️ **REDESIGNED 2026-02-14** — Previous version focused on EIP editing and protocol contributions. Replaced with practical, employment-focused track per Lord Zexo's directive.
 
 ### Overview
 
-Phase 3 transforms students from fullstack Web2 developers into **Fullstack Web3 Developers**. Five weeks of hands-on Solidity, Foundry, testing, DeFi, NFTs, EIP analysis, and open source contribution.
+Phase 3 transforms students from fullstack Web2 developers into **employable Web3 developers who can win hackathons**. Five weeks of hands-on Solidity, Foundry, DeFi, security, and a full hackathon simulation.
 
-**Prerequisites:** Completion of Phase 2 (all 5 weeks including Web3 frontend)
+**Goal:** Students graduate able to:
+- Apply for Solidity/Web3 developer jobs
+- Compete (and win) at ETHGlobal and similar hackathons
+- Build and deploy production-quality smart contracts
+- Have a portfolio of deployed projects on their GitHub
+
+**Prerequisites:** Completion of Phase 2 (all 5 weeks including Web3 frontend integration)
+
+**What this is NOT:** This is not a protocol research track. No EIP editing, no protocol-level contributions. This is a builder track.
 
 ---
 
 ### Week 1: `phase-3-week1-solidity-fundamentals`
 
-**"Selamat datang di Tower of Chains, Etherean! 🧙‍♂️"**
+**"Selamat datang di Tower of Chains, Etherean! 🧙‍♂️ Di tower ini, kalian bakal nulis smart contract pertama kalian. Bukan cuma baca — tapi DEPLOY dan TEST. Let's go!"**
 
-**Study Materials:**
-- Blockchain fundamentals: blocks, transactions, gas, accounts (EOA vs contract)
-- Solidity basics: types, visibility, storage vs memory vs calldata
-- Contract structure: constructor, functions, modifiers, events
-- Development environment: Foundry installation, forge, cast, anvil
-- Your first contract: Counter, then TodoList
-- Testing basics with forge test
+#### Study Materials
 
-**Logic Nolep:**
-- **LN: Voting Contract** — Create a voting system with candidate registration, vote casting, and result tallying. Write 10+ tests.
-- **LN: Piggy Bank** — Create a savings contract with deposit, withdraw (with time lock), and emergency break. Deploy to Monad Testnet.
+| # | Topic | Resources |
+|---|-------|-----------|
+| 1 | Blockchain recap: blocks, txs, gas, accounts (EOA vs contract) | [Cyfrin Updraft — Blockchain Basics](https://updraft.cyfrin.io/courses/blockchain-basics) |
+| 2 | Solidity basics: types (uint, address, bool, bytes, string, arrays, mappings, structs, enums) | [Solidity by Example](https://solidity-by-example.org/) |
+| 3 | Functions: visibility (public/external/internal/private), view/pure, payable | [Cyfrin Updraft — Solidity Fundamentals](https://updraft.cyfrin.io/courses/solidity) |
+| 4 | Modifiers, events, custom errors, require/revert | [Patrick Collins — Learn Solidity](https://www.youtube.com/watch?v=umepbfKp5rI) |
+| 5 | Storage vs memory vs calldata | [Solidity Docs — Data Location](https://docs.soliditylang.org/en/latest/types.html#data-location) |
+| 6 | Foundry setup: forge, cast, anvil | [Foundry Book](https://book.getfoundry.sh/) |
+| 7 | Writing your first test with `forge test` | [Cyfrin Updraft — Foundry Fundamentals](https://updraft.cyfrin.io/courses/foundry) |
+| 8 | Deploying to local anvil + testnet | [Foundry Book — Deploying](https://book.getfoundry.sh/forge/deploying) |
 
-**Arcane Quest (Quiz):**
+#### Logic Nolep
+
+**LN: On-Chain Registry 📜**
+> Build a smart contract "Buku Sihir" (Spell Book) — an on-chain registry where users can register their wizard name, store a list of spells, and look up other wizards. Requirements:
+> - Register with a unique wizard name (revert if taken)
+> - Add spells to your profile (max 10)
+> - View any wizard's spell list
+> - Event emitted on registration and spell addition
+> - 10+ unit tests with Foundry
+> - Deploy to Monad Testnet
+>
+> **Submit:** PR with contract code, tests, deployment script, and testnet contract address in README.
+
+#### Arcane Quest (Quiz)
 - Part 1: Solidity syntax & types
-- Part 2: Storage patterns
-- Part 3: Deploy & interact via cast
+- Part 2: Storage patterns & gas concepts
+- Part 3: Deploy & interact via `cast`
 
 ---
 
 ### Week 2: `phase-3-week2-token-standards`
 
-**Study Materials:**
-- ERC-20 deep dive: implementation from scratch vs OpenZeppelin
-- ERC-721 (NFT): metadata, tokenURI, enumerable
-- ERC-1155 (Multi-token): batch operations, game items
-- OpenZeppelin contracts: inheritance, AccessControl, Ownable
-- Token economics: supply, minting, burning, allowances
-- **EIP Reading Session:** Read EIP-20 and EIP-721 — understand the proposal process
+**"Etherean, minggu ini kalian bakal bikin token dan NFT kalian sendiri. Bukan pake wizard GUI — kalian NULIS sendiri dari nol. OpenZeppelin jadi senjata rahasia kalian. 🪄"**
 
-**Logic Nolep:**
-- **LN: Token Factory** — Build a factory contract that deploys custom ERC-20 tokens with configurable name, symbol, supply, and burn capability. Write comprehensive tests.
-- **LN: NFT Collection** — Build an NFT contract with reveal mechanism, whitelist (Merkle proof), and royalties (EIP-2981). Deploy and mint on testnet.
+#### Study Materials
 
-**Arcane Quest:**
-- Part 1: ERC-20 implementation
-- Part 2: ERC-721 implementation
-- Part 3: Read & summarize an EIP of your choice
+| # | Topic | Resources |
+|---|-------|-----------|
+| 1 | ERC-20: the fungible token standard — implement from scratch, then with OpenZeppelin | [OpenZeppelin ERC-20 Docs](https://docs.openzeppelin.com/contracts/5.x/erc20) |
+| 2 | ERC-721: NFTs — metadata, tokenURI, enumerable | [OpenZeppelin ERC-721 Docs](https://docs.openzeppelin.com/contracts/5.x/erc721) |
+| 3 | ERC-1155: multi-token — batch ops, game items, SFTs | [OpenZeppelin ERC-1155 Docs](https://docs.openzeppelin.com/contracts/5.x/erc1155) |
+| 4 | OpenZeppelin contracts: inheritance, AccessControl, Ownable, Pausable | [OpenZeppelin Wizard](https://wizard.openzeppelin.com/) |
+| 5 | Testing with Foundry: unit tests, fuzz tests, test helpers | [Cyfrin Updraft — Advanced Foundry](https://updraft.cyfrin.io/courses/advanced-foundry) |
+| 6 | Token economics basics: supply, mint, burn, allowances | [Patrick Collins — ERC-20 Deep Dive](https://www.youtube.com/watch?v=umepbfKp5rI) |
+| 7 | Merkle proofs for whitelists | [Solidity by Example — Merkle Tree](https://solidity-by-example.org/app/merkle-tree/) |
 
----
+#### Logic Nolep
 
-### Week 3: `phase-3-week3-defi-mechanics`
+**LN: Token Forge ⚒️**
+> Create your own ERC-20 token "EthereanCoin" with:
+> - Configurable name, symbol, initial supply
+> - Minting (owner only) and burning (any holder)
+> - Pausable transfers (emergency stop)
+> - 15+ tests including fuzz tests for transfer amounts
+> - Deploy to testnet
 
-**Study Materials:**
-- DeFi fundamentals: AMM, liquidity pools, constant product formula (x*y=k)
-- Building a simple DEX: swap, addLiquidity, removeLiquidity
-- LP tokens and yield calculation
-- Price oracles: Chainlink integration
-- Flash loans concept
-- Security: reentrancy, front-running, sandwich attacks
-- **EIP Reading Session:** Read EIP-4626 (Tokenized Vaults)
+**LN: NFT Koleksi Sihir 🖼️**
+> Build an NFT collection "Etherean Artifacts" with:
+> - Max supply of 100
+> - Whitelist minting via Merkle proof (first 24h)
+> - Public mint after whitelist phase
+> - Reveal mechanism (hidden metadata → reveal)
+> - Royalties via EIP-2981
+> - 15+ tests including edge cases
+> - Deploy to testnet and mint at least 3 NFTs
 
-**Logic Nolep:**
-- **LN: Simple DEX** — Build an AMM DEX with two ERC-20 tokens, liquidity provision, and swap functionality with slippage protection and 0.3% fees. Full Foundry test suite with fuzzing.
-- **LN: Staking Contract** — Build a staking system where users deposit tokens and earn rewards over time. Include emergency withdraw and admin functions.
-
-**Arcane Quest:**
-- Part 1: AMM math problems
-- Part 2: Security audit quiz (spot the vulnerability)
-- Part 3: Gas optimization challenge
-
----
-
-### Week 4: `phase-3-week4-advanced-patterns`
-
-**Study Materials:**
-- Upgradeable contracts: proxy patterns (UUPS, Transparent)
-- Multi-contract architectures: factory, diamond pattern
-- Gas optimization: storage packing, calldata, assembly basics
-- Events and indexing: building for frontends/indexers
-- Cross-contract communication
-- Foundry advanced: fuzzing, invariant testing, fork testing
-- **EIP Reading Session:** Read EIP-2535 (Diamond Standard) or EIP-1967 (Proxy Storage)
-
-**Logic Nolep:**
-- **LN: Upgradeable Token** — Deploy a UUPS upgradeable ERC-20, then deploy V2 with new features. Prove the upgrade works via tests.
-- **LN: Multi-Sig Wallet** — Build a multi-signature wallet requiring N-of-M approvals for transactions. Include proposal, approval, execution, and revocation.
-
-**Arcane Quest:**
-- Part 1: Proxy pattern quiz
-- Part 2: Gas optimization challenge (refactor a wasteful contract)
-- Part 3: Fork testing a live protocol
+#### Arcane Quest
+- Part 1: ERC-20 implementation quiz
+- Part 2: ERC-721 implementation quiz
+- Part 3: Spot the bug in token contracts
 
 ---
 
-### Week 5: `phase-3-week5-capstone-and-contribution`
+### Week 3: `phase-3-week3-defi-building-blocks`
 
-**Study Materials:**
-- Smart contract security audit checklist
-- Open source contribution guide: finding issues, writing PRs, code review etiquette
-- Protocol analysis: pick a real protocol (Uniswap, Aave, Compound) and read its contracts
-- Deployment to mainnet considerations: audits, monitoring, incident response
-- Career paths: smart contract engineer, auditor, protocol developer
-- **EIP Contribution:** Draft a mini-EIP (even if not submitted) — understand the format
+**"Welcome to DeFi week, Etherean! 💰 Kalian bakal belajar gimana Uniswap kerja, bikin staking contract sendiri, dan connect semuanya ke frontend dari Phase 2."**
 
-**Logic Nolep:**
-- **LN: Open Source PR** — Find a real open source Web3 project, identify an issue or improvement, and submit a PR. Document the process.
-- **LN: Protocol Fork** — Fork a simple DeFi protocol (like Uniswap V2 core), deploy your own version on testnet, and write a detailed analysis of how it works.
+#### Study Materials
 
-**Final Capstone Project (Group):**
-- Build a complete dApp from scratch: smart contracts + tests + frontend + deployment
-- Suggested projects: DAO governance system, NFT marketplace, lending protocol, on-chain game
-- Final presentation to community — demo + architecture walkthrough + security analysis
-- **Live Code Session** — individual smart contract challenge (like Phase 0's final gate)
+| # | Topic | Resources |
+|---|-------|-----------|
+| 1 | How AMMs work: constant product formula (x*y=k), Uniswap V2 math | [Uniswap V2 Whitepaper](https://uniswap.org/whitepaper.pdf) |
+| 2 | Liquidity pools: adding/removing liquidity, LP tokens, impermanent loss | [Finematics — Liquidity Pools](https://www.youtube.com/watch?v=cizLhxSKrAc) |
+| 3 | Staking contracts: deposit, reward calculation, time-weighted distribution | [Cyfrin Updraft — DeFi](https://updraft.cyfrin.io/) |
+| 4 | Flash loans: concept, use cases, implementation | [Aave Flash Loans Docs](https://docs.aave.com/developers/guides/flash-loans) |
+| 5 | Price oracles: Chainlink integration | [Chainlink Docs — Data Feeds](https://docs.chain.link/data-feeds) |
+| 6 | Connecting contracts to React frontend (from Phase 2) | Reference: `simple-defi-ui`, `tugwar-game-ui` repos |
 
-**Arcane Quest:**
-- Part 1: Security audit a provided contract (find 5 bugs)
-- Part 2: Write a technical blog post about something you learned
-- Part 3: EIP draft exercise
+#### Logic Nolep
+
+**LN: Staking dApp — Etherean Vault 🏦**
+> Build a complete staking dApp (contract + frontend):
+> - Users stake ERC-20 tokens, rewards accrue per second
+> - Claim rewards, unstake, emergency withdraw
+> - Frontend: connect wallet, display balances, stake/unstake/claim
+> - 20+ tests including fuzz tests
+> - Deploy contracts to testnet, frontend to Vercel
+
+#### Arcane Quest
+- Part 1: AMM math problems (calculate swap output, price impact)
+- Part 2: Staking reward calculation scenarios
+- Part 3: Flash loan attack scenario analysis
+
+---
+
+### Week 4: `phase-3-week4-security-and-gas`
+
+**"Etherean, minggu ini kalian jadi auditor. 🔍 Kalian bakal belajar gimana hacker nyerang smart contract — dan gimana cara defend."**
+
+#### Study Materials
+
+| # | Topic | Resources |
+|---|-------|-----------|
+| 1 | Reentrancy attacks: classic, cross-function, cross-contract | [Cyfrin Updraft — Security & Auditing](https://updraft.cyfrin.io/courses/security) |
+| 2 | Integer overflow (pre-0.8) and precision loss | [SWC Registry](https://swcregistry.io/) |
+| 3 | Front-running and sandwich attacks: mempool, MEV | [Flashbots Docs](https://docs.flashbots.net/) |
+| 4 | Access control vulnerabilities: tx.origin, missing modifiers | [OpenZeppelin — Access Control](https://docs.openzeppelin.com/contracts/5.x/access-control) |
+| 5 | Slither static analysis | [Slither GitHub](https://github.com/crytic/slither) |
+| 6 | Gas optimization: storage packing, calldata vs memory, unchecked blocks | [RareSkills — Gas Optimization](https://www.rareskills.io/post/gas-optimization) |
+| 7 | Common patterns: checks-effects-interactions, pull over push, ReentrancyGuard | [Solidity Patterns](https://fravoll.github.io/solidity-patterns/) |
+
+#### Logic Nolep
+
+**LN: Bug Hunter 🐛**
+> Receive 5 intentionally vulnerable contracts (inspired by Damn Vulnerable DeFi). For each: write an exploit test, fix the vulnerability, run Slither, write an audit report.
+
+**LN: Gas Wizard ⛽**
+> Optimize an unoptimized contract from ~50,000 gas to under 30,000 gas per core function. Document every optimization with `forge test --gas-report`.
+
+#### Arcane Quest
+- Part 1: Identify vulnerabilities in code snippets
+- Part 2: Gas optimization quiz
+- Part 3: Write a security checklist for a given contract
+
+---
+
+### Week 5: `phase-3-week5-hackathon-simulation`
+
+**"Etherean, ini minggu terakhir di Tower of Chains! 🏆 Saatnya BUKTIIN. 48 jam buat bikin dApp dari nol — hackathon simulation."**
+
+#### Study Materials
+
+| # | Topic | Resources |
+|---|-------|-----------|
+| 1 | How to win hackathons: ideation, MVP mindset, time management | [ETHGlobal](https://ethglobal.com/) |
+| 2 | Rapid prototyping: Scaffold-ETH 2, templates | [Scaffold-ETH 2](https://scaffoldeth.io/) |
+| 3 | Pitching your project: demo structure, storytelling | Previous ETHJKT Onchain Day presentations |
+| 4 | Web3 developer portfolio: GitHub profile, deployed projects, README quality | [web3.career](https://web3.career/) |
+| 5 | Mock interview prep: common Solidity interview questions | [RareSkills — Solidity Interview](https://www.rareskills.io/post/solidity-interview-questions) |
+| 6 | Job hunting: web3.career, crypto.jobs, ETHGlobal showcase | [crypto.jobs](https://crypto.jobs/) |
+
+#### Hackathon Simulation (48 jam)
+- Teams of 2-3, Friday→Sunday
+- Build a complete dApp: contracts + frontend + deployment
+- Present in 5 min + 3 min Q&A
+- Judged on: Innovation (25%), Technical (30%), Completeness (20%), Presentation (15%), Code Quality (10%)
+
+#### Logic Nolep
+
+**LN: Portfolio Assembly 📂** — Update GitHub profile, pin best repos, write blog post, prepare 10 interview answers.
+
+**LN: Hackathon Project 🚀** — The hackathon simulation project itself.
+
+#### Final Demo Day 🎪
+- Team presentations, community voting
+- Certificate of completion
+- Top projects featured on ETHJKT landing page
 
 ---
 
 ### Phase 3 Summary Table
 
-| Week | Topic | Key Project | EIP Study |
-|------|-------|-------------|-----------|
-| 1 | Solidity Fundamentals + Foundry | Voting Contract + Piggy Bank | — |
-| 2 | Token Standards (ERC-20/721/1155) | Token Factory + NFT Collection | EIP-20, EIP-721 |
-| 3 | DeFi Mechanics (AMM, Staking) | Simple DEX + Staking Contract | EIP-4626 |
-| 4 | Advanced Patterns (Proxy, Gas, Multi-sig) | Upgradeable Token + Multi-Sig Wallet | EIP-2535/1967 |
-| 5 | Capstone + Open Source Contribution | Protocol Fork + Group dApp + OSS PR | Draft a mini-EIP |
+| Week | Topic | Key Build | Skills Gained |
+|------|-------|-----------|---------------|
+| 1 | Solidity Fundamentals + Foundry | On-Chain Registry | Solidity, Foundry, testing, deployment |
+| 2 | Token Standards + Real Contracts | ERC-20 Token + NFT Collection | Token standards, OpenZeppelin, fuzz testing |
+| 3 | DeFi Building Blocks | Staking dApp (contract + frontend) | AMM math, staking, full-stack dApp |
+| 4 | Security + Gas Optimization | Bug hunting + gas optimization | Auditing, Slither, vulnerability patterns |
+| 5 | Hackathon Simulation + Portfolio | Complete dApp (48h) + portfolio | Hackathon skills, interviewing, job readiness |
+
+### Graduate Profile — "Etherean Unchained 🔓"
+
+- ✅ Write, test, and deploy Solidity smart contracts with Foundry
+- ✅ Implement ERC-20, ERC-721, ERC-1155 tokens
+- ✅ Build DeFi primitives (staking, AMM concepts)
+- ✅ Identify and fix common smart contract vulnerabilities
+- ✅ Optimize gas usage
+- ✅ Build a complete dApp (contracts + frontend + deployment)
+- ✅ Compete in hackathons with confidence
+- ✅ Apply for Web3 developer positions with a strong portfolio
 
 ---
 
