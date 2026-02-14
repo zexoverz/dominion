@@ -50,7 +50,7 @@ if [ -n "$APPROVE_IDS" ]; then
   while IFS= read -r pid; do
     [ -z "$pid" ] && continue
     log "Running roundtable debate for proposal $pid"
-    bash "$SCRIPT_DIR/roundtable-debate.sh" "$pid" 2>&1 | tail -3 || log "WARNING: Debate failed for $pid"
+    bash "$SCRIPT_DIR/ai-roundtable.sh" "$pid" 2>&1 | tail -3 || log "WARNING: Debate failed for $pid"
   done <<< "$APPROVE_IDS"
 fi
 
