@@ -1,21 +1,19 @@
-# HEARTBEAT.md
+# HEARTBEAT.md — Dominion Heartbeat
 
-## Active: Phase 1 Overnight Build (Feb 13-14)
-Faisal is sleeping (~03:00-10:00 WIB). Continue Phase 1 autonomously.
+## Instructions
+Read `/data/workspace/dominion/src/throne-integration/heartbeat-runner.md` for full protocol.
 
-### Checklist
-- [x] Check if sub-agents finished (mobile-responsive, character-designs, realtime-animations)
-- [x] Merged, fixed build errors, redeployed frontend to Railway
-- [x] Set up PostgreSQL service on Railway
-- [x] Ran schema.sql + seed.sql against the DB (13 tables + 3 views)
-- [x] Built backend API service (Express + pg, 7 route modules)
-- [x] Deployed backend API to Railway (dominion-api service)
-- [x] Wired frontend to backend API (mock data fallback)
-- [x] Git commit + push all changes
-- [ ] Final pixel art restyle if needed
-- [ ] Send Telegram checkpoint to Faisal when he wakes (~10:00 WIB / 03:00 UTC)
+## Quick Cycle (every heartbeat)
+1. `GET https://dominion-api-production.up.railway.app/` — if down, log & report
+2. `GET /api/proposals?status=pending` — auto-approve if cost < $1
+3. `GET /api/missions?status=active` — check for stalls (>1h no progress)
+4. `GET /api/costs/daily` — warn >$5, alert Faisal >$10
+5. `POST /api/events` — log heartbeat with summary stats
+6. Check `memory/heartbeat-state.json` — if >4h since last proposal gen, generate 1-2 new proposals
+7. If 01:00 UTC and no briefing today → run daily briefing, send to Faisal via Telegram
 
-### Rules
-- Don't message Faisal until he wakes up (~10:00 WIB / 03:00 UTC)
-- If something blocks, note it in memory and move to next task
-- Commit progress incrementally to git
+## Rules
+- Minimize token burn: only fetch what's needed, keep responses short
+- If all nominal → `HEARTBEAT_OK`
+- If noteworthy → brief summary of actions taken
+- Don't message Faisal between 23:00-07:00 WIB unless critical (budget >$10 or API down >1h)

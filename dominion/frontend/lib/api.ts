@@ -39,3 +39,33 @@ export async function getEvents() {
 export async function getRelationships() {
   return fetchAPI<any[]>('/relationships');
 }
+
+export async function patchProposal(id: string, data: Record<string, any>) {
+  const res = await fetch(`${API_BASE}/proposals/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+}
+
+export async function patchMission(id: string, data: Record<string, any>) {
+  const res = await fetch(`${API_BASE}/missions/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+}
+
+export async function createProposal(data: Record<string, any>) {
+  const res = await fetch(`${API_BASE}/proposals`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+}
