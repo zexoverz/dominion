@@ -45,6 +45,15 @@ except Exception as e:
     print(f'ERROR: {e}', file=sys.stderr)
 " 2>/dev/null)"
 
+# Run roundtable debate for each proposal before approving
+if [ -n "$APPROVE_IDS" ]; then
+  while IFS= read -r pid; do
+    [ -z "$pid" ] && continue
+    log "Running roundtable debate for proposal $pid"
+    bash "$SCRIPT_DIR/roundtable-debate.sh" "$pid" 2>&1 | tail -3 || log "WARNING: Debate failed for $pid"
+  done <<< "$APPROVE_IDS"
+fi
+
 # Auto-approve cheap proposals
 if [ -n "$APPROVE_IDS" ]; then
   while IFS= read -r pid; do
