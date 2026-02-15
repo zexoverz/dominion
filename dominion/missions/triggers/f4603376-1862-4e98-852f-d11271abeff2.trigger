@@ -1,0 +1,5 @@
+MISSION_ID=f4603376-1862-4e98-852f-d11271abeff2
+AGENT_ID=seer
+TITLE=test
+PROMPT_FILE=/data/workspace/dominion/missions/f4603376-1862-4e98-852f-d11271abeff2.prompt
+CREATED=2026-02-15T03:18:27Z
