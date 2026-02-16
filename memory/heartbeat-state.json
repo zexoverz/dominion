@@ -1,9 +1,9 @@
 {
   "lastChecks": {
-    "api_health": null,
-    "proposals": null,
-    "missions": null,
-    "costs": null,
+    "api_health": 1739678964,
+    "proposals": 1739678964,
+    "missions": 1739678964,
+    "costs": 1739678964,
     "briefing": null,
     "proposal_gen": null
   },
