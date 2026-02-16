@@ -23,6 +23,10 @@ const statusLabels: Record<string, string> = {
   IN_PROGRESS: "⚔️ ACTIVE",
   REVIEW: "🔍 REVIEW",
   COMPLETE: "✅ COMPLETE",
+  active: "⚔️ ACTIVE",
+  completed: "✅ COMPLETE",
+  pending: "📜 PROPOSED",
+  review: "🔍 REVIEW",
 };
 
 export default function QuestCard({ mission }: { mission: Mission }) {
