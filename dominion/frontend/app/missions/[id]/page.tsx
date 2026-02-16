@@ -11,6 +11,8 @@ interface Step {
   status: string;
   step_order: number;
   description?: string;
+  output_data?: { instructions?: string };
+  input_data?: { instructions?: string };
 }
 
 interface MissionDetail {
@@ -23,6 +25,10 @@ interface MissionDetail {
   progress_pct: number;
   created_at: string;
   steps: Step[];
+}
+
+interface ExpandedSteps {
+  [key: string]: boolean;
 }
 
 const statusIcon: Record<string, string> = {
@@ -50,6 +56,7 @@ export default function MissionDetailPage() {
   const router = useRouter();
   const [mission, setMission] = useState<MissionDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState<ExpandedSteps>({});
 
   useEffect(() => {
     if (params.id) {
@@ -142,7 +149,7 @@ export default function MissionDetailPage() {
             .map((step, i) => (
               <div
                 key={step.id}
-                className={`flex items-start gap-3 p-3 border transition-colors ${
+                className={`border transition-colors ${
                   step.status === "completed"
                     ? "border-green-800/40 bg-green-950/20"
                     : step.status === "running"
@@ -150,23 +157,40 @@ export default function MissionDetailPage() {
                     : "border-rpg-borderDark/60 bg-rpg-bg/30"
                 }`}
               >
-                <span className="text-[14px] flex-shrink-0 mt-0.5">{statusIcon[step.status] || "⬜"}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[8px] font-pixel text-rpg-borderMid">#{i + 1}</span>
-                    <span className="text-[7px] font-pixel px-1.5 py-0.5 bg-rpg-borderDark/30 text-rpg-borderMid border border-rpg-borderDark/50">
-                      {kindIcon[step.kind] || "📌"} {step.kind.replace("_", " ").toUpperCase()}
-                    </span>
+                <div
+                  className="flex items-start gap-3 p-3 cursor-pointer active:bg-rpg-borderDark/20"
+                  onClick={() => {
+                    const instr = step.output_data?.instructions || step.input_data?.instructions;
+                    if (instr) setExpanded((prev) => ({ ...prev, [step.id]: !prev[step.id] }));
+                  }}
+                >
+                  <span className="text-[14px] flex-shrink-0 mt-0.5">{statusIcon[step.status] || "⬜"}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[8px] font-pixel text-rpg-borderMid">#{i + 1}</span>
+                      <span className="text-[7px] font-pixel px-1.5 py-0.5 bg-rpg-borderDark/30 text-rpg-borderMid border border-rpg-borderDark/50">
+                        {kindIcon[step.kind] || "📌"} {step.kind.replace("_", " ").toUpperCase()}
+                      </span>
+                      {(step.output_data?.instructions || step.input_data?.instructions) && (
+                        <span className="text-[7px] font-pixel text-throne-gold">
+                          {expanded[step.id] ? "▼ HIDE" : "▶ DETAILS"}
+                        </span>
+                      )}
+                    </div>
+                    <p className={`text-[9px] font-body mt-1 leading-relaxed ${
+                      step.status === "completed" ? "text-green-400/80 line-through" : "text-rpg-border"
+                    }`}>
+                      {step.title}
+                    </p>
                   </div>
-                  <p className={`text-[9px] font-body mt-1 leading-relaxed ${
-                    step.status === "completed" ? "text-green-400/80 line-through" : "text-rpg-border"
-                  }`}>
-                    {step.title}
-                  </p>
-                  {step.description && (
-                    <p className="text-[8px] font-body text-rpg-borderMid mt-0.5">{step.description}</p>
-                  )}
                 </div>
+                {expanded[step.id] && (step.output_data?.instructions || step.input_data?.instructions) && (
+                  <div className="px-4 pb-3 pt-0 ml-8 border-t border-rpg-borderDark/40">
+                    <pre className="text-[8px] font-body text-rpg-border leading-relaxed whitespace-pre-wrap mt-2">
+                      {step.output_data?.instructions || step.input_data?.instructions}
+                    </pre>
+                  </div>
+                )}
               </div>
             ))}
         </div>
