@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getMission } from "../../../lib/api";
+import ReactMarkdown from "react-markdown";
 
 interface Step {
   id: string;
@@ -186,9 +187,28 @@ export default function MissionDetailPage() {
                 </div>
                 {expanded[step.id] && (step.output_data?.instructions || step.input_data?.instructions) && (
                   <div className="px-4 pb-3 pt-0 ml-8 border-t border-rpg-borderDark/40">
-                    <pre className="text-[8px] font-body text-rpg-border leading-relaxed whitespace-pre-wrap mt-2">
-                      {step.output_data?.instructions || step.input_data?.instructions}
-                    </pre>
+                    <div className="text-[8px] font-body text-rpg-border leading-relaxed mt-2 prose-steps">
+                      <ReactMarkdown
+                        components={{
+                          a: ({ href, children }) => (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-throne-gold underline hover:text-throne-goldLight">
+                              {children}
+                            </a>
+                          ),
+                          strong: ({ children }) => <strong className="text-throne-goldLight font-bold">{children}</strong>,
+                          code: ({ children }) => <code className="bg-rpg-borderDark/50 px-1 py-0.5 text-green-400 text-[7px]">{children}</code>,
+                          pre: ({ children }) => <pre className="bg-rpg-bg border border-rpg-borderDark p-2 my-2 overflow-x-auto text-[7px]">{children}</pre>,
+                          ul: ({ children }) => <ul className="list-disc list-inside space-y-1 my-1">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal list-inside space-y-1 my-1">{children}</ol>,
+                          li: ({ children }) => <li className="text-rpg-border">{children}</li>,
+                          h2: ({ children }) => <h3 className="font-pixel text-[8px] text-throne-gold mt-3 mb-1">{children}</h3>,
+                          h3: ({ children }) => <h3 className="font-pixel text-[8px] text-throne-gold mt-2 mb-1">{children}</h3>,
+                          p: ({ children }) => <p className="my-1">{children}</p>,
+                        }}
+                      >
+                        {step.output_data?.instructions || step.input_data?.instructions || ""}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 )}
               </div>
