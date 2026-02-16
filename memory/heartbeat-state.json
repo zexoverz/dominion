@@ -1,11 +1,11 @@
 {
   "lastChecks": {
-    "api_health": 1739678964,
-    "proposals": 1739678964,
-    "missions": 1739678964,
-    "costs": 1739678964,
+    "api_health": 1739692800,
+    "proposals": 1739692800,
+    "missions": 1739692800,
+    "costs": 1739692800,
     "briefing": null,
-    "proposal_gen": null
+    "proposal_gen": 1739692800
   },
   "lastBriefingDate": null,
   "consecutiveApiFailures": 0
