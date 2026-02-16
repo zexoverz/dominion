@@ -12,11 +12,10 @@ shopt -s nullglob
 for trigger in "$TRIGGERS_DIR"/*.trigger; do
   [ -f "$trigger" ] || continue
   
-  # Source the trigger file
-  MISSION_ID=""
-  AGENT_ID=""
-  PROMPT_FILE=""
-  source "$trigger"
+  # Parse the trigger file safely (don't source — titles can have special chars)
+  MISSION_ID=$(grep '^MISSION_ID=' "$trigger" | head -1 | cut -d= -f2-)
+  AGENT_ID=$(grep '^AGENT_ID=' "$trigger" | head -1 | cut -d= -f2-)
+  PROMPT_FILE=$(grep '^PROMPT_FILE=' "$trigger" | head -1 | cut -d= -f2-)
   
   [ -z "$MISSION_ID" ] && continue
   

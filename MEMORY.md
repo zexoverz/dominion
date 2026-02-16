@@ -66,6 +66,16 @@
 - Over-kredit house plan: sell to Dzikri → deploy equity → BTC
 - v1→v2 shift: removed Pokemon/One Piece/Gold diversification
 
+## Zexo's Quest System (Feb 16, 2026)
+- 3 active personal missions: EIP Quest (20 steps), OSS Quest (7 steps), Protocol Bootcamp (14 steps)
+- EIP-7708 magicians draft ready at dominion/reports/eip-7708-magicians-draft.md
+- Protocol bootcamp guide at dominion/reports/protocol-bootcamp-guide.md (14-day curriculum)
+- GrimSwap was AI-coded (Opus 4.6) — Faisal did ideation/orchestration/privacy design
+- His gap: never touched EVM internals or client code — bootcamp closes this
+- Amsterdam hard fork = where the action is (EIP-7708, EIP-7928)
+- Target repos: ethereum/tests #1498, ethereum/execution-specs, OpenZeppelin #6305/#6289, Foundry #5429
+- Mission detail page built with expandable step instructions
+
 ## Key Lessons
 - Use Sonnet for sub-agents (Opus rate limits too tight)
 - Don't spawn 6+ agents rapidly — space them out
@@ -75,3 +85,6 @@
 - Railway `railway up` builds can take 5-10 min; verify buildId changes before declaring success
 - Frontend lib/api.ts needs /api/ prefix on all paths
 - Mission status values: API returns "active"/"completed"/"pending", not "IN_PROGRESS"/"COMPLETE"
+- DB ops_mission_steps has CHECK constraint on `kind` — only specific values allowed, not arbitrary strings
+- Steps created from proposals via proposed_steps, not from mission creation body
+- Frontend priority mapping needed: API numeric (100/90/70) → frontend strings (CRITICAL/HIGH/MEDIUM)
