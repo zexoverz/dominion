@@ -13,7 +13,7 @@ export function normalizeMission(api: any): Mission {
     priority: api.priority || "MEDIUM",
     status: api.status || "pending",
     assignedTo: api.assignedTo || api.agent_id?.toLowerCase() || "throne",
-    progress: api.progress ?? (api.status === "completed" ? 100 : api.status === "active" ? 50 : 0),
+    progress: api.progress_pct ?? api.progress ?? (api.status === "completed" ? 100 : api.status === "active" ? 0 : 0),
     createdAt: api.created_at
       ? new Date(api.created_at).toLocaleDateString()
       : api.createdAt || "",

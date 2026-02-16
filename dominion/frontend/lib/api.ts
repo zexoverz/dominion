@@ -21,6 +21,10 @@ export async function getMissions() {
   return fetchAPI<any[]>('/api/missions');
 }
 
+export async function getMission(id: string) {
+  return fetchAPI<any>(`/api/missions/${id}`);
+}
+
 export async function getProposals() {
   return fetchAPI<any[]>('/api/proposals');
 }
