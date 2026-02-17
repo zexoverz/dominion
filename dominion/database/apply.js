@@ -4,7 +4,7 @@ const path = require('path');
 
 async function main() {
   const client = new Client({
-    connectionString: 'postgresql://postgres:afpVGbEPjFOnkxHQzlsfwoOMPWhFquVO@yamabiko.proxy.rlwy.net:39639/railway',
+    connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
   });
 
