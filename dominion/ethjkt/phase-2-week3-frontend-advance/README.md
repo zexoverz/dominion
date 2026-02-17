@@ -1,86 +1,169 @@
-# Week3-Front-End-Advance
-Welcome to week 3, sekali lagi selamat setelah melewati 1 week lagi dri phase 2. gua yakin sudah ada beberapa orang yang snowball dri 2 week tersebut.
+# ⚡ Phase 2 — Week 3: Frontend Advance
 
-Setelah kalian melewati week2, sudah dipastikan kalian terbiasa dengan berfikir secara react. Berfikir secara react ini maksudnya adalah ketika kalian melihat User Interface Website atau komponen 
-website kalian akan selalu membayangkan itu jadi code react component. (Hampir setiap react developer berfikir secara natural begini).
+> *"Minggu terakhir Phase 2. Semua yang kalian pelajari di Week 1 dan 2, kita gabungin dan push ke level berikutnya."*
 
-Ketika kalian sudah ketemu dengan mid scale app, atau aplikasi yang lumayan besar. Maka akan sangat susah sekali untuk memanage komponen" react ini. Deliver datanya akan semakin sulit, rerendering semakin slow karena proses useEffect dimana mana, bahkan props yang terlalu banyak untuk dihandle karna komponen tree nya sudah sangat luas.
+---
 
-Di week 3 inilah kalian akan belajar konsep advance frontend dimana kalian akan improve speed cara kerja komponen react dalam development website. Bagaimana cara mengatur props dan state yang banyak, bagaimana kita mengatur suatu unique hooks untuk beberapa case, dan masalah malah latency speed dalam pemrosesan komponen react ke dalam website.
+## 📚 Study Material
 
-Kalian akan belajar menggunakan vite, dimana tools ini akan membungkus react project kalian dan menggunakan rollup modul dengan HMR vite agar pengaturan modul" yang ada react jadi ringan.
+Materi belajar — baca dan praktekin sebelum ngerjain quest/quiz.
 
-Kalian juga akan belajar Core hooks (useRef, useContext, useCallback, useMemo) untuk menghandle case yang sulit, dan Advance React Concepts seperti (rendering logic, reusable hooks, patterns, composition to avoid prop drilling).
+### Day 1-2: Advanced Hooks
 
-Setelah itu Kalian akan belajar asynchronous state management untuk mempermudah handling async proses dalam komponen react menggunakan Tanstack. Tanstack ini tidaknya TanstackQuery saja, kalian juga belajar untuk modul Tanstack lain seperti Tanstack Router, Table dan Form. agar proses data handling di komponen kalian lebih efisiend dibanding handling manual sebelumnya.
+| # | Topic | File |
+|---|-------|------|
+| 01 | Vite — Build Tool yang Bikin CRA Pensiun | [study-material/01-vite-setup.md](study-material/01-vite-setup.md) |
+| 02 | useRef Deep Dive — DOM Manipulation Tanpa Re-render | [study-material/02-useref-deep-dive.md](study-material/02-useref-deep-dive.md) |
+| 03 | useContext Deep Dive — Global State Tanpa Props Drilling | [study-material/03-usecontext-deep-dive.md](study-material/03-usecontext-deep-dive.md) |
+| 04 | useCallback & useMemo — Performance Optimization | [study-material/04-usecallback-usememo.md](study-material/04-usecallback-usememo.md) |
+| 05 | useReducer — Ketika useState Udah Nggak Cukup | [study-material/05-usereducer.md](study-material/05-usereducer.md) |
 
-Kalian juga belajar Cypress untuk frontend testing, unit testing ini tidak hanya terjadi dibackend saja. Di frontend juga membutuhkan tdd dan unit testing.
+### Day 2-3: Patterns & Custom Hooks
 
-Terakhir kalian akan belajar State Management menggunakan redux, dan beberapa updated teknologi seperti stripe untuk payment gateway dan clerk untuk authentication.
+| # | Topic | File |
+|---|-------|------|
+| 06 | Advanced Component Patterns — Bikin Component Kayak Pro | [study-material/06-advanced-patterns.md](study-material/06-advanced-patterns.md) |
+| 07 | Custom Hooks — Bikin Toolkit Sendiri | [study-material/07-custom-hooks.md](study-material/07-custom-hooks.md) |
+| 08 | React Performance — Dari 47 Re-renders ke 2 | [study-material/08-react-performance.md](study-material/08-react-performance.md) |
 
-Week3 ini akan sangat dinilai banget performance website react kalian, kalian dituntut untuk develop website react secara professional dimana data handling nya rapih dan komponen react reusable dan efektif di setiap case unique. tidak ada lagi membuat state banyak dan onChange banyak untuk handling form, tidak ada lagi useEffect sana sini untuk mengatur pengolahan data dari API. hal hal seperti itulah yang harus kita hindari di week3 ini.
+### Day 3-4: TanStack Ecosystem
 
-jadi sekarang mulai untuk mengerjakan mengerjakan study material week 3, dan hajar semua Arcane Quest nya 🚀
+| # | Topic | File |
+|---|-------|------|
+| 09 | TanStack Query — Server State Management yang Bener | [study-material/09-tanstack-query.md](study-material/09-tanstack-query.md) |
+| 10 | TanStack Router — Type-Safe Routing yang Next Level | [study-material/10-tanstack-router.md](study-material/10-tanstack-router.md) |
+| 11 | TanStack Table — Data Table yang Production-Ready | [study-material/11-tanstack-table.md](study-material/11-tanstack-table.md) |
+| 12 | TanStack Form — Form Management yang Gak Bikin Pusing | [study-material/12-tanstack-form.md](study-material/12-tanstack-form.md) |
 
-## Prerequisite
+### Day 4-5: Production Tools
 
-Pastikan kalian udah selesaiin:
-- ✅ Phase 1 (Backend: Node.js, Express, PostgreSQL, REST API)
-- ✅ Phase 2 Week 1 (HTML/CSS/jQuery)
-- ✅ Phase 2 Week 2 (React Basics)
+| # | Topic | File |
+|---|-------|------|
+| 13 | Redux Toolkit — State Management yang Scalable | [study-material/13-redux-toolkit.md](study-material/13-redux-toolkit.md) |
+| 14 | Cypress — E2E Testing yang Bikin Tidur Nyenyak | [study-material/14-cypress-testing.md](study-material/14-cypress-testing.md) |
+| 15 | Stripe + Clerk — Payment & Auth Production-Ready | [study-material/15-stripe-clerk.md](study-material/15-stripe-clerk.md) |
+| 16 | Soft Skill: Code Review Culture | [study-material/16-sk-code-review.md](study-material/16-sk-code-review.md) |
 
-## Week 3 Study Material (Berurutan)
+---
 
-- [Vite : Setup & Configuration](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/vite-setup.md)
-- [useRef Deep Dive](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/useref-deep-dive.md)
-- [useContext Deep Dive](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/usecontext-deep-dive.md)
-- [useCallback & useMemo : Performance Optimization](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/usecallback-usememo.md)
-- [Advanced React Patterns : Composition, Render Props, HOCs](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/advanced-react-patterns.md)
-- [Custom Hooks](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/custom-hooks.md)
-- [TanStack Query : Data Fetching](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/tanstack-query.md)
-- [TanStack Router](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/tanstack-router.md)
-- [Arcane Quest : Dashboard dengan TanStack Query + Table](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/ln-dashboard-tanstack.md)
-- [TanStack Table & Form](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/tanstack-table-form.md)
-- [Cypress : Frontend Testing](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/cypress-testing.md)
-- [Redux Toolkit : State Management](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/redux-toolkit.md)
-- [Stripe : Payment Gateway Integration](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/stripe-integration.md)
-- [Clerk : Authentication](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/clerk-auth.md)
-- [Arcane Quest : E-Commerce Checkout dengan Stripe + Clerk](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/ln-ecommerce-checkout.md)
-- [Soft Skills : Code Review & Collaboration](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/sk-code-review.md)
-- [Group Project Week3](https://github.com/Ethereum-Jakarta/phase-2-week3-frontend-advance/blob/main/study-material/gp-week3.md)
+## ⚔️ Arcane Quests
 
-## Referensi Dokumentasi
+Project-based challenges. Ini yang bikin portfolio kalian standout.
 
-Kalian wajib baca dokumentasi resmi ini selama week 3:
+| # | Quest | Type | File |
+|---|-------|------|------|
+| 01 | 📊 **Arcane Dashboard** — Analytics dashboard (TanStack Query + Table + Router) | Solo | [arcane-quest/aq-01-dashboard.md](arcane-quest/aq-01-dashboard.md) |
+| 02 | 🛒 **Arcane Marketplace** — E-commerce (Stripe + Clerk + Zustand) | Solo (BOSS) | [arcane-quest/aq-02-ecommerce.md](arcane-quest/aq-02-ecommerce.md) |
+| 03 | 💬 **Arcane Messenger** — Real-time chat (WebSocket/Socket.io) | Solo | [arcane-quest/aq-03-realtime-chat.md](arcane-quest/aq-03-realtime-chat.md) |
+| 04 | 🏰 **Arcane Guild Board** — Team dashboard (Group 3-4) | Group | [arcane-quest/aq-04-group-project.md](arcane-quest/aq-04-group-project.md) |
+| 05 | 🧪 **Week 3 UJIAN** — 8 coding challenges | Exam | [arcane-quest/aq-05-ujian.md](arcane-quest/aq-05-ujian.md) |
 
-- Vite → https://vitejs.dev/guide/
-- React Hooks Reference → https://react.dev/reference/react/hooks
-- useRef → https://react.dev/reference/react/useRef
-- useContext → https://react.dev/reference/react/useContext
-- useCallback → https://react.dev/reference/react/useCallback
-- useMemo → https://react.dev/reference/react/useMemo
-- TanStack Query → https://tanstack.com/query/latest/docs/react/overview
-- TanStack Router → https://tanstack.com/router/latest/docs/framework/react/overview
-- TanStack Table → https://tanstack.com/table/latest/docs/introduction
-- TanStack Form → https://tanstack.com/form/latest/docs/overview
-- Cypress → https://docs.cypress.io/guides/overview/why-cypress
-- Redux Toolkit → https://redux-toolkit.js.org/introduction/getting-started
-- Stripe Docs → https://stripe.com/docs
-- Clerk Docs → https://clerk.com/docs
+---
 
-## Cara Pengerjaan
+## 🧩 Quizzes
 
-1. Fork repo ini ke akun GitHub pribadi kalian
-2. Clone hasil fork ke local
-3. Kerjakan setiap study material secara berurutan
-4. Push ke repo fork kalian
-5. Buat Pull Request ke repo utama untuk submission
+Latihan soal dengan starter code + test cases. Kerjain semua sebelum ujian.
 
-## Peraturan
+| # | Quiz | Challenges | Difficulty | File |
+|---|------|-----------|------------|------|
+| 01 | 🪝 **Advanced Hooks** — useRef, useContext, useCallback, useMemo, useReducer | 8 soal | 🔴 HARD | [quiz/quiz-hooks.md](quiz/quiz-hooks.md) |
+| 02 | 🧩 **React Patterns** — Compound components, render props, HOC, custom hooks | 5 soal | 🔴 HARD | [quiz/quiz-patterns.md](quiz/quiz-patterns.md) |
+| 03 | ⚡ **Performance** — Optimization, fix buggy slow code, measure rerenders | 5 soal | 🔴 HARD | [quiz/quiz-performance.md](quiz/quiz-performance.md) |
 
-- Deadline setiap Arcane Quest: lihat jadwal di channel Discord
-- Wajib push minimal 1 commit per hari selama week ini
-- Code harus clean, typed (TypeScript), dan well-commented
-- Semua submission via Pull Request
-- Gunakan Vite sebagai build tool untuk semua project
-- Deploy setiap Arcane Quest ke Vercel
+---
+
+## 🗂️ Folder Structure
+
+```
+phase-2-week3-frontend-advance/
+├── README.md                          ← You are here
+├── study-material/
+│   ├── 01-vite-setup.md
+│   ├── 02-useref-deep-dive.md
+│   ├── 03-usecontext-deep-dive.md
+│   ├── 04-usecallback-usememo.md
+│   ├── 05-usereducer.md
+│   ├── 06-advanced-patterns.md
+│   ├── 07-custom-hooks.md
+│   ├── 08-react-performance.md
+│   ├── 09-tanstack-query.md
+│   ├── 10-tanstack-router.md
+│   ├── 11-tanstack-table.md
+│   ├── 12-tanstack-form.md
+│   ├── 13-redux-toolkit.md
+│   ├── 14-cypress-testing.md
+│   ├── 15-stripe-clerk.md
+│   └── 16-sk-code-review.md
+├── arcane-quest/
+│   ├── aq-01-dashboard.md
+│   ├── aq-02-ecommerce.md
+│   ├── aq-03-realtime-chat.md
+│   ├── aq-04-group-project.md
+│   └── aq-05-ujian.md
+└── quiz/
+    ├── quiz-hooks.md
+    ├── quiz-patterns.md
+    └── quiz-performance.md
+```
+
+---
+
+## 🛤️ Recommended Order
+
+1. **Study material 01-05** — Hooks fundamentals (Day 1-2)
+2. **Kerjain quiz-hooks** — latihan hooks fundamentals
+3. **Study material 06-08** — Patterns & performance
+4. **Kerjain quiz-patterns** — latihan React patterns
+5. **Study material 09-12** — TanStack ecosystem
+6. **AQ-01 Dashboard** — apply TanStack stack
+7. **AQ-03 Messenger** — learn WebSocket
+8. **quiz-performance** — optimize skills
+9. **Study material 13-16** — Redux, testing, payments, code review
+10. **AQ-02 Marketplace** — BOSS QUEST, butuh waktu paling lama
+11. **AQ-04 Guild Board** — group project, parallel sama yang lain
+12. **AQ-05 Ujian** — final exam, semua materi
+
+---
+
+## ⚙️ Tech Stack Week 3
+
+- **Vite + React + TypeScript** (semua project)
+- **Tailwind CSS** (styling)
+- **TanStack Query / Table / Router**
+- **Zustand** (state management)
+- **Socket.io** (real-time)
+- **Clerk** (auth)
+- **Stripe** (payments)
+- **Recharts** (charts)
+- **Vercel** (deployment)
+
+---
+
+## Cara Pengerjaan & Submit Tugas
+
+> Kalian udah pernah ngerjain flow ini di Phase 0-1, jadi harusnya udah familiar. Tapi gua tulis lagi biar gak ada yang bingung.
+
+**Kalian akan melakukan Fork & PR ulang untuk setiap week karena ETHJKT memisahkan 1 Repo = 1 Week.**
+
+### Flow Pengerjaan
+
+1. **Fork** repo ini ke GitHub account kalian
+2. **Clone** fork kalian ke local
+3. Kerjain study materials, quizzes, dan arcane quests
+4. **Commit** progress kalian (wajib push minimal 1 commit per hari!)
+5. **Push** ke fork kalian
+6. **Create Pull Request** ke repo ETHJKT ini
+7. Mentor akan review lewat PR comments
+8. Untuk pengerjaan selanjutnya, tinggal commit & push aja — PR otomatis ke-update
+
+### Rules Submission
+
+- 📝 Isi judul PR dengan **username/nama kalian**
+- 📅 Wajib push **minimal 1 commit per hari**
+- 🧹 Code harus **clean, typed (TypeScript), dan well-commented**
+- 📬 Semua submission via **Pull Request**
+- 🚀 Deploy setiap Arcane Quest ke **Vercel**
+
+---
+
+**Let's finish Phase 2 strong, Arcanists! 🔥⚡**
