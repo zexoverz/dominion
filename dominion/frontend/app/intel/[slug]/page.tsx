@@ -1,33 +1,49 @@
 import { getReport } from '@/lib/api';
-import ReactMarkdown from 'react-markdown';
+import HoloPanel from '@/components/HoloPanel';
+import { getGeneralColor, getGeneralIcon } from '@/lib/generals';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
 
-export default async function ReportDetailPage({ params }: { params: { slug: string } }) {
+export default async function ReportPage({ params }: { params: { slug: string } }) {
   let report: any = null;
   try { report = await getReport(params.slug); } catch {}
 
   if (!report) {
     return (
-      <div className="p-6 md:p-10 max-w-4xl mx-auto">
-        <p className="text-white/40">Report not found</p>
-        <Link href="/intel" className="text-blue-400 text-sm mt-4 inline-block">← Back to Intel</Link>
+      <div className="p-8 text-center">
+        <h1 className="label">REPORT NOT FOUND</h1>
+        <Link href="/intel" className="text-xs" style={{ color: '#00f0ff' }}>← Back to Intel</Link>
       </div>
     );
   }
 
+  const color = getGeneralColor(report.general || report.author || '');
+
   return (
-    <div className="p-6 md:p-10 max-w-4xl mx-auto space-y-6">
-      <Link href="/intel" className="text-white/30 hover:text-white/50 text-sm transition-colors">← Back to Intel</Link>
-      <div className="glass rounded-xl p-6 md:p-8">
-        <div className="mb-6">
-          <span className="text-xs text-white/30 uppercase tracking-wider">{report.general || report.author || 'Intelligence'}</span>
-          <h1 className="text-2xl font-bold text-white mt-1">{report.title}</h1>
-          {report.created_at && <p className="text-xs text-white/20 mt-2">{new Date(report.created_at).toLocaleString()}</p>}
+    <div className="p-4 md:p-8 max-w-4xl mx-auto">
+      <Link href="/intel" className="label mb-4 inline-block" style={{ color: '#00f0ff' }}>
+        ← INTELLIGENCE HUB
+      </Link>
+
+      <HoloPanel glow>
+        <div className="flex items-center gap-2 mb-4">
+          <span style={{ color }}>{getGeneralIcon(report.general || report.author || '')}</span>
+          <span className="label">{report.general || report.author || 'UNKNOWN'}</span>
+          {report.created_at && (
+            <span className="ml-auto text-xs" style={{ color: 'rgba(226,232,240,0.4)' }}>
+              {new Date(report.created_at).toLocaleDateString()}
+            </span>
+          )}
         </div>
-        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white/90 prose-p:text-white/60 prose-a:text-blue-400 prose-strong:text-white/80 prose-code:text-purple-400 prose-pre:bg-white/5 prose-pre:border prose-pre:border-white/5">
-          <ReactMarkdown>{report.content || report.body || report.summary || ''}</ReactMarkdown>
+
+        <h1 className="text-xl font-bold mb-4" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+          {report.title}
+        </h1>
+
+        <div className="prose prose-invert prose-sm max-w-none" style={{ color: 'rgba(226,232,240,0.8)' }}>
+          <ReactMarkdown>{report.content || report.body || ''}</ReactMarkdown>
         </div>
-      </div>
+      </HoloPanel>
     </div>
   );
 }

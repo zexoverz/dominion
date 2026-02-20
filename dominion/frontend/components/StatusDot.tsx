@@ -1,12 +1,23 @@
-export default function StatusDot({ status }: { status: string }) {
-  const color = status === 'active' || status === 'online' ? 'bg-green-500' :
-    status === 'idle' || status === 'paused' ? 'bg-amber-500' : 'bg-red-500';
-  const glow = status === 'active' || status === 'online' ? 'shadow-green-500/50' :
-    status === 'idle' || status === 'paused' ? 'shadow-amber-500/50' : 'shadow-red-500/50';
+export default function StatusDot({ status, size = 8 }: { status: string; size?: number }) {
+  const colors: Record<string, string> = {
+    active: '#22c55e',
+    completed: '#00f0ff',
+    pending: '#f59e0b',
+    failed: '#ef4444',
+    online: '#22c55e',
+    offline: '#555',
+  };
+  const c = colors[status?.toLowerCase()] || '#555';
   return (
-    <span className="relative flex h-2.5 w-2.5">
-      <span className={`absolute inline-flex h-full w-full rounded-full ${color} opacity-75 animate-ping`} />
-      <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${color} shadow-lg ${glow}`} />
-    </span>
+    <span
+      style={{
+        display: 'inline-block',
+        width: size,
+        height: size,
+        borderRadius: '50%',
+        background: c,
+        boxShadow: `0 0 6px ${c}`,
+      }}
+    />
   );
 }

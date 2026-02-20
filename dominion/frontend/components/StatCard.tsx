@@ -1,11 +1,23 @@
-export default function StatCard({ label, value, icon, color }: { label: string; value: string | number; icon: string; color?: string }) {
+import HoloPanel from './HoloPanel';
+
+export default function StatCard({
+  label,
+  value,
+  icon,
+}: {
+  label: string;
+  value: string | number;
+  icon?: string;
+}) {
   return (
-    <div className="glass glass-hover rounded-xl p-5 transition-all duration-300 animate-fade-in">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="text-2xl">{icon}</span>
-        <span className="text-xs font-medium uppercase tracking-wider text-white/40">{label}</span>
+    <HoloPanel glow className="animate-float">
+      <div className="label mb-1">{label}</div>
+      <div className="flex items-center gap-2">
+        {icon && <span className="text-xl">{icon}</span>}
+        <span className="text-2xl font-bold" style={{ fontFamily: "'JetBrains Mono', monospace", color: '#00f0ff' }}>
+          {value}
+        </span>
       </div>
-      <p className={`text-3xl font-bold ${color || 'gradient-text'}`}>{value}</p>
-    </div>
+    </HoloPanel>
   );
 }

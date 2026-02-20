@@ -1,17 +1,24 @@
 import './globals.css';
-import type { Metadata } from 'next';
-import Layout from '@/components/Layout';
+import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
+
+const Scene3D = dynamic(() => import('@/components/Scene3D'), { ssr: false });
+const RadialMenu = dynamic(() => import('@/components/RadialMenu'), { ssr: false });
 
 export const metadata: Metadata = {
-  title: 'Dominion — AI Command Center',
-  description: 'Strategic AI Operations Dashboard',
+  title: 'DOMINION COMMAND',
+  description: 'Holographic Command Interface',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-surface-primary text-white antialiased">
-        <Layout>{children}</Layout>
+    <html lang="en">
+      <body>
+        <Scene3D />
+        <div className="relative" style={{ zIndex: 10, minHeight: '100vh' }}>
+          {children}
+        </div>
+        <RadialMenu />
       </body>
     </html>
   );

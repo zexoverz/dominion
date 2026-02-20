@@ -1,40 +1,58 @@
+import { GENERALS } from '@/lib/generals';
 import StatusDot from './StatusDot';
 
-const GENERAL_META: Record<string, { emoji: string; role: string; color: string; gradient: string }> = {
-  THRONE:      { emoji: '👑', role: 'Strategic Command',          color: '#f59e0b', gradient: 'from-amber-500 to-orange-600' },
-  GRIMOIRE:    { emoji: '📖', role: 'Knowledge & Research',       color: '#8b5cf6', gradient: 'from-purple-500 to-violet-600' },
-  SEER:        { emoji: '🔮', role: 'Market Intelligence',        color: '#06b6d4', gradient: 'from-cyan-500 to-teal-600' },
-  PHANTOM:     { emoji: '👻', role: 'Security & Stealth',         color: '#ef4444', gradient: 'from-red-500 to-rose-600' },
-  ECHO:        { emoji: '🔊', role: 'Communications',             color: '#22c55e', gradient: 'from-green-500 to-emerald-600' },
-  MAMMON:      { emoji: '💰', role: 'Finance & Treasury',         color: '#f59e0b', gradient: 'from-amber-500 to-yellow-600' },
-  'WRAITH-EYE':{ emoji: '👁️', role: 'Surveillance & Monitoring',  color: '#6366f1', gradient: 'from-indigo-500 to-blue-600' },
-};
-
 export default function GeneralCard({ general }: { general: any }) {
-  const name = (general.name || general.id || '').toUpperCase();
-  const meta = GENERAL_META[name] || { emoji: '🤖', role: 'Agent', color: '#3b82f6', gradient: 'from-blue-500 to-indigo-600' };
-  const initials = name.slice(0, 2);
-  const status = general.status || 'idle';
-  const lastActive = general.last_active || general.lastActive;
+  const key = (general.name || general.id || '').toUpperCase();
+  const meta = GENERALS[key] || { name: key, role: 'Unknown', color: '#00f0ff', icon: '⬡' };
 
   return (
-    <div className="glass glass-hover rounded-xl p-5 transition-all duration-300 group animate-fade-in">
-      <div className="flex items-start gap-4">
-        <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${meta.gradient} flex items-center justify-center text-white font-bold text-sm shrink-0 group-hover:scale-110 transition-transform`}>
-          {initials}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-lg">{meta.emoji}</span>
-            <h3 className="font-semibold text-white truncate">{name}</h3>
-            <StatusDot status={status} />
-          </div>
-          <p className="text-sm text-white/40">{meta.role}</p>
-          {lastActive && (
-            <p className="text-xs text-white/25 mt-2">Last active: {new Date(lastActive).toLocaleDateString()}</p>
-          )}
-        </div>
+    <div
+      className="holo-panel scanlines p-5 transition-all duration-300 hover:scale-[1.02]"
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+        minHeight: 180,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        borderColor: meta.color,
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${meta.color}40, inset 0 0 20px ${meta.color}10`;
+        (e.currentTarget as HTMLElement).style.borderColor = meta.color;
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.boxShadow = '';
+        (e.currentTarget as HTMLElement).style.borderColor = '';
+      }}
+    >
+      <div
+        className="flex items-center justify-center mb-2"
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: '50%',
+          border: `2px solid ${meta.color}`,
+          boxShadow: `0 0 12px ${meta.color}60`,
+          fontSize: 22,
+        }}
+      >
+        {meta.icon}
       </div>
+      <h3 className="text-sm font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+        {meta.name}
+      </h3>
+      <p className="text-xs mt-1" style={{ color: 'rgba(226,232,240,0.5)' }}>{meta.role}</p>
+      <div className="flex items-center gap-1 mt-2">
+        <StatusDot status={general.status || 'online'} />
+        <span className="text-xs">{general.status || 'online'}</span>
+      </div>
+      {general.mission_count !== undefined && (
+        <span className="label mt-1">{general.mission_count} missions</span>
+      )}
     </div>
   );
 }
