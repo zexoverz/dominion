@@ -1,204 +1,67 @@
-"use client";
+import { getMissions, getReports, getDailyCosts } from '@/lib/api';
+import RPGPanel from '@/components/RPGPanel';
+import QuestCard from '@/components/QuestCard';
+import ReportCard from '@/components/ReportCard';
+import BtcTicker from '@/components/BtcTicker';
 
-import { useState, useEffect } from "react";
-import { generals as mockGenerals } from "../lib/mock-data";
-import { getGenerals, getMissions, getDailyCosts } from "../lib/api";
-import { mergeGenerals } from "../lib/merge-generals";
-import GeneralCard from "../components/GeneralCard";
-import StatsBar from "../components/StatsBar";
-import SpriteStage from "../components/sprites/SpriteStage";
-import { getGeneralSprite } from "../components/sprites";
-import AgentActivityFeed from "../components/realtime/AgentActivityFeed";
-import SystemPulse from "../components/realtime/SystemPulse";
-import CostTicker from "../components/realtime/CostTicker";
-import NetworkGraph from "../components/realtime/NetworkGraph";
-import MissionProgressLive from "../components/realtime/MissionProgressLive";
-import { useActivity } from "../lib/use-activity";
-import BtcTicker from "../components/BtcTicker";
-import GeneralsMiniGrid from "../components/GeneralsMiniGrid";
+export const dynamic = 'force-dynamic';
 
-export default function Dashboard() {
-  const [generals, setGenerals] = useState(mockGenerals);
-  const [liveMissions, setLiveMissions] = useState<any[]>([]);
-  const [costToday, setCostToday] = useState(() => mockGenerals.reduce((sum, g) => sum + g.costToday, 0));
-  const activity = useActivity();
+export default async function Dashboard() {
+  const [missions, reports, costs] = await Promise.all([
+    getMissions().catch(() => []),
+    getReports().catch(() => []),
+    getDailyCosts().catch(() => []),
+  ]);
 
-  useEffect(() => {
-    getGenerals()
-      .then((data) => setGenerals(mergeGenerals(data)))
-      .catch(() => {});
-    getMissions()
-      .then((data) => setLiveMissions(data || []))
-      .catch(() => {});
-    getDailyCosts()
-      .then((data) => {
-        const total = (data || []).reduce((s: number, c: any) => s + parseFloat(c.cost_usd || "0"), 0);
-        if (total > 0) setCostToday(total);
-      })
-      .catch(() => {});
-  }, []);
+  const active = missions.filter((m: any) => m.status === 'active' || m.status === 'running').slice(0, 3);
+  const completed = missions.filter((m: any) => m.status === 'completed' || m.status === 'done').length;
+  const recentReports = reports.slice(0, 3);
+  const todayCost = costs.length > 0 ? costs[0] : null;
 
   return (
-    <div className="max-w-full overflow-hidden">
-      {/* ═══ BTC MARKET ORACLE ═══ */}
-      <BtcTicker />
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="font-pixel text-gold text-sm sm:text-lg">🏠 Town Square</h1>
+        <BtcTicker />
+      </div>
 
-      {/* ═══ TITLE SCREEN ═══ */}
-      <div className="rpg-panel mb-6 text-center py-6">
-        <p className="font-pixel text-[8px] text-rpg-borderMid mb-2 tracking-widest">— WELCOME TO —</p>
-        <h1 className="font-pixel text-[16px] md:text-[20px] text-throne-gold text-glow-gold mb-3 chapter-title">
-          👑 THE DOMINION
-        </h1>
-        <p className="font-pixel text-[8px] text-rpg-border tracking-wider">
-          of LORD ZEXO
-        </p>
-        <p className="text-[9px] font-body text-rpg-borderMid mt-3">
-          Command your generals. Conquer the unknown.
-        </p>
-        <div className="flex items-center justify-center gap-4 mt-4">
-          <SystemPulse />
-          <CostTicker initialCost={costToday} />
-        </div>
-        {(activity.eventCount > 0 || activity.missionCount > 0) && (
-          <div className="flex items-center justify-center gap-6 mt-3">
-            <span className="font-pixel text-[8px] text-seer-blue">
-              📡 {activity.eventCount} events
-            </span>
-            <span className="font-pixel text-[8px] text-throne-gold">
-              ⚔️ {activity.missionCount} missions
-            </span>
-            {activity.lastUpdate && (
-              <span className="font-pixel text-[7px] text-rpg-borderMid">
-                Updated {Math.round((Date.now() - activity.lastUpdate) / 1000)}s ago
-              </span>
-            )}
+      {/* Quick Stats */}
+      <div className="grid grid-cols-3 gap-3">
+        <RPGPanel className="text-center">
+          <div className="text-2xl font-bold text-forest">{active.length}</div>
+          <div className="text-xs text-brown-dark">Active</div>
+        </RPGPanel>
+        <RPGPanel className="text-center">
+          <div className="text-2xl font-bold text-royal">{completed}</div>
+          <div className="text-xs text-brown-dark">Completed</div>
+        </RPGPanel>
+        <RPGPanel className="text-center">
+          <div className="text-2xl font-bold text-gold">{todayCost?.total_cost ? `$${Number(todayCost.total_cost).toFixed(2)}` : '$0'}</div>
+          <div className="text-xs text-brown-dark">Today&apos;s Cost</div>
+        </RPGPanel>
+      </div>
+
+      {/* Active Quests */}
+      <RPGPanel title="Active Quests">
+        {active.length === 0 ? (
+          <p className="text-brown-dark text-sm italic">No active quests. The realm is quiet...</p>
+        ) : (
+          <div className="space-y-3">
+            {active.map((m: any) => <QuestCard key={m.id} mission={m} />)}
           </div>
         )}
-      </div>
+      </RPGPanel>
 
-      {/* ═══ HUD STATS BAR ═══ */}
-      <StatsBar />
-
-      {/* ═══ GENERALS MINI GRID ═══ */}
-      <GeneralsMiniGrid generals={generals} />
-
-      {/* ═══ CHAPTER TITLE: PHASE 1 ═══ */}
-      <div className="mb-6 text-center py-4" style={{
-        background: 'linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.08) 20%, rgba(251,191,36,0.12) 50%, rgba(251,191,36,0.08) 80%, transparent 100%)',
-        borderTop: '2px solid #5a4a3a',
-        borderBottom: '2px solid #5a4a3a',
-      }}>
-        <p className="font-pixel text-[7px] text-rpg-borderMid mb-1 tracking-[6px]">CHAPTER</p>
-        <h2 className="font-pixel text-[14px] text-throne-gold text-glow-gold chapter-title">
-          ⚔️ PHASE 1 ⚔️
-        </h2>
-        <p className="font-pixel text-[8px] text-throne-goldDark mt-1 tracking-wider">THE FIRST THREE</p>
-        <div className="flex justify-center gap-6 mt-4 items-end">
-          {generals.slice(0, 3).map((g) => (
-            <div key={g.id} className="text-center">
-              {getGeneralSprite(g.id, g.status === 'ACTIVE' ? 'working' : 'idle', 56) || (
-                <span className="text-2xl">{g.emoji}</span>
-              )}
-              <p className="font-pixel text-[7px] mt-1 text-rpg-shadow" style={{ color: g.color }}>{g.name}</p>
-            </div>
-          ))}
-          <div className="border-l-2 border-rpg-borderDark hidden md:block" />
-          {generals.slice(3).map((g) => (
-            <div key={g.id} className="text-center opacity-25 grayscale hidden md:block">
-              {getGeneralSprite(g.id, 'idle', 48) || (
-                <span className="text-2xl">{g.emoji}</span>
-              )}
-              <p className="font-pixel text-[7px] mt-1 text-rpg-borderMid">{g.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ═══ FEATURED GENERAL ═══ */}
-      <div className="rpg-panel p-4 mb-6 flex flex-col items-center">
-        <p className="font-pixel text-[8px] text-rpg-borderMid mb-3 tracking-widest">— SUPREME COMMANDER —</p>
-        <SpriteStage
-          generalId="throne"
-          name="THRONE"
-          state="working"
-          actionText="Orchestrating Phase 1 deployment"
-          status="online"
-          size={128}
-        />
-      </div>
-
-      {/* ═══ ACTIVITY FEED (PROMINENT) ═══ */}
-      <div className="rpg-panel p-4 mb-6">
-        <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">📡 LIVE ACTIVITY</h2>
-        <AgentActivityFeed className="h-[280px] md:h-[320px]" />
-      </div>
-
-      {/* ═══ MAIN CONTENT ═══ */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-        {/* Generals Grid */}
-        <div className="lg:col-span-2">
-          <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">📋 THE GENERALS</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {generals.map((g) => (
-              <GeneralCard key={g.id} general={g} />
-            ))}
+      {/* Recent Intel */}
+      <RPGPanel title="Recent Intel">
+        {recentReports.length === 0 ? (
+          <p className="text-brown-dark text-sm italic">No intel reports yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {recentReports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
           </div>
-        </div>
-
-        {/* Command Center sidebar */}
-        <div className="lg:col-span-1">
-          <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">⚡ COMMAND CENTER</h2>
-          {liveMissions.length > 0 ? (
-            liveMissions.slice(0, 3).map((m: any) => (
-              <MissionProgressLive
-                key={m.id}
-                missionName={m.title || "Unknown Mission"}
-                initialProgress={m.progress_pct ?? (m.status === "completed" ? 100 : 0)}
-                color={m.status === "completed" ? "#22c55e" : "#fbbf24"}
-                className="mb-4"
-              />
-            ))
-          ) : (
-            <>
-              <MissionProgressLive
-                missionName="Deploy the Watchtower"
-                initialProgress={65}
-                color="#fbbf24"
-                className="mb-4"
-              />
-              <MissionProgressLive
-                missionName="Shadow Protocol Alpha"
-                initialProgress={90}
-                color="#94a3b8"
-              />
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* ═══ LIVE INTEL ═══ */}
-      {activity.events.length > 0 && (
-        <div className="rpg-panel p-4 mb-6">
-          <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">📡 LIVE INTEL FEED</h2>
-          <div className="space-y-2">
-            {activity.events.slice(0, 3).map((evt, i) => (
-              <div key={evt.id || i} className="flex items-start gap-2 text-[10px] font-body">
-                <span>{evt.emoji || '⚡'}</span>
-                <span className="text-rpg-text flex-1">{evt.message}</span>
-                <span className="text-rpg-borderMid text-[8px] whitespace-nowrap">
-                  {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ═══ NETWORK GRAPH ═══ */}
-      <div className="mb-6">
-        <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">🌐 GENERAL NETWORK</h2>
-        <NetworkGraph className="max-w-2xl" />
-      </div>
+        )}
+      </RPGPanel>
     </div>
   );
 }

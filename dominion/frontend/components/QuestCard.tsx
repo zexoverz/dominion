@@ -1,88 +1,26 @@
-"use client";
+import Link from 'next/link';
+import GeneralBadge from './GeneralBadge';
+import StatusBadge from './StatusBadge';
+import RPGProgress from './RPGProgress';
 
-import { useRouter } from "next/navigation";
-import { Mission, generals } from "../lib/mock-data";
-import PixelProgress from "./PixelProgress";
-
-const priorityStars: Record<string, number> = {
-  CRITICAL: 5,
-  HIGH: 4,
-  MEDIUM: 3,
-  LOW: 2,
-};
-
-const priorityColors: Record<string, string> = {
-  CRITICAL: "#dc2626",
-  HIGH: "#f97316",
-  MEDIUM: "#fbbf24",
-  LOW: "#22c55e",
-};
-
-const statusLabels: Record<string, string> = {
-  PROPOSED: "📜 PROPOSED",
-  IN_PROGRESS: "⚔️ ACTIVE",
-  REVIEW: "🔍 REVIEW",
-  COMPLETE: "✅ COMPLETE",
-  active: "⚔️ ACTIVE",
-  completed: "✅ COMPLETE",
-  pending: "📜 PROPOSED",
-  review: "🔍 REVIEW",
-};
-
-export default function QuestCard({ mission }: { mission: Mission }) {
-  const router = useRouter();
-  const general = generals.find((g) => g.id === mission.assignedTo);
-  const pColor = priorityColors[mission.priority] || "#fbbf24";
-  const stars = priorityStars[mission.priority] || 1;
+export default function QuestCard({ mission }: { mission: any }) {
+  const steps = mission.steps || [];
+  const done = steps.filter((s: any) => s.status === 'completed' || s.status === 'done').length;
+  const total = steps.length || 1;
 
   return (
-    <div
-      className="quest-scroll p-4 mb-4 cursor-pointer hover:border-throne-gold/60 active:scale-[0.98] transition-all"
-      onClick={() => router.push(`/missions/${mission.id}`)}
-    >
-      {/* Quest Header */}
-      <div className="flex items-center justify-between mb-3 gap-2">
-        <div className="flex items-center gap-3 flex-wrap">
-          {/* Difficulty Stars */}
-          <div className="flex gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <span key={i} className={`text-[10px] ${i < stars ? 'star-filled' : 'star-empty'}`}>★</span>
-            ))}
-          </div>
-          <span
-            className="text-[8px] font-pixel px-2 py-0.5"
-            style={{ backgroundColor: pColor + '22', color: pColor, border: `1px solid ${pColor}44` }}
-          >
-            {mission.priority}
-          </span>
+    <Link href={`/quests/${mission.id}`} className="block rpg-panel hover:border-gold transition-colors">
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-bold text-brown-dark truncate">{mission.title || mission.name}</h3>
+          {mission.general && <GeneralBadge name={mission.general} />}
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[8px] font-body text-rpg-border">{statusLabels[mission.status]}</span>
-          <span className="text-lg flex-shrink-0">{general?.emoji}</span>
-        </div>
+        <StatusBadge status={mission.status || 'pending'} />
       </div>
-
-      {/* Quest Title */}
-      <h3 className="font-pixel text-[10px] text-throne-gold text-rpg-shadow mb-2">{mission.title}</h3>
-      <p className="text-[9px] font-body text-rpg-border mb-3 leading-relaxed">{mission.description}</p>
-
-      {/* Progress Bar — EXP style */}
-      <div className="mb-3 border border-rpg-borderDark p-2 bg-rpg-bg/50">
-        <div className="flex justify-between text-[8px] font-pixel text-rpg-borderMid mb-1">
-          <span>PROGRESS</span>
-          <span className="text-throne-goldLight">{mission.progress}%</span>
-        </div>
-        <PixelProgress value={mission.progress} color={pColor} />
-      </div>
-
-      {/* Reward Section */}
-      <div className="flex justify-between items-center border-t-2 border-rpg-borderDark pt-2 mt-2">
-        <div className="flex items-center gap-2">
-          <span className="text-[8px] font-pixel text-throne-gold">🎁 REWARD:</span>
-          <span className="text-[9px] font-body text-throne-goldLight">{mission.reward}</span>
-        </div>
-        <span className="text-[8px] font-body text-rpg-borderMid">{mission.createdAt}</span>
-      </div>
-    </div>
+      {mission.priority && (
+        <span className="text-xs text-crimson font-bold">⚡ {mission.priority}</span>
+      )}
+      {steps.length > 0 && <RPGProgress value={done} max={total} label="Progress" />}
+    </Link>
   );
 }
