@@ -16,112 +16,55 @@ body {
   line-height: 1.8;
 }
 
-/* Terrain backgrounds for pages */
-.bg-terrain-grass {
-  background: url('/assets/pokemon/terrain-grass-terrain.png') repeat;
-  background-size: 480px;
-  image-rendering: pixelated;
-  position: relative;
-}
-.bg-terrain-grass::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(152, 216, 216, 0.75);
-  z-index: 0;
-  pointer-events: none;
-}
-.bg-terrain-grass > * { position: relative; z-index: 1; }
-
-.bg-party {
-  background: url('/assets/pokemon/party-bg.png') repeat;
-  image-rendering: pixelated;
-  background-size: 128px;
-}
-
-.bg-terrain-building {
-  background: url('/assets/pokemon/terrain-building-terrain.png') repeat;
-  background-size: 480px;
-  image-rendering: pixelated;
-  position: relative;
-}
-.bg-terrain-building::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(152, 216, 216, 0.7);
-  z-index: 0;
-  pointer-events: none;
-}
-.bg-terrain-building > * { position: relative; z-index: 1; }
-
-.bg-terrain-cave {
-  background: url('/assets/pokemon/terrain-cave-terrain.png') repeat;
-  background-size: 480px;
-  image-rendering: pixelated;
-  position: relative;
-}
-.bg-terrain-cave::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(40, 40, 60, 0.6);
-  z-index: 0;
-  pointer-events: none;
-}
-.bg-terrain-cave > * { position: relative; z-index: 1; }
-
-.bg-terrain-indoor {
-  background: url('/assets/pokemon/terrain-indoor-terrain.png') repeat;
-  background-size: 480px;
-  image-rendering: pixelated;
-  position: relative;
-}
-.bg-terrain-indoor::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(240, 232, 216, 0.7);
-  z-index: 0;
-  pointer-events: none;
-}
-.bg-terrain-indoor > * { position: relative; z-index: 1; }
-
-.bg-dex {
-  background: url('/assets/pokemon/dex-kanto_dex_bgtiles.png') repeat;
-  background-size: 256px;
-  image-rendering: pixelated;
-  position: relative;
-}
-.bg-dex::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(200, 56, 56, 0.15);
-  z-index: 0;
-  pointer-events: none;
-}
-.bg-dex > * { position: relative; z-index: 1; }
-
-/* Summary screen bg */
-.bg-summary {
-  background: url('/assets/pokemon/summary_screen-bg.png') no-repeat center top;
-  background-size: 100% auto;
-  image-rendering: pixelated;
-  min-height: 400px;
-}
-
 img.pixel {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
 }
 
-/* Pokemon double-border window */
+/* ===== Page backgrounds — clean Pokemon game colors ===== */
+
+/* Dashboard: Classic FRLG teal with region map watermark */
+.bg-dashboard {
+  background: linear-gradient(180deg, #78c0c0 0%, #98d8d8 30%, #b0e8d0 100%);
+  min-height: 100vh;
+}
+
+/* Missions: Party screen blue */
+.bg-missions {
+  background: linear-gradient(180deg, #6888b8 0%, #7898c8 50%, #88a8d8 100%);
+  min-height: 100vh;
+}
+
+/* Mission detail: Summary screen style */
+.bg-mission-detail {
+  background: linear-gradient(180deg, #e8a060 0%, #f0b878 20%, #f0e8d8 40%);
+  min-height: 100vh;
+}
+
+/* Intel: Pokedex red */
+.bg-intel {
+  background: linear-gradient(180deg, #d04040 0%, #e05050 30%, #f08080 100%);
+  min-height: 100vh;
+}
+
+/* Generals: Pokemon storage green */
+.bg-generals {
+  background: linear-gradient(180deg, #58a858 0%, #68b868 30%, #88d888 100%);
+  min-height: 100vh;
+}
+
+/* Command: Pokemon Center pink/peach */
+.bg-command {
+  background: linear-gradient(180deg, #f0c0a0 0%, #f0d8c0 30%, #f8f0e8 100%);
+  min-height: 100vh;
+}
+
+/* ===== Pokemon Window (dialog/panel) ===== */
 .pkmn-window {
   background: #f8f8f8;
   border: 3px solid #404040;
   border-radius: 8px;
-  box-shadow: inset 0 0 0 2px #d0d0d0;
+  box-shadow: inset 0 0 0 2px #d0d0d0, 2px 2px 0 rgba(0,0,0,0.15);
   padding: 12px;
 }
 
@@ -129,11 +72,11 @@ img.pixel {
   background: #f0e8d8;
   border: 3px solid #404040;
   border-radius: 8px;
-  box-shadow: inset 0 0 0 2px #c8c0b0;
+  box-shadow: inset 0 0 0 2px #c8c0b0, 2px 2px 0 rgba(0,0,0,0.15);
   padding: 12px;
 }
 
-/* HP Bar */
+/* ===== HP Bar ===== */
 .hp-bar-outer {
   background: #484848;
   height: 8px;
@@ -148,13 +91,13 @@ img.pixel {
 .hp-yellow { background: #f8d030; }
 .hp-red { background: #f85030; }
 
-/* Pokemon menu sidebar */
+/* ===== Pokemon Nav Sidebar ===== */
 .pkmn-menu {
   background: #485888;
   border: 3px solid #303850;
   border-radius: 12px;
   padding: 8px 0;
-  box-shadow: inset 0 0 0 2px #586898;
+  box-shadow: inset 0 0 0 2px #586898, 3px 3px 0 rgba(0,0,0,0.2);
 }
 
 .pkmn-menu-item {
@@ -168,9 +111,10 @@ img.pixel {
 }
 .pkmn-menu-item:hover, .pkmn-menu-item.active {
   background: #78a8e8;
+  color: #fff;
 }
 
-/* Pokemon button */
+/* ===== Pokemon Button ===== */
 .pkmn-btn {
   background: linear-gradient(to bottom, #f8a060, #f08030);
   border: 2px solid #c05820;
@@ -181,33 +125,28 @@ img.pixel {
   cursor: pointer;
   text-shadow: 1px 1px 0 #804020;
 }
-.pkmn-btn:active {
-  transform: translateY(1px);
-}
+.pkmn-btn:active { transform: translateY(1px); }
 .pkmn-btn-blue {
   background: linear-gradient(to bottom, #60a0f8, #3890f8);
   border-color: #2060c0;
   text-shadow: 1px 1px 0 #204080;
 }
 
-/* Status badges */
-.badge-active { background: #f08030; color: #fff; }
-.badge-complete { background: #48d048; color: #fff; }
-.badge-pending { background: #a0a0a0; color: #fff; }
-.badge-failed { background: #f85030; color: #fff; }
-
+/* ===== Status Badges ===== */
 .status-badge {
   font-size: 7px;
   padding: 2px 6px;
   border-radius: 2px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  display: inline-block;
 }
+.badge-active { background: #f08030; color: #fff; }
+.badge-completed, .badge-complete { background: #48d048; color: #fff; }
+.badge-pending { background: #a0a0a0; color: #fff; }
+.badge-failed { background: #f85030; color: #fff; }
 
-/* Text box (dialog) */
+/* ===== Text Box ===== */
 .pkmn-textbox {
   background: #f8f8f8;
   border: 3px solid #404040;
@@ -230,7 +169,7 @@ img.pixel {
   50% { transform: translateY(3px); }
 }
 
-/* Party slot */
+/* ===== Party Slot (Mission Card) ===== */
 .party-slot {
   background: #a0c8e8;
   border: 2px solid #607080;
@@ -246,7 +185,7 @@ img.pixel {
   background: #78b0d8;
 }
 
-/* Pokedex entry */
+/* ===== Pokedex Entry ===== */
 .pokedex-entry {
   display: flex;
   align-items: center;
@@ -259,7 +198,7 @@ img.pixel {
   background: #e8e8e8;
 }
 
-/* Mobile bottom nav */
+/* ===== Mobile Nav ===== */
 .mobile-nav {
   position: fixed;
   bottom: 0;
@@ -274,12 +213,7 @@ img.pixel {
   z-index: 50;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #d0d0d0; }
-::-webkit-scrollbar-thumb { background: #808080; border-radius: 3px; }
-
-/* Stat bar */
+/* ===== Stat Bar ===== */
 .stat-bar-bg {
   background: #404040;
   height: 6px;
@@ -290,11 +224,9 @@ img.pixel {
   background: #3890f8;
 }
 
-/* Type badge images */
-.type-badge {
-  image-rendering: pixelated;
-  height: 14px;
-  display: inline-block;
-}
+/* ===== Misc ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #d0d0d0; }
+::-webkit-scrollbar-thumb { background: #808080; border-radius: 3px; }
 
 a { text-decoration: none; color: inherit; }

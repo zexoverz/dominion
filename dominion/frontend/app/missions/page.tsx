@@ -7,7 +7,7 @@ export default async function MissionsPage() {
   try { missions = await getMissions(); } catch {}
 
   return (
-    <div className="space-y-4 bg-party min-h-screen">
+    <div className="space-y-4 bg-missions min-h-screen">
       <PokemonWindow title="POKEMON PARTY — MISSIONS">
         {missions.length === 0 && <div className="text-[9px] text-[#909090]">No missions found...</div>}
         {missions.map((m: any, i: number) => (

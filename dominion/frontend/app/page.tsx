@@ -16,7 +16,7 @@ export default async function Dashboard() {
   const completed = missions.filter((m: any) => m.status === 'complete' || m.status === 'completed').length;
 
   return (
-    <div className="space-y-4 bg-terrain-grass min-h-screen">
+    <div className="space-y-4 bg-dashboard min-h-screen">
       {/* Trainer Card */}
       <PokemonWindow title="TRAINER CARD">
         <div className="text-[12px] font-bold mb-3">LORD ZEXO</div>

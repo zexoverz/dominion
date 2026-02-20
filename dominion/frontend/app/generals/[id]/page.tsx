@@ -27,15 +27,15 @@ export default async function GeneralDetail({ params }: { params: { id: string }
 
   const displayName = general?.name || info?.name || name;
   const relatedMissions = missions.filter((m: any) =>
-    (m.assignedTo || m.general || '').toUpperCase() === displayName.toUpperCase()
+    (m.agent_id || m.assigned_to || m.general || '').toUpperCase() === displayName.toUpperCase()
   );
 
   return (
-    <div className="space-y-4 bg-terrain-building min-h-screen">
+    <div className="space-y-4 bg-generals min-h-screen">
       <Link href="/generals" className="text-[9px] text-[#78a8e8]">← BACK</Link>
 
       {/* Summary-style header */}
-      <div className="bg-summary rounded-lg p-4" style={{ minHeight: 220 }}>
+      <div className="pkmn-window" style={{ minHeight: 220 }}>
         <div className="flex items-start gap-4 pt-4">
           {/* Trainer + Pokemon sprites */}
           <div className="flex flex-col items-center gap-2">

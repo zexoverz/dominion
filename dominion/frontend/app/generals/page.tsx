@@ -15,7 +15,7 @@ export default async function GeneralsPage() {
   });
 
   return (
-    <div className="space-y-4 bg-terrain-building min-h-screen">
+    <div className="space-y-4 bg-generals min-h-screen">
       <PokemonWindow title="BILL&apos;S PC — GENERALS">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {allGenerals.map((g) => (

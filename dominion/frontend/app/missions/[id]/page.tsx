@@ -21,16 +21,18 @@ export default async function MissionDetail({ params }: { params: { id: string }
 
   const steps = mission.steps || [];
   const doneSteps = steps.filter((s: any) => s.status === 'complete' || s.status === 'done').length;
-  const progress = Math.round((mission.progress || 0) * 100);
+  const agent = mission.agent_id || mission.assigned_to || mission.general || '';
+  const rawProgress = mission.progress_pct ?? mission.progress ?? 0;
+  const progress = mission.status === 'completed' ? 100 : Math.round(rawProgress);
 
   return (
-    <div className="space-y-4 bg-terrain-cave min-h-screen">
+    <div className="space-y-4 bg-mission-detail min-h-screen">
       <Link href="/missions" className="text-[9px] text-[#78a8e8]">← BACK</Link>
 
       {/* Summary Screen Style Header */}
-      <div className="bg-summary rounded-lg p-4" style={{ minHeight: 200 }}>
+      <div className="pkmn-window" style={{ minHeight: 200 }}>
         <div className="flex items-start gap-4 pt-4">
-          <GeneralSprite name={mission.assignedTo || mission.general || ''} size={96} />
+          <GeneralSprite name={agent} size={96} />
           <div>
             <div className="text-[11px] font-bold mb-1 text-white" style={{ textShadow: '1px 1px 0 #000' }}>{mission.title || mission.name}</div>
             <StatusBadge status={mission.status || 'pending'} />

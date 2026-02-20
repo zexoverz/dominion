@@ -7,7 +7,7 @@ export default async function IntelPage() {
   try { reports = await getReports(); } catch {}
 
   return (
-    <div className="space-y-4 bg-dex min-h-screen">
+    <div className="space-y-4 bg-intel min-h-screen">
       <PokemonWindow title="POKEDEX — INTEL REPORTS">
         {reports.length === 0 && <div className="text-[9px] text-[#909090]">No reports found...</div>}
         {reports.map((r: any, i: number) => (

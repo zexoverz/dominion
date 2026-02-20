@@ -45,7 +45,7 @@ export default function CommandPage() {
   }
 
   return (
-    <div className="space-y-4 bg-terrain-indoor min-h-screen">
+    <div className="space-y-4 bg-command min-h-screen">
       <PokemonWindow>
         <TextBox>
           <div className="text-[9px]">Welcome to the POKEMON CENTER! How can I help you?</div>
