@@ -24,22 +24,48 @@ export default async function MissionDetail({ params }: { params: { id: string }
   const progress = Math.round((mission.progress || 0) * 100);
 
   return (
-    <div className="space-y-4">
-      <Link href="/missions" className="text-[9px] text-[#3890f8]">← BACK</Link>
+    <div className="space-y-4 bg-terrain-cave min-h-screen">
+      <Link href="/missions" className="text-[9px] text-[#78a8e8]">← BACK</Link>
 
-      <PokemonWindow>
-        <div className="flex items-start gap-4">
-          <GeneralSprite name={mission.assignedTo || mission.general || ''} size={64} />
+      {/* Summary Screen Style Header */}
+      <div className="bg-summary rounded-lg p-4" style={{ minHeight: 200 }}>
+        <div className="flex items-start gap-4 pt-4">
+          <GeneralSprite name={mission.assignedTo || mission.general || ''} size={96} />
           <div>
-            <div className="text-[11px] font-bold mb-1">{mission.title || mission.name}</div>
+            <div className="text-[11px] font-bold mb-1 text-white" style={{ textShadow: '1px 1px 0 #000' }}>{mission.title || mission.name}</div>
             <StatusBadge status={mission.status || 'pending'} />
-            <div className="text-[8px] text-[#707070] mt-1">Assigned: {mission.assignedTo || mission.general || 'N/A'}</div>
+            <div className="text-[8px] text-white mt-1" style={{ textShadow: '1px 1px 0 #000' }}>
+              OT: {mission.assignedTo || mission.general || 'N/A'}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* HP Bar with real sprite aesthetic */}
+      <PokemonWindow title="HP / PROGRESS">
+        <div className="flex items-center gap-2">
+          <img src="/assets/pokemon/summary_screen-hp_bar.png" alt="" className="pixel" style={{ imageRendering: 'pixelated', height: 10 }} />
+          <div className="flex-1">
+            <HPBar value={progress} max={100} />
+          </div>
+        </div>
+        <div className="text-[7px] text-center mt-1">{progress}% — {doneSteps}/{steps.length} steps</div>
+      </PokemonWindow>
+
+      {/* EXP Bar */}
+      <PokemonWindow title="EXP">
+        <div className="flex items-center gap-2">
+          <img src="/assets/pokemon/summary_screen-exp_bar.png" alt="" className="pixel" style={{ imageRendering: 'pixelated', height: 10 }} />
+          <div className="flex-1">
+            <div className="hp-bar-outer">
+              <div className="hp-bar-inner" style={{ width: `${progress}%`, background: '#3890f8' }} />
+            </div>
           </div>
         </div>
       </PokemonWindow>
 
       {mission.description && (
-        <PokemonWindow cream title="MISSION INFO">
+        <PokemonWindow cream title="TRAINER MEMO">
           <div className="text-[8px]">{mission.description}</div>
         </PokemonWindow>
       )}
@@ -49,23 +75,18 @@ export default async function MissionDetail({ params }: { params: { id: string }
           {steps.map((step: any, i: number) => (
             <div key={i} className="flex items-center justify-between py-2 border-b border-[#d0d0d0] last:border-0">
               <div>
-                <div className="text-[9px] font-bold">{step.title || step.name || `Step ${i + 1}`}</div>
+                <div className="text-[9px] font-bold">{step.title || step.name || `Move ${i + 1}`}</div>
                 {step.description && <div className="text-[7px] text-[#909090] mt-1">{step.description}</div>}
               </div>
               <div className="text-[8px]">
                 <span className={step.status === 'complete' || step.status === 'done' ? 'text-[#48d048]' : 'text-[#909090]'}>
-                  {step.status === 'complete' || step.status === 'done' ? '✓' : '—'}
+                  {step.status === 'complete' || step.status === 'done' ? '✓ HIT' : '— PP'}
                 </span>
               </div>
             </div>
           ))}
         </PokemonWindow>
       )}
-
-      <PokemonWindow title="EXP">
-        <HPBar value={progress} max={100} showLabel={false} />
-        <div className="text-[7px] text-center mt-1">{progress}% COMPLETE — {doneSteps}/{steps.length} steps</div>
-      </PokemonWindow>
 
       {mission.events && mission.events.length > 0 && (
         <PokemonWindow title="BATTLE LOG">

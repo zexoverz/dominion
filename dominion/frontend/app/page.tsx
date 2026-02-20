@@ -1,6 +1,9 @@
 import { getMissions, getReports, getGenerals, getEvents } from '@/lib/api';
+import { GENERALS } from '@/lib/generals';
 import PokemonWindow from '@/components/PokemonWindow';
 import TextBox from '@/components/TextBox';
+import HPBar from '@/components/HPBar';
+import TypeBadges from '@/components/TypeBadges';
 
 export default async function Dashboard() {
   let missions: any[] = [], reports: any[] = [], generals: any[] = [], events: any[] = [];
@@ -10,29 +13,72 @@ export default async function Dashboard() {
   try { events = await getEvents(); } catch {}
 
   const active = missions.filter((m: any) => m.status === 'active' || m.status === 'in_progress').length;
+  const completed = missions.filter((m: any) => m.status === 'complete' || m.status === 'completed').length;
 
   return (
-    <div className="space-y-4 bg-kanto min-h-screen">
+    <div className="space-y-4 bg-terrain-grass min-h-screen">
       {/* Trainer Card */}
       <PokemonWindow title="TRAINER CARD">
         <div className="text-[12px] font-bold mb-3">LORD ZEXO</div>
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/pokeball.png" alt="" width={16} height={16} className="pixel" />
-            <span className="text-[9px]">Active Missions: {active}</span>
+            <img src="/assets/pokemon/pokeball.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
+            <span className="text-[9px]">Active: {active}</span>
           </div>
           <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/rare-candy.png" alt="" width={16} height={16} className="pixel" />
+            <img src="/assets/pokemon/rare-candy.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
             <span className="text-[9px]">Reports: {reports.length}</span>
           </div>
           <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/masterball.png" alt="" width={16} height={16} className="pixel" />
+            <img src="/assets/pokemon/masterball.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
             <span className="text-[9px]">Generals: {generals.length}/7</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="inline-block w-3 h-3 rounded-full bg-[#48d048]" />
+            <img src="/assets/pokemon/fire-stone.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
             <span className="text-[9px]">System: ONLINE</span>
           </div>
+        </div>
+      </PokemonWindow>
+
+      {/* Gym Badges */}
+      <PokemonWindow cream title="GYM BADGES">
+        <div className="flex justify-center mb-2">
+          <img src="/assets/pokemon/badges.png" alt="Badges" className="pixel" style={{ height: 40, imageRendering: 'pixelated' }} />
+        </div>
+        <div className="text-[8px] text-center text-[#707070]">
+          {completed} / {missions.length} missions completed
+        </div>
+      </PokemonWindow>
+
+      {/* Party — All 7 Generals */}
+      <PokemonWindow title="PARTY">
+        <div className="space-y-2">
+          {Object.values(GENERALS).map((g) => {
+            const totalStats = g.stats.hp + g.stats.atk + g.stats.def + g.stats.spa + g.stats.spd2 + g.stats.spd;
+            return (
+              <div key={g.name} className="party-slot">
+                <img src={g.sprite} alt={g.pokemon} width={40} height={40} className="pixel" style={{ imageRendering: 'pixelated' }} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[8px] font-bold">{g.name}</span>
+                    <TypeBadges types={g.types} />
+                  </div>
+                  <HPBar value={g.stats.hp} max={160} />
+                  <div className="text-[7px] text-[#707070] mt-1">Lv.50 · {g.pokemon} · BST {totalStats}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </PokemonWindow>
+
+      {/* Kanto Region Map */}
+      <PokemonWindow title="DOMINION MAP">
+        <div className="flex justify-center">
+          <img src="/assets/pokemon/region-map.png" alt="Kanto Region" className="pixel" style={{ width: '100%', maxWidth: 480, imageRendering: 'pixelated' }} />
+        </div>
+        <div className="text-[8px] text-center text-[#707070] mt-2">
+          Current location: DOMINION HQ — Pallet Town
         </div>
       </PokemonWindow>
 
@@ -47,36 +93,6 @@ export default async function Dashboard() {
             </div>
           ))}
         </TextBox>
-      </PokemonWindow>
-
-      {/* Kanto Region Map */}
-      <PokemonWindow title="DOMINION MAP — KANTO REGION">
-        <div className="flex justify-center">
-          <img src="/assets/pokemon/region-map.png" alt="Kanto Region" className="pixel" style={{ width: '100%', maxWidth: 480, imageRendering: 'pixelated' }} />
-        </div>
-        <div className="flex items-center gap-2 mt-3">
-          <img src="/assets/pokemon/player-icon.png" alt="" className="pixel" width={16} height={16} />
-          <span className="text-[8px] text-[#707070]">Current location: DOMINION HQ — Pallet Town</span>
-        </div>
-      </PokemonWindow>
-
-      {/* Gym Badges (mission milestones) */}
-      <PokemonWindow cream title="GYM BADGES">
-        <div className="flex justify-center mb-2">
-          <img src="/assets/pokemon/badges.png" alt="Badges" className="pixel" style={{ height: 32, imageRendering: 'pixelated' }} />
-        </div>
-        <div className="text-[8px] text-center text-[#707070]">
-          {missions.filter((m: any) => m.status === 'complete' || m.status === 'completed').length} / {missions.length} missions completed
-        </div>
-      </PokemonWindow>
-
-      {/* Quick Stats */}
-      <PokemonWindow cream title="MISSION SUMMARY">
-        <div className="text-[8px] space-y-1">
-          <div>Total Missions: {missions.length}</div>
-          <div>Active: {active}</div>
-          <div>Completed: {missions.filter((m: any) => m.status === 'complete' || m.status === 'completed').length}</div>
-        </div>
       </PokemonWindow>
     </div>
   );

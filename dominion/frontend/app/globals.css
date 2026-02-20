@@ -16,22 +16,22 @@ body {
   line-height: 1.8;
 }
 
-/* Page backgrounds using Pokemon maps */
-.bg-kanto {
-  background: #98d8d8 url('/assets/pokemon/region-map.png') no-repeat center top;
-  background-size: cover;
+/* Terrain backgrounds for pages */
+.bg-terrain-grass {
+  background: url('/assets/pokemon/terrain-grass-terrain.png') repeat;
+  background-size: 480px;
   image-rendering: pixelated;
   position: relative;
 }
-.bg-kanto::before {
+.bg-terrain-grass::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(152, 216, 216, 0.82);
+  background: rgba(152, 216, 216, 0.75);
   z-index: 0;
   pointer-events: none;
 }
-.bg-kanto > * { position: relative; z-index: 1; }
+.bg-terrain-grass > * { position: relative; z-index: 1; }
 
 .bg-party {
   background: url('/assets/pokemon/party-bg.png') repeat;
@@ -39,12 +39,76 @@ body {
   background-size: 128px;
 }
 
-/* Gym badges row */
-.badges-strip {
-  background: url('/assets/pokemon/badges.png') no-repeat;
+.bg-terrain-building {
+  background: url('/assets/pokemon/terrain-building-terrain.png') repeat;
+  background-size: 480px;
   image-rendering: pixelated;
-  background-size: contain;
-  height: 20px;
+  position: relative;
+}
+.bg-terrain-building::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(152, 216, 216, 0.7);
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-terrain-building > * { position: relative; z-index: 1; }
+
+.bg-terrain-cave {
+  background: url('/assets/pokemon/terrain-cave-terrain.png') repeat;
+  background-size: 480px;
+  image-rendering: pixelated;
+  position: relative;
+}
+.bg-terrain-cave::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(40, 40, 60, 0.6);
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-terrain-cave > * { position: relative; z-index: 1; }
+
+.bg-terrain-indoor {
+  background: url('/assets/pokemon/terrain-indoor-terrain.png') repeat;
+  background-size: 480px;
+  image-rendering: pixelated;
+  position: relative;
+}
+.bg-terrain-indoor::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(240, 232, 216, 0.7);
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-terrain-indoor > * { position: relative; z-index: 1; }
+
+.bg-dex {
+  background: url('/assets/pokemon/dex-kanto_dex_bgtiles.png') repeat;
+  background-size: 256px;
+  image-rendering: pixelated;
+  position: relative;
+}
+.bg-dex::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(200, 56, 56, 0.15);
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-dex > * { position: relative; z-index: 1; }
+
+/* Summary screen bg */
+.bg-summary {
+  background: url('/assets/pokemon/summary_screen-bg.png') no-repeat center top;
+  background-size: 100% auto;
+  image-rendering: pixelated;
+  min-height: 400px;
 }
 
 img.pixel {
@@ -103,7 +167,7 @@ img.pixel {
   gap: 8px;
 }
 .pkmn-menu-item:hover, .pkmn-menu-item.active {
-  background: rgba(255,255,255,0.1);
+  background: #78a8e8;
 }
 
 /* Pokemon button */
@@ -138,6 +202,9 @@ img.pixel {
   border-radius: 2px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Text box (dialog) */
@@ -221,6 +288,13 @@ img.pixel {
 .stat-bar-fill {
   height: 100%;
   background: #3890f8;
+}
+
+/* Type badge images */
+.type-badge {
+  image-rendering: pixelated;
+  height: 14px;
+  display: inline-block;
 }
 
 a { text-decoration: none; color: inherit; }

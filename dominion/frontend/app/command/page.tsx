@@ -45,10 +45,10 @@ export default function CommandPage() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-terrain-indoor min-h-screen">
       <PokemonWindow>
         <TextBox>
-          <div className="text-[9px]">PROFESSOR OAK: What would you like to do?</div>
+          <div className="text-[9px]">Welcome to the POKEMON CENTER! How can I help you?</div>
         </TextBox>
       </PokemonWindow>
 
@@ -84,7 +84,7 @@ export default function CommandPage() {
         {proposals.length === 0 && <div className="text-[8px] text-[#909090]">No proposals yet. Click REFRESH to load.</div>}
         {proposals.map((p: any, i: number) => (
           <div key={i} className="flex items-center gap-2 py-2 border-b border-[#d0d0d0] last:border-0">
-            <img src="/assets/pokemon/pokeball.png" alt="" width={16} height={16} className="pixel" />
+            <img src="/assets/pokemon/pokeball.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
             <div className="flex-1">
               <div className="text-[8px] font-bold">{p.title}</div>
               <div className="text-[7px] text-[#909090]">{p.status || 'pending'}</div>
