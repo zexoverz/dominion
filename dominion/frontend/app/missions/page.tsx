@@ -3,20 +3,21 @@
 import { useState, useEffect } from "react";
 import { missions as mockMissions } from "../../lib/mock-data";
 import { getMissions } from "../../lib/api";
+import { mergeMissions } from "../../lib/merge-missions";
 import QuestCard from "../../components/QuestCard";
 
 export default function MissionsPage() {
   const [missions, setMissions] = useState(mockMissions);
 
   useEffect(() => {
-    getMissions().then(setMissions).catch(() => {});
+    getMissions().then((d) => setMissions(mergeMissions(d))).catch(() => {});
   }, []);
 
   const grouped = {
-    IN_PROGRESS: missions.filter((m) => m.status === "IN_PROGRESS"),
-    REVIEW: missions.filter((m) => m.status === "REVIEW"),
-    PROPOSED: missions.filter((m) => m.status === "PROPOSED"),
-    COMPLETE: missions.filter((m) => m.status === "COMPLETE"),
+    IN_PROGRESS: missions.filter((m) => m.status === "active" || m.status === "IN_PROGRESS"),
+    REVIEW: missions.filter((m) => m.status === "review" || m.status === "REVIEW"),
+    PROPOSED: missions.filter((m) => m.status === "pending" || m.status === "PROPOSED"),
+    COMPLETE: missions.filter((m) => m.status === "completed" || m.status === "COMPLETE"),
   };
 
   return (

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { getEvents } from "../../lib/api";
 
 interface ActivityEntry {
-  id: number;
+  id: string;
   emoji: string;
   name: string;
   color: string;
@@ -13,95 +14,70 @@ interface ActivityEntry {
   fullText: string;
 }
 
-const ACTIVITIES = [
-  { emoji: "👑", name: "THRONE", color: "#fbbf24", texts: [
-    "Analyzing proposal #12 — resource allocation for Phase 2...",
-    "Reviewing PHANTOM's deployment report...",
-    "Calculating optimal general activation sequence...",
-    "Drafting strategic directive for SEER...",
-    "Evaluating mission priority queue...",
-    "Orchestrating cross-general sync protocol...",
-  ]},
-  { emoji: "🔮", name: "SEER", color: "#a78bfa", texts: [
-    "Running deep market sentiment scan...",
-    "Processing 4,217 data points from sector 7...",
-    "Correlating pattern anomalies in trading volume...",
-    "Generating prophetic insight report v2.3...",
-    "Analyzing competitor API response patterns...",
-    "Forecasting resource consumption for next 72h...",
-  ]},
-  { emoji: "👻", name: "PHANTOM", color: "#94a3b8", texts: [
-    "Deploying shadow service to edge node...",
-    "Writing migration script for database v3...",
-    "Executing stealth code review on PR #47...",
-    "Running zero-downtime deployment sequence...",
-    "Patching security vulnerability in auth module...",
-    "Compiling TypeScript build — 0 errors...",
-  ]},
-  { emoji: "🛡️", name: "WARDEN", color: "#60a5fa", texts: [
-    "Scanning system health metrics...",
-    "Validating cost guard thresholds...",
-    "Monitoring rate limits across all endpoints...",
-  ]},
-  { emoji: "📯", name: "HERALD", color: "#f97316", texts: [
-    "Drafting Phase 1 completion summary...",
-    "Formatting intelligence briefing for Lord Zexo...",
-    "Composing cross-general status report...",
-  ]},
-];
+const AGENT_META: Record<string, { emoji: string; color: string }> = {
+  throne: { emoji: "👑", color: "#fbbf24" },
+  seer:   { emoji: "🔮", color: "#a78bfa" },
+  phantom:{ emoji: "👻", color: "#94a3b8" },
+  warden: { emoji: "🛡️", color: "#60a5fa" },
+  herald: { emoji: "📯", color: "#f97316" },
+  forge:  { emoji: "⚒️", color: "#ef4444" },
+  cipher: { emoji: "🗝️", color: "#22d3ee" },
+  grimoire:{ emoji: "📖", color: "#10b981" },
+  echo:   { emoji: "🔊", color: "#f472b6" },
+  mammon: { emoji: "💰", color: "#eab308" },
+  "wraith-eye": { emoji: "👁️", color: "#8b5cf6" },
+};
+
+function formatTime(ts: string) {
+  try {
+    const d = new Date(ts);
+    return `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")}`;
+  } catch {
+    return "00:00:00";
+  }
+}
 
 export default function AgentActivityFeed({ className = "" }: { className?: string }) {
   const [entries, setEntries] = useState<ActivityEntry[]>([]);
-  const [nextId, setNextId] = useState(0);
+  const [loaded, setLoaded] = useState(false);
   const feedRef = useRef<HTMLDivElement>(null);
 
-  // Add new entries periodically
-  useEffect(() => {
-    const addEntry = () => {
-      const agent = ACTIVITIES[Math.floor(Math.random() * ACTIVITIES.length)];
-      const text = agent.texts[Math.floor(Math.random() * agent.texts.length)];
-      const now = new Date();
-      const timestamp = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+  const fetchAndSet = useCallback(async () => {
+    try {
+      const data = await getEvents();
+      if (!Array.isArray(data) || data.length === 0) return;
 
-      setNextId((prev) => {
-        const id = prev;
-        setEntries((old) => {
-          const newEntries = [...old, {
-            id,
-            emoji: agent.emoji,
-            name: agent.name,
-            color: agent.color,
-            text: "",
-            timestamp,
-            displayedChars: 0,
-            fullText: text,
-          }];
-          return newEntries.slice(-20); // keep last 20
-        });
-        return prev + 1;
+      const mapped: ActivityEntry[] = data.slice(0, 30).map((e: any) => {
+        const agentId = (e.agent_id || e.agentId || "throne").toLowerCase();
+        const meta = AGENT_META[agentId] || { emoji: "❓", color: "#888" };
+        const text = e.title || e.description || e.summary || "Activity logged";
+        return {
+          id: e.id || Math.random().toString(),
+          emoji: meta.emoji,
+          name: agentId.toUpperCase(),
+          color: meta.color,
+          text,
+          timestamp: formatTime(e.created_at || e.timestamp || ""),
+          displayedChars: text.length, // show full text for past events
+          fullText: text,
+        };
       });
-    };
 
-    addEntry(); // initial
-    const interval = setInterval(addEntry, 3000 + Math.random() * 2000);
-    return () => clearInterval(interval);
+      setEntries(mapped);
+      setLoaded(true);
+    } catch {
+      // keep existing entries
+    }
   }, []);
 
-  // Typing animation
+  // Initial fetch + poll every 15s
   useEffect(() => {
-    const interval = setInterval(() => {
-      setEntries((old) =>
-        old.map((e) =>
-          e.displayedChars < e.fullText.length
-            ? { ...e, displayedChars: e.displayedChars + 2, text: e.fullText.slice(0, e.displayedChars + 2) }
-            : e
-        )
-      );
-    }, 30);
-    return () => clearInterval(interval);
-  }, []);
+    fetchAndSet();
+    const iv = setInterval(fetchAndSet, 15000);
+    return () => clearInterval(iv);
+  }, [fetchAndSet]);
 
-  // Auto-scroll
+  // Auto-scroll on new entries
   useEffect(() => {
     if (feedRef.current) {
       feedRef.current.scrollTop = feedRef.current.scrollHeight;
@@ -111,17 +87,23 @@ export default function AgentActivityFeed({ className = "" }: { className?: stri
   return (
     <div className={`rpg-panel p-3 flex flex-col ${className}`}>
       <div className="flex items-center gap-2 mb-3">
-        <div className="w-2 h-2 bg-throne-green  animate-pulse" />
-        <h3 className="text-[9px] text-throne-gold">⚡ LIVE ACTIVITY FEED</h3>
+        <div className="w-2 h-2 bg-throne-green animate-pulse" />
+        <h3 className="text-[9px] text-throne-gold">⚡ LIVE INTEL FEED</h3>
+        {loaded && (
+          <span className="text-[7px] text-rpg-borderMid ml-auto">{entries.length} events</span>
+        )}
       </div>
       <div ref={feedRef} className="flex-1 overflow-y-auto space-y-2 max-h-[300px] scrollbar-thin">
+        {entries.length === 0 && (
+          <p className="text-[8px] text-rpg-borderMid italic text-center py-4">Awaiting intel...</p>
+        )}
         {entries.map((entry, i) => (
           <div
             key={entry.id}
-            className="flex gap-2 items-start opacity-0 animate-fadeIn"
+            className="flex gap-2 items-start"
             style={{
-              animation: "fadeIn 0.4s ease-out forwards",
-              animationDelay: `${i === entries.length - 1 ? 0.1 : 0}s`,
+              animation: i >= entries.length - 3 ? "fadeIn 0.4s ease-out forwards" : undefined,
+              opacity: i >= entries.length - 3 ? undefined : 1,
             }}
           >
             <span className="text-[8px] text-gray-600 mt-0.5 shrink-0 font-mono">{entry.timestamp}</span>
@@ -130,12 +112,7 @@ export default function AgentActivityFeed({ className = "" }: { className?: stri
               <span className="text-[8px] font-bold mr-1" style={{ color: entry.color }}>
                 {entry.name}
               </span>
-              <span className="text-[8px] text-gray-400">
-                {entry.text}
-                {entry.displayedChars < entry.fullText.length && (
-                  <span className="inline-block w-1.5 h-2.5 bg-throne-gold ml-0.5 animate-blink" />
-                )}
-              </span>
+              <span className="text-[8px] text-gray-400">{entry.text}</span>
             </div>
           </div>
         ))}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Mission, generals } from "../lib/mock-data";
 import PixelProgress from "./PixelProgress";
 
@@ -22,15 +23,23 @@ const statusLabels: Record<string, string> = {
   IN_PROGRESS: "⚔️ ACTIVE",
   REVIEW: "🔍 REVIEW",
   COMPLETE: "✅ COMPLETE",
+  active: "⚔️ ACTIVE",
+  completed: "✅ COMPLETE",
+  pending: "📜 PROPOSED",
+  review: "🔍 REVIEW",
 };
 
 export default function QuestCard({ mission }: { mission: Mission }) {
+  const router = useRouter();
   const general = generals.find((g) => g.id === mission.assignedTo);
-  const pColor = priorityColors[mission.priority];
+  const pColor = priorityColors[mission.priority] || "#fbbf24";
   const stars = priorityStars[mission.priority] || 1;
 
   return (
-    <div className="quest-scroll p-4 mb-4">
+    <div
+      className="quest-scroll p-4 mb-4 cursor-pointer hover:border-throne-gold/60 active:scale-[0.98] transition-all"
+      onClick={() => router.push(`/missions/${mission.id}`)}
+    >
       {/* Quest Header */}
       <div className="flex items-center justify-between mb-3 gap-2">
         <div className="flex items-center gap-3 flex-wrap">

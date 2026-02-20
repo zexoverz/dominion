@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { generals as mockGenerals, roundtableMessages as mockMessages } from "../../lib/mock-data";
 import { getGenerals, getRoundtables } from "../../lib/api";
+import { mergeGenerals } from "../../lib/merge-generals";
 import { getGeneralSprite, SpriteState } from "../../components/sprites";
 
 export default function RoundtablePage() {
@@ -10,8 +11,27 @@ export default function RoundtablePage() {
   const [roundtableMessages, setRoundtableMessages] = useState(mockMessages);
 
   useEffect(() => {
-    getGenerals().then(setGenerals).catch(() => {});
-    getRoundtables().then(setRoundtableMessages).catch(() => {});
+    getGenerals().then((d) => setGenerals(mergeGenerals(d))).catch(() => {});
+    getRoundtables().then((data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        // Flatten API roundtable conversation_logs into message format
+        const msgs: any[] = [];
+        for (const rt of data) {
+          for (const log of (rt.conversation_log || [])) {
+            msgs.push({
+              id: `${rt.id}-${log.turn}`,
+              generalId: (log.speaker || "").toLowerCase(),
+              message: log.message || "",
+              timestamp: log.timestamp
+                ? new Date(log.timestamp).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })
+                : "",
+              vote: log.vote || null,
+            });
+          }
+        }
+        if (msgs.length > 0) setRoundtableMessages(msgs);
+      }
+    }).catch(() => {});
   }, []);
 
   const getGeneral = (id: string) => generals.find((g) => g.id === id)!;

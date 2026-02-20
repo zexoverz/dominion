@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { generals as mockGenerals } from "../lib/mock-data";
-import { getGenerals } from "../lib/api";
+import { getGenerals, getMissions, getDailyCosts } from "../lib/api";
+import { mergeGenerals } from "../lib/merge-generals";
 import GeneralCard from "../components/GeneralCard";
 import StatsBar from "../components/StatsBar";
 import SpriteStage from "../components/sprites/SpriteStage";
@@ -13,19 +14,35 @@ import CostTicker from "../components/realtime/CostTicker";
 import NetworkGraph from "../components/realtime/NetworkGraph";
 import MissionProgressLive from "../components/realtime/MissionProgressLive";
 import { useActivity } from "../lib/use-activity";
+import BtcTicker from "../components/BtcTicker";
+import GeneralsMiniGrid from "../components/GeneralsMiniGrid";
 
 export default function Dashboard() {
   const [generals, setGenerals] = useState(mockGenerals);
+  const [liveMissions, setLiveMissions] = useState<any[]>([]);
+  const [costToday, setCostToday] = useState(() => mockGenerals.reduce((sum, g) => sum + g.costToday, 0));
   const activity = useActivity();
 
   useEffect(() => {
-    getGenerals().then(setGenerals).catch(() => {});
+    getGenerals()
+      .then((data) => setGenerals(mergeGenerals(data)))
+      .catch(() => {});
+    getMissions()
+      .then((data) => setLiveMissions(data || []))
+      .catch(() => {});
+    getDailyCosts()
+      .then((data) => {
+        const total = (data || []).reduce((s: number, c: any) => s + parseFloat(c.cost_usd || "0"), 0);
+        if (total > 0) setCostToday(total);
+      })
+      .catch(() => {});
   }, []);
-
-  const costToday = generals.reduce((sum, g) => sum + g.costToday, 0);
 
   return (
     <div className="max-w-full overflow-hidden">
+      {/* ═══ BTC MARKET ORACLE ═══ */}
+      <BtcTicker />
+
       {/* ═══ TITLE SCREEN ═══ */}
       <div className="rpg-panel mb-6 text-center py-6">
         <p className="font-pixel text-[8px] text-rpg-borderMid mb-2 tracking-widest">— WELCOME TO —</p>
@@ -61,6 +78,9 @@ export default function Dashboard() {
 
       {/* ═══ HUD STATS BAR ═══ */}
       <StatsBar />
+
+      {/* ═══ GENERALS MINI GRID ═══ */}
+      <GeneralsMiniGrid generals={generals} />
 
       {/* ═══ CHAPTER TITLE: PHASE 1 ═══ */}
       <div className="mb-6 text-center py-4" style={{
@@ -107,6 +127,12 @@ export default function Dashboard() {
         />
       </div>
 
+      {/* ═══ ACTIVITY FEED (PROMINENT) ═══ */}
+      <div className="rpg-panel p-4 mb-6">
+        <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">📡 LIVE ACTIVITY</h2>
+        <AgentActivityFeed className="h-[280px] md:h-[320px]" />
+      </div>
+
       {/* ═══ MAIN CONTENT ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
         {/* Generals Grid */}
@@ -122,18 +148,31 @@ export default function Dashboard() {
         {/* Command Center sidebar */}
         <div className="lg:col-span-1">
           <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">⚡ COMMAND CENTER</h2>
-          <AgentActivityFeed className="mb-4 h-[320px]" />
-          <MissionProgressLive
-            missionName="Deploy the Watchtower"
-            initialProgress={65}
-            color="#fbbf24"
-            className="mb-4"
-          />
-          <MissionProgressLive
-            missionName="Shadow Protocol Alpha"
-            initialProgress={90}
-            color="#94a3b8"
-          />
+          {liveMissions.length > 0 ? (
+            liveMissions.slice(0, 3).map((m: any) => (
+              <MissionProgressLive
+                key={m.id}
+                missionName={m.title || "Unknown Mission"}
+                initialProgress={m.progress_pct ?? (m.status === "completed" ? 100 : 0)}
+                color={m.status === "completed" ? "#22c55e" : "#fbbf24"}
+                className="mb-4"
+              />
+            ))
+          ) : (
+            <>
+              <MissionProgressLive
+                missionName="Deploy the Watchtower"
+                initialProgress={65}
+                color="#fbbf24"
+                className="mb-4"
+              />
+              <MissionProgressLive
+                missionName="Shadow Protocol Alpha"
+                initialProgress={90}
+                color="#94a3b8"
+              />
+            </>
+          )}
         </div>
       </div>
 
