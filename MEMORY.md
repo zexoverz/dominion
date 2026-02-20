@@ -61,10 +61,13 @@
 - Local copy: dominion/reports/investment-masterplan-v2.md
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
 - Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest, Rp 5M gold
-- War chest: Rp 40M cash float (funded), deploy at -30%/-40%/-50% from ATH
+- War chest: Rp 40M total, 20M deployed, 20M remaining
 - War chest deployment: 25% at -30%, 50% at -40%, 100% at -50%
-- BTC ATH ~$126K; as of Feb 2026 BTC at ~$69K (-45%), triggers already hit
-- Faisal deploying full war chest (Feb 14, 2026)
+- BTC ATH ~$126K; as of Feb 2026 BTC at ~$67K
+- Current BTC holdings: 0.133 BTC
+- XPL: 3278 tokens (write-off, -82% lesson, just forget)
+- Wedding fund: Rp 120M (target Rp 350M by Oct 2026)
+- Feb 2026 DCA executed (salary came Feb 1)
 - ForuAI tokens: sell 100% immediately → BTC, no hodling
 - Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
 - 2030 target: 5-12 BTC, Rp 26B-192B net worth
