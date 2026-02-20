@@ -1,31 +1,24 @@
 import { getReports } from '@/lib/api';
 import ReportCard from '@/components/ReportCard';
-import RPGPanel from '@/components/RPGPanel';
-import SwordDivider from '@/components/SwordDivider';
-
-export const dynamic = 'force-dynamic';
 
 export default async function IntelPage() {
-  const reports = await getReports().catch(() => []);
+  let reports: any[] = [];
+  try { reports = await getReports(); } catch {}
+  if (!Array.isArray(reports)) reports = [];
 
   return (
-    <div className="space-y-5">
-      <div className="text-center">
-        <h1 className="font-pixel text-gold text-sm sm:text-lg">📚 INTELLIGENCE LIBRARY 📚</h1>
-        <p className="text-brown-dark text-sm mt-2">{reports.length} reports gathered</p>
+    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold text-white mb-1">Intel</h1>
+        <p className="text-sm text-white/30">Intelligence reports from the field</p>
       </div>
-
-      <SwordDivider label="ALL REPORTS" />
-
-      {reports.length === 0 ? (
-        <RPGPanel>
-          <p className="text-brown-dark text-sm italic text-center py-4">No intelligence gathered yet. Send your generals on missions!</p>
-        </RPGPanel>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {reports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
-        </div>
-      )}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {reports.length === 0 ? (
+          <p className="text-white/30">No reports available</p>
+        ) : (
+          reports.map((r: any) => <ReportCard key={r.slug || r.id} report={r} />)
+        )}
+      </div>
     </div>
   );
 }

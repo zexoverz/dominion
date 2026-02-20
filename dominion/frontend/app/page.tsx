@@ -1,99 +1,62 @@
-import { getMissions, getReports, getDailyCosts } from '@/lib/api';
-import RPGPanel from '@/components/RPGPanel';
-import QuestCard from '@/components/QuestCard';
-import ReportCard from '@/components/ReportCard';
-import BtcTicker from '@/components/BtcTicker';
-import SwordDivider from '@/components/SwordDivider';
-import ErrorState from '@/components/ErrorState';
+import { getMissions, getReports, getGenerals, getDailyCosts, getEvents } from '@/lib/api';
+import StatCard from '@/components/StatCard';
+import ActivityFeed from '@/components/ActivityFeed';
+import dynamic from 'next/dynamic';
 
-export const dynamic = 'force-dynamic';
+const ThreeBackground = dynamic(() => import('@/components/ThreeBackground'), { ssr: false });
 
-export default async function Dashboard() {
-  let missions: any[] = [];
-  let reports: any[] = [];
-  let costs: any[] = [];
-  let error = false;
+export default async function DashboardPage() {
+  let missions: any[] = [], reports: any[] = [], generals: any[] = [], costs: any[] = [], events: any[] = [];
+  try { [missions, reports, generals, costs, events] = await Promise.all([getMissions(), getReports(), getGenerals(), getDailyCosts(), getEvents()]); } catch {}
 
-  try {
-    [missions, reports, costs] = await Promise.all([
-      getMissions().catch(() => []),
-      getReports().catch(() => []),
-      getDailyCosts().catch(() => []),
-    ]);
-  } catch {
-    error = true;
-  }
-
-  if (error) return <ErrorState message="Failed to load dashboard data." />;
-
-  const active = missions.filter((m: any) => m.status === 'active' || m.status === 'running').slice(0, 3);
-  const completed = missions.filter((m: any) => m.status === 'completed' || m.status === 'done').length;
-  const recentReports = reports.slice(0, 3);
-  const todayCost = costs.length > 0 ? costs[0] : null;
+  const activeMissions = Array.isArray(missions) ? missions.filter((m: any) => m.status === 'active').length : 0;
+  const onlineGenerals = Array.isArray(generals) ? generals.filter((g: any) => g.status === 'active' || g.status === 'online').length : 0;
+  const todayCost = Array.isArray(costs) && costs.length > 0 ? `$${(costs[costs.length - 1]?.total_cost || 0).toFixed(2)}` : '$0.00';
 
   return (
-    <div className="space-y-5">
-      {/* Header */}
-      <div className="nes-container is-dark" style={{ textAlign: 'center', padding: '16px', background: '#2a1a0a' }}>
-        <div className="font-pixel" style={{ color: '#c8a832', fontSize: '14px', letterSpacing: '2px' }}>
-          👑 THE DOMINION 👑
+    <>
+      <ThreeBackground />
+      <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-1">Dashboard</h1>
+          <p className="text-sm text-white/30">AI operations overview</p>
         </div>
-        <div className="text-xs mt-2" style={{ color: '#8b7a5a' }}>Command Center of Lord Zexo</div>
-        <div className="mt-2"><BtcTicker /></div>
-      </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-3 gap-3">
-        <RPGPanel>
-          <div className="text-center">
-            <div className="text-2xl font-bold" style={{ color: '#22c55e' }}>⚔ {active.length}</div>
-            <div className="font-pixel mt-1" style={{ fontSize: '7px', color: '#5a3e1b' }}>Active</div>
-          </div>
-        </RPGPanel>
-        <RPGPanel>
-          <div className="text-center">
-            <div className="text-2xl font-bold" style={{ color: '#3465a4' }}>🏆 {completed}</div>
-            <div className="font-pixel mt-1" style={{ fontSize: '7px', color: '#5a3e1b' }}>Complete</div>
-          </div>
-        </RPGPanel>
-        <RPGPanel>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gold">💰 {todayCost?.total_cost ? `$${Number(todayCost.total_cost).toFixed(0)}` : '$0'}</div>
-            <div className="font-pixel mt-1" style={{ fontSize: '7px', color: '#5a3e1b' }}>Treasury</div>
-          </div>
-        </RPGPanel>
-      </div>
-
-      <SwordDivider label="ACTIVE QUESTS" />
-
-      {/* Active Quests */}
-      {active.length === 0 ? (
-        <RPGPanel>
-          <p className="text-brown-dark text-sm italic text-center py-4">No active quests. The realm is at peace... for now. ⚔</p>
-        </RPGPanel>
-      ) : (
-        <div className="space-y-3">
-          {active.map((m: any) => <QuestCard key={m.id} mission={m} />)}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard label="Active Missions" value={activeMissions} icon="🎯" />
+          <StatCard label="Intel Reports" value={Array.isArray(reports) ? reports.length : 0} icon="📄" />
+          <StatCard label="Generals Online" value={onlineGenerals} icon="⚡" />
+          <StatCard label="Daily Cost" value={todayCost} icon="💰" />
         </div>
-      )}
 
-      <SwordDivider label="RECENT INTEL" />
-
-      {/* Recent Intel */}
-      {recentReports.length === 0 ? (
-        <RPGPanel>
-          <p className="text-brown-dark text-sm italic text-center py-4">No intelligence gathered yet. 📜</p>
-        </RPGPanel>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {recentReports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="glass rounded-xl p-6">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-white/40 mb-4">Recent Activity</h2>
+            <ActivityFeed events={Array.isArray(events) ? events : []} />
+          </div>
+          <div className="glass rounded-xl p-6">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-white/40 mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <a href="/missions" className="glass glass-hover rounded-lg p-4 text-center transition-all hover:scale-[1.02]">
+                <span className="text-2xl block mb-2">🎯</span>
+                <span className="text-xs text-white/50">New Mission</span>
+              </a>
+              <a href="/intel" className="glass glass-hover rounded-lg p-4 text-center transition-all hover:scale-[1.02]">
+                <span className="text-2xl block mb-2">📄</span>
+                <span className="text-xs text-white/50">View Intel</span>
+              </a>
+              <a href="/command" className="glass glass-hover rounded-lg p-4 text-center transition-all hover:scale-[1.02]">
+                <span className="text-2xl block mb-2">📋</span>
+                <span className="text-xs text-white/50">Proposals</span>
+              </a>
+              <a href="/generals" className="glass glass-hover rounded-lg p-4 text-center transition-all hover:scale-[1.02]">
+                <span className="text-2xl block mb-2">⚡</span>
+                <span className="text-xs text-white/50">Generals</span>
+              </a>
+            </div>
+          </div>
         </div>
-      )}
-
-      {/* Footer */}
-      <div className="text-center py-4">
-        <span className="font-pixel" style={{ fontSize: '7px', color: '#8b6914' }}>⚔ Lord Zexo&apos;s Command Center ⚔</span>
       </div>
-    </div>
+    </>
   );
 }

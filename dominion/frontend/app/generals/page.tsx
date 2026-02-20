@@ -1,71 +1,24 @@
 import { getGenerals } from '@/lib/api';
-import RPGPanel from '@/components/RPGPanel';
-import { getGeneralConfig } from '@/lib/generals-config';
-import PixelAvatar from '@/components/PixelAvatar';
-import SwordDivider from '@/components/SwordDivider';
-import ErrorState from '@/components/ErrorState';
-import Link from 'next/link';
-
-export const dynamic = 'force-dynamic';
+import GeneralCard from '@/components/GeneralCard';
 
 export default async function GeneralsPage() {
-  const generals = await getGenerals().catch(() => []);
+  let generals: any[] = [];
+  try { generals = await getGenerals(); } catch {}
+  if (!Array.isArray(generals)) generals = [];
 
   return (
-    <div className="space-y-5">
-      <div className="text-center">
-        <h1 className="font-pixel text-gold text-sm sm:text-lg">⚔ THE BARRACKS ⚔</h1>
-        <p className="text-brown-dark text-sm mt-2">Choose your warrior</p>
+    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold text-white mb-1">Generals</h1>
+        <p className="text-sm text-white/30">AI agents powering the operation</p>
       </div>
-
-      <SwordDivider label="SELECT GENERAL" />
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {generals.map((g: any) => {
-          const cfg = getGeneralConfig(g.name || g.id);
-          const isActive = g.status === 'active' || g.status === 'running';
-          return (
-            <Link key={g.id} href={`/generals/${g.id}`} className="block">
-              <div
-                className="nes-container text-center"
-                style={{
-                  cursor: 'pointer',
-                  transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-                  borderColor: isActive ? cfg.color : undefined,
-                }}
-              >
-                {/* Character sprite */}
-                <div className="flex justify-center mb-3">
-                  <PixelAvatar generalId={cfg.id} size="lg" />
-                </div>
-
-                {/* Name */}
-                <div className="font-pixel mb-1" style={{ fontSize: '9px', color: cfg.color }}>{cfg.name}</div>
-
-                {/* Role */}
-                <div className="text-xs text-brown-dark mb-2">{cfg.role}</div>
-
-                {/* Status indicator */}
-                <div className="flex justify-center">
-                  {isActive ? (
-                    <span className="nes-badge">
-                      <span className="is-success" style={{ fontSize: '7px' }}>ACTIVE</span>
-                    </span>
-                  ) : (
-                    <span className="nes-badge">
-                      <span className="is-dark" style={{ fontSize: '7px' }}>IDLE</span>
-                    </span>
-                  )}
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {generals.length === 0 ? (
+          <p className="text-white/30">No generals found</p>
+        ) : (
+          generals.map((g: any) => <GeneralCard key={g.id || g.name} general={g} />)
+        )}
       </div>
-
-      {generals.length === 0 && (
-        <ErrorState message="No generals found in the barracks." />
-      )}
     </div>
   );
 }
