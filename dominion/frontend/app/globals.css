@@ -1,35 +1,140 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import 'nes.css/css/nes.min.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Override NES.css defaults for warm parchment theme */
 body {
   background-color: #f4e8c1;
   color: #3a2a1a;
   font-family: system-ui, sans-serif;
 }
 
+/* NES.css overrides for parchment theme */
+.nes-container {
+  background-color: #faf3e0 !important;
+  color: #3a2a1a !important;
+}
+
+.nes-container.is-dark {
+  background-color: #5a3e1b !important;
+  color: #faf3e0 !important;
+}
+
+.nes-container.with-title > .title {
+  background-color: #f4e8c1 !important;
+  color: #c8a832 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 10px !important;
+}
+
+.nes-btn {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 10px !important;
+}
+
+.nes-btn.is-primary {
+  background-color: #c8a832 !important;
+  color: #fff !important;
+}
+.nes-btn.is-primary::after {
+  box-shadow: inset -4px -4px #9a7e1e !important;
+}
+
+.nes-btn.is-error {
+  background-color: #c03030 !important;
+}
+
+.nes-btn.is-success {
+  background-color: #2d8b4e !important;
+}
+
+.nes-badge .is-primary {
+  background-color: #c8a832 !important;
+}
+.nes-badge .is-success {
+  background-color: #2d8b4e !important;
+}
+.nes-badge .is-error {
+  background-color: #c03030 !important;
+}
+
+.nes-progress {
+  height: 20px !important;
+}
+
+/* Pixel art avatar container */
+.pixel-avatar {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+}
+
+.pixel-avatar.lg {
+  width: 64px;
+  height: 64px;
+}
+
+/* RPG Sword Divider */
+.sword-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  color: #8b6914;
+  font-size: 12px;
+}
+.sword-divider::before,
+.sword-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #8b6914, transparent);
+}
+
+/* Scroll background for panels */
+.scroll-bg {
+  background: linear-gradient(135deg, #faf3e0 0%, #e8dcc8 50%, #faf3e0 100%);
+  border-image-source: none;
+}
+
+/* Pulsing quest indicator */
+@keyframes quest-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.quest-active {
+  animation: quest-pulse 2s ease-in-out infinite;
+}
+
+/* RPG corner ornaments */
+.rpg-ornament {
+  position: relative;
+}
+.rpg-ornament::before {
+  content: '◆';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  color: #c8a832;
+  font-size: 10px;
+}
+.rpg-ornament::after {
+  content: '◆';
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  color: #c8a832;
+  font-size: 10px;
+}
+
 @layer components {
-  .rpg-panel {
-    @apply bg-parchment-light border-2 border-brown-border rounded-none p-4;
-    box-shadow: 0 0 0 2px #5a3e1b, 0 0 0 4px #8b6914, 4px 4px 0 0 rgba(90,62,27,0.3);
-  }
   .rpg-title {
     @apply font-pixel text-gold text-xs sm:text-sm tracking-wider uppercase;
-  }
-  .rpg-btn {
-    @apply px-4 py-2 font-pixel text-xs border-2 border-brown-border bg-parchment-dark text-brown-text hover:bg-gold hover:text-white transition-colors cursor-pointer;
-    box-shadow: 2px 2px 0 0 #5a3e1b;
-  }
-  .rpg-btn:active {
-    box-shadow: none;
-    transform: translate(2px, 2px);
-  }
-  .rpg-btn-primary {
-    @apply rpg-btn bg-gold text-white border-gold-dark;
-  }
-  .rpg-btn-danger {
-    @apply rpg-btn bg-crimson text-white border-red-900;
   }
 }
 
@@ -53,3 +158,21 @@ body {
 .markdown-body th { @apply bg-parchment-dark border border-brown-border p-2 text-left font-bold text-sm; }
 .markdown-body td { @apply border border-brown-border p-2 text-sm; }
 .markdown-body hr { @apply border-brown-border my-4; }
+
+/* NES.css responsive fixes */
+@media (max-width: 768px) {
+  .nes-container {
+    padding: 12px !important;
+    margin: 0 !important;
+  }
+  .nes-container.with-title {
+    padding-top: 20px !important;
+  }
+  .nes-container.with-title > .title {
+    font-size: 8px !important;
+  }
+  .nes-btn {
+    font-size: 8px !important;
+    padding: 4px 8px !important;
+  }
+}

@@ -1,6 +1,7 @@
 import { getMissions } from '@/lib/api';
 import RPGPanel from '@/components/RPGPanel';
 import QuestCard from '@/components/QuestCard';
+import SwordDivider from '@/components/SwordDivider';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,7 +12,9 @@ export default async function QuestsPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-pixel text-gold text-sm sm:text-lg">📜 Quest Board</h1>
+      <h1 className="font-pixel text-gold text-sm sm:text-lg">
+        <i className="nes-icon is-small star"></i> Quest Board
+      </h1>
 
       <RPGPanel title={`Active Quests (${active.length})`}>
         {active.length === 0 ? (
@@ -22,6 +25,8 @@ export default async function QuestsPage() {
           </div>
         )}
       </RPGPanel>
+
+      <SwordDivider label="COMPLETED" />
 
       <RPGPanel title={`Completed (${completed.length})`}>
         {completed.length === 0 ? (

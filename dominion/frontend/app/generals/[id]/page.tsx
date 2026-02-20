@@ -3,6 +3,8 @@ import RPGPanel from '@/components/RPGPanel';
 import QuestCard from '@/components/QuestCard';
 import ReportCard from '@/components/ReportCard';
 import { getGeneralConfig } from '@/lib/generals-config';
+import PixelAvatar from '@/components/PixelAvatar';
+import SwordDivider from '@/components/SwordDivider';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -21,34 +23,44 @@ export default async function GeneralDetail({ params }: { params: { id: string }
 
   return (
     <div className="space-y-4">
-      <Link href="/generals" className="text-royal text-sm hover:underline">← Back to Barracks</Link>
+      <Link href="/generals" className="nes-text is-primary" style={{ fontSize: '10px', fontFamily: '"Press Start 2P", monospace' }}>
+        ← Back to Barracks
+      </Link>
 
       <RPGPanel>
         <div className="flex items-center gap-4">
-          <span className="text-5xl">{cfg.icon}</span>
+          <PixelAvatar generalId={cfg.id} size="lg" />
           <div>
             <h1 className="font-pixel text-sm" style={{ color: cfg.color }}>{cfg.name}</h1>
             <div className="text-brown-dark">{cfg.role}</div>
-            {general?.status && <div className="text-xs text-forest font-bold mt-1">{general.status}</div>}
+            {general?.status && (
+              <span className="nes-text is-success" style={{ fontSize: '10px' }}>{general.status}</span>
+            )}
           </div>
         </div>
         {general?.description && <p className="text-brown-dark mt-3">{general.description}</p>}
       </RPGPanel>
 
       {myMissions.length > 0 && (
-        <RPGPanel title="Recent Quests">
-          <div className="space-y-3">
-            {myMissions.map((m: any) => <QuestCard key={m.id} mission={m} />)}
-          </div>
-        </RPGPanel>
+        <>
+          <SwordDivider label="QUESTS" />
+          <RPGPanel title="Recent Quests">
+            <div className="space-y-3">
+              {myMissions.map((m: any) => <QuestCard key={m.id} mission={m} />)}
+            </div>
+          </RPGPanel>
+        </>
       )}
 
       {myReports.length > 0 && (
-        <RPGPanel title="Intel Reports">
-          <div className="space-y-3">
-            {myReports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
-          </div>
-        </RPGPanel>
+        <>
+          <SwordDivider label="INTEL" />
+          <RPGPanel title="Intel Reports">
+            <div className="space-y-3">
+              {myReports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
+            </div>
+          </RPGPanel>
+        </>
       )}
     </div>
   );

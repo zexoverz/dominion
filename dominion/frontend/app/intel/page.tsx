@@ -9,7 +9,9 @@ export default async function IntelPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-pixel text-gold text-sm sm:text-lg">📚 Library</h1>
+      <h1 className="font-pixel text-gold text-sm sm:text-lg">
+        <i className="nes-icon coin is-small"></i> Library
+      </h1>
 
       <RPGPanel title={`Intel Reports (${reports.length})`}>
         {reports.length === 0 ? (

@@ -3,6 +3,7 @@ import RPGPanel from '@/components/RPGPanel';
 import QuestCard from '@/components/QuestCard';
 import ReportCard from '@/components/ReportCard';
 import BtcTicker from '@/components/BtcTicker';
+import SwordDivider from '@/components/SwordDivider';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,25 +22,35 @@ export default async function Dashboard() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="font-pixel text-gold text-sm sm:text-lg">🏠 Town Square</h1>
+        <h1 className="font-pixel text-gold text-sm sm:text-lg">
+          <i className="nes-icon trophy is-small"></i> Town Square
+        </h1>
         <BtcTicker />
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3">
-        <RPGPanel className="text-center">
-          <div className="text-2xl font-bold text-forest">{active.length}</div>
-          <div className="text-xs text-brown-dark">Active</div>
+        <RPGPanel>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-forest">{active.length}</div>
+            <div style={{ fontSize: '8px', fontFamily: '"Press Start 2P", monospace', color: '#5a3e1b' }}>Active</div>
+          </div>
         </RPGPanel>
-        <RPGPanel className="text-center">
-          <div className="text-2xl font-bold text-royal">{completed}</div>
-          <div className="text-xs text-brown-dark">Completed</div>
+        <RPGPanel>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-royal">{completed}</div>
+            <div style={{ fontSize: '8px', fontFamily: '"Press Start 2P", monospace', color: '#5a3e1b' }}>Done</div>
+          </div>
         </RPGPanel>
-        <RPGPanel className="text-center">
-          <div className="text-2xl font-bold text-gold">{todayCost?.total_cost ? `$${Number(todayCost.total_cost).toFixed(2)}` : '$0'}</div>
-          <div className="text-xs text-brown-dark">Today&apos;s Cost</div>
+        <RPGPanel>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-gold">{todayCost?.total_cost ? `$${Number(todayCost.total_cost).toFixed(2)}` : '$0'}</div>
+            <div style={{ fontSize: '8px', fontFamily: '"Press Start 2P", monospace', color: '#5a3e1b' }}>Gold</div>
+          </div>
         </RPGPanel>
       </div>
+
+      <SwordDivider label="ACTIVE QUESTS" />
 
       {/* Active Quests */}
       <RPGPanel title="Active Quests">
@@ -51,6 +62,8 @@ export default async function Dashboard() {
           </div>
         )}
       </RPGPanel>
+
+      <SwordDivider label="RECENT INTEL" />
 
       {/* Recent Intel */}
       <RPGPanel title="Recent Intel">
