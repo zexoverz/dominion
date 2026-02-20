@@ -12,7 +12,7 @@ export default async function Dashboard() {
   const active = missions.filter((m: any) => m.status === 'active' || m.status === 'in_progress').length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-kanto min-h-screen">
       {/* Trainer Card */}
       <PokemonWindow title="TRAINER CARD">
         <div className="text-[12px] font-bold mb-3">LORD ZEXO</div>
@@ -47,6 +47,27 @@ export default async function Dashboard() {
             </div>
           ))}
         </TextBox>
+      </PokemonWindow>
+
+      {/* Kanto Region Map */}
+      <PokemonWindow title="DOMINION MAP — KANTO REGION">
+        <div className="flex justify-center">
+          <img src="/assets/pokemon/region-map.png" alt="Kanto Region" className="pixel" style={{ width: '100%', maxWidth: 480, imageRendering: 'pixelated' }} />
+        </div>
+        <div className="flex items-center gap-2 mt-3">
+          <img src="/assets/pokemon/player-icon.png" alt="" className="pixel" width={16} height={16} />
+          <span className="text-[8px] text-[#707070]">Current location: DOMINION HQ — Pallet Town</span>
+        </div>
+      </PokemonWindow>
+
+      {/* Gym Badges (mission milestones) */}
+      <PokemonWindow cream title="GYM BADGES">
+        <div className="flex justify-center mb-2">
+          <img src="/assets/pokemon/badges.png" alt="Badges" className="pixel" style={{ height: 32, imageRendering: 'pixelated' }} />
+        </div>
+        <div className="text-[8px] text-center text-[#707070]">
+          {missions.filter((m: any) => m.status === 'complete' || m.status === 'completed').length} / {missions.length} missions completed
+        </div>
       </PokemonWindow>
 
       {/* Quick Stats */}

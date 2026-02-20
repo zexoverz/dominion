@@ -16,6 +16,37 @@ body {
   line-height: 1.8;
 }
 
+/* Page backgrounds using Pokemon maps */
+.bg-kanto {
+  background: #98d8d8 url('/assets/pokemon/region-map.png') no-repeat center top;
+  background-size: cover;
+  image-rendering: pixelated;
+  position: relative;
+}
+.bg-kanto::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(152, 216, 216, 0.82);
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-kanto > * { position: relative; z-index: 1; }
+
+.bg-party {
+  background: url('/assets/pokemon/party-bg.png') repeat;
+  image-rendering: pixelated;
+  background-size: 128px;
+}
+
+/* Gym badges row */
+.badges-strip {
+  background: url('/assets/pokemon/badges.png') no-repeat;
+  image-rendering: pixelated;
+  background-size: contain;
+  height: 20px;
+}
+
 img.pixel {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
