@@ -3,230 +3,371 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --throne-black: #0a0a0f;
+  --throne-gold: #fbbf24;
+  --throne-dark: #12121a;
+  --throne-purple: #1a1028;
+  --rpg-border-light: #8b7355;
+  --rpg-border-mid: #5a4a3a;
+  --rpg-border-dark: #2a1f15;
+  --rpg-bg: #0c0c18;
+  --rpg-panel: #10102a;
+}
+
 * {
-  font-family: 'Press Start 2P', monospace;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: unset;
+  image-rendering: pixelated;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 0 !important;
 }
 
 body {
-  background: #98d8d8;
-  color: #383838;
-  font-size: 10px;
-  line-height: 1.8;
+  background-color: var(--rpg-bg);
+  color: #c8c0b0;
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-img.pixel {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
+/* Heading font */
+h1, h2, h3, h4, h5, h6,
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
 }
 
-/* ===== Page backgrounds — clean Pokemon game colors ===== */
-
-/* Dashboard: Classic FRLG teal with region map watermark */
-.bg-dashboard {
-  background: linear-gradient(180deg, #78c0c0 0%, #98d8d8 30%, #b0e8d0 100%);
-  min-height: 100vh;
-}
-
-/* Missions: Party screen blue */
-.bg-missions {
-  background: linear-gradient(180deg, #6888b8 0%, #7898c8 50%, #88a8d8 100%);
-  min-height: 100vh;
-}
-
-/* Mission detail: Summary screen style */
-.bg-mission-detail {
-  background: linear-gradient(180deg, #e8a060 0%, #f0b878 20%, #f0e8d8 40%);
-  min-height: 100vh;
-}
-
-/* Intel: Pokedex red */
-.bg-intel {
-  background: linear-gradient(180deg, #d04040 0%, #e05050 30%, #f08080 100%);
-  min-height: 100vh;
-}
-
-/* Generals: Pokemon storage green */
-.bg-generals {
-  background: linear-gradient(180deg, #58a858 0%, #68b868 30%, #88d888 100%);
-  min-height: 100vh;
-}
-
-/* Command: Pokemon Center pink/peach */
-.bg-command {
-  background: linear-gradient(180deg, #f0c0a0 0%, #f0d8c0 30%, #f8f0e8 100%);
-  min-height: 100vh;
-}
-
-/* ===== Pokemon Window (dialog/panel) ===== */
-.pkmn-window {
-  background: #f8f8f8;
-  border: 3px solid #404040;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 2px #d0d0d0, 2px 2px 0 rgba(0,0,0,0.15);
-  padding: 12px;
-}
-
-.pkmn-window-cream {
-  background: #f0e8d8;
-  border: 3px solid #404040;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 2px #c8c0b0, 2px 2px 0 rgba(0,0,0,0.15);
-  padding: 12px;
-}
-
-/* ===== HP Bar ===== */
-.hp-bar-outer {
-  background: #484848;
-  height: 8px;
+/* ════════════════════════════════════
+   SCANLINE OVERLAY
+   ════════════════════════════════════ */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 1px;
-}
-.hp-bar-inner {
   height: 100%;
-  transition: width 0.5s ease;
-}
-.hp-green { background: #48d048; }
-.hp-yellow { background: #f8d030; }
-.hp-red { background: #f85030; }
-
-/* ===== Pokemon Nav Sidebar ===== */
-.pkmn-menu {
-  background: #485888;
-  border: 3px solid #303850;
-  border-radius: 12px;
-  padding: 8px 0;
-  box-shadow: inset 0 0 0 2px #586898, 3px 3px 0 rgba(0,0,0,0.2);
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.12) 1px,
+    rgba(0, 0, 0, 0.12) 2px
+  );
+  mix-blend-mode: multiply;
 }
 
-.pkmn-menu-item {
-  color: #f8f8f8;
-  padding: 8px 16px;
-  font-size: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.pkmn-menu-item:hover, .pkmn-menu-item.active {
-  background: #78a8e8;
-  color: #fff;
-}
-
-/* ===== Pokemon Button ===== */
-.pkmn-btn {
-  background: linear-gradient(to bottom, #f8a060, #f08030);
-  border: 2px solid #c05820;
-  border-radius: 8px;
-  color: #f8f8f8;
-  padding: 8px 16px;
-  font-size: 10px;
-  cursor: pointer;
-  text-shadow: 1px 1px 0 #804020;
-}
-.pkmn-btn:active { transform: translateY(1px); }
-.pkmn-btn-blue {
-  background: linear-gradient(to bottom, #60a0f8, #3890f8);
-  border-color: #2060c0;
-  text-shadow: 1px 1px 0 #204080;
+/* ════════════════════════════════════
+   CRT CURVATURE (subtle)
+   ════════════════════════════════════ */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
 }
 
-/* ===== Status Badges ===== */
-.status-badge {
-  font-size: 7px;
-  padding: 2px 6px;
-  border-radius: 2px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: inline-block;
+/* ════════════════════════════════════
+   DARK STONE TEXTURE BACKGROUND
+   ════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(45deg, rgba(20, 15, 30, 0.3) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(20, 15, 30, 0.3) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(20, 15, 30, 0.3) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(20, 15, 30, 0.3) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+  opacity: 0.5;
 }
-.badge-active { background: #f08030; color: #fff; }
-.badge-completed, .badge-complete { background: #48d048; color: #fff; }
-.badge-pending { background: #a0a0a0; color: #fff; }
-.badge-failed { background: #f85030; color: #fff; }
 
-/* ===== Text Box ===== */
-.pkmn-textbox {
-  background: #f8f8f8;
-  border: 3px solid #404040;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 2px #d0d0d0;
-  padding: 12px 16px;
+/* ════════════════════════════════════
+   RPG DIALOG BOX / FF-STYLE PANEL
+   Double-border like SNES RPG menus
+   ════════════════════════════════════ */
+.rpg-panel {
+  background: linear-gradient(180deg, #10102a 0%, #0a0a1e 100%);
+  border: 3px solid #8b7355;
+  outline: 3px solid #2a1f15;
+  outline-offset: -6px;
+  padding: 16px;
   position: relative;
 }
-.pkmn-textbox::after {
-  content: '▼';
+
+.rpg-panel::before {
+  content: '';
   position: absolute;
-  bottom: 4px;
-  right: 8px;
-  font-size: 8px;
-  color: #383838;
-  animation: bounce-arrow 1s infinite;
-}
-@keyframes bounce-arrow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
+  inset: 3px;
+  border: 1px solid rgba(139, 115, 85, 0.3);
+  pointer-events: none;
 }
 
-/* ===== Party Slot (Mission Card) ===== */
-.party-slot {
-  background: #a0c8e8;
-  border: 2px solid #607080;
-  border-radius: 8px;
-  padding: 8px 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.party-slot:hover, .party-slot.selected {
-  background: #78b0d8;
-}
-
-/* ===== Pokedex Entry ===== */
-.pokedex-entry {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  border-bottom: 2px solid #d0d0d0;
-  cursor: pointer;
-}
-.pokedex-entry:hover {
-  background: #e8e8e8;
+/* ════════════════════════════════════
+   PIXEL BORDERS (box-shadow based)
+   ════════════════════════════════════ */
+.pixel-border {
+  box-shadow:
+    -4px 0 0 0 #8b7355,
+    4px 0 0 0 #8b7355,
+    0 -4px 0 0 #8b7355,
+    0 4px 0 0 #8b7355,
+    -4px -4px 0 0 #5a4a3a,
+    4px -4px 0 0 #5a4a3a,
+    -4px 4px 0 0 #5a4a3a,
+    4px 4px 0 0 #5a4a3a;
 }
 
-/* ===== Mobile Nav ===== */
-.mobile-nav {
-  position: fixed;
+.pixel-border-gold {
+  box-shadow:
+    -3px 0 0 0 #fbbf24,
+    3px 0 0 0 #fbbf24,
+    0 -3px 0 0 #fbbf24,
+    0 3px 0 0 #fbbf24,
+    -3px -3px 0 0 #b8860b,
+    3px -3px 0 0 #b8860b,
+    -3px 3px 0 0 #b8860b,
+    3px 3px 0 0 #b8860b,
+    -6px 0 0 0 #b8860b,
+    6px 0 0 0 #b8860b,
+    0 -6px 0 0 #b8860b,
+    0 6px 0 0 #b8860b;
+}
+
+.pixel-border-thin {
+  box-shadow:
+    -2px 0 0 0 #5a4a3a,
+    2px 0 0 0 #5a4a3a,
+    0 -2px 0 0 #5a4a3a,
+    0 2px 0 0 #5a4a3a,
+    -2px -2px 0 0 #3a2a1a,
+    2px -2px 0 0 #3a2a1a,
+    -2px 2px 0 0 #3a2a1a,
+    2px 2px 0 0 #3a2a1a;
+}
+
+/* ════════════════════════════════════
+   GOLD GLOW TEXT
+   ════════════════════════════════════ */
+.text-glow-gold {
+  text-shadow:
+    0 0 4px #fbbf24,
+    0 0 8px #fbbf2488,
+    0 0 16px #fbbf2444,
+    2px 2px 0px #b8860b;
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 6px #a78bfa, 0 0 12px #a78bfa44;
+}
+
+/* RPG text dropshadow for all pixel headings */
+.text-rpg-shadow {
+  text-shadow: 2px 2px 0px #000, -1px -1px 0px #000;
+}
+
+/* ════════════════════════════════════
+   8-BIT SCROLLBAR
+   ════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+  border-left: 2px solid #5a4a3a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b7355, #5a4a3a);
+  border: 2px solid #2a1f15;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #fbbf24, #8b7355);
+}
+::-webkit-scrollbar-corner {
+  background: #0a0a0f;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #5a4a3a #0a0a0f;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ════════════════════════════════════
+   BLINKING CURSOR
+   ════════════════════════════════════ */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.rpg-cursor {
+  animation: cursor-blink 0.8s step-end infinite;
+}
+
+/* ════════════════════════════════════
+   STATUS DOTS
+   ════════════════════════════════════ */
+.status-active {
+  background: #22c55e;
+  box-shadow: 0 0 4px #22c55e, 0 0 8px #22c55e66;
+  animation: blink 1.5s step-start infinite;
+}
+.status-idle {
+  background: #fbbf24;
+  box-shadow: 0 0 4px #fbbf24;
+}
+.status-offline {
+  background: #64748b;
+}
+
+/* ════════════════════════════════════
+   QUEST SCROLL
+   ════════════════════════════════════ */
+.quest-scroll {
+  background:
+    linear-gradient(180deg,
+      #1a1510 0%,
+      #15120e 4%,
+      #12100c 8%,
+      #100e0a 50%,
+      #12100c 92%,
+      #15120e 96%,
+      #1a1510 100%
+    );
+  border: 3px solid #5a4a3a;
+  position: relative;
+}
+
+.quest-scroll::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #8b7355 0px,
+    #8b7355 4px,
+    #5a4a3a 4px,
+    #5a4a3a 8px
+  );
+}
+
+.quest-scroll::after {
+  content: '';
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-  padding: 4px;
-  background: #485888;
-  border-top: 3px solid #303850;
-  z-index: 50;
-}
-
-/* ===== Stat Bar ===== */
-.stat-bar-bg {
-  background: #404040;
   height: 6px;
-  flex: 1;
-}
-.stat-bar-fill {
-  height: 100%;
-  background: #3890f8;
+  background: repeating-linear-gradient(
+    90deg,
+    #8b7355 0px,
+    #8b7355 4px,
+    #5a4a3a 4px,
+    #5a4a3a 8px
+  );
 }
 
-/* ===== Misc ===== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #d0d0d0; }
-::-webkit-scrollbar-thumb { background: #808080; border-radius: 3px; }
+/* ════════════════════════════════════
+   HP / MP / EXP BARS
+   ════════════════════════════════════ */
+.hp-bar {
+  background: #1a0a0a;
+  border: 2px solid #5a4a3a;
+  position: relative;
+  overflow: hidden;
+}
 
-a { text-decoration: none; color: inherit; }
+.hp-bar-fill {
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.hp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ════════════════════════════════════
+   RPG MENU ITEM HOVER
+   ════════════════════════════════════ */
+.rpg-menu-item {
+  position: relative;
+  transition: background-color 0.1s step-end;
+}
+
+.rpg-menu-item:hover {
+  background: rgba(139, 115, 85, 0.15);
+}
+
+.rpg-menu-item:active {
+  background: rgba(251, 191, 36, 0.2);
+  transform: scale(0.98);
+}
+
+/* ════════════════════════════════════
+   CHAPTER TITLE ANIMATION
+   ════════════════════════════════════ */
+@keyframes chapter-appear {
+  0% { opacity: 0; letter-spacing: 12px; }
+  50% { opacity: 1; letter-spacing: 6px; }
+  100% { opacity: 1; letter-spacing: 4px; }
+}
+
+.chapter-title {
+  animation: chapter-appear 1.5s ease-out forwards;
+  letter-spacing: 4px;
+}
+
+/* ════════════════════════════════════
+   SAFE AREA
+   ════════════════════════════════════ */
+.safe-bottom {
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+
+/* ════════════════════════════════════
+   PIXEL STAR RATING
+   ════════════════════════════════════ */
+.star-filled { color: #fbbf24; text-shadow: 0 0 4px #fbbf2466; }
+.star-empty { color: #3a2a1a; }

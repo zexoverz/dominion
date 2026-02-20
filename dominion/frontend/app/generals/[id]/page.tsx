@@ -1,109 +1,172 @@
-import { getGeneral, getMissions } from '@/lib/api';
-import { getGeneralInfo, GENERALS } from '@/lib/generals';
-import Link from 'next/link';
-import PokemonWindow from '@/components/PokemonWindow';
-import StatBar from '@/components/StatBar';
-import StatusBadge from '@/components/StatusBadge';
-import HPBar from '@/components/HPBar';
-import TypeBadges from '@/components/TypeBadges';
+"use client";
 
-export default async function GeneralDetail({ params }: { params: { id: string } }) {
-  let general: any = null;
-  let missions: any[] = [];
-  try { general = await getGeneral(params.id); } catch {}
-  try { missions = await getMissions(); } catch {}
+import { useState, useEffect } from "react";
+import { generals as mockGenerals, missions as mockMissions } from "../../../lib/mock-data";
+import { getGenerals, getGeneral, getMissions } from "../../../lib/api";
+import PixelProgress from "../../../components/PixelProgress";
+import SpriteStage from "../../../components/sprites/SpriteStage";
+import { SpriteState } from "../../../components/sprites";
+import Link from "next/link";
 
-  const name = (general?.name || params.id).toUpperCase();
-  const info = getGeneralInfo(name);
+export default function GeneralDetail({ params }: { params: { id: string } }) {
+  const [generals, setGenerals] = useState(mockGenerals);
+  const [missions, setMissions] = useState(mockMissions);
+  const [generalData, setGeneralData] = useState(() => mockGenerals.find((g) => g.id === params.id));
+  const [spriteState, setSpriteState] = useState<SpriteState>('idle');
+  const spriteStates: SpriteState[] = ['idle', 'working', 'thinking', 'walking', 'talking', 'celebrating'];
 
-  if (!general && !info) {
-    return (
-      <PokemonWindow>
-        <Link href="/generals" className="text-[9px] text-[#3890f8]">← BACK</Link>
-        <div className="text-[9px] mt-4">General not found.</div>
-      </PokemonWindow>
-    );
+  useEffect(() => {
+    getGeneral(params.id).then(setGeneralData).catch(() => {});
+    getGenerals().then(setGenerals).catch(() => {});
+    getMissions().then(setMissions).catch(() => {});
+  }, [params.id]);
+
+  const general = generalData || generals.find((g) => g.id === params.id);
+  if (!general) {
+    return <div className="font-pixel text-[10px] text-throne-red">⚠️ GENERAL NOT FOUND</div>;
   }
 
-  const displayName = general?.name || info?.name || name;
-  const relatedMissions = missions.filter((m: any) =>
-    (m.agent_id || m.assigned_to || m.general || '').toUpperCase() === displayName.toUpperCase()
-  );
+  const generalMissions = missions.filter((m) => m.assignedTo === general.id);
+  const personality = Object.entries(general.personality);
+  const relationships = Object.entries(general.relationships);
 
   return (
-    <div className="space-y-4 bg-generals min-h-screen">
-      <Link href="/generals" className="text-[9px] text-[#78a8e8]">← BACK</Link>
+    <div className="max-w-full overflow-hidden">
+      <Link href="/" className="font-pixel text-[9px] text-rpg-borderMid hover:text-throne-gold mb-4 inline-flex items-center min-h-[44px] gap-2">
+        <span className="rpg-cursor">▶</span> BACK TO THRONE ROOM
+      </Link>
 
-      {/* Summary-style header */}
-      <div className="pkmn-window" style={{ minHeight: 220 }}>
-        <div className="flex items-start gap-4 pt-4">
-          {/* Trainer + Pokemon sprites */}
-          <div className="flex flex-col items-center gap-2">
-            {info && (
-              <img
-                src={info.trainer}
-                alt=""
-                className="pixel"
-                style={{ imageRendering: 'pixelated', width: 48, height: 48, objectFit: 'none', objectPosition: '0 0' }}
-              />
-            )}
-            {info && (
-              <img
-                src={info.sprite}
-                alt={info.pokemon}
-                className="pixel"
-                style={{ imageRendering: 'pixelated', width: 96, height: 96 }}
-              />
-            )}
+      {/* Character Header — RPG status screen style */}
+      <div className="rpg-panel p-4 md:p-6 mb-6">
+        <div className="flex flex-col items-center mb-4">
+          <SpriteStage
+            generalId={general.id}
+            name={general.name}
+            state={spriteState}
+            actionText={general.currentMission || `${spriteState}...`}
+            status={general.status === 'ACTIVE' ? 'online' : general.status === 'IDLE' ? 'idle' : 'offline'}
+            size={192}
+          />
+          {/* Animation state selector */}
+          <div className="flex flex-wrap gap-2 mt-4 justify-center">
+            {spriteStates.map((s) => (
+              <button
+                key={s}
+                onClick={() => setSpriteState(s)}
+                className={`font-pixel text-[8px] px-3 py-1.5 border transition-colors min-h-[32px] ${
+                  spriteState === s
+                    ? 'text-throne-gold border-throne-gold bg-throne-gold/10'
+                    : 'text-rpg-borderMid border-rpg-borderDark hover:text-rpg-border hover:border-rpg-border'
+                }`}
+              >
+                {s.toUpperCase()}
+              </button>
+            ))}
           </div>
-          <div>
-            <div className="text-[14px] font-bold mb-1 text-white" style={{ textShadow: '1px 1px 0 #000' }}>{displayName}</div>
-            {info && (
-              <>
-                <div className="text-[8px] text-white mb-1" style={{ textShadow: '1px 1px 0 #000' }}>{info.pokemon} — {info.role}</div>
-                <TypeBadges types={info.types} />
-              </>
-            )}
-            {general?.status && <div className="mt-2"><StatusBadge status={general.status} /></div>}
+        </div>
+        <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-6">
+          <div className="min-w-0 flex-1">
+            <h1 className="font-pixel text-[14px] md:text-[16px] mb-1 text-rpg-shadow break-words" style={{ color: general.color }}>
+              {general.emoji} {general.name}
+            </h1>
+            <p className="font-body text-[10px] text-rpg-border italic mb-3">{general.title}</p>
+            <div className="flex gap-2 md:gap-3 items-center flex-wrap mb-3">
+              <span className={`w-3 h-3 status-${general.status.toLowerCase()}`} />
+              <span className="font-pixel text-[8px] text-rpg-border">{general.status}</span>
+              <span className="font-pixel text-[8px] px-2 py-0.5 bg-rpg-borderDark/30 text-throne-goldLight border border-rpg-borderDark">{general.model}</span>
+              <span className="font-pixel text-[8px] text-rpg-borderMid">Phase {general.phase}</span>
+            </div>
+            <p className="font-body text-[9px] text-rpg-border max-w-lg break-words leading-relaxed">{general.description}</p>
           </div>
         </div>
       </div>
 
-      {info && (
-        <PokemonWindow cream title="BASE STATS">
-          <div className="space-y-1">
-            <StatBar label="HP" value={info.stats.hp} />
-            <StatBar label="ATK" value={info.stats.atk} />
-            <StatBar label="DEF" value={info.stats.def} />
-            <StatBar label="SP.ATK" value={info.stats.spa} />
-            <StatBar label="SP.DEF" value={info.stats.spd2} />
-            <StatBar label="SPD" value={info.stats.spd} />
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <img src="/assets/pokemon/summary_screen-hp_bar.png" alt="" className="pixel" style={{ imageRendering: 'pixelated', height: 10 }} />
-            <HPBar value={info.stats.hp} max={160} />
-          </div>
-        </PokemonWindow>
-      )}
-
-      {general?.description && (
-        <PokemonWindow title="TRAINER MEMO">
-          <div className="text-[8px]">{general.description}</div>
-        </PokemonWindow>
-      )}
-
-      {relatedMissions.length > 0 && (
-        <PokemonWindow title="RECENT MISSIONS">
-          {relatedMissions.slice(0, 5).map((m: any, i: number) => (
-            <Link key={i} href={`/missions/${m.id || m._id}`}>
-              <div className="flex items-center justify-between py-2 border-b border-[#d0d0d0] last:border-0">
-                <span className="text-[8px]">{m.title || m.name}</span>
-                <StatusBadge status={m.status || 'pending'} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        {/* Personality — stat bars */}
+        <div className="rpg-panel p-3 md:p-4">
+          <h2 className="font-pixel text-[10px] text-throne-gold mb-4 text-rpg-shadow">🧠 STATS</h2>
+          <div className="flex flex-col gap-3">
+            {personality.map(([trait, value]) => (
+              <div key={trait}>
+                <div className="flex justify-between text-[8px] font-pixel text-rpg-borderMid mb-1">
+                  <span className="uppercase">{trait}</span>
+                  <span className="text-throne-goldLight">{value}</span>
+                </div>
+                <PixelProgress value={value as number} color={general.color} height={12} segments={20} />
               </div>
-            </Link>
-          ))}
-        </PokemonWindow>
-      )}
+            ))}
+          </div>
+        </div>
+
+        {/* Relationships */}
+        <div className="rpg-panel p-3 md:p-4">
+          <h2 className="font-pixel text-[10px] text-throne-gold mb-4 text-rpg-shadow">🤝 BONDS</h2>
+          <div className="flex flex-col gap-3">
+            {relationships.map(([id, score]) => {
+              const other = generals.find((g) => g.id === id);
+              if (!other) return null;
+              const s = score as number;
+              return (
+                <div key={id} className="flex items-center gap-2 md:gap-3">
+                  <span className="text-lg flex-shrink-0">{other.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between text-[8px] font-pixel text-rpg-borderMid mb-1">
+                      <span className="text-rpg-shadow" style={{ color: other.color }}>{other.name}</span>
+                      <span>{s}/100</span>
+                    </div>
+                    <PixelProgress value={s} color={s > 70 ? "#22c55e" : s > 40 ? "#fbbf24" : "#dc2626"} height={8} segments={10} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mission History */}
+        <div className="rpg-panel p-3 md:p-4 lg:col-span-2">
+          <h2 className="font-pixel text-[10px] text-throne-gold mb-4 text-rpg-shadow">📜 QUEST LOG</h2>
+          {generalMissions.length === 0 ? (
+            <p className="font-body text-[9px] text-rpg-borderMid italic">No quests yet. Awaiting activation...</p>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {generalMissions.map((m) => (
+                <div key={m.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 p-2 md:p-3"
+                  style={{ borderLeft: '3px solid #5a4a3a', background: 'rgba(16,16,42,0.5)' }}>
+                  <span className="font-body text-[8px] text-rpg-borderMid sm:w-20 flex-shrink-0">{m.createdAt}</span>
+                  <span className="font-pixel text-[8px] text-throne-goldLight flex-1 break-words">{m.title}</span>
+                  <div className="flex gap-2 items-center">
+                    <span className="font-pixel text-[7px] px-2 py-0.5" style={{
+                      color: m.status === "COMPLETE" ? "#22c55e" : m.status === "IN_PROGRESS" ? "#fbbf24" : "#94a3b8",
+                      backgroundColor: m.status === "COMPLETE" ? "#22c55e11" : m.status === "IN_PROGRESS" ? "#fbbf2411" : "#94a3b811",
+                      border: `1px solid ${m.status === "COMPLETE" ? "#22c55e33" : m.status === "IN_PROGRESS" ? "#fbbf2433" : "#94a3b833"}`,
+                    }}>
+                      {m.status}
+                    </span>
+                    <span className="font-body text-[8px] text-rpg-borderMid">{m.progress}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Vital Signs */}
+        <div className="rpg-panel p-3 md:p-4 lg:col-span-2">
+          <h2 className="font-pixel text-[10px] text-throne-gold mb-4 text-rpg-shadow">📊 VITAL SIGNS</h2>
+          <div className="flex flex-wrap gap-6 md:gap-8">
+            {[
+              { label: "TOTAL QUESTS", value: general.totalMissions.toString() },
+              { label: "GOLD TODAY", value: `${general.costToday.toFixed(2)}g` },
+              { label: "MODEL", value: general.model },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="font-pixel text-[7px] text-rpg-borderMid">{s.label}</p>
+                <p className="font-pixel text-[14px] text-throne-goldLight text-rpg-shadow">{s.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

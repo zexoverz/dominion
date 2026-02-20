@@ -1,99 +1,165 @@
-import { getMissions, getReports, getGenerals, getEvents } from '@/lib/api';
-import { GENERALS } from '@/lib/generals';
-import PokemonWindow from '@/components/PokemonWindow';
-import TextBox from '@/components/TextBox';
-import HPBar from '@/components/HPBar';
-import TypeBadges from '@/components/TypeBadges';
+"use client";
 
-export default async function Dashboard() {
-  let missions: any[] = [], reports: any[] = [], generals: any[] = [], events: any[] = [];
-  try { missions = await getMissions(); } catch {}
-  try { reports = await getReports(); } catch {}
-  try { generals = await getGenerals(); } catch {}
-  try { events = await getEvents(); } catch {}
+import { useState, useEffect } from "react";
+import { generals as mockGenerals } from "../lib/mock-data";
+import { getGenerals } from "../lib/api";
+import GeneralCard from "../components/GeneralCard";
+import StatsBar from "../components/StatsBar";
+import SpriteStage from "../components/sprites/SpriteStage";
+import { getGeneralSprite } from "../components/sprites";
+import AgentActivityFeed from "../components/realtime/AgentActivityFeed";
+import SystemPulse from "../components/realtime/SystemPulse";
+import CostTicker from "../components/realtime/CostTicker";
+import NetworkGraph from "../components/realtime/NetworkGraph";
+import MissionProgressLive from "../components/realtime/MissionProgressLive";
+import { useActivity } from "../lib/use-activity";
 
-  const active = missions.filter((m: any) => m.status === 'active' || m.status === 'in_progress').length;
-  const completed = missions.filter((m: any) => m.status === 'complete' || m.status === 'completed').length;
+export default function Dashboard() {
+  const [generals, setGenerals] = useState(mockGenerals);
+  const activity = useActivity();
+
+  useEffect(() => {
+    getGenerals().then(setGenerals).catch(() => {});
+  }, []);
+
+  const costToday = generals.reduce((sum, g) => sum + g.costToday, 0);
 
   return (
-    <div className="space-y-4 bg-dashboard min-h-screen">
-      {/* Trainer Card */}
-      <PokemonWindow title="TRAINER CARD">
-        <div className="text-[12px] font-bold mb-3">LORD ZEXO</div>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/pokeball.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
-            <span className="text-[9px]">Active: {active}</span>
+    <div className="max-w-full overflow-hidden">
+      {/* ═══ TITLE SCREEN ═══ */}
+      <div className="rpg-panel mb-6 text-center py-6">
+        <p className="font-pixel text-[8px] text-rpg-borderMid mb-2 tracking-widest">— WELCOME TO —</p>
+        <h1 className="font-pixel text-[16px] md:text-[20px] text-throne-gold text-glow-gold mb-3 chapter-title">
+          👑 THE DOMINION
+        </h1>
+        <p className="font-pixel text-[8px] text-rpg-border tracking-wider">
+          of LORD ZEXO
+        </p>
+        <p className="text-[9px] font-body text-rpg-borderMid mt-3">
+          Command your generals. Conquer the unknown.
+        </p>
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <SystemPulse />
+          <CostTicker initialCost={costToday} />
+        </div>
+        {(activity.eventCount > 0 || activity.missionCount > 0) && (
+          <div className="flex items-center justify-center gap-6 mt-3">
+            <span className="font-pixel text-[8px] text-seer-blue">
+              📡 {activity.eventCount} events
+            </span>
+            <span className="font-pixel text-[8px] text-throne-gold">
+              ⚔️ {activity.missionCount} missions
+            </span>
+            {activity.lastUpdate && (
+              <span className="font-pixel text-[7px] text-rpg-borderMid">
+                Updated {Math.round((Date.now() - activity.lastUpdate) / 1000)}s ago
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/rare-candy.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
-            <span className="text-[9px]">Reports: {reports.length}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/masterball.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
-            <span className="text-[9px]">Generals: {generals.length}/7</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <img src="/assets/pokemon/fire-stone.png" alt="" width={20} height={20} className="pixel" style={{ imageRendering: 'pixelated' }} />
-            <span className="text-[9px]">System: ONLINE</span>
-          </div>
-        </div>
-      </PokemonWindow>
+        )}
+      </div>
 
-      {/* Gym Badges */}
-      <PokemonWindow cream title="GYM BADGES">
-        <div className="flex justify-center mb-2">
-          <img src="/assets/pokemon/badges.png" alt="Badges" className="pixel" style={{ height: 40, imageRendering: 'pixelated' }} />
-        </div>
-        <div className="text-[8px] text-center text-[#707070]">
-          {completed} / {missions.length} missions completed
-        </div>
-      </PokemonWindow>
+      {/* ═══ HUD STATS BAR ═══ */}
+      <StatsBar />
 
-      {/* Party — All 7 Generals */}
-      <PokemonWindow title="PARTY">
-        <div className="space-y-2">
-          {Object.values(GENERALS).map((g) => {
-            const totalStats = g.stats.hp + g.stats.atk + g.stats.def + g.stats.spa + g.stats.spd2 + g.stats.spd;
-            return (
-              <div key={g.name} className="party-slot">
-                <img src={g.sprite} alt={g.pokemon} width={40} height={40} className="pixel" style={{ imageRendering: 'pixelated' }} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[8px] font-bold">{g.name}</span>
-                    <TypeBadges types={g.types} />
-                  </div>
-                  <HPBar value={g.stats.hp} max={160} />
-                  <div className="text-[7px] text-[#707070] mt-1">Lv.50 · {g.pokemon} · BST {totalStats}</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </PokemonWindow>
-
-      {/* Kanto Region Map */}
-      <PokemonWindow title="DOMINION MAP">
-        <div className="flex justify-center">
-          <img src="/assets/pokemon/region-map.png" alt="Kanto Region" className="pixel" style={{ width: '100%', maxWidth: 480, imageRendering: 'pixelated' }} />
-        </div>
-        <div className="text-[8px] text-center text-[#707070] mt-2">
-          Current location: DOMINION HQ — Pallet Town
-        </div>
-      </PokemonWindow>
-
-      {/* Recent Activity */}
-      <PokemonWindow title="RECENT ACTIVITY">
-        <TextBox>
-          {events.length === 0 && <div className="text-[9px] text-[#909090]">No recent activity...</div>}
-          {events.slice(0, 8).map((e: any, i: number) => (
-            <div key={i} className="text-[8px] mb-2">
-              {e.general || e.source || 'SYSTEM'} used {e.type || e.action || 'ACTION'}!
-              {e.description && <span className="text-[#707070]"> {e.description}</span>}
+      {/* ═══ CHAPTER TITLE: PHASE 1 ═══ */}
+      <div className="mb-6 text-center py-4" style={{
+        background: 'linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.08) 20%, rgba(251,191,36,0.12) 50%, rgba(251,191,36,0.08) 80%, transparent 100%)',
+        borderTop: '2px solid #5a4a3a',
+        borderBottom: '2px solid #5a4a3a',
+      }}>
+        <p className="font-pixel text-[7px] text-rpg-borderMid mb-1 tracking-[6px]">CHAPTER</p>
+        <h2 className="font-pixel text-[14px] text-throne-gold text-glow-gold chapter-title">
+          ⚔️ PHASE 1 ⚔️
+        </h2>
+        <p className="font-pixel text-[8px] text-throne-goldDark mt-1 tracking-wider">THE FIRST THREE</p>
+        <div className="flex justify-center gap-6 mt-4 items-end">
+          {generals.slice(0, 3).map((g) => (
+            <div key={g.id} className="text-center">
+              {getGeneralSprite(g.id, g.status === 'ACTIVE' ? 'working' : 'idle', 56) || (
+                <span className="text-2xl">{g.emoji}</span>
+              )}
+              <p className="font-pixel text-[7px] mt-1 text-rpg-shadow" style={{ color: g.color }}>{g.name}</p>
             </div>
           ))}
-        </TextBox>
-      </PokemonWindow>
+          <div className="border-l-2 border-rpg-borderDark hidden md:block" />
+          {generals.slice(3).map((g) => (
+            <div key={g.id} className="text-center opacity-25 grayscale hidden md:block">
+              {getGeneralSprite(g.id, 'idle', 48) || (
+                <span className="text-2xl">{g.emoji}</span>
+              )}
+              <p className="font-pixel text-[7px] mt-1 text-rpg-borderMid">{g.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ FEATURED GENERAL ═══ */}
+      <div className="rpg-panel p-4 mb-6 flex flex-col items-center">
+        <p className="font-pixel text-[8px] text-rpg-borderMid mb-3 tracking-widest">— SUPREME COMMANDER —</p>
+        <SpriteStage
+          generalId="throne"
+          name="THRONE"
+          state="working"
+          actionText="Orchestrating Phase 1 deployment"
+          status="online"
+          size={128}
+        />
+      </div>
+
+      {/* ═══ MAIN CONTENT ═══ */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+        {/* Generals Grid */}
+        <div className="lg:col-span-2">
+          <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">📋 THE GENERALS</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {generals.map((g) => (
+              <GeneralCard key={g.id} general={g} />
+            ))}
+          </div>
+        </div>
+
+        {/* Command Center sidebar */}
+        <div className="lg:col-span-1">
+          <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">⚡ COMMAND CENTER</h2>
+          <AgentActivityFeed className="mb-4 h-[320px]" />
+          <MissionProgressLive
+            missionName="Deploy the Watchtower"
+            initialProgress={65}
+            color="#fbbf24"
+            className="mb-4"
+          />
+          <MissionProgressLive
+            missionName="Shadow Protocol Alpha"
+            initialProgress={90}
+            color="#94a3b8"
+          />
+        </div>
+      </div>
+
+      {/* ═══ LIVE INTEL ═══ */}
+      {activity.events.length > 0 && (
+        <div className="rpg-panel p-4 mb-6">
+          <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">📡 LIVE INTEL FEED</h2>
+          <div className="space-y-2">
+            {activity.events.slice(0, 3).map((evt, i) => (
+              <div key={evt.id || i} className="flex items-start gap-2 text-[10px] font-body">
+                <span>{evt.emoji || '⚡'}</span>
+                <span className="text-rpg-text flex-1">{evt.message}</span>
+                <span className="text-rpg-borderMid text-[8px] whitespace-nowrap">
+                  {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ═══ NETWORK GRAPH ═══ */}
+      <div className="mb-6">
+        <h2 className="font-pixel text-[10px] text-rpg-border mb-4 text-rpg-shadow">🌐 GENERAL NETWORK</h2>
+        <NetworkGraph className="max-w-2xl" />
+      </div>
     </div>
   );
 }
