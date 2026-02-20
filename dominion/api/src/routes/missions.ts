@@ -218,4 +218,39 @@ router.patch('/:mid/steps/:sid', async (req, res) => {
   }
 });
 
+// DELETE /api/missions/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Use a single transaction to clean up everything
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      // Delete events referencing steps or this mission
+      await client.query(`DELETE FROM ops_agent_events WHERE step_id IN (SELECT id FROM ops_mission_steps WHERE mission_id = $1)`, [id]);
+      await client.query('DELETE FROM ops_agent_events WHERE mission_id = $1', [id]);
+      // Disable trigger to avoid division-by-zero when all steps removed
+      await client.query('ALTER TABLE ops_mission_steps DISABLE TRIGGER USER');
+      await client.query('DELETE FROM ops_mission_steps WHERE mission_id = $1', [id]);
+      await client.query('ALTER TABLE ops_mission_steps ENABLE TRIGGER USER');
+      // Delete the mission itself
+      await client.query('COMMIT');
+    } catch (txErr) {
+      await client.query('ROLLBACK').catch(() => {});
+      await client.query('ALTER TABLE ops_mission_steps ENABLE TRIGGER USER').catch(() => {});
+      throw txErr;
+    } finally {
+      client.release();
+    }
+    const result = await pool.query('DELETE FROM ops_missions WHERE id = $1 RETURNING *', [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Mission not found' });
+    }
+    res.json({ deleted: true, id });
+  } catch (err: any) {
+    console.error('DELETE /api/missions/:id error:', err);
+    res.status(500).json({ error: err?.message || 'Internal server error' });
+  }
+});
+
 export default router;

@@ -49,6 +49,12 @@
 - ETHJKT curriculum: Phase 2 gaps identified (Week 4-5), Phase 3 designed (hackathon-ready)
 - "Logic Nolep" → "Arcane Quest" rebrand pushed to 7 live ETHJKT repos
 - 33 checkpoints shipped in single async session (Feb 14, 2026)
+- ETHJKT Phase 2 Week 3-5 FULLY REVAMPED (Feb 16, 2026): 63 files, 3 attempts to get quality right
+- Week 6 = Group Capstone (separate week), demos on Discord "Magic Temple" voice channel
+- Dominion repo made PUBLIC with proper README + docs
+- All 3 missions (EIP/OSS/Bootcamp) have expandable instructions on dashboard
+- OZ #6305 = best first PR target (30 min, EIP-2200 comment fix)
+- ethereum/tests #1498 BLOCKED (upstream not merged)
 
 ## Investment Master Plan (v2.0 — source of truth)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
@@ -77,6 +83,7 @@
 - Mission detail page built with expandable step instructions
 
 ## Key Lessons
+- Cron jobs: do NOT set model field — "sonnet" alias doesn't resolve. Omit model entirely to use default.
 - Use Sonnet for sub-agents (Opus rate limits too tight)
 - Don't spawn 6+ agents rapidly — space them out
 - Railway: put build deps in regular dependencies (devDeps skip in production)
