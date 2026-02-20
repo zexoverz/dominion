@@ -1,58 +1,49 @@
-import { GENERALS } from '@/lib/generals';
+import Link from 'next/link';
 import StatusDot from './StatusDot';
+
+const GENERALS: Record<string, { name: string; role: string; color: string; icon: string }> = {
+  THRONE: { name: 'THRONE', role: 'Strategic Command', color: '#f59e0b', icon: '👑' },
+  GRIMOIRE: { name: 'GRIMOIRE', role: 'Knowledge & Research', color: '#8b5cf6', icon: '📖' },
+  SEER: { name: 'SEER', role: 'Market Intelligence', color: '#06b6d4', icon: '🔮' },
+  PHANTOM: { name: 'PHANTOM', role: 'Security & Stealth', color: '#ef4444', icon: '👻' },
+  ECHO: { name: 'ECHO', role: 'Communications', color: '#22c55e', icon: '🔊' },
+  MAMMON: { name: 'MAMMON', role: 'Finance & Treasury', color: '#f59e0b', icon: '💰' },
+  'WRAITH-EYE': { name: 'WRAITH-EYE', role: 'Surveillance', color: '#6366f1', icon: '👁️' },
+};
 
 export default function GeneralCard({ general }: { general: any }) {
   const key = (general.name || general.id || '').toUpperCase();
   const meta = GENERALS[key] || { name: key, role: 'Unknown', color: '#00f0ff', icon: '⬡' };
+  const id = general.id || key.toLowerCase();
 
   return (
-    <div
-      className="holo-panel scanlines p-5 transition-all duration-300 hover:scale-[1.02]"
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-        minHeight: 180,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        borderColor: meta.color,
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${meta.color}40, inset 0 0 20px ${meta.color}10`;
-        (e.currentTarget as HTMLElement).style.borderColor = meta.color;
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = '';
-        (e.currentTarget as HTMLElement).style.borderColor = '';
-      }}
-    >
-      <div
-        className="flex items-center justify-center mb-2"
-        style={{
-          width: 48,
-          height: 48,
-          borderRadius: '50%',
-          border: `2px solid ${meta.color}`,
-          boxShadow: `0 0 12px ${meta.color}60`,
-          fontSize: 22,
-        }}
-      >
-        {meta.icon}
+    <Link href={`/generals/${id}`} className="block">
+      <div className="holo-panel p-5 transition-all duration-200 hover:scale-[1.02]"
+        style={{ overflow: 'hidden', borderLeft: `3px solid ${meta.color}`, cursor: 'pointer' }}>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center shrink-0"
+            style={{
+              width: 48, height: 48, borderRadius: '50%',
+              background: `${meta.color}15`,
+              border: `2px solid ${meta.color}40`,
+              fontSize: 22,
+            }}>
+            {meta.icon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-sm font-bold" style={{ fontFamily: "'JetBrains Mono', monospace", color: '#e2e8f0' }}>
+              {meta.name}
+            </h3>
+            <p className="text-xs mt-0.5" style={{ color: 'rgba(226,232,240,0.5)' }}>{meta.role}</p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <StatusDot status={general.status || 'online'} />
+            <span className="text-xs uppercase" style={{ color: 'rgba(226,232,240,0.4)', fontFamily: "'JetBrains Mono', monospace" }}>
+              {general.status || 'online'}
+            </span>
+          </div>
+        </div>
       </div>
-      <h3 className="text-sm font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-        {meta.name}
-      </h3>
-      <p className="text-xs mt-1" style={{ color: 'rgba(226,232,240,0.5)' }}>{meta.role}</p>
-      <div className="flex items-center gap-1 mt-2">
-        <StatusDot status={general.status || 'online'} />
-        <span className="text-xs">{general.status || 'online'}</span>
-      </div>
-      {general.mission_count !== undefined && (
-        <span className="label mt-1">{general.mission_count} missions</span>
-      )}
-    </div>
+    </Link>
   );
 }
