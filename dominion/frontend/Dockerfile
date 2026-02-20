@@ -10,6 +10,7 @@ COPY . .
 ENV NODE_PATH=/app/node_modules
 RUN npm run build
 
+# v3.5 - with public assets
 FROM node:18-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
