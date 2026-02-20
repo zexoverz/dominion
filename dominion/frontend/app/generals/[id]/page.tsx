@@ -1,58 +1,86 @@
-import { getGeneral } from '@/lib/api';
-import { GENERALS } from '@/lib/generals';
-import HoloPanel from '@/components/HoloPanel';
-import StatusDot from '@/components/StatusDot';
+import { getGeneral, getMissions } from '@/lib/api';
+import { getGeneralInfo, GENERALS } from '@/lib/generals';
 import Link from 'next/link';
+import PokemonWindow from '@/components/PokemonWindow';
+import GeneralSprite from '@/components/GeneralSprite';
+import StatBar from '@/components/StatBar';
+import StatusBadge from '@/components/StatusBadge';
 
-export default async function GeneralPage({ params }: { params: { id: string } }) {
+export default async function GeneralDetail({ params }: { params: { id: string } }) {
   let general: any = null;
+  let missions: any[] = [];
   try { general = await getGeneral(params.id); } catch {}
+  try { missions = await getMissions(); } catch {}
 
-  if (!general) {
+  // Try to find pokemon info from name or id
+  const name = (general?.name || params.id).toUpperCase();
+  const info = getGeneralInfo(name);
+
+  if (!general && !info) {
     return (
-      <div className="p-8 text-center">
-        <h1 className="label">GENERAL NOT FOUND</h1>
-        <Link href="/generals" className="text-xs" style={{ color: '#00f0ff' }}>← Back to Council</Link>
-      </div>
+      <PokemonWindow>
+        <Link href="/generals" className="text-[9px] text-[#3890f8]">← BACK</Link>
+        <div className="text-[9px] mt-4">General not found.</div>
+      </PokemonWindow>
     );
   }
 
-  const key = (general.name || '').toUpperCase();
-  const meta = GENERALS[key] || { name: key, role: 'Unknown', color: '#00f0ff', icon: '⬡' };
+  const displayName = general?.name || info?.name || name;
+  const relatedMissions = missions.filter((m: any) =>
+    (m.assignedTo || m.general || '').toUpperCase() === displayName.toUpperCase()
+  );
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto">
-      <Link href="/generals" className="label mb-4 inline-block" style={{ color: '#00f0ff' }}>
-        ← THE COUNCIL
-      </Link>
+    <div className="space-y-4">
+      <Link href="/generals" className="text-[9px] text-[#3890f8]">← BACK</Link>
 
-      <HoloPanel glow>
-        <div className="flex items-center gap-4 mb-4">
-          <div
-            className="flex items-center justify-center"
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: '50%',
-              border: `2px solid ${meta.color}`,
-              boxShadow: `0 0 20px ${meta.color}60`,
-              fontSize: 28,
-            }}
-          >
-            {meta.icon}
-          </div>
+      <PokemonWindow>
+        <div className="flex items-start gap-4">
+          <GeneralSprite name={displayName} size={128} />
           <div>
-            <h1 className="text-xl font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              {meta.name}
-            </h1>
-            <p className="text-sm" style={{ color: 'rgba(226,232,240,0.5)' }}>{meta.role}</p>
-            <div className="flex items-center gap-1 mt-1">
-              <StatusDot status={general.status || 'online'} />
-              <span className="text-xs">{general.status || 'online'}</span>
-            </div>
+            <div className="text-[12px] font-bold mb-1">{displayName}</div>
+            {info && (
+              <>
+                <div className="text-[8px] text-[#707070] mb-1">{info.pokemon} — {info.role}</div>
+                <div className="text-[8px]" style={{ color: info.color }}>TYPE: {info.type}</div>
+              </>
+            )}
+            {general?.status && <div className="mt-2"><StatusBadge status={general.status} /></div>}
           </div>
         </div>
-      </HoloPanel>
+      </PokemonWindow>
+
+      {info && (
+        <PokemonWindow cream title="BASE STATS">
+          <div className="space-y-1">
+            <StatBar label="HP" value={info.stats.hp} />
+            <StatBar label="ATK" value={info.stats.atk} />
+            <StatBar label="DEF" value={info.stats.def} />
+            <StatBar label="SP.ATK" value={info.stats.spa} />
+            <StatBar label="SP.DEF" value={info.stats.spd2} />
+            <StatBar label="SPD" value={info.stats.spd} />
+          </div>
+        </PokemonWindow>
+      )}
+
+      {general?.description && (
+        <PokemonWindow title="INFO">
+          <div className="text-[8px]">{general.description}</div>
+        </PokemonWindow>
+      )}
+
+      {relatedMissions.length > 0 && (
+        <PokemonWindow title="RECENT MISSIONS">
+          {relatedMissions.slice(0, 5).map((m: any, i: number) => (
+            <Link key={i} href={`/missions/${m.id || m._id}`}>
+              <div className="flex items-center justify-between py-2 border-b border-[#d0d0d0] last:border-0">
+                <span className="text-[8px]">{m.title || m.name}</span>
+                <StatusBadge status={m.status || 'pending'} />
+              </div>
+            </Link>
+          ))}
+        </PokemonWindow>
+      )}
     </div>
   );
 }

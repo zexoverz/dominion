@@ -1,49 +1,33 @@
 import { getReport } from '@/lib/api';
-import HoloPanel from '@/components/HoloPanel';
-import { getGeneralColor, getGeneralIcon } from '@/lib/generals';
 import Link from 'next/link';
+import PokemonWindow from '@/components/PokemonWindow';
 import ReactMarkdown from 'react-markdown';
 
-export default async function ReportPage({ params }: { params: { slug: string } }) {
+export default async function ReportDetail({ params }: { params: { slug: string } }) {
   let report: any = null;
   try { report = await getReport(params.slug); } catch {}
 
   if (!report) {
     return (
-      <div className="p-8 text-center">
-        <h1 className="label">REPORT NOT FOUND</h1>
-        <Link href="/intel" className="text-xs" style={{ color: '#00f0ff' }}>← Back to Intel</Link>
-      </div>
+      <PokemonWindow>
+        <Link href="/intel" className="text-[9px] text-[#3890f8]">← BACK</Link>
+        <div className="text-[9px] mt-4">Report not found.</div>
+      </PokemonWindow>
     );
   }
 
-  const color = getGeneralColor(report.general || report.author || '');
-
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto">
-      <Link href="/intel" className="label mb-4 inline-block" style={{ color: '#00f0ff' }}>
-        ← INTELLIGENCE HUB
-      </Link>
-
-      <HoloPanel glow>
-        <div className="flex items-center gap-2 mb-4">
-          <span style={{ color }}>{getGeneralIcon(report.general || report.author || '')}</span>
-          <span className="label">{report.general || report.author || 'UNKNOWN'}</span>
-          {report.created_at && (
-            <span className="ml-auto text-xs" style={{ color: 'rgba(226,232,240,0.4)' }}>
-              {new Date(report.created_at).toLocaleDateString()}
-            </span>
-          )}
+    <div className="space-y-4">
+      <Link href="/intel" className="text-[9px] text-[#3890f8]">← BACK</Link>
+      <PokemonWindow>
+        <div className="text-[11px] font-bold mb-2">{report.title || report.name}</div>
+        <div className="text-[7px] text-[#909090] mb-3">
+          {report.general || report.author || 'Unknown'} · {report.createdAt ? new Date(report.createdAt).toLocaleDateString() : ''}
         </div>
-
-        <h1 className="text-xl font-bold mb-4" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-          {report.title}
-        </h1>
-
-        <div className="prose prose-invert prose-sm max-w-none" style={{ color: 'rgba(226,232,240,0.8)' }}>
-          <ReactMarkdown>{report.content || report.body || ''}</ReactMarkdown>
+        <div className="text-[8px] leading-relaxed prose-sm">
+          <ReactMarkdown>{report.content || report.body || report.markdown || ''}</ReactMarkdown>
         </div>
-      </HoloPanel>
+      </PokemonWindow>
     </div>
   );
 }

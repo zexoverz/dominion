@@ -1,27 +1,45 @@
 import { getGenerals } from '@/lib/api';
-import GeneralCard from '@/components/GeneralCard';
+import { getGeneralInfo, GENERALS } from '@/lib/generals';
+import Link from 'next/link';
+import PokemonWindow from '@/components/PokemonWindow';
+import GeneralSprite from '@/components/GeneralSprite';
+import StatBar from '@/components/StatBar';
 
 export default async function GeneralsPage() {
-  let generals: any[] = [];
-  try { generals = await getGenerals(); } catch {}
+  let apiGenerals: any[] = [];
+  try { apiGenerals = await getGenerals(); } catch {}
+
+  // Merge API data with local pokemon data
+  const allGenerals = Object.values(GENERALS).map(g => {
+    const api = apiGenerals.find((a: any) => (a.name || '').toUpperCase() === g.name);
+    return { ...g, ...api, pokemonData: g };
+  });
 
   return (
-    <div className="p-4 md:p-8 max-w-6xl mx-auto">
-      <h1 className="text-lg mb-6" style={{ color: '#00f0ff', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-        The Council
-      </h1>
-
-      {generals.length === 0 ? (
-        <div className="text-center py-8 text-sm" style={{ color: 'rgba(226,232,240,0.4)' }}>
-          NO GENERALS REGISTERED
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-          {generals.map((g: any) => (
-            <GeneralCard key={g.id || g.name} general={g} />
+    <div className="space-y-4">
+      <PokemonWindow title="BILL&apos;S PC — GENERALS">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {allGenerals.map((g) => (
+            <Link key={g.name} href={`/generals/${(g.id || g._id || g.name).toString().toLowerCase()}`}>
+              <div className="pkmn-window-cream cursor-pointer hover:brightness-95 transition">
+                <div className="flex items-start gap-3">
+                  <GeneralSprite name={g.name} size={64} />
+                  <div className="flex-1">
+                    <div className="text-[10px] font-bold">{g.name}</div>
+                    <div className="text-[7px] text-[#707070]">{g.pokemonData.role}</div>
+                    <div className="text-[7px] mt-1" style={{ color: g.pokemonData.color }}>TYPE: {g.pokemonData.type}</div>
+                  </div>
+                </div>
+                <div className="mt-2 space-y-1">
+                  <StatBar label="ATK" value={g.pokemonData.stats.atk} />
+                  <StatBar label="DEF" value={g.pokemonData.stats.def} />
+                  <StatBar label="SPD" value={g.pokemonData.stats.spd} />
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
-      )}
+      </PokemonWindow>
     </div>
   );
 }
