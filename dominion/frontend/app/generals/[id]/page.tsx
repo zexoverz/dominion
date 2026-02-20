@@ -22,45 +22,54 @@ export default async function GeneralDetail({ params }: { params: { id: string }
   const myReports = reports.filter((r: any) => (r.general || '').toLowerCase() === name.toLowerCase()).slice(0, 5);
 
   return (
-    <div className="space-y-4">
-      <Link href="/generals" className="nes-text is-primary" style={{ fontSize: '10px', fontFamily: '"Press Start 2P", monospace' }}>
-        ← Back to Barracks
+    <div className="space-y-5">
+      <Link href="/generals" className="nes-btn is-primary" style={{ fontSize: '8px', padding: '4px 12px' }}>
+        ← Barracks
       </Link>
 
+      {/* Character card */}
       <RPGPanel>
-        <div className="flex items-center gap-4">
-          <PixelAvatar generalId={cfg.id} size="lg" />
-          <div>
-            <h1 className="font-pixel text-sm" style={{ color: cfg.color }}>{cfg.name}</h1>
-            <div className="text-brown-dark">{cfg.role}</div>
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className="flex-shrink-0">
+            <PixelAvatar generalId={cfg.id} size="xl" />
+          </div>
+          <div className="text-center sm:text-left">
+            <h1 className="font-pixel text-lg mb-1" style={{ color: cfg.color }}>{cfg.name}</h1>
+            <div className="text-brown-dark text-sm mb-2">{cfg.role}</div>
             {general?.status && (
-              <span className="nes-text is-success" style={{ fontSize: '10px' }}>{general.status}</span>
+              <span className="nes-badge">
+                <span className={general.status === 'active' ? 'is-success' : 'is-dark'} style={{ fontSize: '8px' }}>
+                  {general.status.toUpperCase()}
+                </span>
+              </span>
             )}
+            {general?.description && <p className="text-brown-dark mt-3 text-sm">{general.description}</p>}
           </div>
         </div>
-        {general?.description && <p className="text-brown-dark mt-3">{general.description}</p>}
       </RPGPanel>
 
       {myMissions.length > 0 && (
         <>
           <SwordDivider label="QUESTS" />
-          <RPGPanel title="Recent Quests">
-            <div className="space-y-3">
-              {myMissions.map((m: any) => <QuestCard key={m.id} mission={m} />)}
-            </div>
-          </RPGPanel>
+          <div className="space-y-3">
+            {myMissions.map((m: any) => <QuestCard key={m.id} mission={m} />)}
+          </div>
         </>
       )}
 
       {myReports.length > 0 && (
         <>
-          <SwordDivider label="INTEL" />
-          <RPGPanel title="Intel Reports">
-            <div className="space-y-3">
-              {myReports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
-            </div>
-          </RPGPanel>
+          <SwordDivider label="INTEL REPORTS" />
+          <div className="space-y-3">
+            {myReports.map((r: any) => <ReportCard key={r.id || r.slug} report={r} />)}
+          </div>
         </>
+      )}
+
+      {myMissions.length === 0 && myReports.length === 0 && (
+        <RPGPanel>
+          <p className="text-brown-dark text-sm italic text-center py-4">This general has no recorded activity yet.</p>
+        </RPGPanel>
       )}
     </div>
   );

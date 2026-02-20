@@ -69,14 +69,13 @@ body {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  width: 32px;
-  height: 32px;
   display: inline-block;
 }
 
-.pixel-avatar.lg {
-  width: 64px;
-  height: 64px;
+/* Hover lift for clickable cards */
+.nes-container[style*="cursor: pointer"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(90,62,27,0.2);
 }
 
 /* RPG Sword Divider */

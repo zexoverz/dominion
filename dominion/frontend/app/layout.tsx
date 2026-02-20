@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen bg-parchment">
         <RPGNav />
-        <main className="md:ml-48 pb-16 md:pb-4 p-4 max-w-5xl mx-auto">
+        <main className="md:ml-48 pb-20 md:pb-6 p-4 sm:p-6 max-w-5xl mx-auto">
           {children}
         </main>
       </body>
