@@ -1,4 +1,4 @@
-# 🔮 SEER Daily BTC Intelligence — February 19, 2026
+# 🔮 SEER Daily BTC Intelligence — February 22, 2026
 
 *Generated at 18:00 UTC by SEER Intelligence Engine*
 
@@ -8,12 +8,12 @@
 
 | Metric | Value |
 |--------|-------|
-| **BTC Price** | $66,304 |
-| **24h Change** | -1.16% |
-| **Market Cap** | $1.33T |
-| **24h Volume** | $36.8B |
+| **BTC Price** | $67,350 |
+| **24h Change** | -1.56% |
+| **Market Cap** | $1.35T |
+| **24h Volume** | $20.2B |
 | **All-Time High** | $126,080 |
-| **Drawdown from ATH** | -47.4% |
+| **Drawdown from ATH** | -46.6% |
 | **Fear & Greed Index** | 9/100 — Extreme Fear |
 
 ---
