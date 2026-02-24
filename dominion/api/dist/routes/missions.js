@@ -191,6 +191,22 @@ router.patch('/:mid/steps/:sid', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+// DELETE /api/missions/:mid/steps/:sid — delete a single step
+router.delete('/:mid/steps/:sid', async (req, res) => {
+    try {
+        const { mid, sid } = req.params;
+        await db_1.default.query('DELETE FROM ops_agent_events WHERE step_id = $1', [sid]);
+        const result = await db_1.default.query('DELETE FROM ops_mission_steps WHERE id = $1 AND mission_id = $2 RETURNING *', [sid, mid]);
+        if (result.rows.length === 0)
+            return res.status(404).json({ error: 'Step not found' });
+        await db_1.default.query('UPDATE ops_missions SET last_activity_at = NOW() WHERE id = $1', [mid]);
+        res.json({ deleted: true, id: sid });
+    }
+    catch (err) {
+        console.error('DELETE step error:', err);
+        res.status(500).json({ error: err?.message || 'Internal server error' });
+    }
+});
 // DELETE /api/missions/:id
 router.delete('/:id', async (req, res) => {
     try {
