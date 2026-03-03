@@ -17,7 +17,7 @@ export const GENERALS: GeneralInfo[] = [
     emoji: '👑',
     role: 'Supreme Strategic Commander — orchestrates all generals, makes final decisions, sets Dominion priorities',
     domain: ['strategic-planning', 'decision-making', 'general-coordination', 'priority-setting', 'conflict-resolution', 'resource-allocation', 'high-level-architecture', 'vision-alignment', 'crisis-management', 'delegation'],
-    model: 'claude-opus-4-6',
+    model: 'claude-sonnet-4-6',  // TEMP: swapped from opus-4-6 due to API overload
     priority: 1,
   },
   {
@@ -27,7 +27,7 @@ export const GENERALS: GeneralInfo[] = [
     emoji: '🔮',
     role: 'Chief Analytics & Intelligence Officer — data analysis, prediction, pattern recognition, and strategic foresight',
     domain: ['data-analysis', 'prediction', 'pattern-recognition', 'metrics-tracking', 'market-analysis', 'risk-assessment', 'forecasting', 'statistical-modeling', 'performance-analytics', 'strategic-intelligence'],
-    model: 'claude-opus-4-6',
+    model: 'claude-sonnet-4-6',  // TEMP: swapped from opus-4-6 due to API overload
     priority: 2,
   },
   {
