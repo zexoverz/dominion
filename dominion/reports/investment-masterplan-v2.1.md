@@ -40,13 +40,15 @@
 
 All income streams convert to Bitcoin. No altcoins. No speculation. Institutional adoption (Harvard, BlackRock, US Strategic Reserve) provides floor. Bear markets are buying opportunities.
 
-### Key Numbers (December 2025)
+### Key Numbers (March 2026)
 | Metric | Value |
 |--------|-------|
-| Current Net Worth | Rp 369M liquid + Rp 350M house equity |
+| Current Net Worth | ~Rp 534M liquid + Rp 350M house equity |
 | Monthly Income | Rp 165M ($10,050) |
-| Monthly Investment | Rp 112M (68% savings rate) |
-| Current BTC | 0.07 BTC ($6,979) |
+| Monthly Investment | ~Rp 108M (post-TGE) |
+| Current BTC | 0.153 BTC (~$9,945) |
+| Wedding Fund | Rp 150M (target Rp 350M by Oct 2026) |
+| War Chest | Rp 31M |
 | 2030 Target | Rp 26B - 192B (depending on BTC price) |
 
 ### The Thesis
@@ -121,19 +123,19 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 
 ---
 
-## Part III: Current Assets (December 2025)
+## Part III: Current Assets (March 2026)
 
 ### Liquid Investments
 | Asset | Value (USD) | Value (IDR) | Notes |
 |-------|-------------|-------------|-------|
-| Bitcoin | $6,979 | Rp 114.5M | 0.07 BTC |
+| Bitcoin | ~$9,945 | ~Rp 163M | 0.153 BTC @ ~$65K |
 | One Piece Cards | $2,603 | Rp 42.7M | +113% ROI 🔥 |
 | Pokemon Cards | $1,508 | Rp 24.7M | Sell → BTC |
-| USDT War Chest | $1,309 | Rp 21.5M | Deploy at dips |
-| Wedding Fund | $3,596 | Rp 59M | On track for Nov 2026 |
-| XPL | $571 | Rp 9.4M | -82% lesson 💀 |
-| ForuAI (pending) | $5,940 | Rp 97.4M | TGE January |
-| **Total Liquid** | **$22,506** | **Rp 369M** | |
+| USDT War Chest | ~$1,890 | Rp 31M | Deploy at dips |
+| Wedding Fund | ~$9,146 | Rp 150M | On track for Nov 2026 |
+| XPL | ~$571 | Rp 9.4M | -82% lesson 💀 (write-off) |
+| ForuAI (pending) | ~$6,930 | ~Rp 113.6M | TGE March 12, 2026 |
+| **Total Liquid** | **~$32,593** | **~Rp 534M** | |
 
 ### Hard Assets
 | Asset | Value | Notes |
