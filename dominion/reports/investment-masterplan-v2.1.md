@@ -17,7 +17,15 @@
 - ✅ Added Health & Fitness: Rp 4M/mo (PT gym Rp 2.4M + basketball private Rp 1.6M)
 - 📊 Spending updated: Rp 53M → Rp 57M/mo
 - 📊 Pre-TGE investment capacity: ~Rp 92M/mo (token income not yet flowing)
-- 📈 Current BTC: 0.153 BTC (Mar 2026)
+- 📈 Current BTC: 0.153 BTC @ $70,875 (Mar 2026)
+- 💼 Discovered OKU Top Performer #1 tier: $8,730/mo (confirmed Feb 2026)
+- 📱 iPhone 17 Pro Max: pre-spent from USD balance Dec, refilled by TP1 Feb
+- 🏠 House renovation: Rp 28M (Faisal 20M + Zikri 8M) — garden, kanopi, keramik, kitchen
+- 🚗 Zekrom project car: DP 5M coloring paid, 12M remaining (ETHGlobal $1K, Mar 11)
+- 📊 OKU/ForuAI income split clarified: ForuAI cash → 100% BTC, OKU → everything else
+- 🤲 Lebaran months: war chest skipped for zakat maal + THR + infaq/sodaqoh
+- ✅ 4-month spending audit passed (Nov 2025 - Feb 2026): masterplan untouched by lifestyle spending
+- 💑 Keiko Rp 4M = wedding gold investment. Extra transfers = personal gifts from play budget
 
 ### December 2025 Updates (v2.0)
 - ❌ XPL failed (-82%) — Lesson learned, NO MORE ALTCOINS
@@ -61,17 +69,17 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 ### Profile
 | Detail | Value |
 |--------|-------|
-| Age | 24 (born 2001) |
-| Working since | Age 18 (6+ years) |
+| Age | 25 (born 2001) |
+| Working since | Age 18 (7+ years) |
 | Status | Engaged to Keiko, wedding Nov 2026 |
 | Mindset | CEO, not employee |
 
-### The Empire at 24
+### The Empire at 25
 | Achievement | Status |
 |-------------|--------|
 | 🏠 House | Owned since age 21 (Rp 1B+ value) |
-| 🚗 Dream Car | BMW E36 M52 |
-| 💼 Dual Income | $10,050/month |
+| 🚗 Dream Car | BMW E36 M52 "Zekrom" (project car) |
+| 💼 Dual Income | $10,050/month (up to $12,030 at TP1) |
 | 👨‍💻 Employee | Dzikri handles both jobs |
 | 💑 Partner | Keiko (saving together for wedding) |
 | 🚀 Startup | CTO of Kruu (co-founder: Nino Fernandez) |
@@ -213,13 +221,14 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 ### All Roads Lead to Bitcoin
 | Source | Action |
 |--------|--------|
-| OKU Salary | → BTC |
-| ForuAI Cash | → BTC |
+| ForuAI Cash ($2,310/mo) | 100% → BTC immediately |
 | ForuAI Tokens | Sell immediately → BTC |
+| OKU Surplus | → BTC (after expenses/wedding/war chest) |
+| OKU TP1 Extra (+$1,980) | → BTC or planned purchases |
+| OKU Yearly Bonus ($5K) | Life upgrades (house, car, holiday) — does NOT touch masterplan |
 | Pokemon Cards | Sell in bear → BTC |
 | House Equity | Over-kredit to Dzikri → BTC |
-| Bonuses | 50% BTC, 50% Wedding |
-| Monthly Surplus | → BTC |
+| Freelance Income | → War chest or BTC |
 
 ### Price Projections (Cycle-Aware)
 | Period | BTC Price | Strategy |
@@ -424,9 +433,20 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | Continue monthly DCA | Rp 50M | Mar 29/30 |
 
 ### ForuAI Token Strategy
-- **Personal tokens (TGE Jan 2026):** Sell 100% immediately → BTC
+- **Personal tokens (TGE March 12, 2026):** ~$6,930 accumulated (7 months). Sell 100% immediately → BTC
+- **Monthly tokens (post-TGE):** $990/mo. Sell 100% immediately → BTC
 - **Core tokens (Nov 2026+):** Sell 100% immediately → BTC
 - **NO HODLING. NO EXCEPTIONS.**
+
+### Keiko Budget Clarification
+- Rp 4M/mo = **wedding gold investment** (managed by Keiko). This is in the masterplan.
+- Extra transfers to Keiko (dates, gifts, etc.) = **personal gifts from play budget**. NOT a budget leak.
+- Actual Keiko total: ~Rp 7.2M/mo avg, but only Rp 4M is from the plan. Rest is discretionary.
+
+### Spending Discipline Note
+- Aggressive saver: sweeps large amounts into Flexi Saver on payday → sometimes has Rp 0 in ATM 😂
+- Jan 2026: swept Rp 90M into savings, had to withdraw Rp 5.6M back for living costs
+- Philosophy: save first, figure out living expenses after. "Wealth is what you don't see."
 
 ---
 
@@ -605,11 +625,50 @@ Graham (Value) + Buffett (Contrarian) + Dalio (Cycles)
 
 ---
 
+## Part XVI: Spending Audit Results (Nov 2025 - Feb 2026)
+
+*4-month Jenius bank statement audit conducted March 6, 2026 by THRONE AI.*
+
+### Verdict: ✅ MASTERPLAN IS CLEAN
+
+| Category | Finding |
+|----------|---------|
+| Dzikri salary | ✅ On budget (Rp 16M). Feb 21.8M = TP1 bonus, not permanent raise |
+| Family (Papa) | ✅ On budget (~Rp 13M avg) |
+| Keiko | ✅ Rp 4M wedding gold on plan. Extra = play budget gifts |
+| iPhone 17 Pro Max | ✅ Pre-spent from USD, refilled by TP1 salary. Plan untouched |
+| House renovation | ✅ From OKU yearly bonus. Rp 28M (Faisal 20M + Zikri 8M) |
+| Zekrom car work | ✅ From yearly bonus + ETHGlobal winnings. Plan untouched |
+| Jogja holiday | ✅ From yearly bonus (~Rp 11M). Plan untouched |
+| ETHJKT/Kruu events | ✅ From play budget/surplus (~Rp 14M via Revo) |
+| War chest skip (Mar) | ✅ Lebaran month: zakat maal + THR + infaq/sodaqoh 🤲 |
+| Wedding fund | ✅ Rp 150M accumulated (on track for Rp 350M by Oct 2026) |
+| BTC DCA | ✅ ForuAI cash → BTC consistently |
+
+### Key Insight
+**The masterplan and lifestyle spending operate in separate buckets:**
+- 🏦 **Masterplan funds:** OKU salary → expenses + wedding + war chest. ForuAI cash → 100% BTC.
+- 🎉 **Lifestyle funds:** OKU yearly bonus ($5K) + TP1 extra ($1,980) + freelance income → phone, car, house reno, holidays.
+- These two buckets don't mix. The plan is protected.
+
+### Monthly Cash Flow Reality
+| Item | Budget | Actual | Status |
+|------|--------|--------|--------|
+| Total expenses | Rp 57M | ~Rp 57M | ✅ Match |
+| Wedding fund | Rp 30M | Rp 30-42M | ✅ On/above target |
+| BTC DCA (pre-TGE) | Rp 50M | ~Rp 46.6M | ⚠️ Slightly under (no token income yet) |
+| War chest | Rp 15M | Variable | ✅ Skipped for religious obligations only |
+| Entertainment | - | Rp 250K/mo | ✅ Minimal |
+| Food | Rp 2.76M | ~Rp 2.9M | ✅ Mostly modest |
+
+---
+
 ### Signed
 
 **Muhammad Faisal Firdani**
-**Age 24 | December 13, 2025**
-**Net Worth: Rp 369M**
+**Age 25 | Updated March 6, 2026**
+**Net Worth: ~Rp 549M liquid + Rp 350M house equity**
+**BTC Holdings: 0.153 BTC**
 **Target 2030: Rp 50B+**
 
 ---
@@ -618,5 +677,6 @@ Graham (Value) + Buffett (Contrarian) + Dalio (Cycles)
 
 ---
 
-**Document v2.0 | December 13, 2025**
+**Document v2.1 | March 6, 2026**
+**Previous version: v2.0 (December 13, 2025) — preserved in repo**
 **Next update: When significant changes occur**
