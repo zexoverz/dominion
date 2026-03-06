@@ -43,10 +43,10 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 ### Key Numbers (March 2026)
 | Metric | Value |
 |--------|-------|
-| Current Net Worth | ~Rp 534M liquid + Rp 350M house equity |
+| Current Net Worth | ~Rp 549M liquid + Rp 350M house equity |
 | Monthly Income | Rp 165M ($10,050) |
 | Monthly Investment | ~Rp 108M (post-TGE) |
-| Current BTC | 0.153 BTC (~$9,945) |
+| Current BTC | 0.153 BTC (~$10,844 @ $70,875) |
 | Wedding Fund | Rp 150M (target Rp 350M by Oct 2026) |
 | War Chest | Rp 31M |
 | 2030 Target | Rp 26B - 192B (depending on BTC price) |
@@ -128,14 +128,14 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 ### Liquid Investments
 | Asset | Value (USD) | Value (IDR) | Notes |
 |-------|-------------|-------------|-------|
-| Bitcoin | ~$9,945 | ~Rp 163M | 0.153 BTC @ ~$65K |
+| Bitcoin | ~$10,844 | ~Rp 177.8M | 0.153 BTC @ ~$70,875 |
 | One Piece Cards | $2,603 | Rp 42.7M | +113% ROI 🔥 |
 | Pokemon Cards | $1,508 | Rp 24.7M | Sell → BTC |
 | USDT War Chest | ~$1,890 | Rp 31M | Deploy at dips |
 | Wedding Fund | ~$9,146 | Rp 150M | On track for Nov 2026 |
 | XPL | ~$571 | Rp 9.4M | -82% lesson 💀 (write-off) |
 | ForuAI (pending) | ~$6,930 | ~Rp 113.6M | TGE March 12, 2026 |
-| **Total Liquid** | **~$32,593** | **~Rp 534M** | |
+| **Total Liquid** | **~$33,492** | **~Rp 549M** | |
 
 ### Hard Assets
 | Asset | Value | Notes |
