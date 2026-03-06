@@ -89,14 +89,33 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | ForuAI Tokens | $990 | Rp 16.2M |
 | **Total** | **$10,050** | **Rp 164.8M** |
 
+### OKU Salary Tiers
+| Tier | Monthly USD | Monthly IDR | Trigger |
+|------|-----------|-------------|---------|
+| Standard | $6,750 | ~Rp 110.7M | Normal performance |
+| **Top Performer #1** | **$8,730** | **~Rp 143.2M** | Hit TP1 ranking |
+| Yearly Bonus | +$5,000 | ~Rp 82M | December (one-time) |
+
+*Feb 2026 confirmed TP1: incoming Rp 143,456,250 = ~$8,730 ✅*
+
 ### Freelance & Windfall Income (Dec 2025 - Feb 2026)
 | Source | Amount | Status | Allocation |
 |--------|--------|--------|------------|
-| OKU Yearly Bonus | $5,000 | ✅ Received | 50% BTC, 50% Wedding |
-| ETHGlobal Hackathon Win | $1,000 | ✅ Received | Car upgrade (Zekrom full recolor + body fix) 🚗 |
+| OKU Yearly Bonus | $5,000 | ✅ Received (Jan 2) | House reno, Zekrom, Jogja holiday, rest → BTC/war chest |
+| OKU TP1 Extra (Feb) | +$1,980 | ✅ Received | iPhone 17 Pro Max (pre-spent Dec, refilled by TP1) |
+| ETHGlobal Hackathon Win | $1,000 | ⏳ Arrives Mar 11 | Zekrom recolor remaining Rp 12M |
 | ForuAI Rep Leaderboard | $2,500 | ⏳ Unpaid | War chest or Japan holiday with Keiko |
 | LilStars NFT Project | $1,800 | ✅ Received | → War chest (now Rp 31M) |
 | ForuAI TGE Token Unlock | ~$6,930 | ⏳ Mar 12 | Sell 100% → BTC |
+
+### OKU Bonus Allocation ($5K = ~Rp 82M)
+| Item | Amount | Notes |
+|------|--------|-------|
+| 🏠 House renovation | Rp 20M | Garden, kanopi, keramik, kitchen roof (Zikri added 8M) |
+| 🚗 Zekrom maintenance | ~Rp 16.7M | Project car finishing (DP 5M color, rest from ETHGlobal) |
+| ✈️ Jogja family holiday | ~Rp 11M | Jan 2026, family + Keiko |
+| 💰 BTC / War chest | ~Rp 34M | Remainder |
+| **Total** | **~Rp 82M** | ✅ Fully allocated |
 
 ### Monthly Expenses: Rp 57M (Actual)
 | Category | Amount |
