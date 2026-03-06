@@ -1,5 +1,5 @@
-# Investment Master Plan 2025-2030 (v2.0)
-**Muhammad Faisal Firdani | Bitcoin Maxi Strategy | December 2025**
+# Investment Master Plan 2025-2030 (v2.1)
+**Muhammad Faisal Firdani | Bitcoin Maxi Strategy | Updated March 2026**
 
 ---
 
@@ -8,9 +8,18 @@
 | Version | Date | Key Changes |
 |---------|------|-------------|
 | v1.0 | Oct 22, 2025 | Initial cycle-aware strategy |
-| **v2.0** | **Dec 13, 2025** | **Bitcoin Maxi pivot, Fire Sale theory, math corrections** |
+| v2.0 | Dec 13, 2025 | Bitcoin Maxi pivot, Fire Sale theory, math corrections |
+| **v2.1** | **Mar 6, 2026** | **TGE date fix, health/fitness allocation, gold via Keiko** |
 
-### December 2025 Updates
+### March 2026 Updates (v2.1)
+- 🔄 ForuAI TGE: January 2026 → **March 12, 2026** (~$6,930 accumulated 7 months)
+- ❌ Removed direct gold Rp 5M — Keiko handles gold from her Rp 4M
+- ✅ Added Health & Fitness: Rp 4M/mo (PT gym Rp 2.4M + basketball private Rp 1.6M)
+- 📊 Spending updated: Rp 53M → Rp 57M/mo
+- 📊 Pre-TGE investment capacity: ~Rp 92M/mo (token income not yet flowing)
+- 📈 Current BTC: 0.153 BTC (Mar 2026)
+
+### December 2025 Updates (v2.0)
 - ❌ XPL failed (-82%) — Lesson learned, NO MORE ALTCOINS
 - ✅ OKU salary raised: $6,300 → $6,750
 - ✅ OKU bonus $5,000 incoming Dec 30
@@ -84,7 +93,7 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | OKU Yearly Bonus | $5,000 | Dec 30, 2025 |
 | ForuAI Token Unlock | $5,940 | January 2026 |
 
-### Monthly Expenses: Rp 53M (Actual)
+### Monthly Expenses: Rp 57M (Actual)
 | Category | Amount |
 |----------|--------|
 | Family (Ortu + Zahra) | Rp 13M |
@@ -92,10 +101,22 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | Dzikri (handles both jobs) | Rp 16M |
 | Subscriptions + food | Rp 2.76M |
 | Personal spending | Rp 9-10M |
-| Keiko | Rp 4M |
-| **Total** | **~Rp 53M** |
+| Keiko | Rp 4M (includes gold investment on Faisal's behalf) |
+| Health & Fitness | Rp 4M |
+| **Total** | **~Rp 57M** |
 
-### Investment Capacity: Rp 112M/month
+#### Health & Fitness Breakdown
+| Activity | Cost | Frequency |
+|----------|------|-----------|
+| Personal Trainer (Gym) | Rp 2.4M/mo | 3-4x/week |
+| Basketball Private Training | Rp 1.6M/mo | 2hrs/week, 4x/month (solo drill with coach) |
+
+### Investment Capacity
+| Period | Capacity | Notes |
+|--------|----------|-------|
+| Pre-TGE (now) | ~Rp 92M/mo | Without ForuAI token income |
+| Post-TGE (Mar 12+) | ~Rp 108M/mo | With token income flowing |
+
 *Hidden alpha: Rp 11-12M surplus from under-spending personal budget*
 
 ---
@@ -337,15 +358,18 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 
 ## Part X: Monthly Execution Plan
 
-### Monthly Allocation (December 2025+)
+### Monthly Allocation (Updated March 2026)
 | Category | Amount | Destination |
 |----------|--------|-------------|
 | Wedding Fund | Rp 30M | Cash/BBCA |
-| Bitcoin DCA | Rp 50M | BTC |
+| Bitcoin DCA | Rp 50M* | BTC |
 | War Chest | Rp 15M | USDT |
-| Gold | Rp 5M | Physical/Digital |
-| Monthly Surplus | Rp 12M | Extra BTC |
-| **Total** | **Rp 112M** | |
+| Gold | Rp 4M | Via Keiko |
+| Health & Fitness | Rp 4M | PT + Basketball |
+| Monthly Surplus | ~Rp 8M | Extra BTC |
+| **Total** | **~Rp 108M** | |
+
+*\*BTC DCA target Rp 50M — may run lower pre-TGE when token income isn't flowing. Post-TGE (Mar 12+) tokens sell immediately → BTC on top of DCA.*
 
 ### December 2025 Actions
 | Action | Amount | Timing |
@@ -354,12 +378,12 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | OKU Bonus → Wedding | $2,500 | Dec 30 |
 | Continue DCA | Rp 50M | Dec 29/30 |
 
-### January 2026 Actions
+### March 2026 Actions
 | Action | Amount | Timing |
 |--------|--------|--------|
-| ForuAI TGE unlock | $5,940 | At TGE |
-| Sell 100% FORU → BTC | All | Immediately |
-| Resume monthly DCA | Rp 50M | Jan 30 |
+| ForuAI TGE unlock | ~$6,930 (7mo accumulated) | March 12, 2026 |
+| Sell 100% FORU → BTC | All | Immediately at TGE |
+| Continue monthly DCA | Rp 50M | Mar 29/30 |
 
 ### ForuAI Token Strategy
 - **Personal tokens (TGE Jan 2026):** Sell 100% immediately → BTC
@@ -400,7 +424,7 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 ### 2026
 | Date | Event |
 |------|-------|
-| January | ForuAI TGE → Sell all → BTC |
+| March 12 | ForuAI TGE → ~$6,930 accumulated tokens → Sell all → BTC |
 | Q2-Q4 | Bear market accumulation |
 | August | House fixed rate ends (consider over-kredit) |
 | October | Wedding fund complete (Rp 350M) |
