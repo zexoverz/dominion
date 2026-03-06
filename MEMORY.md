@@ -56,19 +56,33 @@
 - OZ #6305 = best first PR target (30 min, EIP-2200 comment fix)
 - ethereum/tests #1498 BLOCKED (upstream not merged)
 
+## EIP Journey (started Feb 24, 2026)
+- First attended EIP Editing Office Hour #90 (Feb 24) — met Pooja Ranjan, Sam Wilson
+- Interested in contributing to ERC-8165 (Agentic Onchain Operations) by Qin Wang/CSIRO
+- ZK privacy angle is his unique value-add (GrimSwap experience)
+- Bootcamp restructured: 14 days → 8 weeks (realistic pace)
+- Currently Week 1 Day 5-6 of opcodes (mapping lookups done, function dispatcher next) — still stuck here as of Feb 27
+- Joined EPS 2026 (Ethereum Protocol Studies) — kicked off Feb 23, has crypto + zkEVM tracks
+- EPS → EPF pipeline is his path to core contributor status
+- X growth: 200 → 1,258 followers in 1 week (content strategy working)
+
 ## Investment Master Plan (v2.0 — source of truth)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
 - Local copy: dominion/reports/investment-masterplan-v2.md
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
-- Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest, Rp 5M gold
+- Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest, Rp 4M gold (via Keiko), Rp 4M health/fitness
+- Health: PT gym Rp 2.4M (3-4x/week) + basketball private Rp 1.6M (2hrs/week solo drill with coach)
+- BTC DCA runs lower pre-TGE since token income not flowing yet
 - War chest: Rp 40M total, 20M deployed, 20M remaining
 - War chest deployment: 25% at -30%, 50% at -40%, 100% at -50%
 - BTC ATH ~$126K; as of Feb 2026 BTC at ~$67K
-- Current BTC holdings: 0.133 BTC
+- Current BTC holdings: 0.153 BTC (updated Mar 1, 2026 — bought 0.02 BTC at $65K with ForuAI salary)
 - XPL: 3278 tokens (write-off, -82% lesson, just forget)
 - Wedding fund: Rp 120M (target Rp 350M by Oct 2026)
 - Feb 2026 DCA executed (salary came Feb 1)
+- Mar 2026 DCA started: $1,318 at $65K (ForuAI salary Feb 26)
 - ForuAI tokens: sell 100% immediately → BTC, no hodling
+- ForuAI TGE: March 12, 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026) unlocking at once
 - Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
 - 2030 target: 5-12 BTC, Rp 26B-192B net worth
 - Wedding fund target: Rp 350M by Oct 2026
@@ -87,6 +101,7 @@
 
 ## Key Lessons
 - Cron jobs: do NOT set model field — "sonnet" alias doesn't resolve. Omit model entirely to use default.
+- Sub-agent model: "anthropic/claude-sonnet-4" does NOT resolve. Omit model param entirely to use default.
 - Use Sonnet for sub-agents (Opus rate limits too tight)
 - Don't spawn 6+ agents rapidly — space them out
 - Railway: put build deps in regular dependencies (devDeps skip in production)
