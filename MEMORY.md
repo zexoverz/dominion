@@ -68,17 +68,28 @@
 
 ## Investment Master Plan (v2.0 — source of truth)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
-- Local copy: dominion/reports/investment-masterplan-v2.md
+- Local copy: dominion/reports/investment-masterplan-v2.1.md (latest), v2.md preserved as history
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
 - Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest, Rp 4M gold (via Keiko), Rp 4M health/fitness
 - Health: PT gym Rp 2.4M (3-4x/week) + basketball private Rp 1.6M (2hrs/week solo drill with coach)
-- BTC DCA runs lower pre-TGE since token income not flowing yet
-- War chest: Rp 40M total, 20M deployed, 20M remaining
+- ForuAI cash ($2,310) → 100% BTC every month. OKU covers everything else.
+- BTC DCA pre-TGE: ~Rp 46.6M/mo. Post-TGE: ~Rp 63M+ (tokens sell → BTC on top)
+- OKU surplus (~Rp 8.7M) variable — sometimes car (Zekrom) or misc
+- War chest Rp 15M skipped during Lebaran months (zakat maal + THR + infaq/sodaqoh)
+- Freelance income Dec-Feb 2026: ETHGlobal $1K (→ car recolor), LilStars $1.8K (→ war chest), ForuAI leaderboard $2.5K (unpaid, → war chest or Japan trip)
+- Car nickname: Zekrom (BMW E36 M52) — project car, coloring DP 5M paid, 12M remaining (from ETHGlobal $1K, arrives Mar 11)
+- OKU Top Performer #1: salary bumps to $8,730/mo (vs normal $6,750). Feb 2026 confirmed TP1.
+- OKU yearly bonus: $5K (Dec 2025 → used for iPhone 17 Pro Max, old iPhone 13 Pro → mom)
+- House reno (Dec 2025): garden, kanopi, keramik parking, kitchen roof. Total Rp 28M (Faisal 20M + Zikri 8M)
+- Kruu Jogja event (Nov 2025): Rp 6.1M via Revo (transport, villa, team)
+- Keiko actual spending: ~Rp 7.2M/mo avg (vs 4M budget) — the #1 budget leak
+- Spending analysis saved: dominion/reports/spending-analysis-nov25-feb26.md
+- War chest: Rp 31M (as of Mar 6, 2026)
 - War chest deployment: 25% at -30%, 50% at -40%, 100% at -50%
 - BTC ATH ~$126K; as of Feb 2026 BTC at ~$67K
 - Current BTC holdings: 0.153 BTC (updated Mar 1, 2026 — bought 0.02 BTC at $65K with ForuAI salary)
 - XPL: 3278 tokens (write-off, -82% lesson, just forget)
-- Wedding fund: Rp 120M (target Rp 350M by Oct 2026)
+- Wedding fund: Rp 150M (target Rp 350M by Oct 2026, updated Mar 6)
 - Feb 2026 DCA executed (salary came Feb 1)
 - Mar 2026 DCA started: $1,318 at $65K (ForuAI salary Feb 26)
 - ForuAI tokens: sell 100% immediately → BTC, no hodling
