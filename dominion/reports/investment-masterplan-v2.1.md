@@ -89,11 +89,14 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | ForuAI Tokens | $990 | Rp 16.2M |
 | **Total** | **$10,050** | **Rp 164.8M** |
 
-### Upcoming Windfalls
-| Source | Amount | When |
-|--------|--------|------|
-| OKU Yearly Bonus | $5,000 | Dec 30, 2025 |
-| ForuAI Token Unlock | $5,940 | January 2026 |
+### Freelance & Windfall Income (Dec 2025 - Feb 2026)
+| Source | Amount | Status | Allocation |
+|--------|--------|--------|------------|
+| OKU Yearly Bonus | $5,000 | ✅ Received | 50% BTC, 50% Wedding |
+| ETHGlobal Hackathon Win | $1,000 | ✅ Received | Car upgrade (Zekrom full recolor + body fix) 🚗 |
+| ForuAI Rep Leaderboard | $2,500 | ⏳ Unpaid | War chest or Japan holiday with Keiko |
+| LilStars NFT Project | $1,800 | ✅ Received | → War chest (now Rp 31M) |
+| ForuAI TGE Token Unlock | ~$6,930 | ⏳ Mar 12 | Sell 100% → BTC |
 
 ### Monthly Expenses: Rp 57M (Actual)
 | Category | Amount |
@@ -361,17 +364,31 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 ## Part X: Monthly Execution Plan
 
 ### Monthly Allocation (Updated March 2026)
-| Category | Amount | Destination |
-|----------|--------|-------------|
-| Wedding Fund | Rp 30M | Cash/BBCA |
-| Bitcoin DCA | Rp 50M* | BTC |
-| War Chest | Rp 15M | USDT |
-| Gold | Rp 4M | Via Keiko |
-| Health & Fitness | Rp 4M | PT + Basketball |
-| Monthly Surplus | ~Rp 8M | Extra BTC |
-| **Total** | **~Rp 108M** | |
 
-*\*BTC DCA target Rp 50M — may run lower pre-TGE when token income isn't flowing. Post-TGE (Mar 12+) tokens sell immediately → BTC on top of DCA.*
+**Income split:**
+| Source | Amount | Goes To |
+|--------|--------|---------|
+| ForuAI Cash | $2,310 (Rp 37.9M) | 100% → BTC DCA |
+| OKU Trade | $6,750 (Rp 110.7M) | Expenses + Wedding + War Chest |
+
+**From OKU income (Rp 110.7M):**
+| Category | Amount | Notes |
+|----------|--------|-------|
+| All Expenses | ~Rp 57M | Living + Dzikri + Keiko + Health |
+| Wedding Fund | Rp 30M | Cash/BBCA |
+| War Chest | Rp 15M | USDT (skipped some months — see below) |
+| Surplus | ~Rp 8.7M | → BTC when available, sometimes car/misc |
+
+**Total BTC per month:**
+| Period | BTC DCA | Source |
+|--------|---------|--------|
+| Pre-TGE (now) | ~Rp 46.6M | ForuAI cash (37.9M) + OKU surplus (~8.7M) |
+| Post-TGE (Mar 12+) | ~Rp 63M+ | + token sell (~Rp 16.2M/mo) |
+
+**Notes:**
+- OKU surplus is variable — some months goes to car maintenance (Zekrom), misc expenses
+- War chest Rp 15M skipped in months with religious obligations (Lebaran: zakat maal, THR, infaq/sodaqoh — investment for akhirat 🤲)
+- Post-TGE: ForuAI tokens sell 100% immediately → BTC on top of cash DCA
 
 ### December 2025 Actions
 | Action | Amount | Timing |
@@ -397,12 +414,14 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 ## Part XI: Decision Framework
 
 ### Monthly Checklist
-- [ ] DCA Rp 50M into Bitcoin (date 29/30)
+- [ ] ForuAI cash ($2,310) → BTC immediately on payday
+- [ ] OKU surplus → BTC (variable, after expenses)
 - [ ] Allocate Rp 30M to wedding fund
-- [ ] Add Rp 15M to war chest (USDT)
-- [ ] Add Rp 5M to gold
-- [ ] Sell any FORU received → BTC immediately
+- [ ] Add Rp 15M to war chest (USDT) — skip if Lebaran/religious obligations
+- [ ] Keiko handles gold from her Rp 4M
+- [ ] Sell any FORU tokens received → BTC immediately
 - [ ] Monitor BTC price for war chest deployment
+- [ ] Zakat maal + THR + infaq/sodaqoh during Ramadan/Lebaran 🤲
 
 ### Key Decision Rules
 | Trigger | Action |
