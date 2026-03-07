@@ -38,5 +38,22 @@
     "lebaran": "war chest skipped for zakat/THR/infaq",
     "foru_tokens": "sell 100% immediately to BTC",
     "foru_tge": "2026-03-12"
-  }
+  },
+  "monthly_checklist": [
+    "ForuAI cash ($2,310) -> BTC immediately on payday",
+    "OKU surplus -> BTC (variable, after expenses)",
+    "Allocate Rp 30M to wedding fund",
+    "Add Rp 15M to war chest (USDT) - skip if Lebaran/religious obligations",
+    "Keiko handles gold from her Rp 4M",
+    "Sell any FORU tokens received -> BTC immediately",
+    "Monitor BTC price for war chest deployment",
+    "Zakat maal + THR + infaq/sodaqoh during Ramadan/Lebaran"
+  ],
+  "march_2026_actions": [
+    {"action": "ForuAI TGE unlock ~$6,930 (7mo accumulated)", "date": "2026-03-12", "status": "pending"},
+    {"action": "Sell 100% FORU -> BTC", "date": "at TGE", "status": "pending"},
+    {"action": "Monthly BTC DCA Rp 50M", "date": "done", "status": "completed"},
+    {"action": "Wedding fund Rp 30M", "date": "done", "status": "completed"},
+    {"action": "War chest Rp 15M", "date": "skipped", "status": "skipped - Lebaran"}
+  ]
 }

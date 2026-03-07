@@ -207,6 +207,32 @@ fi)
 
 ---
 
+## ✅ Monthly Checklist (from Master Plan v2.1)
+
+$(python3 -c "
+import json
+s = json.load(open('${SNAPSHOT}'))
+for item in s.get('monthly_checklist', []):
+    print(f'- [ ] {item}')
+print()
+
+month_key = '$(date +%B_%Y | tr A-Z a-z)'.replace(' ', '_')
+actions = s.get('march_2026_actions', [])
+if actions:
+    print('### This Month Actions')
+    for a in actions:
+        status = a['status']
+        if status == 'completed':
+            icon = '✅'
+        elif status.startswith('skipped'):
+            icon = '⏭️'
+        else:
+            icon = '⏳'
+        print(f'- {icon} {a[\"action\"]} ({a[\"date\"]})')
+")
+
+---
+
 ## 🔥 Reminders
 
 - 🪙 Gold: ${GOLD_NOTE}
