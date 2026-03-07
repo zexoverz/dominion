@@ -1,11 +1,3 @@
----
-general: SEER
-emoji: "🔮"
-date: "2026-02-22"
-category: market-intel
-title: "BTC Deep Research — February 2026"
----
-
 # 🔮 SEER INTELLIGENCE REPORT
 ## Bitcoin Deep Research & Market Analysis
 ### February 22, 2026 | Classification: LORD ZEXO — EYES ONLY
