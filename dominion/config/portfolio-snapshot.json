@@ -1,0 +1,42 @@
+{
+  "last_updated": "2026-03-07",
+  "updated_by": "THRONE",
+  "btc": {
+    "holdings": 0.1677,
+    "avg_buy_price_usd": 80000,
+    "initial_stack_dec2025": 0.07,
+    "ath_usd": 126000,
+    "target_2030": 5.0
+  },
+  "wedding": {
+    "fund_idr": 150000000,
+    "target_idr": 350000000,
+    "monthly_idr": 30000000,
+    "date": "2026-11"
+  },
+  "war_chest": {
+    "total_idr": 31000000,
+    "deployed_idr": 20000000,
+    "remaining_idr": 11000000,
+    "triggers": {
+      "30pct": 0.25,
+      "40pct": 0.50,
+      "50pct": 1.00
+    }
+  },
+  "dca": {
+    "monthly_idr": 50000000,
+    "march_2026": "completed",
+    "last_buy": {
+      "amount_btc": 0.0349,
+      "price_usd": [67900, 65000],
+      "date": "2026-03-07"
+    }
+  },
+  "notes": {
+    "gold": "removed — Keiko handles from her Rp 4M",
+    "lebaran": "war chest skipped for zakat/THR/infaq",
+    "foru_tokens": "sell 100% immediately → BTC",
+    "foru_tge": "2026-03-12"
+  }
+}

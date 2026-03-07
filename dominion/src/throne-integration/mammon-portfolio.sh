@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # MAMMON Portfolio Tracker — BTC Holdings, Wedding Fund, DCA Progress
-# Tracks Faisal's investment progress against Master Plan v2.0
+# Reads from portfolio-snapshot.json (single source of truth)
+# THRONE updates the snapshot; this script just reads it.
 
 set -euo pipefail
 
@@ -10,27 +11,40 @@ REPORT_FILE="$DOMINION_DIR/reports/mammon-portfolio-${TODAY}.md"
 API_REPORT_DIR="$DOMINION_DIR/api/reports"
 API_LOG="$DOMINION_DIR/api/logs"
 NOTIF_DIR="$DOMINION_DIR/api/notifications"
+SNAPSHOT="$DOMINION_DIR/config/portfolio-snapshot.json"
 
-# ── Config ──
-DCA_START="2025-03"          # March 2025
-MONTHLY_DCA_IDR=50000000     # Rp 50M
-MONTHLY_WEDDING_IDR=30000000 # Rp 30M
-WEDDING_TARGET_IDR=350000000 # Rp 350M
-WEDDING_DATE="2026-11"       # November 2026
-WAR_CHEST_IDR=40000000       # Rp 40M funded
-BTC_ATH=109000               # ~$109K ATH (Jan 2025)
-AVG_BUY_PRICE_USD=80000      # Estimated avg purchase price
-BTC_TARGET=5.0               # 5 BTC minimum target by 2030
-INITIAL_BTC=0.07             # Starting BTC (Dec 2025)
-INITIAL_WEDDING_IDR=59000000 # Starting wedding fund (Dec 2025)
+# ── Load from snapshot (single source of truth) ──
+if [ ! -f "$SNAPSHOT" ]; then
+    echo "❌ portfolio-snapshot.json not found! THRONE must create it."
+    exit 1
+fi
+
+echo "📂 Loading portfolio snapshot (last updated: $(python3 -c "import json; print(json.load(open('$SNAPSHOT'))['last_updated'])"))"
+
+# Parse snapshot with python3 (reliable JSON parsing)
+eval "$(python3 -c "
+import json
+s = json.load(open('${SNAPSHOT}'))
+print(f'ACTUAL_BTC={s[\"btc\"][\"holdings\"]}')
+print(f'BTC_ATH={s[\"btc\"][\"ath_usd\"]}')
+print(f'BTC_TARGET={s[\"btc\"][\"target_2030\"]}')
+print(f'AVG_BUY_USD={s[\"btc\"][\"avg_buy_price_usd\"]}')
+print(f'ACTUAL_WEDDING_IDR={s[\"wedding\"][\"fund_idr\"]}')
+print(f'WEDDING_TARGET_IDR={s[\"wedding\"][\"target_idr\"]}')
+print(f'MONTHLY_WEDDING_IDR={s[\"wedding\"][\"monthly_idr\"]}')
+print(f'WEDDING_DATE={s[\"wedding\"][\"date\"]}')
+print(f'WAR_CHEST_IDR={s[\"war_chest\"][\"total_idr\"]}')
+print(f'MONTHLY_DCA_IDR={s[\"dca\"][\"monthly_idr\"]}')
+print(f'SNAPSHOT_DATE={s[\"last_updated\"]}')
+")"
 
 # ── Fetch BTC Price ──
 echo "📡 Fetching BTC price from CoinGecko..."
 PRICE_JSON=$(curl -sf "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,idr&include_24hr_change=true" 2>/dev/null || echo '{}')
 
-BTC_USD=$(echo "$PRICE_JSON" | grep -o '"usd":[0-9.]*' | head -1 | cut -d: -f2)
-BTC_IDR=$(echo "$PRICE_JSON" | grep -o '"idr":[0-9.]*' | head -1 | cut -d: -f2)
-BTC_24H=$(echo "$PRICE_JSON" | grep -o '"usd_24h_change":[0-9.-]*' | head -1 | cut -d: -f2)
+BTC_USD=$(echo "$PRICE_JSON" | grep -o '"usd":[0-9.]*' | head -1 | cut -d: -f2 || true)
+BTC_IDR=$(echo "$PRICE_JSON" | grep -o '"idr":[0-9.]*' | head -1 | cut -d: -f2 || true)
+BTC_24H=$(echo "$PRICE_JSON" | grep -o '"usd_24h_change":[0-9.-]*' | head -1 | cut -d: -f2 || true)
 
 if [ -z "$BTC_USD" ] || [ "$BTC_USD" = "" ]; then
     echo "⚠️  CoinGecko API failed, using fallback price"
@@ -45,30 +59,11 @@ BTC_IDR_INT=${BTC_IDR%.*}
 
 echo "💰 BTC: \$${BTC_USD} | Rp ${BTC_IDR}"
 
-# ── Calculate Months of DCA ──
-start_year=2025; start_month=3
+# ── Date helpers ──
 current_year=$(date +%Y); current_month=$(date +%-m)
-MONTHS_DCA=$(( (current_year - start_year) * 12 + current_month - start_month ))
-[ $MONTHS_DCA -lt 0 ] && MONTHS_DCA=0
 
-# ── BTC Accumulated ──
-# Total IDR spent on DCA
-TOTAL_DCA_IDR=$(( MONTHS_DCA * MONTHLY_DCA_IDR ))
-
-# Convert avg buy price to IDR (use 16400 rate)
-IDR_RATE=16400
-AVG_BUY_PRICE_IDR=$(( AVG_BUY_PRICE_USD * IDR_RATE ))
-
-# BTC from DCA (in satoshis for precision, then convert)
-if [ $AVG_BUY_PRICE_IDR -gt 0 ]; then
-    # BTC = total_idr / price_per_btc_idr — use awk for float
-    BTC_FROM_DCA=$(awk "BEGIN {printf \"%.6f\", $TOTAL_DCA_IDR / $AVG_BUY_PRICE_IDR}")
-else
-    BTC_FROM_DCA="0.000000"
-fi
-
-# Total BTC = initial + DCA accumulated
-TOTAL_BTC=$(awk "BEGIN {printf \"%.6f\", $INITIAL_BTC + $BTC_FROM_DCA}")
+# ── BTC Holdings (use actual snapshot) ──
+TOTAL_BTC=$ACTUAL_BTC
 
 # ── Portfolio Value ──
 PORTFOLIO_USD=$(awk "BEGIN {printf \"%.0f\", $TOTAL_BTC * $BTC_USD}")
@@ -78,12 +73,8 @@ PORTFOLIO_IDR=$(awk "BEGIN {printf \"%.0f\", $TOTAL_BTC * $BTC_IDR_INT}")
 BTC_PROGRESS_PCT=$(awk "BEGIN {pct=$TOTAL_BTC/$BTC_TARGET*100; if(pct>100)pct=100; printf \"%.1f\", pct}")
 BTC_PROGRESS_INT=${BTC_PROGRESS_PCT%.*}
 
-# ── Wedding Fund ──
-# Started with Rp 59M in Dec 2025, adding Rp 30M/month since March 2025
-# But the plan started Dec 2025 for wedding savings at Rp 30M/month
-WEDDING_MONTHS_SAVING=$(( MONTHS_DCA ))
-# Wedding fund = initial + months * monthly
-WEDDING_FUND=$(( INITIAL_WEDDING_IDR + WEDDING_MONTHS_SAVING * MONTHLY_WEDDING_IDR ))
+# ── Wedding Fund (use actual snapshot) ──
+WEDDING_FUND=$ACTUAL_WEDDING_IDR
 [ $WEDDING_FUND -gt $WEDDING_TARGET_IDR ] && WEDDING_FUND=$WEDDING_TARGET_IDR
 WEDDING_PCT=$(awk "BEGIN {pct=$WEDDING_FUND/$WEDDING_TARGET_IDR*100; if(pct>100)pct=100; printf \"%.1f\", pct}")
 WEDDING_PCT_INT=${WEDDING_PCT%.*}
@@ -148,7 +139,7 @@ fmt_usd() { echo "$1" | awk '{printf "%'\''d", $1}' 2>/dev/null || echo "$1"; }
 
 PORTFOLIO_USD_FMT=$(fmt_usd "$PORTFOLIO_USD")
 PORTFOLIO_IDR_FMT=$(fmt_idr "$PORTFOLIO_IDR")
-TOTAL_DCA_IDR_FMT=$(fmt_idr "$TOTAL_DCA_IDR")
+
 WEDDING_FUND_FMT=$(fmt_idr "$WEDDING_FUND")
 BTC_USD_FMT=$(fmt_usd "$BTC_USD_INT")
 BTC_IDR_FMT=$(fmt_idr "$BTC_IDR_INT")
@@ -177,12 +168,10 @@ cat > "$REPORT_FILE" << REPORT
 
 | Metric | Value |
 |--------|-------|
-| Initial Stack (Dec 2025) | ${INITIAL_BTC} BTC |
-| Months of DCA | ${MONTHS_DCA} months |
-| Total DCA Invested | Rp ${TOTAL_DCA_IDR_FMT} |
-| Avg Buy Price | ~\$${AVG_BUY_PRICE_USD} |
-| BTC from DCA | ${BTC_FROM_DCA} BTC |
+| Initial Stack (Dec 2025) | 0.07 BTC |
+| Avg Buy Price | ~\$${AVG_BUY_USD} |
 | **Total BTC** | **${TOTAL_BTC} BTC** |
+| Snapshot Date | ${SNAPSHOT_DATE} |
 | Portfolio (USD) | \$${PORTFOLIO_USD_FMT} |
 | Portfolio (IDR) | Rp ${PORTFOLIO_IDR_FMT} |
 
@@ -280,7 +269,7 @@ War Chest Size: Rp 40,000,000 (USDT)
 ---
 
 *Generated by MAMMON — Financial General of the Dominion*
-*Investment Master Plan v2.0 | Stack Sats, Prepare for Fire Sale*
+*Investment Master Plan v2.1 | Data from portfolio-snapshot.json*
 REPORT
 
 echo "📄 Report generated: $REPORT_FILE"

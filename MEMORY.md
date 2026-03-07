@@ -70,7 +70,7 @@
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
 - Local copy: dominion/reports/investment-masterplan-v2.1.md (latest), v2.md preserved as history
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
-- Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest, Rp 4M gold (via Keiko), Rp 4M health/fitness
+- Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest (skipped Lebaran months → zakat/THR/infaq), Rp 4M Keiko (she handles gold), Rp 4M health/fitness
 - Health: PT gym Rp 2.4M (3-4x/week) + basketball private Rp 1.6M (2hrs/week solo drill with coach)
 - ForuAI cash ($2,310) → 100% BTC every month. OKU covers everything else.
 - BTC DCA pre-TGE: ~Rp 46.6M/mo. Post-TGE: ~Rp 63M+ (tokens sell → BTC on top)
@@ -87,11 +87,11 @@
 - War chest: Rp 31M (as of Mar 6, 2026)
 - War chest deployment: 25% at -30%, 50% at -40%, 100% at -50%
 - BTC ATH ~$126K; as of Feb 2026 BTC at ~$67K
-- Current BTC holdings: 0.153 BTC (updated Mar 1, 2026 — bought 0.02 BTC at $65K with ForuAI salary)
+- Current BTC holdings: 0.1677 BTC (updated Mar 7, 2026 — Mar DCA: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K from ForuAI salary)
 - XPL: 3278 tokens (write-off, -82% lesson, just forget)
 - Wedding fund: Rp 150M (target Rp 350M by Oct 2026, updated Mar 6)
 - Feb 2026 DCA executed (salary came Feb 1)
-- Mar 2026 DCA started: $1,318 at $65K (ForuAI salary Feb 26)
+- Mar 2026 DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K (ForuAI + OKU salary)
 - ForuAI tokens: sell 100% immediately → BTC, no hodling
 - ForuAI TGE: March 12, 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026) unlocking at once
 - Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
