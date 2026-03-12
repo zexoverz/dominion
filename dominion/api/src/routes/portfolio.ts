@@ -482,12 +482,13 @@ router.post('/reseed', async (_req: Request, res: Response) => {
     const allCards = [
       // === ONE PIECE — Original Collection (12 cards, ALL JP) ===
       // === ONE PIECE — Original Collection (12 cards, ALL JP) ===
-      { franchise: 'one_piece', name: 'Roronoa Zoro (Treasure Cup)', code: 'OP01-025', set: 'Promo', rarity: 'SR', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 780, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/promo-op10/10015.jpg', yuyuJpy: 178000, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/promo-op10/10015', date: '2025-11-03' },
-      { franchise: 'one_piece', name: 'Luffy-Tarou', code: 'ST18-005', set: 'A Fist of Divine Speed', rarity: 'SP', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st18/10005.jpg', yuyuJpy: 220, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/st18/10005', date: '2025-10-06' },
-      { franchise: 'one_piece', name: 'Shanks', code: 'ST16-004', set: 'A Fist of Divine Speed', rarity: 'SP', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st16/10004.jpg', yuyuJpy: 120, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/st16/10004', date: '2026-03-10' },
-      { franchise: 'one_piece', name: 'Monkey.D.Luffy', code: 'OP07-109', set: 'Promo', rarity: 'Promo', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op07/10131.jpg', yuyuJpy: 2480, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op07/10131', date: '2026-03-12' },
-      { franchise: 'one_piece', name: 'Sanji (Parallel)', code: 'PRB01-001', set: 'PRB01 The Best', rarity: 'L', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 36, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/prb01/10002.jpg', yuyuJpy: 1480, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/prb01/10002', date: '2025-10-06' },
-      { franchise: 'one_piece', name: 'Sanji (Alt Art)', code: 'OP06-119', set: 'Wings of the Captain', rarity: 'SEC', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 39, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op06/10144.jpg', yuyuJpy: 1980, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op06/10144', date: '2026-03-12' },
+      // SLABS: yuyuJpy = raw reference only, slabPriceUsd = eBay/SNKRDUNK slab comp
+      { franchise: 'one_piece', name: 'Roronoa Zoro (Treasure Cup)', code: 'OP01-025', set: 'Promo', rarity: 'SR', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 780, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/promo-op10/10015.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=OP01-025+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-11-03' },
+      { franchise: 'one_piece', name: 'Luffy-Tarou', code: 'ST18-005', set: 'A Fist of Divine Speed', rarity: 'SP', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st18/10005.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=ST18-005+PSA+10+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-06' },
+      { franchise: 'one_piece', name: 'Shanks', code: 'ST16-004', set: 'A Fist of Divine Speed', rarity: 'SP', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st16/10004.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=ST16-004+PSA+10+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2026-03-10' },
+      { franchise: 'one_piece', name: 'Monkey.D.Luffy', code: 'OP07-109', set: 'Promo', rarity: 'Promo', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op07/10131.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=OP07-109+PSA+10+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2026-03-12' },
+      { franchise: 'one_piece', name: 'Sanji (Parallel)', code: 'PRB01-001', set: 'PRB01 The Best', rarity: 'L', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 36, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/prb01/10002.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PRB01-001+PSA+10+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-06' },
+      { franchise: 'one_piece', name: 'Sanji (Alt Art)', code: 'OP06-119', set: 'Wings of the Captain', rarity: 'SEC', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 39, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op06/10144.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=OP06-119+PSA+10+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2026-03-12' },
       { franchise: 'one_piece', name: 'St. Ethanbaron V. Nusjuro (Red Parallel)', code: 'OP13-080', set: 'Carrying on His Will', rarity: 'R', grade: 'Raw', grader: null, lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op13/10099.jpg', yuyuJpy: 17800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10099', date: '2025-10-06' },
       { franchise: 'one_piece', name: 'St. Jaygarcia Saturn (Red Parallel)', code: 'OP13-083', set: 'Carrying on His Will', rarity: 'R', grade: 'Raw', grader: null, lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op13/10105.jpg', yuyuJpy: 17800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10105', date: '2025-10-06' },
       { franchise: 'one_piece', name: 'St. Marcus Mars (Red Parallel)', code: 'OP13-091', set: 'Carrying on His Will', rarity: 'R', grade: 'Raw', grader: null, lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op13/10119.jpg', yuyuJpy: 17800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10119', date: '2025-10-06' },
@@ -512,28 +513,47 @@ router.post('/reseed', async (_req: Request, res: Response) => {
       { franchise: 'one_piece', name: 'Cross Guild', code: 'OP09-057', set: 'The Four Emperors', rarity: 'Parallel', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://card.yuyu-tei.jp/opc/front/op09/10072.jpg', yuyuJpy: 120, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op09/10072', date: '2026-03-08' },
       { franchise: 'one_piece', name: 'Luffy Nika (SEC)', code: 'EB04-061', set: 'Extra Booster 04', rarity: 'SEC', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://card.yuyu-tei.jp/opc/front/eb04/10061.jpg', yuyuJpy: 120, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/eb04/10061', date: '2026-03-08' },
 
-      // === POKEMON — JP PSA 10 (5 cards) ===
-      { franchise: 'pokemon', name: 'Lugia V', code: '110/098', set: 'Paradigm Trigger', rarity: 'Secret Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 690, costIdr: 0, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
-      { franchise: 'pokemon', name: 'Zekrom ex', code: '174/086', set: 'Black Bolt', rarity: 'Secret Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 450, costIdr: 0, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
-      { franchise: 'pokemon', name: 'Charizard ex', code: '349/190', set: 'Shiny Treasure ex', rarity: 'Super Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 348, costIdr: 0, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
-      { franchise: 'pokemon', name: "N's Reshiram", code: '109/100', set: 'Battle Partners', rarity: 'Art Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 39, costIdr: 0, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
-      { franchise: 'pokemon', name: 'Black Kyurem ex', code: '077/064', set: 'Paradise Dragona', rarity: 'Super Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 10, costIdr: 0, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
+      // === POKEMON — JP PSA 10 (5 cards) — eBay sold comps ===
+      { franchise: 'pokemon', name: 'Lugia V', code: '110/098', set: 'Paradigm Trigger', rarity: 'Secret Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 690, costIdr: 0, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=lugia+v+110%2F098+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-01' },
+      { franchise: 'pokemon', name: 'Zekrom ex', code: '174/086', set: 'Black Bolt', rarity: 'Secret Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 450, costIdr: 0, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=zekrom+ex+174%2F086+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-01' },
+      { franchise: 'pokemon', name: 'Charizard ex', code: '349/190', set: 'Shiny Treasure ex', rarity: 'Super Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 348, costIdr: 0, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=charizard+ex+349%2F190+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-01' },
+      { franchise: 'pokemon', name: "N's Reshiram", code: '109/100', set: 'Battle Partners', rarity: 'Art Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 39, costIdr: 0, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=N+reshiram+109%2F100+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-01' },
+      { franchise: 'pokemon', name: 'Black Kyurem ex', code: '077/064', set: 'Paradise Dragona', rarity: 'Super Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 10, costIdr: 0, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=black+kyurem+ex+077%2F064+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-01' },
 
-      // === POKEMON — Indonesian EGS Slabs (2 cards) ===
-      { franchise: 'pokemon', name: 'Mew ex SAR', code: '347/190', set: 'Shiny Treasure ex (SV4a)', rarity: 'SAR', grade: 'EGS 9', grader: 'EGS', lang: 'ID', costUsd: 0, costIdr: 3500000, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
-      { franchise: 'pokemon', name: 'Gardevoir ex SAR', code: '348/190', set: 'Shiny Treasure ex (SV4a)', rarity: 'SAR', grade: 'EGS 9.5', grader: 'EGS', lang: 'ID', costUsd: 0, costIdr: 1500000, image: null, yuyuJpy: null, yuyuUrl: null, date: '2025-10-01' },
+      // === POKEMON — Indonesian EGS Slabs (2 cards) — SNKR Dunk / local market ===
+      { franchise: 'pokemon', name: 'Mew ex SAR', code: '347/190', set: 'Shiny Treasure ex (SV4a)', rarity: 'SAR', grade: 'EGS 9', grader: 'EGS', lang: 'ID', costUsd: 0, costIdr: 3500000, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: null, priceSrc: null, date: '2025-10-01' },
+      { franchise: 'pokemon', name: 'Gardevoir ex SAR', code: '348/190', set: 'Shiny Treasure ex (SV4a)', rarity: 'SAR', grade: 'EGS 9.5', grader: 'EGS', lang: 'ID', costUsd: 0, costIdr: 1500000, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: null, priceSrc: null, date: '2025-10-01' },
     ];
 
     let inserted = 0;
     for (const c of allCards) {
-      // Convert Yuyu-tei JPY price to USD for current_price
-      const currentPriceUsd = c.yuyuJpy ? (c.yuyuJpy * JPY_TO_USD) : null;
-      const currentPriceIdr = c.yuyuJpy ? (c.yuyuJpy * 100) : null; // x100 JPY→IDR
+      // Determine current price: Yuyu-tei JPY for raw singles, slabPriceUsd for slabs
+      const isSlab = c.grade && c.grade !== 'Raw';
+      let currentPriceUsd: number | null = null;
+      let currentPriceIdr: number | null = null;
+
+      if (isSlab && c.slabPriceUsd) {
+        // Slab: use manual eBay/SNKRDUNK comp price
+        currentPriceUsd = c.slabPriceUsd;
+        currentPriceIdr = c.slabPriceUsd * IDR_PER_USD;
+      } else if (!isSlab && c.yuyuJpy) {
+        // Raw: use Yuyu-tei JPY conversion
+        currentPriceUsd = c.yuyuJpy * JPY_TO_USD;
+        currentPriceIdr = c.yuyuJpy * 100; // x100 JPY→IDR
+      }
+
+      const priceSource = c.priceSrc || (c.yuyuJpy ? 'yuyu-tei' : null);
+      const metadata = {
+        price_url: c.yuyuUrl || null,
+        ebay_url: c.ebayUrl || null,
+        yuyu_tei_jpy: c.yuyuJpy || null,
+        slab_price_usd: c.slabPriceUsd || null,
+      };
 
       await pool.query(`
         INSERT INTO portfolio_cards (franchise, card_name, card_code, set_name, rarity, grade, grading_company, language, cost_usd, cost_idr, current_price_usd, current_price_idr, image_url, price_source, date_added, metadata)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-      `, [c.franchise, c.name, c.code, c.set, c.rarity, c.grade, c.grader, c.lang, c.costUsd, c.costIdr, currentPriceUsd, currentPriceIdr, c.image, c.yuyuJpy ? 'yuyu-tei' : null, c.date, JSON.stringify({ price_url: c.yuyuUrl || null, yuyu_tei_jpy: c.yuyuJpy || null })]);
+      `, [c.franchise, c.name, c.code, c.set, c.rarity, c.grade, c.grader, c.lang, c.costUsd, c.costIdr, currentPriceUsd, currentPriceIdr, c.image, priceSource, c.date, JSON.stringify(metadata)]);
       inserted++;
     }
 
