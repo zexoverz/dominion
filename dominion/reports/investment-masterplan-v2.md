@@ -371,8 +371,8 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | Rule | Detail |
 |------|--------|
 | **Lifetime Cap** | Rp 200M (from v1 allocation) |
-| **Spent So Far** | ~Rp 20M (OP cards only — Rp 43M total includes Pokemon) |
-| **Remaining Budget** | ~Rp 180M |
+| **Spent So Far** | ~Rp 26.5M (Rp 20M original + Rp 6.5M previous buy) |
+| **Remaining Budget** | ~Rp 173.5M |
 | **Buy Strategy** | **Opportunistic ONLY** — no monthly DCA, no scheduled buys |
 | **What Qualifies** | Grail-tier cards only (PSA 10, rare parallels, signature pieces) |
 | **Funding Source** | Personal spending budget or surplus — NEVER touches BTC DCA or wedding fund |
