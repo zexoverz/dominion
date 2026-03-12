@@ -40,4 +40,10 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ### Telegram
 - Faisal's chat ID: 1449994544
 
+### Railway
+- Project: handsome-mercy (90885399-d29a-46f0-a3d8-20df0cbfefed)
+- API Token: caf65a97-2ecc-4470-8c74-4f14f4a2d6c9
+- API Service URL: dominion-api-production.up.railway.app
+- Frontend Service URL: dominion-frontend-production.up.railway.app
+
 Add whatever helps you do your job. This is your cheat sheet.
