@@ -87,6 +87,36 @@ export async function createMission(data: Record<string, any>) {
   return res.json();
 }
 
+// ═══ Portfolio API ═══
+
+export async function getPortfolioSummary(password?: string) {
+  return fetchAPI<any>(`/api/portfolio/summary${password ? `?password=${password}` : ''}`);
+}
+
+export async function getPortfolioHoldings(password?: string) {
+  return fetchAPI<any[]>(`/api/portfolio/holdings${password ? `?password=${password}` : ''}`);
+}
+
+export async function getPortfolioCards(franchise?: string, password?: string) {
+  const params = new URLSearchParams();
+  if (franchise) params.set('franchise', franchise);
+  if (password) params.set('password', password);
+  const qs = params.toString();
+  return fetchAPI<any[]>(`/api/portfolio/cards${qs ? `?${qs}` : ''}`);
+}
+
+export async function getPortfolioCard(id: string, password?: string) {
+  return fetchAPI<any>(`/api/portfolio/cards/${id}${password ? `?password=${password}` : ''}`);
+}
+
+export async function getPortfolioDcaLog(password?: string) {
+  return fetchAPI<any[]>(`/api/portfolio/dca-log${password ? `?password=${password}` : ''}`);
+}
+
+export async function getPortfolioFunds(password?: string) {
+  return fetchAPI<any[]>(`/api/portfolio/funds${password ? `?password=${password}` : ''}`);
+}
+
 export async function createProposal(data: Record<string, any>) {
   const res = await fetch(`${API_BASE}/api/proposals`, {
     method: 'POST',

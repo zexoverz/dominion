@@ -13,6 +13,7 @@ const navItems = [
   { href: "/admin", label: "COMMAND", shortLabel: "CMD", icon: "⚔️" },
   { href: "/reports", label: "INTEL", shortLabel: "INTEL", icon: "📜" },
   { href: "/logs", label: "LOG", shortLabel: "LOG", icon: "📋" },
+  { href: "/portfolio", label: "PORTFOLIO", shortLabel: "VAULT", icon: "💰" },
 ];
 
 export default function Sidebar() {
