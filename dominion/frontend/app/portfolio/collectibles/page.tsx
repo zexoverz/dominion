@@ -28,6 +28,7 @@ type Card = {
   image_url: string | null;
   date_added: string;
   notes: string | null;
+  metadata: { price_url?: string; yuyu_tei_jpy?: number } | null;
 };
 
 function formatUsd(n: number) {
@@ -305,14 +306,25 @@ export default function CollectiblesPage() {
                 </div>
               </div>
 
-              {/* ROI */}
-              {hasPrice && (
-                <div className="mt-2 text-right">
+              {/* ROI + Link */}
+              <div className="mt-2 flex justify-between items-center">
+                {card.metadata?.price_url ? (
+                  <a
+                    href={card.metadata.price_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[7px] font-pixel text-throne-gold/60 hover:text-throne-gold"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    🔗
+                  </a>
+                ) : <span />}
+                {hasPrice && (
                   <span className={`font-pixel text-[10px] ${roi >= 0 ? "text-throne-green" : "text-throne-red"}`}>
                     {roi >= 0 ? "+" : ""}{roi.toFixed(1)}%
                   </span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           );
         })}
@@ -378,6 +390,24 @@ export default function CollectiblesPage() {
                       </>
                     );
                   })()}
+                </>
+              )}
+
+              {/* Price Source Link */}
+              {selectedCard.metadata?.price_url && (
+                <>
+                  <div className="border-t border-rpg-borderDark my-3" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-pixel text-rpg-borderMid">Price Source</span>
+                    <a
+                      href={selectedCard.metadata.price_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[9px] font-pixel text-throne-gold hover:text-throne-goldLight underline"
+                    >
+                      🔗 Yuyu-tei {selectedCard.metadata.yuyu_tei_jpy ? `¥${selectedCard.metadata.yuyu_tei_jpy.toLocaleString()}` : ''}
+                    </a>
+                  </div>
                 </>
               )}
             </div>
