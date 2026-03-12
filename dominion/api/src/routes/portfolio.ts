@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 
 const IDR_PER_USD = 16400;
+const JPY_TO_USD = 0.0067; // ~150 JPY per USD
 
 // ── Auth Middleware ──
 function authMiddleware(req: Request, res: Response, next: Function) {
@@ -477,7 +478,7 @@ router.post('/reseed', async (_req: Request, res: Response) => {
     await pool.query('DELETE FROM portfolio_cards');
 
     // JPY to USD conversion (¥1 = ~$0.0067)
-    const JPY_TO_USD = 0.0067;
+
 
     const allCards = [
       // === ONE PIECE — Original Collection (12 cards, ALL JP) ===
