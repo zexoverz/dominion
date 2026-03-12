@@ -1,0 +1,206 @@
+{
+  "posted": [
+    {
+      "post": 46,
+      "date": "2026-02-21",
+      "slot": "siang"
+    },
+    {
+      "post": 47,
+      "date": "2026-02-21",
+      "slot": "siang"
+    },
+    {
+      "post": 39,
+      "date": "2026-02-21",
+      "slot": "malam"
+    },
+    {
+      "post": 48,
+      "date": "2026-02-22",
+      "slot": "siang"
+    },
+    {
+      "post": 40,
+      "date": "2026-02-22",
+      "slot": "malam"
+    },
+    {
+      "post": "49-custom",
+      "date": "2026-02-23",
+      "slot": "siang"
+    },
+    {
+      "post": 41,
+      "date": "2026-02-23",
+      "slot": "malam"
+    },
+    {
+      "post": 50,
+      "date": "2026-02-24",
+      "slot": "siang"
+    },
+    {
+      "post": 42,
+      "date": "2026-02-24",
+      "slot": "malam"
+    },
+    {
+      "post": 51,
+      "date": "2026-02-25",
+      "slot": "siang"
+    },
+    {
+      "post": 43,
+      "date": "2026-02-25",
+      "slot": "malam"
+    },
+    {
+      "post": "custom-lpdp-npd",
+      "date": "2026-02-26",
+      "slot": "siang"
+    },
+    {
+      "post": 44,
+      "date": "2026-02-26",
+      "slot": "malam"
+    },
+    {
+      "post": 53,
+      "date": "2026-02-27",
+      "slot": "siang"
+    },
+    {
+      "post": 45,
+      "date": "2026-02-27",
+      "slot": "malam"
+    },
+    {
+      "post": 54,
+      "date": "2026-02-28",
+      "slot": "siang"
+    },
+    {
+      "post": 61,
+      "date": "2026-02-28",
+      "slot": "malam"
+    },
+    {
+      "post": 55,
+      "date": "2026-03-01",
+      "slot": "siang"
+    },
+    {
+      "post": 62,
+      "date": "2026-03-01",
+      "slot": "malam"
+    },
+    {
+      "post": 56,
+      "date": "2026-03-02",
+      "slot": "siang"
+    },
+    {
+      "post": 63,
+      "date": "2026-03-02",
+      "slot": "malam"
+    },
+    {
+      "post": 57,
+      "date": "2026-03-03",
+      "slot": "siang"
+    },
+    {
+      "post": 64,
+      "date": "2026-03-03",
+      "slot": "malam"
+    },
+    {
+      "post": 58,
+      "date": "2026-03-04",
+      "slot": "siang"
+    },
+    {
+      "post": 65,
+      "date": "2026-03-04",
+      "slot": "malam"
+    },
+    {
+      "post": 59,
+      "date": "2026-03-05",
+      "slot": "siang"
+    },
+    {
+      "post": 66,
+      "date": "2026-03-05",
+      "slot": "malam"
+    },
+    {
+      "post": 60,
+      "date": "2026-03-06",
+      "slot": "siang"
+    },
+    {
+      "post": 67,
+      "date": "2026-03-06",
+      "slot": "malam"
+    },
+    {
+      "post": 68,
+      "date": "2026-03-07",
+      "slot": "siang"
+    },
+    {
+      "post": 69,
+      "date": "2026-03-07",
+      "slot": "malam"
+    },
+    {
+      "post": 52,
+      "date": "2026-03-08",
+      "slot": "siang"
+    },
+    {
+      "post": 70,
+      "date": "2026-03-08",
+      "slot": "malam"
+    },
+    {
+      "post": 71,
+      "date": "2026-03-09",
+      "slot": "siang"
+    },
+    {
+      "post": 72,
+      "date": "2026-03-09",
+      "slot": "malam"
+    },
+    {
+      "post": 73,
+      "date": "2026-03-10",
+      "slot": "siang"
+    },
+    {
+      "post": 74,
+      "date": "2026-03-10",
+      "slot": "malam"
+    },
+    {
+      "post": 75,
+      "date": "2026-03-11",
+      "slot": "siang"
+    },
+    {
+      "post": 76,
+      "date": "2026-03-11",
+      "slot": "malam"
+    },
+    {
+      "post": 77,
+      "date": "2026-03-12",
+      "slot": "siang"
+    }
+  ],
+  "nextMeme": 78,
+  "nextSubstance": 77
+}

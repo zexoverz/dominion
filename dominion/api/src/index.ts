@@ -11,6 +11,7 @@ import eventsRouter from './routes/events';
 import relationshipsRouter from './routes/relationships';
 import streamRouter from './routes/stream';
 import reportsRouter from './routes/reports';
+import portfolioRouter from './routes/portfolio';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
@@ -33,6 +34,7 @@ app.use('/api/events', eventsRouter);
 app.use('/api/relationships', relationshipsRouter);
 app.use('/api/stream', streamRouter);
 app.use('/api/reports', reportsRouter);
+app.use('/api/portfolio', portfolioRouter);
 
 app.listen(PORT, () => {
   console.log(`Dominion API running on port ${PORT}`);

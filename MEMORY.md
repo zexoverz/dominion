@@ -100,6 +100,18 @@
 - Over-kredit house plan: sell to Dzikri → deploy equity → BTC
 - v1→v2 shift: removed Pokemon/One Piece/Gold diversification
 
+## OP TCG Collecting (Mar 7, 2026)
+- Faisal wants to collect One Piece TCG cards (SP/manga art) — fun + speculative hold
+- Thesis: OP manga ending soon → cards become legacy artifacts (like Pokemon Base Set)
+- Budget: Rp 20M from TGE token unlock (Mar 12) for Japan trip (May 2026)
+- Strategy: JP raw SP/manga singles from early sets (OP01-OP04), iconic characters only
+- PSA 10 slabs: ONLY for manga art & mini manga art (display/personal love pieces)
+- Raw singles: for SP, promo, alt art (no slab premium — 88% gem rate makes grading pointless)
+- Yuyu-tei is the price reference, x100 JPY→IDR conversion rate
+- Post-wedding (Nov 2026): Rp 1-2M/mo ongoing card budget from freed wedding allocation
+- Rule: never touch BTC DCA for cards, treat as entertainment not investment
+- Car plan: wait for 2028 bull run, sell 0.1 BTC at $300K for Rp 200M used car, hard cash
+
 ## Zexo's Quest System (Feb 16, 2026)
 - 3 active personal missions: EIP Quest (20 steps), OSS Quest (7 steps), Protocol Bootcamp (14 steps)
 - EIP-7708 magicians draft ready at dominion/reports/eip-7708-magicians-draft.md
@@ -112,7 +124,7 @@
 
 ## Key Lessons
 - Cron jobs: do NOT set model field — "sonnet" alias doesn't resolve. Omit model entirely to use default.
-- Sub-agent model: "anthropic/claude-sonnet-4" does NOT resolve. Omit model param entirely to use default.
+- Sub-agent model: "anthropic/claude-sonnet-4" does NOT resolve (FailoverError). Omit model param entirely for sub-agents to use default.
 - Use Sonnet for sub-agents (Opus rate limits too tight)
 - Don't spawn 6+ agents rapidly — space them out
 - Railway: put build deps in regular dependencies (devDeps skip in production)

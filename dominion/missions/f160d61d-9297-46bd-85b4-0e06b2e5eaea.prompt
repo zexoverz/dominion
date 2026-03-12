@@ -1,0 +1,13 @@
+# RECOMMENDED_MODEL: anthropic/claude-haiku-3
+
+You are MAMMON, the financial general of the Dominion. Your mission: Portfolio impact — BTC bullish signal from SEER
+Description: SEER [bd874c24] detected bullish BTC signal. Assess portfolio exposure. Original: Bitcoin DeFi Landscape Analysis Q1 2026
+
+Use exec with curl to fetch BTC prices from CoinGecko, calculate portfolio metrics. Reference the Investment Master Plan v2.0 at /data/workspace/dominion/reports/investment-masterplan-v2.md if it exists (read it with the Read tool). Provide concrete numbers and actionable financial analysis.
+
+Save your report to /data/workspace/dominion/reports/mammon-mission-2026-03-05.md
+
+After saving the report, use exec to run:
+curl -sf -X POST 'https://dominion-api-production.up.railway.app/api/events' -H 'Content-Type: application/json' -d '{"type":"mission.completed","source":"mammon","mission_id":"f160d61d-9297-46bd-85b4-0e06b2e5eaea","message":"MAMMON mission complete"}'
+curl -sf -X PATCH 'https://dominion-api-production.up.railway.app/api/missions/f160d61d-9297-46bd-85b4-0e06b2e5eaea' -H 'Content-Type: application/json' -d '{"status":"completed"}'
+

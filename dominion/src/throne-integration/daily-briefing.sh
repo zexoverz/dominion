@@ -21,7 +21,7 @@ if [ "$BTC_PRICE" != "N/A" ] && [ "$BTC_PRICE" != "null" ]; then
   BTC_CHANGE_FMT=$(printf "%+.2f" "$BTC_CHANGE" 2>/dev/null || echo "$BTC_CHANGE")
   
   # ATH and drawdown calc
-  ATH=109000
+  ATH=126000
   DRAWDOWN=$(echo "scale=1; ($BTC_PRICE - $ATH) / $ATH * 100" | bc 2>/dev/null || echo "N/A")
   ATH_FMT=$(printf "%'.0f" "$ATH")
   
