@@ -28,7 +28,7 @@ type Card = {
   image_url: string | null;
   date_added: string;
   notes: string | null;
-  metadata: { price_url?: string; ebay_url?: string; yuyu_tei_jpy?: number; slab_price_usd?: number } | null;
+  metadata: { price_url?: string; ebay_url?: string; snkr_url?: string; yuyu_tei_jpy?: number; snkr_dunk_jpy?: number; slab_price_usd?: number } | null;
   price_source: string | null;
 };
 
@@ -309,16 +309,20 @@ export default function CollectiblesPage() {
 
               {/* ROI + Link */}
               <div className="mt-2 flex justify-between items-center">
-                {(card.metadata?.price_url || card.metadata?.ebay_url) ? (
+                {(card.metadata?.price_url || card.metadata?.ebay_url || card.metadata?.snkr_url) ? (
                   <a
-                    href={card.metadata?.price_url || card.metadata?.ebay_url || '#'}
+                    href={card.metadata?.price_url || card.metadata?.snkr_url || card.metadata?.ebay_url || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-[7px] font-pixel ${card.metadata?.ebay_url && !card.metadata?.price_url ? 'text-blue-400/60 hover:text-blue-400' : 'text-throne-gold/60 hover:text-throne-gold'}`}
+                    className={`text-[7px] font-pixel ${
+                      card.metadata?.snkr_url ? 'text-green-400/60 hover:text-green-400' :
+                      card.metadata?.ebay_url && !card.metadata?.price_url ? 'text-blue-400/60 hover:text-blue-400' :
+                      'text-throne-gold/60 hover:text-throne-gold'
+                    }`}
                     onClick={(e) => e.stopPropagation()}
-                    title={card.metadata?.price_url ? 'Yuyu-tei' : 'eBay Sold'}
+                    title={card.metadata?.price_url ? 'Yuyu-tei' : card.metadata?.snkr_url ? 'SNKRDUNK' : 'eBay Sold'}
                   >
-                    {card.metadata?.price_url ? '🏪' : '🔍'}
+                    {card.metadata?.price_url ? '🏪' : card.metadata?.snkr_url ? '👟' : '🔍'}
                   </a>
                 ) : <span />}
                 {hasPrice && (
@@ -395,30 +399,28 @@ export default function CollectiblesPage() {
                 </>
               )}
 
-              {/* Price Source Link */}
-              {(selectedCard.metadata?.price_url || selectedCard.metadata?.ebay_url) && (
+              {/* Price Source Links */}
+              {(selectedCard.metadata?.price_url || selectedCard.metadata?.ebay_url || selectedCard.metadata?.snkr_url) && (
                 <>
                   <div className="border-t border-rpg-borderDark my-3" />
                   <div className="flex justify-between items-center">
                     <span className="text-[9px] font-pixel text-rpg-borderMid">Price Source</span>
                     <div className="flex gap-2">
                       {selectedCard.metadata?.price_url && (
-                        <a
-                          href={selectedCard.metadata.price_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[9px] font-pixel text-throne-gold hover:text-throne-goldLight underline"
-                        >
+                        <a href={selectedCard.metadata.price_url} target="_blank" rel="noopener noreferrer"
+                          className="text-[9px] font-pixel text-throne-gold hover:text-throne-goldLight underline">
                           🏪 Yuyu-tei {selectedCard.metadata.yuyu_tei_jpy ? `¥${selectedCard.metadata.yuyu_tei_jpy.toLocaleString()}` : ''}
                         </a>
                       )}
+                      {selectedCard.metadata?.snkr_url && (
+                        <a href={selectedCard.metadata.snkr_url} target="_blank" rel="noopener noreferrer"
+                          className="text-[9px] font-pixel text-green-400 hover:text-green-300 underline">
+                          👟 SNKRDUNK {selectedCard.metadata.snkr_dunk_jpy ? `¥${selectedCard.metadata.snkr_dunk_jpy.toLocaleString()}` : ''}
+                        </a>
+                      )}
                       {selectedCard.metadata?.ebay_url && (
-                        <a
-                          href={selectedCard.metadata.ebay_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[9px] font-pixel text-blue-400 hover:text-blue-300 underline"
-                        >
+                        <a href={selectedCard.metadata.ebay_url} target="_blank" rel="noopener noreferrer"
+                          className="text-[9px] font-pixel text-blue-400 hover:text-blue-300 underline">
                           🔍 eBay Sold
                         </a>
                       )}

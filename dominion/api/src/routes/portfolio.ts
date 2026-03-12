@@ -508,10 +508,11 @@ router.post('/reseed', async (_req: Request, res: Response) => {
       { franchise: 'one_piece', name: 'Big Mom (2nd Anniversary)', code: 'BigMom-Promo', set: '2nd Anniversary', rarity: 'Promo', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 333334, image: 'https://card.yuyu-tei.jp/opc/front/promo-op10/10107.jpg', yuyuJpy: 980, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/promo-op10/10107', date: '2026-03-08' },
 
       // === ONE PIECE — March 8 Deal 2: Cherry-picked (4 cards, Rp 3.5M) ===
-      { franchise: 'one_piece', name: 'Sabo Wanted (SP)', code: 'OP13-120', set: 'Carrying on His Will', rarity: 'SP', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://card.yuyu-tei.jp/opc/front/op13/10161.jpg', yuyuJpy: 69800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10161', date: '2026-03-08' },
-      { franchise: 'one_piece', name: 'Buggy Wanted (SP)', code: 'OP09-051', set: 'The Four Emperors', rarity: 'SP', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://card.yuyu-tei.jp/opc/front/op09/10066.jpg', yuyuJpy: 99800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op09/10066', date: '2026-03-08' },
-      { franchise: 'one_piece', name: 'Cross Guild', code: 'OP09-057', set: 'The Four Emperors', rarity: 'Parallel', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://card.yuyu-tei.jp/opc/front/op09/10072.jpg', yuyuJpy: 120, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op09/10072', date: '2026-03-08' },
-      { franchise: 'one_piece', name: 'Luffy Nika (SEC)', code: 'EB04-061', set: 'Extra Booster 04', rarity: 'SEC', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://card.yuyu-tei.jp/opc/front/eb04/10061.jpg', yuyuJpy: 120, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/eb04/10061', date: '2026-03-08' },
+      // Wanted poster = 手配書 (SPC) variant, NOT manga art (SP/コミパラ)
+      { franchise: 'one_piece', name: 'Sabo Wanted Poster (SPC)', code: 'OP13-120', set: 'Carrying on His Will', rarity: 'SEC-SPC', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://cdn.snkrdunk.com/upload_bg_removed/OPC-TCG-2025-08-15-12-of.webp', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: null, snkrUrl: 'https://snkrdunk.com/apparels/676011', snkrJpy: 7999, priceSrc: 'snkrdunk', date: '2026-03-08' },
+      { franchise: 'one_piece', name: 'Buggy Wanted Poster (SPC)', code: 'OP09-051', set: 'The Four Emperors', rarity: 'R-SPC', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://cdn.snkrdunk.com/upload_bg_removed/20240831045755-0.webp', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: null, snkrUrl: 'https://snkrdunk.com/apparels/349442', snkrJpy: 7000, priceSrc: 'snkrdunk', date: '2026-03-08' },
+      { franchise: 'one_piece', name: 'Cross Guild (Parallel)', code: 'OP09-057', set: 'PRB02 The Best vol.2', rarity: 'R-P', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://cdn.snkrdunk.com/upload_bg_removed/20250728015949-0.webp', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: null, snkrUrl: 'https://snkrdunk.com/apparels/656320', snkrJpy: 8000, priceSrc: 'snkrdunk', date: '2026-03-08' },
+      { franchise: 'one_piece', name: 'Luffy Nika (SEC-P)', code: 'EB04-061', set: 'Egghead Crisis', rarity: 'SEC-P', grade: 'Raw', grader: null, lang: 'JP', costUsd: 0, costIdr: 875000, image: 'https://cdn.snkrdunk.com/upload_bg_removed/20260130070831-0.webp', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: null, snkrUrl: 'https://snkrdunk.com/apparels/751308', snkrJpy: 4900, priceSrc: 'snkrdunk', date: '2026-03-08' },
 
       // === POKEMON — JP PSA 10 (5 cards) — eBay sold comps ===
       { franchise: 'pokemon', name: 'Lugia V', code: '110/098', set: 'Paradigm Trigger', rarity: 'Secret Rare', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 690, costIdr: 0, image: null, yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=lugia+v+110%2F098+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-01' },
@@ -536,6 +537,10 @@ router.post('/reseed', async (_req: Request, res: Response) => {
         // Slab: use manual eBay/SNKRDUNK comp price
         currentPriceUsd = c.slabPriceUsd;
         currentPriceIdr = c.slabPriceUsd * IDR_PER_USD;
+      } else if (!isSlab && c.snkrJpy) {
+        // Raw with SNKR Dunk price
+        currentPriceUsd = c.snkrJpy * JPY_TO_USD;
+        currentPriceIdr = c.snkrJpy * 100;
       } else if (!isSlab && c.yuyuJpy) {
         // Raw: use Yuyu-tei JPY conversion
         currentPriceUsd = c.yuyuJpy * JPY_TO_USD;
@@ -546,7 +551,9 @@ router.post('/reseed', async (_req: Request, res: Response) => {
       const metadata = {
         price_url: c.yuyuUrl || null,
         ebay_url: c.ebayUrl || null,
+        snkr_url: (c as any).snkrUrl || null,
         yuyu_tei_jpy: c.yuyuJpy || null,
+        snkr_dunk_jpy: (c as any).snkrJpy || null,
         slab_price_usd: c.slabPriceUsd || null,
       };
 
