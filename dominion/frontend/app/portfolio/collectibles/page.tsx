@@ -26,7 +26,6 @@ type Card = {
   current_price_usd: string | null;
   current_price_idr: string | null;
   image_url: string | null;
-  language: string;
   date_added: string;
   notes: string | null;
 };
