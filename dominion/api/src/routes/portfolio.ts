@@ -591,19 +591,25 @@ router.post('/update-prices', async (req: Request, res: Response) => {
       let source = card.price_source;
 
       try {
-        if (meta.snkr_url || (isSlab && card.card_code)) {
-          // Try SNKR Dunk for cards with snkr_url or slabs
-          const keyword = encodeURIComponent(`${card.card_code}${isSlab ? ' PSA' : ''}`);
+        if (meta.snkr_url || card.card_code) {
+          // Try SNKR Dunk search
+          const keyword = encodeURIComponent(card.card_code);
           const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
           if (snkrRes.ok) {
             const data = await snkrRes.json();
-            const products = data?.search?.products || data?.search?.rankingProducts || [];
 
             if (isSlab) {
-              // For slabs: find PSA10 condition listings
-              const psa10 = products.filter((p: any) => p.condition === 'PSA10' && p.salePrice);
+              // For slabs: search used listings with PSA10 condition
+              // Filter products (used items) that match our exact card code and have PSA10
+              const products = data?.search?.products || [];
+              const psa10 = products.filter((p: any) =>
+                p.condition === 'PSA10' &&
+                p.salePrice &&
+                p.title?.includes(card.card_code) &&
+                !p.title?.includes('英語版') // exclude English
+              );
               if (psa10.length > 0) {
-                // Use lowest PSA10 listing price
+                // Use lowest PSA10 listing
                 const lowest = Math.min(...psa10.map((p: any) => p.salePrice));
                 newSnkrJpy = lowest;
                 newPriceUsd = lowest * JPY_TO_USD;
@@ -611,10 +617,14 @@ router.post('/update-prices', async (req: Request, res: Response) => {
                 source = 'snkrdunk';
               }
             } else {
-              // For raw: find rankingProducts with matching card code
+              // For raw singles: use rankingProducts (product pages, not used items)
               const ranked = data?.search?.rankingProducts || [];
+              // Match exact card code, Japanese only, with salePrice, correct rarity
               const match = ranked.find((p: any) =>
-                p.title?.includes(card.card_code) && p.salePrice && !p.title?.includes('英語版')
+                p.title?.includes(card.card_code) &&
+                p.salePrice &&
+                !p.title?.includes('英語版') &&
+                p.salePrice > 0
               );
               if (match) {
                 newSnkrJpy = match.salePrice;
