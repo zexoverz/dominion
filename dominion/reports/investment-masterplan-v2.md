@@ -9,6 +9,7 @@
 |---------|------|-------------|
 | v1.0 | Oct 22, 2025 | Initial cycle-aware strategy |
 | **v2.0** | **Dec 13, 2025** | **Bitcoin Maxi pivot, Fire Sale theory, math corrections** |
+| **v2.1** | **Mar 12, 2026** | **One Piece Cards legacy carve-out added** |
 
 ### December 2025 Updates
 - ❌ XPL failed (-82%) — Lesson learned, NO MORE ALTCOINS
@@ -365,6 +366,23 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 - **Personal tokens (TGE Jan 2026):** Sell 100% immediately → BTC
 - **Core tokens (Nov 2026+):** Sell 100% immediately → BTC
 - **NO HODLING. NO EXCEPTIONS.**
+
+### One Piece Cards (Legacy Carve-Out)
+| Rule | Detail |
+|------|--------|
+| **Lifetime Cap** | Rp 200M (from v1 allocation) |
+| **Spent So Far** | ~Rp 43M |
+| **Remaining Budget** | ~Rp 157M |
+| **Buy Strategy** | **Opportunistic ONLY** — no monthly DCA, no scheduled buys |
+| **What Qualifies** | Grail-tier cards only (PSA 10, rare parallels, signature pieces) |
+| **Funding Source** | Personal spending budget or surplus — NEVER touches BTC DCA or wedding fund |
+| **Sell Strategy** | Hold long-term, sell in bull market if 3x+ gains |
+
+**Rules:**
+- No FOMO buys. If it's not a grail, pass.
+- No monthly allocation. Opportunity knocks or it doesn't.
+- Wedding fund and BTC DCA are untouchable — OP cards come from leftover money only.
+- Track every purchase with cost basis for ROI calculation.
 
 ---
 
