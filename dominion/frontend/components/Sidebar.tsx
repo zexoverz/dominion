@@ -118,7 +118,7 @@ export default function Sidebar() {
             );
           })}
         </div>
-        <div className="grid grid-cols-4 w-full border-t border-rpg-borderDark/50">
+        <div className="grid grid-cols-5 w-full border-t border-rpg-borderDark/50">
           {navItems.slice(4).map((item) => {
             const isActive = pathname === item.href;
             return (
