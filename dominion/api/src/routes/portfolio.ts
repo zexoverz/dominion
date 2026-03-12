@@ -482,13 +482,13 @@ router.post('/reseed', async (_req: Request, res: Response) => {
     const allCards = [
       // === ONE PIECE — Original Collection (12 cards, ALL JP) ===
       // === ONE PIECE — Original Collection (12 cards, ALL JP) ===
-      // SLABS: yuyuJpy = raw reference only, slabPriceUsd = eBay/SNKRDUNK slab comp
-      { franchise: 'one_piece', name: 'Roronoa Zoro (Treasure Cup)', code: 'OP01-025', set: 'Promo', rarity: 'SR', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 780, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/promo-op10/10015.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=OP01-025+PSA+10+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-11-03' },
-      { franchise: 'one_piece', name: 'Luffy-Tarou', code: 'ST18-005', set: 'A Fist of Divine Speed', rarity: 'SP', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st18/10005.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=ST18-005+PSA+10+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-06' },
-      { franchise: 'one_piece', name: 'Shanks', code: 'ST16-004', set: 'A Fist of Divine Speed', rarity: 'SP', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st16/10004.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=ST16-004+PSA+10+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2026-03-10' },
-      { franchise: 'one_piece', name: 'Monkey.D.Luffy', code: 'OP07-109', set: 'Promo', rarity: 'Promo', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op07/10131.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=OP07-109+PSA+10+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2026-03-12' },
-      { franchise: 'one_piece', name: 'Sanji (Parallel)', code: 'PRB01-001', set: 'PRB01 The Best', rarity: 'L', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 36, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/prb01/10002.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PRB01-001+PSA+10+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2025-10-06' },
-      { franchise: 'one_piece', name: 'Sanji (Alt Art)', code: 'OP06-119', set: 'Wings of the Captain', rarity: 'SEC', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 39, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op06/10144.jpg', yuyuJpy: null, slabPriceUsd: null, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=OP06-119+PSA+10+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', priceSrc: 'ebay', date: '2026-03-12' },
+      // SLABS: slabPriceUsd from SNKR Dunk / eBay comps. Titles match PSA label format.
+      { franchise: 'one_piece', name: 'Roronoa Zoro (Flagship Battle)', code: 'OP01-025', set: 'Flagship Battle Promo', rarity: 'SR', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 780, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/promo-op10/10015.jpg', yuyuJpy: null, slabPriceUsd: 2200, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PSA+10+OP01-025+flagship+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', snkrUrl: 'https://snkrdunk.com/apparels/106779', snkrJpy: 330000, priceSrc: 'snkrdunk', ebayTitle: 'PSA 10 Roronoa Zoro OP01-025 Flagship Battle Limited Promo ONE PIECE Japanese', date: '2025-11-03' },
+      { franchise: 'one_piece', name: 'Luffy-Tarou (Special Alt Art)', code: 'ST18-005', set: 'A Fist of Divine Speed', rarity: 'SR-SPC', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st18/10005.jpg', yuyuJpy: null, slabPriceUsd: 187, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PSA+10+ST18-005+luffy+tarou+special+alternate+art+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', snkrUrl: 'https://snkrdunk.com/apparels/520558', snkrJpy: 28000, priceSrc: 'snkrdunk', ebayTitle: 'PSA 10 Luffy-Tarou ST18-005 Special Alternate Art ONE PIECE Japanese', date: '2025-10-06' },
+      { franchise: 'one_piece', name: 'Shanks (Special Alt Art)', code: 'ST16-004', set: 'A Fist of Divine Speed', rarity: 'SR-SPC', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/st16/10004.jpg', yuyuJpy: null, slabPriceUsd: 200, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PSA+10+ST16-004+shanks+special+alternate+art+one+piece&LH_Complete=1&LH_Sold=1&_sop=13', snkrUrl: 'https://snkrdunk.com/apparels/520557', snkrJpy: 30000, priceSrc: 'snkrdunk', ebayTitle: 'PSA 10 Shanks ST16-004 Special Alternate Art ONE PIECE Japanese', date: '2026-03-10' },
+      { franchise: 'one_piece', name: 'Monkey D. Luffy (One Piece Day)', code: 'OP07-109', set: 'One Piece Day 24 Promo', rarity: 'SR', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 60, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op07/10131.jpg', yuyuJpy: null, slabPriceUsd: 233, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PSA+10+OP07-109+luffy+one+piece+day+japanese&LH_Complete=1&LH_Sold=1&_sop=13', snkrUrl: 'https://snkrdunk.com/apparels/348126', snkrJpy: 35000, priceSrc: 'snkrdunk', ebayTitle: 'PSA 10 Monkey D. Luffy OP07-109 One Piece Day 24 ONE PIECE Japanese', date: '2026-03-12' },
+      { franchise: 'one_piece', name: 'Sanji (Parallel)', code: 'PRB01-001', set: 'PRB01 The Best', rarity: 'L-P', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 36, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/prb01/10002.jpg', yuyuJpy: null, slabPriceUsd: 113, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PSA+10+PRB01-001+sanji+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', snkrUrl: 'https://snkrdunk.com/apparels/328655', snkrJpy: 17000, priceSrc: 'snkrdunk', ebayTitle: 'PSA 10 Sanji PRB01-001 Alternate Art ONE PIECE Japanese', date: '2025-10-06' },
+      { franchise: 'one_piece', name: 'Sanji (Alternate Art)', code: 'OP06-119', set: 'Wings of the Captain', rarity: 'SEC', grade: 'PSA 10', grader: 'PSA', lang: 'JP', costUsd: 39, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op06/10144.jpg', yuyuJpy: null, slabPriceUsd: 53, yuyuUrl: null, ebayUrl: 'https://www.ebay.com/sch/i.html?_nkw=PSA+10+OP06-119+sanji+alternate+art+one+piece+japanese&LH_Complete=1&LH_Sold=1&_sop=13', snkrUrl: null, snkrJpy: null, priceSrc: 'ebay', ebayTitle: 'PSA 10 Sanji OP06-119 Alternate Art ONE PIECE Japanese', date: '2026-03-12' },
       { franchise: 'one_piece', name: 'St. Ethanbaron V. Nusjuro (Red Parallel)', code: 'OP13-080', set: 'Carrying on His Will', rarity: 'R', grade: 'Raw', grader: null, lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op13/10099.jpg', yuyuJpy: 17800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10099', date: '2025-10-06' },
       { franchise: 'one_piece', name: 'St. Jaygarcia Saturn (Red Parallel)', code: 'OP13-083', set: 'Carrying on His Will', rarity: 'R', grade: 'Raw', grader: null, lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op13/10105.jpg', yuyuJpy: 17800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10105', date: '2025-10-06' },
       { franchise: 'one_piece', name: 'St. Marcus Mars (Red Parallel)', code: 'OP13-091', set: 'Carrying on His Will', rarity: 'R', grade: 'Raw', grader: null, lang: 'JP', costUsd: 65, costIdr: 0, image: 'https://card.yuyu-tei.jp/opc/front/op13/10119.jpg', yuyuJpy: 17800, yuyuUrl: 'https://yuyu-tei.jp/sell/opc/card/op13/10119', date: '2025-10-06' },
@@ -555,6 +555,7 @@ router.post('/reseed', async (_req: Request, res: Response) => {
         yuyu_tei_jpy: c.yuyuJpy || null,
         snkr_dunk_jpy: (c as any).snkrJpy || null,
         slab_price_usd: c.slabPriceUsd || null,
+        ebay_title: (c as any).ebayTitle || null,
       };
 
       await pool.query(`
@@ -568,6 +569,101 @@ router.post('/reseed', async (_req: Request, res: Response) => {
   } catch (err) {
     console.error('Reseed error:', err);
     res.status(500).json({ error: 'Reseed failed', details: String(err) });
+  }
+});
+
+// ═══ POST /api/portfolio/update-prices ═══
+// Fetches latest prices from SNKR Dunk + Yuyu-tei for all cards
+router.post('/update-prices', async (req: Request, res: Response) => {
+  try {
+    const cards = await pool.query('SELECT * FROM portfolio_cards');
+    let updated = 0;
+    const results: any[] = [];
+
+    for (const card of cards.rows) {
+      const meta = card.metadata || {};
+      const isSlab = card.grade && card.grade !== 'Raw';
+      let newPriceUsd: number | null = null;
+      let newPriceIdr: number | null = null;
+      let newSnkrJpy: number | null = null;
+      let newYuyuJpy: number | null = null;
+      let source = card.price_source;
+
+      try {
+        if (meta.snkr_url || (isSlab && card.card_code)) {
+          // Try SNKR Dunk for cards with snkr_url or slabs
+          const keyword = encodeURIComponent(`${card.card_code}${isSlab ? ' PSA' : ''}`);
+          const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
+          if (snkrRes.ok) {
+            const data = await snkrRes.json();
+            const products = data?.search?.products || data?.search?.rankingProducts || [];
+
+            if (isSlab) {
+              // For slabs: find PSA10 condition listings
+              const psa10 = products.filter((p: any) => p.condition === 'PSA10' && p.salePrice);
+              if (psa10.length > 0) {
+                // Use lowest PSA10 listing price
+                const lowest = Math.min(...psa10.map((p: any) => p.salePrice));
+                newSnkrJpy = lowest;
+                newPriceUsd = lowest * JPY_TO_USD;
+                newPriceIdr = lowest * 100;
+                source = 'snkrdunk';
+              }
+            } else {
+              // For raw: find rankingProducts with matching card code
+              const ranked = data?.search?.rankingProducts || [];
+              const match = ranked.find((p: any) =>
+                p.title?.includes(card.card_code) && p.salePrice && !p.title?.includes('英語版')
+              );
+              if (match) {
+                newSnkrJpy = match.salePrice;
+                newPriceUsd = match.salePrice * JPY_TO_USD;
+                newPriceIdr = match.salePrice * 100;
+                source = 'snkrdunk';
+              }
+            }
+          }
+        }
+
+        // Fallback: Yuyu-tei for raw singles with price_url
+        if (!newPriceUsd && !isSlab && meta.price_url) {
+          // Keep existing Yuyu-tei price (would need HTML scraping for live update)
+          if (meta.yuyu_tei_jpy) {
+            newYuyuJpy = meta.yuyu_tei_jpy;
+            newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
+            newPriceIdr = meta.yuyu_tei_jpy * 100;
+          }
+        }
+
+        if (newPriceUsd) {
+          const updatedMeta = {
+            ...meta,
+            snkr_dunk_jpy: newSnkrJpy || meta.snkr_dunk_jpy,
+            yuyu_tei_jpy: newYuyuJpy || meta.yuyu_tei_jpy,
+            slab_price_usd: isSlab ? newPriceUsd : meta.slab_price_usd,
+            last_price_update: new Date().toISOString(),
+          };
+
+          await pool.query(`
+            UPDATE portfolio_cards
+            SET current_price_usd = $1, current_price_idr = $2, price_source = $3, metadata = $4, updated_at = NOW()
+            WHERE id = $5
+          `, [newPriceUsd, newPriceIdr, source, JSON.stringify(updatedMeta), card.id]);
+          updated++;
+          results.push({ card: card.card_name, code: card.card_code, price_usd: newPriceUsd.toFixed(2), source });
+        }
+      } catch (cardErr) {
+        results.push({ card: card.card_name, code: card.card_code, error: String(cardErr) });
+      }
+
+      // Rate limit: 200ms between SNKR Dunk requests
+      await new Promise(r => setTimeout(r, 200));
+    }
+
+    res.json({ success: true, updated, total: cards.rows.length, results });
+  } catch (err) {
+    console.error('Update prices error:', err);
+    res.status(500).json({ error: 'Update prices failed', details: String(err) });
   }
 });
 
