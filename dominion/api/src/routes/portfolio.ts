@@ -599,17 +599,20 @@ router.post('/update-prices', async (req: Request, res: Response) => {
             const data = await snkrRes.json();
 
             if (isSlab) {
-              // For slabs: search used listings with PSA10 condition
-              // Filter products (used items) that match our exact card code and have PSA10
+              // For slabs: filter PSA10 listings by SPECIFIC apparel ID to avoid mixing card variants
               const products = data?.search?.products || [];
-              const psa10 = products.filter((p: any) =>
-                p.condition === 'PSA10' &&
-                p.salePrice &&
-                p.title?.includes(card.card_code) &&
-                !p.title?.includes('英語版') // exclude English
-              );
+              const apparelMatch = meta.snkr_url?.match(/apparels\/(\d+)/);
+              const targetId = apparelMatch?.[1];
+              const psa10 = products.filter((p: any) => {
+                if (p.condition !== 'PSA10' || !p.salePrice) return false;
+                if (!p.title?.includes(card.card_code)) return false;
+                if (p.title?.includes('英語版')) return false;
+                // If we have a specific apparel ID, only match that exact product
+                if (targetId && p.link) return p.link.includes(`/apparels/${targetId}/`);
+                return true;
+              });
               if (psa10.length > 0) {
-                // Use lowest PSA10 listing
+                // Use lowest PSA10 listing for the EXACT variant
                 const lowest = Math.min(...psa10.map((p: any) => p.salePrice));
                 newSnkrJpy = lowest;
                 newPriceUsd = lowest * JPY_TO_USD;
