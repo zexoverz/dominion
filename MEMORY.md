@@ -122,12 +122,34 @@
 - Target repos: ethereum/tests #1498, ethereum/execution-specs, OpenZeppelin #6305/#6289, Foundry #5429
 - Mission detail page built with expandable step instructions
 
+## Portfolio Dashboard (built Mar 12, 2026)
+- Personal investment + collectibles tracker on Dominion frontend
+- Pages: /portfolio (dashboard), /portfolio/collectibles (card deck)
+- 32 cards tracked: 25 One Piece (all JP) + 7 Pokemon (5 JP PSA 10, 2 ID EGS)
+- Price sources: Yuyu-tei (primary), SNKR Dunk, eBay — NOT TCGPlayer
+- Yuyu-tei OP image pattern: `https://card.yuyu-tei.jp/opc/front/{set}/{id}.jpg`
+- Pokemon images still pending (different URL pattern)
+- Password protected via PORTFOLIO_PASSWORD env var
+- Reseed endpoint: POST /api/portfolio/reseed (clears + reinserts all 32 cards)
+
+## Railway Deploy
+- Services now auto-deploy from git push to `zexoverz/dominion`
+- API rootDirectory: `dominion/api`, Frontend: `dominion/frontend`
+- Railway API token (project-scoped): caf65a97-2ecc-4470-8c74-4f14f4a2d6c9
+- GraphQL API: `https://backboard.railway.com/graphql/v2`
+- Service IDs: API=fea5bbc3, Frontend=973035e7, Postgres=b422d873, OpenClaw=b0853454
+- Environment ID: ad89fb04-6c5f-42a6-9e81-020a7c218315
+
 ## Key Lessons
 - Cron jobs: do NOT set model field — "sonnet" alias doesn't resolve. Omit model entirely to use default.
 - Sub-agent model: "anthropic/claude-sonnet-4" does NOT resolve (FailoverError). Omit model param entirely for sub-agents to use default.
 - Use Sonnet for sub-agents (Opus rate limits too tight)
 - Don't spawn 6+ agents rapidly — space them out
 - Railway: put build deps in regular dependencies (devDeps skip in production)
+- Railway rootDirectory must match full repo path (e.g., `dominion/api` not `api`)
+- Railway project-scoped tokens can't do CLI `railway up`, but GraphQL mutations work
+- Railway `bind` valid values: auto, lan, loopback, custom, tailnet (NOT "all")
+- Yuyu-tei Pokemon images use `/poc/100_140/` not `/poc/front/` — need different scraping approach
 - PostgreSQL: no MySQL INDEX() syntax, no CONCURRENTLY in transactions
 - **ALWAYS test frontend API calls against actual deployed build before shipping** — missing /api/ prefix bug (Feb 14, 2026)
 - Railway `railway up` builds can take 5-10 min; verify buildId changes before declaring success

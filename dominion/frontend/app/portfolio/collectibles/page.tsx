@@ -26,6 +26,7 @@ type Card = {
   current_price_usd: string | null;
   current_price_idr: string | null;
   image_url: string | null;
+  language: string;
   date_added: string;
   notes: string | null;
 };
@@ -256,9 +257,23 @@ export default function CollectiblesPage() {
               onClick={() => setSelectedCard(card)}
               className="rpg-panel p-3 cursor-pointer hover:bg-rpg-borderDark/30 transition-colors group"
             >
-              {/* Card Image Placeholder */}
-              <div className="w-full h-32 bg-rpg-borderDark/40 border border-rpg-borderMid/30 mb-2 flex items-center justify-center">
-                <span className="text-3xl opacity-50">{franchiseIcon(card.franchise)}</span>
+              {/* Card Image */}
+              <div className="w-full h-32 bg-rpg-borderDark/40 border border-rpg-borderMid/30 mb-2 flex items-center justify-center overflow-hidden relative">
+                {card.image_url ? (
+                  <img
+                    src={card.image_url}
+                    alt={card.card_name}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="text-3xl opacity-50">{franchiseIcon(card.franchise)}</span>
+                )}
+                {card.language && (
+                  <span className="absolute top-1 right-1 bg-black/70 text-[7px] font-pixel px-1 py-0.5 text-throne-gold border border-rpg-borderMid/50">
+                    {card.language}
+                  </span>
+                )}
               </div>
 
               {/* Card Name */}
@@ -316,9 +331,22 @@ export default function CollectiblesPage() {
               <button onClick={() => setSelectedCard(null)} className="font-pixel text-[10px] text-rpg-border hover:text-throne-gold">✕</button>
             </div>
 
-            {/* Card Image Placeholder */}
-            <div className="w-full h-48 bg-rpg-borderDark/40 border border-rpg-borderMid/30 mb-4 flex items-center justify-center">
-              <span className="text-5xl opacity-50">{franchiseIcon(selectedCard.franchise)}</span>
+            {/* Card Image */}
+            <div className="w-full h-48 bg-rpg-borderDark/40 border border-rpg-borderMid/30 mb-4 flex items-center justify-center overflow-hidden relative">
+              {selectedCard.image_url ? (
+                <img
+                  src={selectedCard.image_url}
+                  alt={selectedCard.card_name}
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <span className="text-5xl opacity-50">{franchiseIcon(selectedCard.franchise)}</span>
+              )}
+              {selectedCard.language && (
+                <span className="absolute top-2 right-2 bg-black/80 text-[9px] font-pixel px-2 py-1 text-throne-gold border border-rpg-borderMid/50">
+                  {selectedCard.language}
+                </span>
+              )}
             </div>
 
             <div className="space-y-2">
