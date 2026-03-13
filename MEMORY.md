@@ -105,6 +105,14 @@
 - Over-kredit house plan: sell to Dzikri → deploy equity → BTC
 - v1→v2 shift: removed Pokemon/One Piece/Gold diversification
 
+## Portfolio System (built Mar 12-13, 2026)
+- 4 frontend pages: /portfolio (dashboard), /collectibles, /analytics, /masterplan
+- API endpoints: summary, holdings, cards, funds, dca-log, analytics, masterplan, update-prices
+- Price scraper: PSA10 → SNKR Dunk avg always; raw promo → Yuyu-tei only; raw singles → higher of SNKR avg vs Yuyu-tei
+- Promo/anniversary cards skip SNKR Dunk (generic codes match wrong variants)
+- Price history saved every scrape for charts
+- Remaining: Telegram sync, mobile polish, auth (~4h)
+
 ## OP TCG Collecting (Mar 7, 2026)
 - Faisal wants to collect One Piece TCG cards (SP/manga art) — fun + speculative hold
 - Thesis: OP manga ending soon → cards become legacy artifacts (like Pokemon Base Set)
