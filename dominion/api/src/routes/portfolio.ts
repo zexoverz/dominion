@@ -537,6 +537,44 @@ router.post('/smart-add', async (req: Request, res: Response) => {
       } catch (e) { /* SNKR Dunk search failed */ }
     }
 
+    // ═══ STEP 3b: Get image for OP singles (search SNKR Dunk for image only) ═══
+    if (!imageUrl && isOnePiece && !isSlab && card_code) {
+      try {
+        const keyword = encodeURIComponent(card_code);
+        const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
+        if (snkrRes.ok) {
+          const data = await snkrRes.json();
+          const ranked = data?.search?.rankingProducts || [];
+          // Find the matching card — prefer parallel/rarity match
+          const rarityKw: Record<string, string[]> = {
+            'Parallel': ['パラレル', 'P'], 'SP': ['SP', 'スペシャル'], 'SEC': ['SEC'], 'Alt Art': ['アルティメット', 'ALT'],
+          };
+          const kws = rarity ? (rarityKw[rarity] || []) : [];
+          let match = kws.length > 0
+            ? ranked.find((p: any) => p.title?.includes(card_code) && !p.title?.includes('英語版') && kws.some((k: string) => p.title?.includes(k)))
+            : null;
+          if (!match) match = ranked.find((p: any) => p.title?.includes(card_code) && !p.title?.includes('英語版'));
+          
+          if (match?.link) {
+            const apparelMatch = match.link.match(/\/apparels\/(\d+)/);
+            if (apparelMatch) {
+              const aid = apparelMatch[1];
+              try {
+                const pageRes = await fetch(`https://snkrdunk.com/apparels/${aid}`, {
+                  headers: { 'User-Agent': 'Mozilla/5.0' }
+                });
+                if (pageRes.ok) {
+                  const html = await pageRes.text();
+                  const imgMatch = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/);
+                  if (imgMatch) imageUrl = imgMatch[1];
+                }
+              } catch (e) { /* image fetch failed */ }
+            }
+          }
+        }
+      } catch (e) { /* SNKR Dunk image search failed */ }
+    }
+
     // ═══ STEP 4: Fallback — use Yuyu-tei if no price yet ═══
     if (!currentPriceUsd && yuyuTeiJpy) {
       currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
