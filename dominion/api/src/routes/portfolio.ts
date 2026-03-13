@@ -929,15 +929,23 @@ router.get('/masterplan', async (_req: Request, res: Response) => {
     const fs = require('fs');
     const path = require('path');
     
-    // Read masterplan markdown
-    const masterplanPath = path.resolve(__dirname, '../../../reports/investment-masterplan-v2.1.md');
+    // Read masterplan markdown — try multiple paths for different environments
+    const candidates = [
+      path.resolve(__dirname, '../../static/masterplan.md'),
+      path.resolve(__dirname, '../static/masterplan.md'),
+      path.resolve(__dirname, '../../../reports/investment-masterplan-v2.1.md'),
+      '/data/workspace/dominion/reports/investment-masterplan-v2.1.md',
+      '/data/workspace/dominion/api/static/masterplan.md',
+    ];
     let content = '';
-    try {
-      content = fs.readFileSync(masterplanPath, 'utf-8');
-    } catch {
-      // Try alternate path
-      const altPath = '/data/workspace/dominion/reports/investment-masterplan-v2.1.md';
-      content = fs.readFileSync(altPath, 'utf-8');
+    for (const p of candidates) {
+      try {
+        content = fs.readFileSync(p, 'utf-8');
+        break;
+      } catch { /* try next */ }
+    }
+    if (!content) {
+      return res.status(404).json({ error: 'Masterplan file not found' });
     }
     
     // Fetch live data for injection
