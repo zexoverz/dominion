@@ -929,24 +929,14 @@ router.get('/masterplan', async (_req: Request, res: Response) => {
     const fs = require('fs');
     const path = require('path');
     
-    // Read masterplan markdown — try multiple paths for different environments
-    const candidates = [
-      path.resolve(__dirname, '../../static/masterplan.md'),
-      path.resolve(__dirname, '../static/masterplan.md'),
-      path.resolve(__dirname, '../../../reports/investment-masterplan-v2.1.md'),
-      '/data/workspace/dominion/reports/investment-masterplan-v2.1.md',
-      '/data/workspace/dominion/api/static/masterplan.md',
-    ];
-    let content = '';
-    for (const p of candidates) {
-      try {
-        content = fs.readFileSync(p, 'utf-8');
-        break;
-      } catch { /* try next */ }
+    // Read masterplan from reports directory (same path as reports.ts uses)
+    const reportsDir = path.resolve(__dirname, '../../reports');
+    const masterplanPath = path.join(reportsDir, 'investment-masterplan-v2.1.md');
+    
+    if (!fs.existsSync(masterplanPath)) {
+      return res.status(404).json({ error: 'Masterplan file not found', tried: masterplanPath });
     }
-    if (!content) {
-      return res.status(404).json({ error: 'Masterplan file not found' });
-    }
+    const content = fs.readFileSync(masterplanPath, 'utf-8');
     
     // Fetch live data for injection
     const btcResult = await pool.query(
