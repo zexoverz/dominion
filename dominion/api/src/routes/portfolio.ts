@@ -612,11 +612,12 @@ router.post('/update-prices', async (req: Request, res: Response) => {
                 return true;
               });
               if (psa10.length > 0) {
-                // Use highest PSA10 listing for the EXACT variant (reflects true market value)
-                const highest = Math.max(...psa10.map((p: any) => p.salePrice));
-                newSnkrJpy = highest;
-                newPriceUsd = highest * JPY_TO_USD;
-                newPriceIdr = highest * 100;
+                // Use average PSA10 listing price — realistic sellable market value
+                const prices = psa10.map((p: any) => p.salePrice);
+                const avg = Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length);
+                newSnkrJpy = avg;
+                newPriceUsd = avg * JPY_TO_USD;
+                newPriceIdr = avg * 100;
                 source = 'snkrdunk';
               }
             } else {
