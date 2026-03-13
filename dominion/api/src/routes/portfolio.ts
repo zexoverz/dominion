@@ -394,6 +394,23 @@ router.post('/cards', async (req: Request, res: Response) => {
   }
 });
 
+// ═══ DELETE /api/portfolio/cards/:id ═══
+router.delete('/cards/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    // Also delete related price history
+    await pool.query('DELETE FROM portfolio_card_prices WHERE card_id = $1', [id]);
+    const result = await pool.query('DELETE FROM portfolio_cards WHERE id = $1 RETURNING id, card_name', [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    res.json({ deleted: true, card: result.rows[0] });
+  } catch (err: any) {
+    console.error('DELETE /api/portfolio/cards error:', err);
+    res.status(500).json({ error: 'Internal server error', detail: err?.message });
+  }
+});
+
 // ═══ PATCH /api/portfolio/cards/:id ═══
 router.patch('/cards/:id', async (req: Request, res: Response) => {
   try {
