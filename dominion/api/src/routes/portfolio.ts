@@ -637,7 +637,10 @@ router.post('/update-prices', async (req: Request, res: Response) => {
         // Pokemon PSA 10 slabs → ALWAYS SNKR Dunk
         // Pokemon raw singles → SNKR Dunk (no Yuyu-tei for Pokemon)
 
-        if (isSlab && (meta.snkr_url || card.card_code)) {
+        if (meta.skip_snkr_scraper) {
+          // ═══ SKIP: Non-JP slabs (Indonesian EGS etc) — price set manually ═══
+          // Keep existing price, don't overwrite with JP SNKR Dunk data
+        } else if (isSlab && (meta.snkr_url || card.card_code)) {
           // ═══ SLABS: SNKR Dunk PSA 10 average ═══
           const keyword = encodeURIComponent(`${card.card_code} PSA`);
           const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
