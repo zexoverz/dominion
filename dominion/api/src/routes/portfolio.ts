@@ -640,20 +640,22 @@ router.post('/update-prices', async (req: Request, res: Response) => {
         if (meta.skip_snkr_scraper) {
           // ═══ SKIP: Non-JP slabs (Indonesian EGS etc) — price set manually ═══
           // Keep existing price, don't overwrite with JP SNKR Dunk data
-        } else if (isSlab && (meta.snkr_url || card.card_code)) {
-          // ═══ SLABS: SNKR Dunk PSA 10 average ═══
+        } else if (isSlab && (meta.snkr_url || meta.snkr_apparel_id || card.card_code)) {
+          // ═══ SLABS: SNKR Dunk PSA 10 IQR-filtered average ═══
           const keyword = encodeURIComponent(`${card.card_code} PSA`);
           const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
           if (snkrRes.ok) {
             const data = await snkrRes.json();
             const products = data?.search?.products || [];
-            const apparelMatch = meta.snkr_url?.match(/apparels\/(\d+)/);
-            const targetId = apparelMatch?.[1];
+            // Use apparel ID from metadata (most reliable) or from URL
+            const targetId = meta.snkr_apparel_id || meta.snkr_url?.match(/apparels\/(\d+)/)?.[1];
             const psa10 = products.filter((p: any) => {
               if (p.condition !== 'PSA10' || !p.salePrice) return false;
-              if (!p.title?.includes(card.card_code)) return false;
               if (p.title?.includes('英語版')) return false;
+              // Match by apparel ID (exact product) — this is the key filter
               if (targetId && p.link) return p.link.includes(`/apparels/${targetId}/`);
+              // Fallback: match by card code in title
+              if (!p.title?.includes(card.card_code)) return false;
               return true;
             });
             if (psa10.length > 0) {
