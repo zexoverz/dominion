@@ -386,7 +386,7 @@ router.get('/cards/:id/prices', async (req: Request, res: Response) => {
 //   One Piece raw singles → Yuyu-tei
 router.post('/smart-add', async (req: Request, res: Response) => {
   try {
-    const { card_code, card_name, franchise, grade, rarity, cost_idr, cost_usd, set_name, yuyu_tei_url, language, notes } = req.body;
+    const { card_code, card_name, franchise, grade, rarity, cost_idr, cost_usd, set_name, yuyu_tei_url, yuyu_tei_jpy: inputYuyuJpy, language, notes } = req.body;
     if (!card_code || !card_name || !franchise || !cost_idr) {
       return res.status(400).json({ error: 'Required: card_code, card_name, franchise, cost_idr' });
     }
@@ -421,22 +421,34 @@ router.post('/smart-add', async (req: Request, res: Response) => {
       return Math.round((filtered.length > 0 ? filtered : prices).reduce((a, b) => a + b, 0) / (filtered.length || prices.length));
     }
 
-    // ═══ STEP 1: Scrape Yuyu-tei (for OP singles with URL) ═══
-    if (isOnePiece && !isSlab && yuyu_tei_url) {
-      try {
-        const yuyuRes = await fetch(yuyu_tei_url);
-        if (yuyuRes.ok) {
-          const html = await yuyuRes.text();
-          // Extract price from Yuyu-tei page: pattern "XX,XXX 円" or "XXXXX 円"
-          const priceMatch = html.match(/(\d{1,3}(?:,\d{3})*)\s*円/);
-          if (priceMatch) {
-            yuyuTeiJpy = parseInt(priceMatch[1].replace(/,/g, ''));
-            currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
-            currentPriceIdr = yuyuTeiJpy * 100;
-            priceSource = 'yuyu-tei';
+    // ═══ STEP 1: Yuyu-tei price (for OP singles) ═══
+    if (isOnePiece && !isSlab) {
+      // Option A: Manual JPY price provided
+      if (inputYuyuJpy) {
+        yuyuTeiJpy = inputYuyuJpy;
+        currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
+        currentPriceIdr = yuyuTeiJpy * 100;
+        priceSource = 'yuyu-tei';
+      }
+      // Option B: Scrape from Yuyu-tei URL
+      else if (yuyu_tei_url) {
+        try {
+          const yuyuRes = await fetch(yuyu_tei_url, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+          });
+          if (yuyuRes.ok) {
+            const html = await yuyuRes.text();
+            // Extract first price from card detail page
+            const priceMatch = html.match(/(\d{1,3}(?:,\d{3})*)\s*円/);
+            if (priceMatch) {
+              yuyuTeiJpy = parseInt(priceMatch[1].replace(/,/g, ''));
+              currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
+              currentPriceIdr = yuyuTeiJpy * 100;
+              priceSource = 'yuyu-tei';
+            }
           }
-        }
-      } catch (e) { /* Yuyu-tei scrape failed, will try SNKR Dunk */ }
+        } catch (e) { /* Yuyu-tei scrape failed */ }
+      }
     }
 
     // ═══ STEP 2: Search SNKR Dunk ═══
