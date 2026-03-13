@@ -688,8 +688,8 @@ router.post('/update-prices', async (req: Request, res: Response) => {
 
         // Yuyu-tei cross-check: if SNKR Dunk price is suspiciously low compared to Yuyu-tei, prefer Yuyu-tei
         // This catches cases where SNKR Dunk returns a generic version instead of the parallel/rare variant
-        if (meta.yuyu_tei_jpy && newSnkrJpy && newSnkrJpy < meta.yuyu_tei_jpy * 0.3) {
-          // SNKR Dunk price is less than 30% of Yuyu-tei — likely wrong variant matched
+        if (meta.yuyu_tei_jpy && newSnkrJpy && newSnkrJpy < meta.yuyu_tei_jpy * 0.8) {
+          // SNKR Dunk price is less than 80% of Yuyu-tei — likely wrong variant or underpriced listing
           newYuyuJpy = meta.yuyu_tei_jpy;
           newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
           newPriceIdr = meta.yuyu_tei_jpy * 100;
