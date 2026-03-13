@@ -657,7 +657,17 @@ router.post('/update-prices', async (req: Request, res: Response) => {
               return true;
             });
             if (psa10.length > 0) {
-              const prices = psa10.map((p: any) => p.salePrice);
+              let prices = psa10.map((p: any) => p.salePrice).sort((a: number, b: number) => a - b);
+              // Remove outliers using IQR method (prevents wrong variants from inflating average)
+              if (prices.length >= 4) {
+                const q1 = prices[Math.floor(prices.length / 4)];
+                const q3 = prices[Math.floor(3 * prices.length / 4)];
+                const iqr = q3 - q1;
+                const lower = q1 - 1.5 * iqr;
+                const upper = q3 + 1.5 * iqr;
+                const filtered = prices.filter((p: number) => p >= lower && p <= upper);
+                if (filtered.length > 0) prices = filtered;
+              }
               const avg = Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length);
               newSnkrJpy = avg;
               newPriceUsd = avg * JPY_TO_USD;
