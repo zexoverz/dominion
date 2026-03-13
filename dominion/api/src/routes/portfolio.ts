@@ -645,6 +645,13 @@ router.post('/update-prices', async (req: Request, res: Response) => {
               // For raw singles: use rankingProducts (product pages, not used items)
               const ranked = data?.search?.rankingProducts || [];
               
+              // Skip SNKR Dunk for promo/anniversary cards with generic codes (e.g. OP02-013)
+              // These codes match multiple variants at wildly different prices — Yuyu-tei is more reliable
+              const isPromo = card.set_name?.includes('Anniversary') || card.set_name?.includes('Promo') || card.rarity === 'Promo';
+              if (isPromo && meta.yuyu_tei_jpy) {
+                // Skip SNKR Dunk entirely, will fall through to Yuyu-tei below
+              } else {
+              
               // For parallel/SP/SEC variants, try to match the specific rarity in the title
               const isParallel = card.rarity && ['Parallel', 'SP', 'SEC', 'L'].includes(card.rarity);
               const rarityKeywords: Record<string, string[]> = {
@@ -687,6 +694,7 @@ router.post('/update-prices', async (req: Request, res: Response) => {
                 newPriceIdr = avg * 100;
                 source = 'snkrdunk';
               }
+              } // close isPromo else
             }
           }
         }
