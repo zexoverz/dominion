@@ -418,12 +418,7 @@ export default function CollectiblesPage() {
                           👟 SNKRDUNK {selectedCard.metadata.snkr_dunk_jpy ? `¥${selectedCard.metadata.snkr_dunk_jpy.toLocaleString()}` : ''}
                         </a>
                       )}
-                      {selectedCard.metadata?.ebay_url && (
-                        <a href={selectedCard.metadata.ebay_url} target="_blank" rel="noopener noreferrer"
-                          className="text-[9px] font-pixel text-blue-400 hover:text-blue-300 underline">
-                          🔍 eBay Sold
-                        </a>
-                      )}
+                      
                     </div>
                   </div>
                 </>

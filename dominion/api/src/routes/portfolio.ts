@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import pool from '../db';
 import { v4 as uuidv4 } from 'uuid';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const router = Router();
 
@@ -357,6 +359,25 @@ router.get('/cards/:id', async (req: Request, res: Response) => {
   }
 });
 
+// ═══ GET /api/portfolio/cards/:id/prices — Price history (last 90 days) ═══
+router.get('/cards/:id/prices', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const days = parseInt(req.query.days as string) || 90;
+    const result = await pool.query(
+      `SELECT id, price_usd, price_idr, source, recorded_at
+       FROM portfolio_card_prices
+       WHERE card_id = $1 AND recorded_at >= NOW() - INTERVAL '1 day' * $2
+       ORDER BY recorded_at ASC`,
+      [id, days]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error('GET /api/portfolio/cards/:id/prices error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // ═══ POST /api/portfolio/cards ═══
 router.post('/cards', async (req: Request, res: Response) => {
   try {
@@ -664,6 +685,13 @@ router.post('/update-prices', async (req: Request, res: Response) => {
             SET current_price_usd = $1, current_price_idr = $2, price_source = $3, metadata = $4, updated_at = NOW()
             WHERE id = $5
           `, [newPriceUsd, newPriceIdr, source, JSON.stringify(updatedMeta), card.id]);
+
+          // Insert price history record
+          await pool.query(`
+            INSERT INTO portfolio_card_prices (card_id, price_usd, price_idr, source)
+            VALUES ($1, $2, $3, $4)
+          `, [card.id, newPriceUsd, newPriceIdr || 0, source || 'unknown']);
+
           updated++;
           results.push({ card: card.card_name, code: card.card_code, price_usd: newPriceUsd.toFixed(2), source });
         }
@@ -673,6 +701,26 @@ router.post('/update-prices', async (req: Request, res: Response) => {
 
       // Rate limit: 200ms between SNKR Dunk requests
       await new Promise(r => setTimeout(r, 200));
+    }
+
+    // Write portfolio-prices.json snapshot for local cron comparison
+    try {
+      const snapshot: Record<string, any> = {};
+      const allCards = await pool.query('SELECT id, card_name, card_code, current_price_usd, current_price_idr, updated_at FROM portfolio_cards WHERE current_price_usd IS NOT NULL');
+      for (const c of allCards.rows) {
+        snapshot[c.id] = {
+          name: c.card_name,
+          code: c.card_code,
+          price_usd: parseFloat(c.current_price_usd),
+          price_idr: parseFloat(c.current_price_idr) || 0,
+          updated: c.updated_at,
+        };
+      }
+      const snapshotPath = path.resolve(__dirname, '../../../../memory/portfolio-prices.json');
+      fs.mkdirSync(path.dirname(snapshotPath), { recursive: true });
+      fs.writeFileSync(snapshotPath, JSON.stringify({ timestamp: new Date().toISOString(), prices: snapshot }, null, 2));
+    } catch (snapErr) {
+      console.error('Failed to write portfolio-prices.json snapshot:', snapErr);
     }
 
     res.json({ success: true, updated, total: cards.rows.length, results });
