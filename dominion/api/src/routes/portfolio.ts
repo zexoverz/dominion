@@ -644,13 +644,38 @@ router.post('/update-prices', async (req: Request, res: Response) => {
             } else {
               // For raw singles: use rankingProducts (product pages, not used items)
               const ranked = data?.search?.rankingProducts || [];
-              // Match exact card code, Japanese only, with salePrice, correct rarity
-              const match = ranked.find((p: any) =>
-                p.title?.includes(card.card_code) &&
-                p.salePrice &&
-                !p.title?.includes('英語版') &&
-                p.salePrice > 0
-              );
+              
+              // For parallel/SP/SEC variants, try to match the specific rarity in the title
+              const isParallel = card.rarity && ['Parallel', 'SP', 'SEC', 'L'].includes(card.rarity);
+              const rarityKeywords: Record<string, string[]> = {
+                'Parallel': ['パラレル', 'PARALLEL', 'Parallel'],
+                'SP': ['SP', 'スペシャル'],
+                'SEC': ['SEC', 'シークレット'],
+                'L': ['L', 'リーダー', 'パラレル'],
+                'R': ['R'],
+              };
+              const matchKeywords = card.rarity ? (rarityKeywords[card.rarity] || []) : [];
+              
+              // Try to find a match that includes the rarity keyword
+              let match = null;
+              if (isParallel && matchKeywords.length > 0) {
+                match = ranked.find((p: any) =>
+                  p.title?.includes(card.card_code) &&
+                  p.salePrice &&
+                  !p.title?.includes('英語版') &&
+                  p.salePrice > 0 &&
+                  matchKeywords.some((kw: string) => p.title?.includes(kw))
+                );
+              }
+              // Fallback: generic match by card code
+              if (!match) {
+                match = ranked.find((p: any) =>
+                  p.title?.includes(card.card_code) &&
+                  p.salePrice &&
+                  !p.title?.includes('英語版') &&
+                  p.salePrice > 0
+                );
+              }
               if (match) {
                 newSnkrJpy = match.salePrice;
                 newPriceUsd = match.salePrice * JPY_TO_USD;
@@ -661,14 +686,23 @@ router.post('/update-prices', async (req: Request, res: Response) => {
           }
         }
 
-        // Fallback: Yuyu-tei for raw singles with price_url
-        if (!newPriceUsd && !isSlab && meta.price_url) {
-          // Keep existing Yuyu-tei price (would need HTML scraping for live update)
-          if (meta.yuyu_tei_jpy) {
-            newYuyuJpy = meta.yuyu_tei_jpy;
-            newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
-            newPriceIdr = meta.yuyu_tei_jpy * 100;
-          }
+        // Yuyu-tei cross-check: if SNKR Dunk price is suspiciously low compared to Yuyu-tei, prefer Yuyu-tei
+        // This catches cases where SNKR Dunk returns a generic version instead of the parallel/rare variant
+        if (meta.yuyu_tei_jpy && newSnkrJpy && newSnkrJpy < meta.yuyu_tei_jpy * 0.3) {
+          // SNKR Dunk price is less than 30% of Yuyu-tei — likely wrong variant matched
+          newYuyuJpy = meta.yuyu_tei_jpy;
+          newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
+          newPriceIdr = meta.yuyu_tei_jpy * 100;
+          source = 'yuyu-tei';
+          newSnkrJpy = null; // don't save misleading SNKR data
+        }
+
+        // Fallback: Yuyu-tei for cards without SNKR Dunk price
+        if (!newPriceUsd && !isSlab && meta.yuyu_tei_jpy) {
+          newYuyuJpy = meta.yuyu_tei_jpy;
+          newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
+          newPriceIdr = meta.yuyu_tei_jpy * 100;
+          source = 'yuyu-tei';
         }
 
         if (newPriceUsd) {
