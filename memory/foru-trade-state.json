@@ -1,0 +1,27 @@
+{
+  "tokens_received": false,
+  "total_usd": 6930,
+  "entry_price": null,
+  "highest_price": null,
+  "received_date": null,
+  "sell_tranches_done": 0,
+  "held_portion_sold": false,
+  "cards_portion_sold": false,
+  "days_flat": 0,
+  "last_price": null,
+  "allocation": {
+    "btc_immediate": { "pct": 50, "usd": 3465, "tranches": 3 },
+    "hold_for_pump": { "pct": 20, "usd": 1386 },
+    "cards_japan": { "pct": 30, "usd": 2079 }
+  },
+  "exit_rules": {
+    "trailing_stop_pct": 20,
+    "take_profit_multiple": 2.0,
+    "time_decay_days": 14,
+    "time_decay_threshold_pct": 5,
+    "btc_override_25_warchest": 65000,
+    "btc_override_100_warchest": 60000,
+    "hard_deadline": "2026-05-01"
+  },
+  "notes": "Strategy set Mar 13, 2026. Tokens expected end of March. When received, Faisal updates tokens_received=true and sets entry_price."
+}
