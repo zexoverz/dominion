@@ -378,6 +378,205 @@ router.get('/cards/:id/prices', async (req: Request, res: Response) => {
   }
 });
 
+// ═══ POST /api/portfolio/smart-add — Auto-detect, scrape, and add card ═══
+// Input: { card_code, card_name, franchise, grade?, rarity?, cost_idr, set_name?, yuyu_tei_url?, language? }
+// Rules:
+//   Pokemon (any grade) → SNKR Dunk
+//   One Piece PSA 10 → SNKR Dunk
+//   One Piece raw singles → Yuyu-tei
+router.post('/smart-add', async (req: Request, res: Response) => {
+  try {
+    const { card_code, card_name, franchise, grade, rarity, cost_idr, cost_usd, set_name, yuyu_tei_url, language, notes } = req.body;
+    if (!card_code || !card_name || !franchise || !cost_idr) {
+      return res.status(400).json({ error: 'Required: card_code, card_name, franchise, cost_idr' });
+    }
+
+    const JPY_TO_USD = 0.0067;
+    const IDR_PER_USD = 16400;
+    const isOnePiece = franchise === 'one_piece';
+    const isPSA10 = grade === 'PSA 10';
+    const isSlab = isPSA10 || (grade && grade !== 'Raw');
+    const cardLanguage = language || 'JP';
+
+    let currentPriceUsd = 0;
+    let currentPriceIdr = 0;
+    let priceSource = '';
+    let imageUrl = '';
+    let snkrApparelId = '';
+    let snkrUrl = '';
+    let snkrDunkJpy = 0;
+    let yuyuTeiJpy = 0;
+    const costUsd = cost_usd || Math.round(cost_idr / IDR_PER_USD * 100) / 100;
+
+    // ═══ IQR helper ═══
+    function iqrAvg(prices: number[]): number {
+      prices.sort((a, b) => a - b);
+      if (prices.length < 4) return Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
+      const q1 = prices[Math.floor(prices.length / 4)];
+      const q3 = prices[Math.floor(3 * prices.length / 4)];
+      const iqr = q3 - q1;
+      const lower = q1 - 1.5 * iqr;
+      const upper = q3 + 1.5 * iqr;
+      const filtered = prices.filter(p => p >= lower && p <= upper);
+      return Math.round((filtered.length > 0 ? filtered : prices).reduce((a, b) => a + b, 0) / (filtered.length || prices.length));
+    }
+
+    // ═══ STEP 1: Scrape Yuyu-tei (for OP singles with URL) ═══
+    if (isOnePiece && !isSlab && yuyu_tei_url) {
+      try {
+        const yuyuRes = await fetch(yuyu_tei_url);
+        if (yuyuRes.ok) {
+          const html = await yuyuRes.text();
+          // Extract price from Yuyu-tei page: pattern "XX,XXX 円" or "XXXXX 円"
+          const priceMatch = html.match(/(\d{1,3}(?:,\d{3})*)\s*円/);
+          if (priceMatch) {
+            yuyuTeiJpy = parseInt(priceMatch[1].replace(/,/g, ''));
+            currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
+            currentPriceIdr = yuyuTeiJpy * 100;
+            priceSource = 'yuyu-tei';
+          }
+        }
+      } catch (e) { /* Yuyu-tei scrape failed, will try SNKR Dunk */ }
+    }
+
+    // ═══ STEP 2: Search SNKR Dunk ═══
+    const useSnkrDunk = !isOnePiece || isSlab; // Pokemon always, OP only for slabs
+    if (useSnkrDunk) {
+      try {
+        const keyword = encodeURIComponent(isPSA10 ? `${card_code} PSA` : card_code);
+        const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
+        if (snkrRes.ok) {
+          const data = await snkrRes.json();
+          const products = data?.search?.products || [];
+          const ranked = data?.search?.rankingProducts || [];
+
+          if (isPSA10) {
+            // Find the most common apparel ID among PSA10 listings (= correct product)
+            const apparelCounts: Record<string, number> = {};
+            const psa10All = products.filter((p: any) => {
+              if (p.condition !== 'PSA10' || !p.salePrice) return false;
+              if (p.title?.includes('英語版')) return false;
+              return true;
+            });
+            
+            for (const p of psa10All) {
+              const match = p.link?.match(/\/apparels\/(\d+)\//);
+              if (match) {
+                apparelCounts[match[1]] = (apparelCounts[match[1]] || 0) + 1;
+              }
+            }
+            
+            // Pick the apparel ID with the most PSA10 listings
+            const bestApparel = Object.entries(apparelCounts).sort((a, b) => b[1] - a[1])[0];
+            if (bestApparel) {
+              snkrApparelId = bestApparel[0];
+              snkrUrl = `https://snkrdunk.com/apparels/${snkrApparelId}`;
+              
+              // Filter PSA10 for this apparel and get IQR average
+              const psa10Prices = psa10All
+                .filter((p: any) => p.link?.includes(`/apparels/${snkrApparelId}/`))
+                .map((p: any) => p.salePrice);
+              
+              if (psa10Prices.length > 0) {
+                snkrDunkJpy = iqrAvg(psa10Prices);
+                currentPriceUsd = Math.round(snkrDunkJpy * JPY_TO_USD * 100) / 100;
+                currentPriceIdr = snkrDunkJpy * 100;
+                priceSource = 'snkrdunk';
+              }
+            }
+          } else {
+            // Raw singles (Pokemon) — use ranked products average
+            const matches = ranked.filter((p: any) =>
+              p.title?.includes(card_code) &&
+              p.salePrice && p.salePrice > 0 &&
+              !p.title?.includes('英語版')
+            );
+            if (matches.length > 0) {
+              const prices = matches.map((p: any) => p.salePrice);
+              snkrDunkJpy = iqrAvg(prices);
+              currentPriceUsd = Math.round(snkrDunkJpy * JPY_TO_USD * 100) / 100;
+              currentPriceIdr = snkrDunkJpy * 100;
+              priceSource = 'snkrdunk';
+            }
+            // Get apparel from first ranked match
+            if (ranked.length > 0 && ranked[0].link) {
+              const match = ranked[0].link.match(/\/apparels\/(\d+)/);
+              if (match) {
+                snkrApparelId = match[1];
+                snkrUrl = `https://snkrdunk.com/apparels/${snkrApparelId}`;
+              }
+            }
+          }
+
+          // ═══ STEP 3: Get image from SNKR Dunk product page ═══
+          if (snkrApparelId) {
+            try {
+              const pageRes = await fetch(`https://snkrdunk.com/apparels/${snkrApparelId}`, {
+                headers: { 'User-Agent': 'Mozilla/5.0' }
+              });
+              if (pageRes.ok) {
+                const html = await pageRes.text();
+                const imgMatch = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/);
+                if (imgMatch) imageUrl = imgMatch[1];
+              }
+            } catch (e) { /* image fetch failed */ }
+          }
+        }
+      } catch (e) { /* SNKR Dunk search failed */ }
+    }
+
+    // ═══ STEP 4: Fallback — use Yuyu-tei if no price yet ═══
+    if (!currentPriceUsd && yuyuTeiJpy) {
+      currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
+      currentPriceIdr = yuyuTeiJpy * 100;
+      priceSource = 'yuyu-tei';
+    }
+
+    // ═══ STEP 5: Build metadata ═══
+    const metadata: any = {};
+    if (snkrApparelId) metadata.snkr_apparel_id = snkrApparelId;
+    if (snkrUrl) metadata.snkr_url = snkrUrl;
+    if (snkrDunkJpy) metadata.snkr_dunk_jpy = snkrDunkJpy;
+    if (yuyuTeiJpy) metadata.yuyu_tei_jpy = yuyuTeiJpy;
+    if (yuyu_tei_url) metadata.price_url = yuyu_tei_url;
+    if (cardLanguage !== 'JP') {
+      metadata.language = cardLanguage;
+      if (isSlab) metadata.skip_snkr_scraper = true;
+    }
+
+    // ═══ STEP 6: Insert card ═══
+    const result = await pool.query(`
+      INSERT INTO portfolio_cards (franchise, card_name, card_code, set_name, rarity, grade, grading_company, language, cost_usd, cost_idr, current_price_usd, current_price_idr, image_url, price_source, date_added, notes, metadata)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+      RETURNING *
+    `, [
+      franchise, card_name, card_code, set_name || null, rarity || null,
+      grade || 'Raw', isPSA10 ? 'PSA' : null, cardLanguage,
+      costUsd, cost_idr, currentPriceUsd, currentPriceIdr,
+      imageUrl || null, priceSource || null, new Date().toISOString(),
+      notes || null, JSON.stringify(metadata)
+    ]);
+
+    const card = result.rows[0];
+    const roi = costUsd > 0 ? ((currentPriceUsd - costUsd) / costUsd * 100).toFixed(1) : '0';
+
+    res.json({
+      ...card,
+      _summary: {
+        cost: `Rp ${cost_idr.toLocaleString()} ($${costUsd})`,
+        market_price: `$${currentPriceUsd} (¥${snkrDunkJpy || yuyuTeiJpy || 0})`,
+        roi: `${roi}%`,
+        price_source: priceSource,
+        image_found: !!imageUrl,
+        apparel_id: snkrApparelId || null,
+      }
+    });
+  } catch (err: any) {
+    console.error('POST /api/portfolio/smart-add error:', err);
+    res.status(500).json({ error: 'Internal server error', detail: err?.message || String(err) });
+  }
+});
+
 // ═══ POST /api/portfolio/cards ═══
 router.post('/cards', async (req: Request, res: Response) => {
   try {
