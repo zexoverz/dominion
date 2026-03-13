@@ -381,12 +381,12 @@ router.get('/cards/:id/prices', async (req: Request, res: Response) => {
 // ═══ POST /api/portfolio/cards ═══
 router.post('/cards', async (req: Request, res: Response) => {
   try {
-    const { franchise, card_name, card_code, set_name, rarity, grade, grading_company, language, cost_usd, cost_idr, current_price_usd, current_price_idr, image_url, price_source, date_added, notes } = req.body;
+    const { franchise, card_name, card_code, set_name, rarity, grade, grading_company, language, cost_usd, cost_idr, current_price_usd, current_price_idr, image_url, price_source, date_added, notes, metadata } = req.body;
     const result = await pool.query(`
-      INSERT INTO portfolio_cards (franchise, card_name, card_code, set_name, rarity, grade, grading_company, language, cost_usd, cost_idr, current_price_usd, current_price_idr, image_url, price_source, date_added, notes)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+      INSERT INTO portfolio_cards (franchise, card_name, card_code, set_name, rarity, grade, grading_company, language, cost_usd, cost_idr, current_price_usd, current_price_idr, image_url, price_source, date_added, notes, metadata)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
       RETURNING *
-    `, [franchise, card_name, card_code, set_name, rarity, grade, grading_company, language || 'JP', cost_usd || 0, cost_idr || 0, current_price_usd, current_price_idr, image_url, price_source, date_added, notes]);
+    `, [franchise || 'onepiece', card_name, card_code, set_name, rarity, grade || 'Raw', grading_company || null, language || 'JP', cost_usd || 0, cost_idr || 0, current_price_usd || 0, current_price_idr || 0, image_url || null, price_source || null, date_added || new Date().toISOString(), notes || null, metadata || null]);
     res.json(result.rows[0]);
   } catch (err) {
     console.error('POST /api/portfolio/cards error:', err);
