@@ -125,6 +125,14 @@ export async function getPortfolioFunds(password?: string) {
   return fetchAPI<any[]>(`/api/portfolio/funds${password ? `?password=${password}` : ''}`);
 }
 
+export async function getPortfolioAnalytics(password?: string) {
+  return fetchAPI<any>(`/api/portfolio/analytics${password ? `?password=${password}` : ''}`);
+}
+
+export async function getPortfolioMasterplan(password?: string) {
+  return fetchAPI<any>(`/api/portfolio/masterplan${password ? `?password=${password}` : ''}`);
+}
+
 export async function createProposal(data: Record<string, any>) {
   const res = await fetch(`${API_BASE}/api/proposals`, {
     method: 'POST',

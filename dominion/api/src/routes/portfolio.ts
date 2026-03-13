@@ -730,4 +730,251 @@ router.post('/update-prices', async (req: Request, res: Response) => {
   }
 });
 
+// ═══ GET /api/portfolio/analytics ═══
+// Aggregated analytics: BTC, cards, funds, projections, DCA performance
+router.get('/analytics', async (_req: Request, res: Response) => {
+  try {
+    const [holdingsRes, cardsRes, fundsRes, dcaRes] = await Promise.all([
+      pool.query('SELECT * FROM portfolio_holdings'),
+      pool.query('SELECT * FROM portfolio_cards'),
+      pool.query('SELECT * FROM portfolio_fund_tracker'),
+      pool.query('SELECT * FROM portfolio_dca_log ORDER BY month ASC'),
+    ]);
+
+    const holdings = holdingsRes.rows;
+    const cards = cardsRes.rows;
+    const funds = fundsRes.rows;
+    const dcaLog = dcaRes.rows;
+
+    // ── BTC Holdings ──
+    const btcHolding = holdings.find((h: any) => h.symbol === 'BTC');
+    const btcQty = btcHolding ? parseFloat(btcHolding.quantity) : 0;
+    const btcCostBasis = btcHolding ? parseFloat(btcHolding.cost_basis_usd) : 0;
+    const btcAvgPrice = btcQty > 0 ? btcCostBasis / btcQty : 0;
+
+    // ── Card Portfolio ──
+    const getCardCost = (c: any) => {
+      const usd = parseFloat(c.cost_usd) || 0;
+      if (usd > 0) return usd;
+      return (parseFloat(c.cost_idr) || 0) / IDR_PER_USD;
+    };
+    const getCardCurrent = (c: any) => {
+      const usd = parseFloat(c.current_price_usd || '0');
+      if (usd > 0) return usd;
+      const idr = parseFloat(c.current_price_idr || '0');
+      if (idr > 0) return idr / IDR_PER_USD;
+      return getCardCost(c);
+    };
+
+    const cardsTotalCost = cards.reduce((s: number, c: any) => s + getCardCost(c), 0);
+    const cardsTotalCurrent = cards.reduce((s: number, c: any) => s + getCardCurrent(c), 0);
+    const cardsROI = cardsTotalCost > 0 ? ((cardsTotalCurrent - cardsTotalCost) / cardsTotalCost) * 100 : 0;
+
+    // ── Per-franchise breakdown ──
+    const franchises: Record<string, { cost: number; current: number; count: number }> = {};
+    for (const c of cards) {
+      const f = c.franchise;
+      if (!franchises[f]) franchises[f] = { cost: 0, current: 0, count: 0 };
+      franchises[f].cost += getCardCost(c);
+      franchises[f].current += getCardCurrent(c);
+      franchises[f].count++;
+    }
+    const franchiseBreakdown = Object.entries(franchises).map(([name, data]) => ({
+      franchise: name,
+      cost_usd: Math.round(data.cost * 100) / 100,
+      current_usd: Math.round(data.current * 100) / 100,
+      roi_pct: data.cost > 0 ? Math.round(((data.current - data.cost) / data.cost) * 10000) / 100 : 0,
+      count: data.count,
+    }));
+
+    // ── Top 5 by ROI % ──
+    const cardsWithROI = cards.map((c: any) => {
+      const cost = getCardCost(c);
+      const current = getCardCurrent(c);
+      const hasPriceData = parseFloat(c.current_price_usd || '0') > 0 || parseFloat(c.current_price_idr || '0') > 0;
+      return {
+        id: c.id,
+        card_name: c.card_name,
+        card_code: c.card_code,
+        franchise: c.franchise,
+        grade: c.grade,
+        cost_usd: cost,
+        current_usd: current,
+        roi_pct: cost > 0 && hasPriceData ? ((current - cost) / cost) * 100 : 0,
+        pnl_usd: current - cost,
+        has_price: hasPriceData,
+      };
+    });
+
+    const topByROI = [...cardsWithROI].filter(c => c.has_price).sort((a, b) => b.roi_pct - a.roi_pct).slice(0, 5);
+    const topByValue = [...cardsWithROI].filter(c => c.has_price).sort((a, b) => b.current_usd - a.current_usd).slice(0, 5);
+    const bottomByROI = [...cardsWithROI].filter(c => c.has_price).sort((a, b) => a.roi_pct - b.roi_pct).slice(0, 5);
+
+    // ── War Chest & Wedding ──
+    const warChest = funds.find((f: any) => f.fund_type === 'war_chest');
+    const wedding = funds.find((f: any) => f.fund_type === 'wedding');
+    const warChestIdr = warChest ? parseFloat(warChest.current_amount_idr) : 0;
+    const warChestUsd = warChestIdr / IDR_PER_USD;
+    const weddingCurrent = wedding ? parseFloat(wedding.current_amount_idr) : 0;
+    const weddingTarget = wedding ? parseFloat(wedding.target_amount_idr) : 350000000;
+    const weddingDate = wedding?.target_date || '2026-10-01';
+
+    // ── DCA Performance ──
+    const totalDcaUsd = dcaLog.reduce((s: number, d: any) => s + parseFloat(d.amount_usd), 0);
+    const totalBtcAcquired = dcaLog.reduce((s: number, d: any) => s + parseFloat(d.btc_acquired), 0);
+    const avgDcaPrice = totalBtcAcquired > 0 ? totalDcaUsd / totalBtcAcquired : 0;
+    const monthlyDcaAvg = dcaLog.length > 0 ? totalDcaUsd / dcaLog.length : 0;
+
+    // Monthly accumulation rate (last 3 months avg or overall)
+    const recentDca = dcaLog.slice(-3);
+    const recentMonthlyBtc = recentDca.length > 0
+      ? recentDca.reduce((s: number, d: any) => s + parseFloat(d.btc_acquired), 0) / recentDca.length
+      : 0;
+
+    // ── 2030 Projections ──
+    const monthsTo2030 = Math.max(0, (2030 - new Date().getFullYear()) * 12 + (0 - new Date().getMonth()));
+    const projectedBtcAt2030 = btcQty + (recentMonthlyBtc * monthsTo2030);
+    const priceTargets = [100000, 200000, 300000, 500000, 1000000];
+    const projections = priceTargets.map(price => ({
+      btc_price: price,
+      projected_btc: Math.round(projectedBtcAt2030 * 100000000) / 100000000,
+      net_worth_usd: Math.round(projectedBtcAt2030 * price),
+      net_worth_idr: Math.round(projectedBtcAt2030 * price * IDR_PER_USD),
+    }));
+
+    // ── Income Allocation (from masterplan) ──
+    // Monthly income ~$10,050 = Rp 165M
+    const monthlyIncomeUsd = 10050;
+    const incomeAllocation = {
+      monthly_income_usd: monthlyIncomeUsd,
+      monthly_income_idr: monthlyIncomeUsd * IDR_PER_USD,
+      breakdown: [
+        { category: 'BTC DCA', amount_usd: monthlyDcaAvg || 500, pct: 0 },
+        { category: 'Wedding Fund', amount_usd: 600, pct: 0 },
+        { category: 'War Chest', amount_usd: 300, pct: 0 },
+        { category: 'Cards', amount_usd: 200, pct: 0 },
+        { category: 'Living & Expenses', amount_usd: 0, pct: 0 },
+      ],
+    };
+    // Calculate living expenses as remainder
+    const allocatedUsd = incomeAllocation.breakdown.slice(0, 4).reduce((s, b) => s + b.amount_usd, 0);
+    incomeAllocation.breakdown[4].amount_usd = monthlyIncomeUsd - allocatedUsd;
+    // Calculate percentages
+    for (const b of incomeAllocation.breakdown) {
+      b.pct = Math.round((b.amount_usd / monthlyIncomeUsd) * 10000) / 100;
+    }
+    const savingsRate = Math.round(((monthlyIncomeUsd - incomeAllocation.breakdown[4].amount_usd) / monthlyIncomeUsd) * 10000) / 100;
+
+    res.json({
+      btc: {
+        quantity: btcQty,
+        cost_basis_usd: btcCostBasis,
+        avg_price: Math.round(btcAvgPrice),
+        monthly_accumulation_rate: Math.round(recentMonthlyBtc * 100000000) / 100000000,
+      },
+      cards: {
+        total_cost_usd: Math.round(cardsTotalCost * 100) / 100,
+        total_current_usd: Math.round(cardsTotalCurrent * 100) / 100,
+        roi_pct: Math.round(cardsROI * 100) / 100,
+        count: cards.length,
+        franchise_breakdown: franchiseBreakdown,
+        top_by_roi: topByROI,
+        top_by_value: topByValue,
+        bottom_by_roi: bottomByROI,
+      },
+      war_chest: {
+        amount_idr: warChestIdr,
+        amount_usd: Math.round(warChestUsd * 100) / 100,
+        deployment_triggers: [
+          { drawdown_pct: 30, deploy_pct: 25, deploy_usd: Math.round(warChestUsd * 0.25 * 100) / 100 },
+          { drawdown_pct: 40, deploy_pct: 50, deploy_usd: Math.round(warChestUsd * 0.50 * 100) / 100 },
+          { drawdown_pct: 50, deploy_pct: 100, deploy_usd: Math.round(warChestUsd * 100) / 100 },
+        ],
+      },
+      wedding: {
+        current_idr: weddingCurrent,
+        target_idr: weddingTarget,
+        progress_pct: Math.round((weddingCurrent / weddingTarget) * 10000) / 100,
+        target_date: weddingDate,
+      },
+      dca: {
+        total_invested_usd: Math.round(totalDcaUsd * 100) / 100,
+        total_btc_acquired: Math.round(totalBtcAcquired * 100000000) / 100000000,
+        avg_buy_price: Math.round(avgDcaPrice),
+        monthly_avg_usd: Math.round(monthlyDcaAvg * 100) / 100,
+        entries: dcaLog.length,
+      },
+      projections_2030: {
+        current_btc: btcQty,
+        monthly_accumulation: Math.round(recentMonthlyBtc * 100000000) / 100000000,
+        months_to_2030: monthsTo2030,
+        projected_btc: Math.round(projectedBtcAt2030 * 100000000) / 100000000,
+        scenarios: projections,
+      },
+      income_allocation: {
+        ...incomeAllocation,
+        savings_rate_pct: savingsRate,
+      },
+    });
+  } catch (err) {
+    console.error('GET /api/portfolio/analytics error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ═══ GET /api/portfolio/masterplan ═══
+// Serves the investment masterplan with live data injected
+router.get('/masterplan', async (_req: Request, res: Response) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    
+    // Read masterplan markdown
+    const masterplanPath = path.resolve(__dirname, '../../../reports/investment-masterplan-v2.1.md');
+    let content = '';
+    try {
+      content = fs.readFileSync(masterplanPath, 'utf-8');
+    } catch {
+      // Try alternate path
+      const altPath = '/data/workspace/dominion/reports/investment-masterplan-v2.1.md';
+      content = fs.readFileSync(altPath, 'utf-8');
+    }
+    
+    // Fetch live data for injection
+    const btcResult = await pool.query(
+      "SELECT quantity, cost_basis_usd FROM portfolio_holdings WHERE symbol = 'BTC' LIMIT 1"
+    );
+    const fundsResult = await pool.query('SELECT * FROM portfolio_fund_tracker');
+    
+    const btcHoldings = btcResult.rows[0]?.quantity || 0;
+    const btcCost = btcResult.rows[0]?.cost_basis_usd || 0;
+    
+    const wedding = fundsResult.rows.find((f: any) => f.fund_type === 'wedding');
+    const warChest = fundsResult.rows.find((f: any) => f.fund_type === 'war_chest');
+    
+    // Cards summary
+    const cardsResult = await pool.query(
+      "SELECT COUNT(*) as count, COALESCE(SUM(cost_usd), 0) + COALESCE(SUM(cost_idr::numeric / 16400), 0) as total_cost, COALESCE(SUM(current_price_usd), 0) as total_current FROM portfolio_cards"
+    );
+    
+    res.json({
+      content,
+      live_data: {
+        btc_holdings: parseFloat(btcHoldings),
+        btc_cost_basis: parseFloat(btcCost),
+        wedding_fund_idr: wedding ? parseFloat(wedding.current_amount_idr) : 0,
+        wedding_target_idr: wedding ? parseFloat(wedding.target_amount_idr) : 0,
+        war_chest_idr: warChest ? parseFloat(warChest.current_amount_idr) : 0,
+        cards_count: parseInt(cardsResult.rows[0]?.count || '0'),
+        cards_cost_usd: parseFloat(cardsResult.rows[0]?.total_cost || '0'),
+        cards_current_usd: parseFloat(cardsResult.rows[0]?.total_current || '0'),
+        last_updated: new Date().toISOString()
+      }
+    });
+  } catch (err) {
+    console.error('GET /api/portfolio/masterplan error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
