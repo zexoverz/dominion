@@ -388,9 +388,9 @@ router.post('/cards', async (req: Request, res: Response) => {
       RETURNING *
     `, [franchise || 'onepiece', card_name, card_code, set_name, rarity, grade || 'Raw', grading_company || null, language || 'JP', cost_usd || 0, cost_idr || 0, current_price_usd || 0, current_price_idr || 0, image_url || null, price_source || null, date_added || new Date().toISOString(), notes || null, metadata || null]);
     res.json(result.rows[0]);
-  } catch (err) {
+  } catch (err: any) {
     console.error('POST /api/portfolio/cards error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', detail: err?.message || String(err) });
   }
 });
 
