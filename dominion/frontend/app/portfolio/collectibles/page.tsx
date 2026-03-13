@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import PixelBorder from "../../../components/PixelBorder";
 import PixelProgress from "../../../components/PixelProgress";
-import { getPortfolioCards } from "../../../lib/api";
+import { getPortfolioCards, getPortfolioCardPrices } from "../../../lib/api";
 
 const IDR_PER_USD = 16400;
 const OP_BUDGET_CAP_IDR = 200_000_000;
@@ -338,94 +338,10 @@ export default function CollectiblesPage() {
 
       {/* Detail Modal */}
       {selectedCard && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={() => setSelectedCard(null)}>
-          <div className="rpg-panel p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h2 className="font-pixel text-[12px] text-throne-gold mb-1">{selectedCard.card_name}</h2>
-                <p className="text-[10px] font-body text-rpg-borderMid">{selectedCard.card_code} • {selectedCard.set_name}</p>
-              </div>
-              <button onClick={() => setSelectedCard(null)} className="font-pixel text-[10px] text-rpg-border hover:text-throne-gold">✕</button>
-            </div>
-
-            {/* Card Image */}
-            <div className="w-full h-48 bg-rpg-borderDark/40 border border-rpg-borderMid/30 mb-4 flex items-center justify-center overflow-hidden relative">
-              {selectedCard.image_url ? (
-                <img
-                  src={selectedCard.image_url}
-                  alt={selectedCard.card_name}
-                  className="w-full h-full object-contain"
-                />
-              ) : (
-                <span className="text-5xl opacity-50">{franchiseIcon(selectedCard.franchise)}</span>
-              )}
-              {selectedCard.language && (
-                <span className="absolute top-2 right-2 bg-black/80 text-[9px] font-pixel px-2 py-1 text-throne-gold border border-rpg-borderMid/50">
-                  {selectedCard.language}
-                </span>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <DetailRow label="Franchise" value={selectedCard.franchise === "one_piece" ? "One Piece" : "Pokemon"} />
-              <DetailRow label="Set" value={selectedCard.set_name || "—"} />
-              <DetailRow label="Rarity" value={selectedCard.rarity || "—"} />
-              <DetailRow label="Grade" value={`${selectedCard.grade}${selectedCard.grading_company ? ` (${selectedCard.grading_company})` : ""}`} />
-              <DetailRow label="Language" value={selectedCard.language} />
-              <DetailRow label="Date Added" value={selectedCard.date_added ? new Date(selectedCard.date_added).toLocaleDateString() : "—"} />
-
-              <div className="border-t border-rpg-borderDark my-3" />
-
-              <DetailRow label="Cost (USD)" value={formatUsd(getCardCostUsd(selectedCard))} />
-              <DetailRow label="Cost (IDR)" value={formatIdr(getCardCostUsd(selectedCard) * IDR_PER_USD)} />
-              
-              {(parseFloat(selectedCard.current_price_usd || "0") > 0 || parseFloat(selectedCard.current_price_idr || "0") > 0) && (
-                <>
-                  <DetailRow label="Current (USD)" value={formatUsd(getCardCurrentUsd(selectedCard))} color="text-throne-goldLight" />
-                  <DetailRow label="Current (IDR)" value={formatIdr(getCardCurrentUsd(selectedCard) * IDR_PER_USD)} color="text-throne-goldLight" />
-                  
-                  <div className="border-t border-rpg-borderDark my-3" />
-                  
-                  {(() => {
-                    const roi = getROI(selectedCard);
-                    const pnl = getCardCurrentUsd(selectedCard) - getCardCostUsd(selectedCard);
-                    return (
-                      <>
-                        <DetailRow label="P&L" value={`${pnl >= 0 ? "+" : ""}${formatUsd(pnl)}`} color={pnl >= 0 ? "text-throne-green" : "text-throne-red"} />
-                        <DetailRow label="ROI" value={`${roi >= 0 ? "+" : ""}${roi.toFixed(1)}%`} color={roi >= 0 ? "text-throne-green" : "text-throne-red"} />
-                      </>
-                    );
-                  })()}
-                </>
-              )}
-
-              {/* Price Source Links */}
-              {(selectedCard.metadata?.price_url || selectedCard.metadata?.ebay_url || selectedCard.metadata?.snkr_url) && (
-                <>
-                  <div className="border-t border-rpg-borderDark my-3" />
-                  <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-pixel text-rpg-borderMid">Price Source</span>
-                    <div className="flex gap-2">
-                      {selectedCard.metadata?.price_url && (
-                        <a href={selectedCard.metadata.price_url} target="_blank" rel="noopener noreferrer"
-                          className="text-[9px] font-pixel text-throne-gold hover:text-throne-goldLight underline">
-                          🏪 Yuyu-tei {selectedCard.metadata.yuyu_tei_jpy ? `¥${selectedCard.metadata.yuyu_tei_jpy.toLocaleString()}` : ''}
-                        </a>
-                      )}
-                      {selectedCard.metadata?.snkr_url && (
-                        <a href={selectedCard.metadata.snkr_url} target="_blank" rel="noopener noreferrer"
-                          className="text-[9px] font-pixel text-green-400 hover:text-green-300 underline">
-                          👟 SNKRDUNK {selectedCard.metadata.snkr_dunk_jpy ? `¥${selectedCard.metadata.snkr_dunk_jpy.toLocaleString()}` : ''}
-                        </a>
-                      )}
-                      
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
+        <CardDetailModal
+          card={selectedCard}
+          onClose={() => setSelectedCard(null)}
+        />
       )}
 
       {/* Footer */}
@@ -433,6 +349,240 @@ export default function CollectiblesPage() {
         <p className="text-[8px] font-body text-rpg-borderMid">
           Price sources: Yuyu-tei • SNKR Dunk • eBay (NO TCGPlayer) • $1 = Rp {IDR_PER_USD.toLocaleString()}
         </p>
+      </div>
+    </div>
+  );
+}
+
+// ═══ Price History SVG Chart ═══
+function PriceHistoryChart({ prices }: { prices: { price_usd: string; recorded_at: string }[] }) {
+  if (prices.length < 2) {
+    return (
+      <div className="w-full h-24 bg-rpg-borderDark/30 border border-rpg-borderMid/20 flex items-center justify-center">
+        <span className="text-[8px] font-pixel text-rpg-borderMid">
+          {prices.length === 0 ? "NO PRICE DATA YET" : "NEED 2+ DATA POINTS"}
+        </span>
+      </div>
+    );
+  }
+
+  const values = prices.map((p) => parseFloat(p.price_usd));
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+
+  const W = 400;
+  const H = 100;
+  const PAD = 10;
+  const chartW = W - PAD * 2;
+  const chartH = H - PAD * 2;
+
+  const points = values.map((v, i) => {
+    const x = PAD + (i / (values.length - 1)) * chartW;
+    const y = PAD + chartH - ((v - min) / range) * chartH;
+    return `${x},${y}`;
+  });
+
+  const polyline = points.join(" ");
+  const areaPoints = `${PAD},${PAD + chartH} ${polyline} ${PAD + chartW},${PAD + chartH}`;
+  const isUp = values[values.length - 1] >= values[0];
+  const strokeColor = isUp ? "#22c55e" : "#ef4444";
+  const fillColor = isUp ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)";
+
+  const firstDate = new Date(prices[0].recorded_at).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const lastDate = new Date(prices[prices.length - 1].recorded_at).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
+  return (
+    <div className="w-full">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-24" preserveAspectRatio="none">
+        {/* Grid lines */}
+        <line x1={PAD} y1={PAD} x2={PAD + chartW} y2={PAD} stroke="#333" strokeWidth="0.5" strokeDasharray="4" />
+        <line x1={PAD} y1={PAD + chartH / 2} x2={PAD + chartW} y2={PAD + chartH / 2} stroke="#333" strokeWidth="0.5" strokeDasharray="4" />
+        <line x1={PAD} y1={PAD + chartH} x2={PAD + chartW} y2={PAD + chartH} stroke="#333" strokeWidth="0.5" strokeDasharray="4" />
+        {/* Fill area */}
+        <polygon points={areaPoints} fill={fillColor} />
+        {/* Line */}
+        <polyline points={polyline} fill="none" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* End dot */}
+        {(() => {
+          const lastPt = points[points.length - 1].split(",");
+          return <circle cx={lastPt[0]} cy={lastPt[1]} r="3" fill={strokeColor} />;
+        })()}
+      </svg>
+      <div className="flex justify-between px-1 mt-1">
+        <span className="text-[7px] font-body text-rpg-borderMid">{firstDate}</span>
+        <span className="text-[7px] font-body text-rpg-borderMid">
+          ${min.toFixed(2)} — ${max.toFixed(2)}
+        </span>
+        <span className="text-[7px] font-body text-rpg-borderMid">{lastDate}</span>
+      </div>
+    </div>
+  );
+}
+
+// ═══ Card Detail Modal ═══
+function CardDetailModal({ card, onClose }: { card: Card; onClose: () => void }) {
+  const [priceHistory, setPriceHistory] = useState<any[]>([]);
+  const [loadingPrices, setLoadingPrices] = useState(true);
+
+  useEffect(() => {
+    setLoadingPrices(true);
+    getPortfolioCardPrices(card.id, 90)
+      .then(setPriceHistory)
+      .catch(() => setPriceHistory([]))
+      .finally(() => setLoadingPrices(false));
+  }, [card.id]);
+
+  const cost = getCardCostUsd(card);
+  const current = getCardCurrentUsd(card);
+  const roi = getROI(card);
+  const pnl = current - cost;
+  const hasPrice = parseFloat(card.current_price_usd || "0") > 0 || parseFloat(card.current_price_idr || "0") > 0;
+  const snkrDunkSearchUrl = `https://snkrdunk.com/v3/search?keyword=${encodeURIComponent(card.card_code)}`;
+  const snkrDunkUrl = card.metadata?.snkr_url || snkrDunkSearchUrl;
+  const lastUpdate = (card.metadata as any)?.last_price_update;
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={onClose}>
+      <div
+        className="rpg-panel p-0 max-w-lg w-full max-h-[85vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          border: "3px solid #d4a017",
+          boxShadow: "0 0 20px rgba(212,160,23,0.3), inset 0 0 20px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-start p-4 pb-2 border-b border-rpg-borderDark">
+          <div className="flex-1 min-w-0">
+            <h2 className="font-pixel text-[12px] text-throne-gold text-glow-gold mb-1 truncate">{card.card_name}</h2>
+            <p className="text-[9px] font-body text-rpg-borderMid">
+              {card.card_code} • {card.set_name} • {card.rarity}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="font-pixel text-[12px] text-rpg-border hover:text-throne-gold ml-2 leading-none"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="p-4 space-y-4">
+          {/* Card Image */}
+          <div className="w-full h-56 bg-rpg-borderDark/40 border border-rpg-borderMid/30 flex items-center justify-center overflow-hidden relative">
+            {card.image_url ? (
+              <img
+                src={card.image_url}
+                alt={card.card_name}
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <span className="text-5xl opacity-50">{franchiseIcon(card.franchise)}</span>
+            )}
+            {card.language && (
+              <span className="absolute top-2 right-2 bg-black/80 text-[9px] font-pixel px-2 py-1 text-throne-gold border border-rpg-borderMid/50">
+                {card.language}
+              </span>
+            )}
+            <span className={`absolute top-2 left-2 px-2 py-0.5 text-[8px] font-pixel border ${gradeBadgeColor(card.grade)}`}>
+              {card.grade}{card.grading_company ? ` (${card.grading_company})` : ""}
+            </span>
+          </div>
+
+          {/* Card Info Grid */}
+          <div className="grid grid-cols-2 gap-2">
+            <DetailRow label="Franchise" value={card.franchise === "one_piece" ? "🏴‍☠️ One Piece" : "⚡ Pokemon"} />
+            <DetailRow label="Set" value={card.set_name || "—"} />
+            <DetailRow label="Rarity" value={card.rarity || "—"} />
+            <DetailRow label="Grade" value={`${card.grade}${card.grading_company ? ` (${card.grading_company})` : ""}`} />
+          </div>
+
+          {/* Price Comparison */}
+          <div className="border border-rpg-borderMid/30 bg-rpg-borderDark/20 p-3">
+            <p className="text-[8px] font-pixel text-rpg-borderMid mb-2">💰 PRICE ANALYSIS</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-[7px] font-pixel text-rpg-borderMid">PURCHASE PRICE</p>
+                <p className="font-pixel text-[11px] text-rpg-border">{formatUsd(cost)}</p>
+                <p className="text-[8px] font-body text-rpg-borderMid">{formatIdr(cost * IDR_PER_USD)}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[7px] font-pixel text-rpg-borderMid">CURRENT PRICE</p>
+                <p className="font-pixel text-[11px] text-throne-goldLight">
+                  {hasPrice ? formatUsd(current) : "—"}
+                </p>
+                {hasPrice && (
+                  <p className="text-[8px] font-body text-rpg-borderMid">{formatIdr(current * IDR_PER_USD)}</p>
+                )}
+              </div>
+            </div>
+            {hasPrice && (
+              <div className="mt-2 pt-2 border-t border-rpg-borderDark flex justify-between items-center">
+                <div>
+                  <span className="text-[7px] font-pixel text-rpg-borderMid">P&L: </span>
+                  <span className={`font-pixel text-[10px] ${pnl >= 0 ? "text-throne-green" : "text-throne-red"}`}>
+                    {pnl >= 0 ? "+" : ""}{formatUsd(pnl)}
+                  </span>
+                </div>
+                <span className={`font-pixel text-[12px] ${roi >= 0 ? "text-throne-green" : "text-throne-red"}`}>
+                  {roi >= 0 ? "▲" : "▼"} {roi >= 0 ? "+" : ""}{roi.toFixed(1)}%
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Price History Chart */}
+          <div className="border border-rpg-borderMid/30 bg-rpg-borderDark/20 p-3">
+            <p className="text-[8px] font-pixel text-rpg-borderMid mb-2">📈 PRICE HISTORY (90 DAYS)</p>
+            {loadingPrices ? (
+              <div className="w-full h-24 flex items-center justify-center">
+                <span className="text-[8px] font-pixel text-rpg-borderMid animate-blink">LOADING...</span>
+              </div>
+            ) : (
+              <PriceHistoryChart prices={priceHistory} />
+            )}
+          </div>
+
+          {/* Links */}
+          <div className="border border-rpg-borderMid/30 bg-rpg-borderDark/20 p-3">
+            <p className="text-[8px] font-pixel text-rpg-borderMid mb-2">🔗 MARKET LINKS</p>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={snkrDunkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rpg-panel px-3 py-1.5 text-[8px] font-pixel text-green-400 hover:text-green-300 hover:bg-rpg-borderDark/50 transition-colors"
+              >
+                👟 SNKR DUNK
+                {card.metadata?.snkr_dunk_jpy ? ` ¥${card.metadata.snkr_dunk_jpy.toLocaleString()}` : ""}
+              </a>
+              {card.metadata?.price_url && (
+                <a
+                  href={card.metadata.price_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rpg-panel px-3 py-1.5 text-[8px] font-pixel text-throne-gold hover:text-throne-goldLight hover:bg-rpg-borderDark/50 transition-colors"
+                >
+                  🏪 YUYU-TEI
+                  {card.metadata.yuyu_tei_jpy ? ` ¥${card.metadata.yuyu_tei_jpy.toLocaleString()}` : ""}
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Last Update Timestamp */}
+          {lastUpdate && (
+            <div className="text-center">
+              <p className="text-[7px] font-body text-rpg-borderMid">
+                Last price update: {new Date(lastUpdate).toLocaleString("en-US", {
+                  month: "short", day: "numeric", year: "numeric",
+                  hour: "2-digit", minute: "2-digit",
+                })}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

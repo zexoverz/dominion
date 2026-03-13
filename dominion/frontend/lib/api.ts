@@ -109,6 +109,14 @@ export async function getPortfolioCard(id: string, password?: string) {
   return fetchAPI<any>(`/api/portfolio/cards/${id}${password ? `?password=${password}` : ''}`);
 }
 
+export async function getPortfolioCardPrices(id: string, days?: number, password?: string) {
+  const params = new URLSearchParams();
+  if (days) params.set('days', String(days));
+  if (password) params.set('password', password);
+  const qs = params.toString();
+  return fetchAPI<any[]>(`/api/portfolio/cards/${id}/prices${qs ? `?${qs}` : ''}`);
+}
+
 export async function getPortfolioDcaLog(password?: string) {
   return fetchAPI<any[]>(`/api/portfolio/dca-log${password ? `?password=${password}` : ''}`);
 }
