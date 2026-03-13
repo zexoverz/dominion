@@ -399,7 +399,7 @@ router.patch('/cards/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const fields = req.body;
-    const allowed = ['card_name', 'card_code', 'set_name', 'rarity', 'grade', 'grading_company', 'cost_usd', 'cost_idr', 'current_price_usd', 'current_price_idr', 'image_url', 'price_source', 'notes'];
+    const allowed = ['card_name', 'card_code', 'set_name', 'rarity', 'grade', 'grading_company', 'cost_usd', 'cost_idr', 'current_price_usd', 'current_price_idr', 'image_url', 'price_source', 'notes', 'metadata'];
     const updates: string[] = [];
     const values: any[] = [];
     
@@ -686,19 +686,24 @@ router.post('/update-prices', async (req: Request, res: Response) => {
           }
         }
 
-        // Yuyu-tei cross-check: if SNKR Dunk price is suspiciously low compared to Yuyu-tei, prefer Yuyu-tei
-        // This catches cases where SNKR Dunk returns a generic version instead of the parallel/rare variant
-        if (meta.yuyu_tei_jpy && newSnkrJpy && newSnkrJpy < meta.yuyu_tei_jpy * 0.8) {
-          // SNKR Dunk price is less than 80% of Yuyu-tei — likely wrong variant or underpriced listing
-          newYuyuJpy = meta.yuyu_tei_jpy;
-          newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
-          newPriceIdr = meta.yuyu_tei_jpy * 100;
-          source = 'yuyu-tei';
-          newSnkrJpy = null; // don't save misleading SNKR data
+        // Smart price selection: use whichever is HIGHER between SNKR Dunk and Yuyu-tei
+        // Higher price = better for portfolio valuation and realistic selling opportunity
+        if (meta.yuyu_tei_jpy) {
+          const yuyuUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
+          const yuyuIdr = meta.yuyu_tei_jpy * 100;
+          
+          if (!newPriceUsd || (yuyuUsd > newPriceUsd)) {
+            // Yuyu-tei price is higher (or SNKR Dunk had no result) — use Yuyu-tei
+            newYuyuJpy = meta.yuyu_tei_jpy;
+            newPriceUsd = yuyuUsd;
+            newPriceIdr = yuyuIdr;
+            source = 'yuyu-tei';
+          }
+          // else: SNKR Dunk is higher, keep it (already set above)
         }
 
-        // Fallback: Yuyu-tei for cards without SNKR Dunk price
-        if (!newPriceUsd && !isSlab && meta.yuyu_tei_jpy) {
+        // Fallback: Yuyu-tei for cards without any SNKR Dunk result
+        if (!newPriceUsd && meta.yuyu_tei_jpy) {
           newYuyuJpy = meta.yuyu_tei_jpy;
           newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
           newPriceIdr = meta.yuyu_tei_jpy * 100;
