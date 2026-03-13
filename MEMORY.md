@@ -93,7 +93,12 @@
 - Feb 2026 DCA executed (salary came Feb 1)
 - Mar 2026 DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K (ForuAI + OKU salary)
 - ForuAI tokens: sell 100% immediately → BTC, no hodling
-- ForuAI TGE: March 12, 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026) unlocking at once
+- ForuAI TGE: March 12, 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026)
+- FORU salary tokens NOT released yet (team finalizing, expected end of March)
+- FORU distribution plan: 50% → BTC immediately, 20% hold for exchange listing pump, 30% → Japan trip card shopping ($2,079)
+- FORU exit triggers: TP at 2x, SL at -30%, HARD DEADLINE May 1 2026 sell all remaining
+- FORU tokenomics: 172% Y1 inflation, seed unlock Sep 2026, team unlock Mar 2027 — DO NOT BUY MORE
+- Japan trip: April-May 2026, card shopping budget from FORU entertainment allocation
 - Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
 - 2030 target: 5-12 BTC, Rp 26B-192B net worth
 - Wedding fund target: Rp 350M by Oct 2026
