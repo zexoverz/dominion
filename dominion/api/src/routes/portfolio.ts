@@ -629,112 +629,70 @@ router.post('/update-prices', async (req: Request, res: Response) => {
       let source = card.price_source;
 
       try {
-        if (meta.snkr_url || card.card_code) {
-          // Try SNKR Dunk search — append "PSA" for slabs so used listings include graded cards
-          const keyword = encodeURIComponent(isSlab ? `${card.card_code} PSA` : card.card_code);
+        const isOnePiece = card.franchise === 'one_piece';
+
+        // ═══ PRICING RULES ═══
+        // One Piece raw singles → ALWAYS Yuyu-tei (SNKR Dunk matches wrong variants)
+        // One Piece PSA 10 slabs → ALWAYS SNKR Dunk
+        // Pokemon PSA 10 slabs → ALWAYS SNKR Dunk
+        // Pokemon raw singles → SNKR Dunk (no Yuyu-tei for Pokemon)
+
+        if (isSlab && (meta.snkr_url || card.card_code)) {
+          // ═══ SLABS: SNKR Dunk PSA 10 average ═══
+          const keyword = encodeURIComponent(`${card.card_code} PSA`);
           const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
           if (snkrRes.ok) {
             const data = await snkrRes.json();
-
-            if (isSlab) {
-              // For slabs: filter PSA10 listings by SPECIFIC apparel ID to avoid mixing card variants
-              const products = data?.search?.products || [];
-              const apparelMatch = meta.snkr_url?.match(/apparels\/(\d+)/);
-              const targetId = apparelMatch?.[1];
-              const psa10 = products.filter((p: any) => {
-                if (p.condition !== 'PSA10' || !p.salePrice) return false;
-                if (!p.title?.includes(card.card_code)) return false;
-                if (p.title?.includes('英語版')) return false;
-                // If we have a specific apparel ID, only match that exact product
-                if (targetId && p.link) return p.link.includes(`/apparels/${targetId}/`);
-                return true;
-              });
-              if (psa10.length > 0) {
-                // Use average PSA10 listing price — realistic sellable market value
-                const prices = psa10.map((p: any) => p.salePrice);
-                const avg = Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length);
-                newSnkrJpy = avg;
-                newPriceUsd = avg * JPY_TO_USD;
-                newPriceIdr = avg * 100;
-                source = 'snkrdunk';
-              }
-            } else {
-              // For raw singles: use rankingProducts (product pages, not used items)
-              const ranked = data?.search?.rankingProducts || [];
-              
-              // Skip SNKR Dunk for promo/anniversary cards with generic codes (e.g. OP02-013)
-              // These codes match multiple variants at wildly different prices — Yuyu-tei is more reliable
-              const isPromo = card.set_name?.includes('Anniversary') || card.set_name?.includes('Promo') || card.rarity === 'Promo';
-              if (isPromo && meta.yuyu_tei_jpy) {
-                // Skip SNKR Dunk entirely, will fall through to Yuyu-tei below
-              } else {
-              
-              // For parallel/SP/SEC variants, try to match the specific rarity in the title
-              const isParallel = card.rarity && ['Parallel', 'SP', 'SEC', 'L'].includes(card.rarity);
-              const rarityKeywords: Record<string, string[]> = {
-                'Parallel': ['パラレル', 'PARALLEL', 'Parallel'],
-                'SP': ['SP', 'スペシャル'],
-                'SEC': ['SEC', 'シークレット'],
-                'L': ['L', 'リーダー', 'パラレル'],
-                'R': ['R'],
-              };
-              const matchKeywords = card.rarity ? (rarityKeywords[card.rarity] || []) : [];
-              
-              // Find ALL matching listings and use AVERAGE price
-              let matches: any[] = [];
-              
-              // For parallel/SP/SEC: try rarity-specific matches first
-              if (isParallel && matchKeywords.length > 0) {
-                matches = ranked.filter((p: any) =>
-                  p.title?.includes(card.card_code) &&
-                  p.salePrice &&
-                  !p.title?.includes('英語版') &&
-                  p.salePrice > 0 &&
-                  matchKeywords.some((kw: string) => p.title?.includes(kw))
-                );
-              }
-              // Fallback: generic match by card code
-              if (matches.length === 0) {
-                matches = ranked.filter((p: any) =>
-                  p.title?.includes(card.card_code) &&
-                  p.salePrice &&
-                  !p.title?.includes('英語版') &&
-                  p.salePrice > 0
-                );
-              }
-              if (matches.length > 0) {
-                // Use average of all matching listings
-                const prices = matches.map((p: any) => p.salePrice);
-                const avg = Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length);
-                newSnkrJpy = avg;
-                newPriceUsd = avg * JPY_TO_USD;
-                newPriceIdr = avg * 100;
-                source = 'snkrdunk';
-              }
-              } // close isPromo else
+            const products = data?.search?.products || [];
+            const apparelMatch = meta.snkr_url?.match(/apparels\/(\d+)/);
+            const targetId = apparelMatch?.[1];
+            const psa10 = products.filter((p: any) => {
+              if (p.condition !== 'PSA10' || !p.salePrice) return false;
+              if (!p.title?.includes(card.card_code)) return false;
+              if (p.title?.includes('英語版')) return false;
+              if (targetId && p.link) return p.link.includes(`/apparels/${targetId}/`);
+              return true;
+            });
+            if (psa10.length > 0) {
+              const prices = psa10.map((p: any) => p.salePrice);
+              const avg = Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length);
+              newSnkrJpy = avg;
+              newPriceUsd = avg * JPY_TO_USD;
+              newPriceIdr = avg * 100;
+              source = 'snkrdunk';
+            }
+          }
+        } else if (!isSlab && isOnePiece && meta.yuyu_tei_jpy) {
+          // ═══ ONE PIECE RAW SINGLES: ALWAYS Yuyu-tei ═══
+          newYuyuJpy = meta.yuyu_tei_jpy;
+          newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
+          newPriceIdr = meta.yuyu_tei_jpy * 100;
+          source = 'yuyu-tei';
+        } else if (!isSlab && !isOnePiece && card.card_code) {
+          // ═══ POKEMON RAW SINGLES: SNKR Dunk ranked products ═══
+          const keyword = encodeURIComponent(card.card_code);
+          const snkrRes = await fetch(`https://snkrdunk.com/v3/search?func=all&refId=search&sortKey=default&keyword=${keyword}`);
+          if (snkrRes.ok) {
+            const data = await snkrRes.json();
+            const ranked = data?.search?.rankingProducts || [];
+            const matches = ranked.filter((p: any) =>
+              p.title?.includes(card.card_code) &&
+              p.salePrice && p.salePrice > 0 &&
+              !p.title?.includes('英語版')
+            );
+            if (matches.length > 0) {
+              const prices = matches.map((p: any) => p.salePrice);
+              const avg = Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length);
+              newSnkrJpy = avg;
+              newPriceUsd = avg * JPY_TO_USD;
+              newPriceIdr = avg * 100;
+              source = 'snkrdunk';
             }
           }
         }
 
-        // Price selection logic depends on grade:
-        // PSA 10 slabs → ALWAYS use SNKR Dunk (that's where slab market lives)
-        // Raw singles → use whichever is HIGHER between SNKR Dunk and Yuyu-tei
-        if (!isSlab && meta.yuyu_tei_jpy) {
-          const yuyuUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
-          const yuyuIdr = meta.yuyu_tei_jpy * 100;
-          
-          if (!newPriceUsd || (yuyuUsd > newPriceUsd)) {
-            // Yuyu-tei is higher (or SNKR had no result) — use Yuyu-tei for raw singles
-            newYuyuJpy = meta.yuyu_tei_jpy;
-            newPriceUsd = yuyuUsd;
-            newPriceIdr = yuyuIdr;
-            source = 'yuyu-tei';
-          }
-          // else: SNKR Dunk is higher for this raw single, keep it
-        }
-
-        // Fallback for raw singles without any price yet
-        if (!newPriceUsd && !isSlab && meta.yuyu_tei_jpy) {
+        // Fallback for any card without a price yet
+        if (!newPriceUsd && meta.yuyu_tei_jpy) {
           newYuyuJpy = meta.yuyu_tei_jpy;
           newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
           newPriceIdr = meta.yuyu_tei_jpy * 100;
