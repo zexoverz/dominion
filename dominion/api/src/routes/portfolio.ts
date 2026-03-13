@@ -422,6 +422,7 @@ router.post('/smart-add', async (req: Request, res: Response) => {
     }
 
     // ═══ STEP 1: Yuyu-tei price (for OP singles) ═══
+    let yuyuTeiUrl = yuyu_tei_url || '';
     if (isOnePiece && !isSlab) {
       // Option A: Manual JPY price provided
       if (inputYuyuJpy) {
@@ -430,7 +431,7 @@ router.post('/smart-add', async (req: Request, res: Response) => {
         currentPriceIdr = yuyuTeiJpy * 100;
         priceSource = 'yuyu-tei';
       }
-      // Option B: Scrape from Yuyu-tei URL
+      // Option B: Scrape from provided Yuyu-tei URL
       else if (yuyu_tei_url) {
         try {
           const yuyuRes = await fetch(yuyu_tei_url, {
@@ -438,7 +439,6 @@ router.post('/smart-add', async (req: Request, res: Response) => {
           });
           if (yuyuRes.ok) {
             const html = await yuyuRes.text();
-            // Extract first price from card detail page
             const priceMatch = html.match(/(\d{1,3}(?:,\d{3})*)\s*円/);
             if (priceMatch) {
               yuyuTeiJpy = parseInt(priceMatch[1].replace(/,/g, ''));
@@ -448,6 +448,64 @@ router.post('/smart-add', async (req: Request, res: Response) => {
             }
           }
         } catch (e) { /* Yuyu-tei scrape failed */ }
+      }
+      // Option C: AUTO-DISCOVER — search Yuyu-tei set page by card_code
+      else if (card_code) {
+        try {
+          // Extract set from card_code (e.g. "OP13-076" → "op13", "ST10-004" → "st10", "EB04-061" → "eb04")
+          const setMatch = card_code.match(/^([A-Za-z]+\d+)/);
+          if (setMatch) {
+            const setCode = setMatch[1].toLowerCase();
+            const setUrl = `https://yuyu-tei.jp/sell/opc/s/${setCode}`;
+            const setRes = await fetch(setUrl, {
+              headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+            });
+            if (setRes.ok) {
+              const html = await setRes.text();
+              // Find all entries matching the card code
+              const regex = new RegExp(
+                `href="(https://yuyu-tei\\.jp/sell/opc/card/[^"]+)"[^>]*>.*?` +
+                `<img[^>]*alt="${card_code.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s+([^"]*)"[^>]*>.*?` +
+                `(\\d{1,3}(?:,\\d{3})*)\\s*円`,
+                'gs'
+              );
+              
+              // Rarity matching keywords
+              const rarityKw: Record<string, string[]> = {
+                'Parallel': ['パラレル', 'P-R', 'P-SR', 'P-SEC', 'P-L'],
+                'SP': ['SP', 'スペシャル', 'SPC'],
+                'SEC': ['SEC', 'P-SEC'],
+                'L': ['P-L', 'リーダー'],
+                'Alt Art': ['パラレル', 'P-'],
+              };
+              const targetKw = rarity ? (rarityKw[rarity] || []) : [];
+              
+              let bestMatch: { url: string; price: number; alt: string } | null = null;
+              let fallbackMatch: { url: string; price: number; alt: string } | null = null;
+              
+              let m;
+              while ((m = regex.exec(html)) !== null) {
+                const [, cardUrl, alt, priceStr] = m;
+                const price = parseInt(priceStr.replace(/,/g, ''));
+                
+                if (targetKw.length > 0 && targetKw.some(kw => alt.includes(kw))) {
+                  bestMatch = { url: cardUrl, price, alt };
+                } else if (!fallbackMatch) {
+                  fallbackMatch = { url: cardUrl, price, alt };
+                }
+              }
+              
+              const found = bestMatch || (targetKw.length === 0 ? fallbackMatch : null);
+              if (found) {
+                yuyuTeiJpy = found.price;
+                yuyuTeiUrl = found.url;
+                currentPriceUsd = Math.round(yuyuTeiJpy * JPY_TO_USD * 100) / 100;
+                currentPriceIdr = yuyuTeiJpy * 100;
+                priceSource = 'yuyu-tei';
+              }
+            }
+          }
+        } catch (e) { /* Yuyu-tei auto-discover failed */ }
       }
     }
 
@@ -588,7 +646,7 @@ router.post('/smart-add', async (req: Request, res: Response) => {
     if (snkrUrl) metadata.snkr_url = snkrUrl;
     if (snkrDunkJpy) metadata.snkr_dunk_jpy = snkrDunkJpy;
     if (yuyuTeiJpy) metadata.yuyu_tei_jpy = yuyuTeiJpy;
-    if (yuyu_tei_url) metadata.price_url = yuyu_tei_url;
+    if (yuyuTeiUrl) metadata.price_url = yuyuTeiUrl;
     if (cardLanguage !== 'JP') {
       metadata.language = cardLanguage;
       if (isSlab) metadata.skip_snkr_scraper = true;
