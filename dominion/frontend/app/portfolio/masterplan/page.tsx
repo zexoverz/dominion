@@ -260,25 +260,46 @@ export default function MasterplanPage() {
   const cardsRoi = live.cards_cost_usd > 0 ? ((live.cards_current_usd - live.cards_cost_usd) / live.cards_cost_usd * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-yellow-900/40 via-amber-900/30 to-yellow-900/40 border-b-2 border-yellow-600/30">
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div>
-              <h1 className="text-3xl font-bold text-yellow-400">📜 Investment Master Plan</h1>
-              <p className="text-amber-300/70 mt-1">v2.1 — Bitcoin Maximalist Strategy 2025-2030</p>
-            </div>
-            <div className="flex gap-2">
-              <Link href="/portfolio" className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-yellow-400 rounded text-sm border border-yellow-900/50">← Dashboard</Link>
-              <Link href="/portfolio/analytics" className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-yellow-400 rounded text-sm border border-yellow-900/50">📊 Analytics</Link>
-              <Link href="/portfolio/collectibles" className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-yellow-400 rounded text-sm border border-yellow-900/50">🃏 Cards</Link>
-            </div>
-          </div>
+    <div className="min-h-screen bg-rpg-dark text-rpg-text">
+      <div className="max-w-6xl mx-auto space-y-4 p-4">
+        {/* Title */}
+        <div className="rpg-panel p-4 text-center">
+          <h1 className="font-pixel text-[14px] md:text-[18px] text-throne-gold text-glow-gold mb-1">
+            📜 INVESTMENT MASTER PLAN
+          </h1>
+          <p className="text-[9px] font-body text-rpg-borderMid">
+            v2.1 — Bitcoin Maximalist Strategy 2025-2030
+          </p>
         </div>
-      </div>
 
-      <div className="max-w-5xl mx-auto px-4 py-6">
+        {/* Nav */}
+        <div className="flex flex-wrap gap-2">
+          <Link href="/portfolio">
+            <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+              📊 OVERVIEW
+            </span>
+          </Link>
+          <Link href="/portfolio/collectibles">
+            <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+              🃏 COLLECTIBLES
+            </span>
+          </Link>
+          <Link href="/portfolio/analytics">
+            <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+              📈 ANALYTICS
+            </span>
+          </Link>
+          <Link href="/portfolio/masterplan">
+            <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-throne-gold bg-rpg-borderDark/50 border border-throne-gold/30">
+              📜 MASTERPLAN
+            </span>
+          </Link>
+          <Link href="/">
+            <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+              🏰 DOMINION
+            </span>
+          </Link>
+        </div>
         {/* Live Data Dashboard */}
         <PixelBorder className="mb-8">
           <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-950">

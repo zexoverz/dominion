@@ -142,15 +142,30 @@ export default function CollectiblesPage() {
       </div>
 
       {/* Nav */}
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Link href="/portfolio">
-          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold">
+          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
             📊 OVERVIEW
           </span>
         </Link>
         <Link href="/portfolio/collectibles">
-          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-throne-gold bg-rpg-borderDark/50">
+          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-throne-gold bg-rpg-borderDark/50 border border-throne-gold/30">
             🃏 COLLECTIBLES
+          </span>
+        </Link>
+        <Link href="/portfolio/analytics">
+          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+            📈 ANALYTICS
+          </span>
+        </Link>
+        <Link href="/portfolio/masterplan">
+          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+            📜 MASTERPLAN
+          </span>
+        </Link>
+        <Link href="/">
+          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+            🏰 DOMINION
           </span>
         </Link>
       </div>
