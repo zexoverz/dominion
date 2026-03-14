@@ -204,8 +204,13 @@
       "post": 78,
       "date": "2026-03-13",
       "slot": "siang"
+    },
+    {
+      "post": 79,
+      "date": "2026-03-13",
+      "slot": "malam"
     }
   ],
   "nextMeme": 79,
-  "nextSubstance": 77
+  "nextSubstance": 80
 }

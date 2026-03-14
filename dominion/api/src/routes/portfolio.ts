@@ -1181,39 +1181,93 @@ router.get('/analytics', async (_req: Request, res: Response) => {
       ? recentDca.reduce((s: number, d: any) => s + parseFloat(d.btc_acquired), 0) / recentDca.length
       : 0;
 
-    // ── 2030 Projections ──
+    // ── 2030 Projections (synced with masterplan v2.1) ──
     const monthsTo2030 = Math.max(0, (2030 - new Date().getFullYear()) * 12 + (0 - new Date().getMonth()));
-    const projectedBtcAt2030 = btcQty + (recentMonthlyBtc * monthsTo2030);
-    const priceTargets = [100000, 200000, 300000, 500000, 1000000];
+    // Use masterplan monthly DCA rate: ~$2,841/mo at current prices
+    const masterplanMonthlyDca = 2841; // ForuAI cash $2,310 + OKU surplus ~$531
+    const estimatedAvgBtcPrice = 70000; // conservative bear market avg
+    const masterplanMonthlyBtc = masterplanMonthlyDca / estimatedAvgBtcPrice;
+    const effectiveMonthlyBtc = recentMonthlyBtc > 0 ? recentMonthlyBtc : masterplanMonthlyBtc;
+    const projectedBtcAt2030 = btcQty + (effectiveMonthlyBtc * monthsTo2030);
+    
+    // Masterplan scenarios: worst (4.1), personal (5.3), full (11.7)
+    const priceTargets = [150000, 300000, 500000, 1000000];
+    const btcScenarios = [
+      { label: 'Worst (salary only)', btc: 4.1 },
+      { label: 'Personal FORU', btc: 5.3 },
+      { label: 'DCA projection', btc: Math.round(projectedBtcAt2030 * 10000) / 10000 },
+      { label: 'Full allocation', btc: 11.7 },
+    ];
     const projections = priceTargets.map(price => ({
       btc_price: price,
-      projected_btc: Math.round(projectedBtcAt2030 * 100000000) / 100000000,
-      net_worth_usd: Math.round(projectedBtcAt2030 * price),
-      net_worth_idr: Math.round(projectedBtcAt2030 * price * IDR_PER_USD),
+      scenarios: btcScenarios.map(s => ({
+        label: s.label,
+        btc: s.btc,
+        net_worth_usd: Math.round(s.btc * price),
+        net_worth_idr: Math.round(s.btc * price * IDR_PER_USD),
+      })),
     }));
 
-    // ── Income Allocation (from masterplan) ──
-    // Monthly income ~$10,050 = Rp 165M
+    // ── DCA Cumulative Timeline (for chart) ──
+    let cumulativeBtc = 0;
+    let cumulativeCost = 0;
+    const dcaTimeline = dcaLog.map((d: any) => {
+      cumulativeBtc += parseFloat(d.btc_acquired);
+      cumulativeCost += parseFloat(d.amount_usd);
+      return {
+        month: d.month,
+        btc_acquired: parseFloat(d.btc_acquired),
+        amount_usd: parseFloat(d.amount_usd),
+        btc_price: parseFloat(d.btc_price_usd),
+        cumulative_btc: Math.round(cumulativeBtc * 100000000) / 100000000,
+        cumulative_cost: Math.round(cumulativeCost * 100) / 100,
+      };
+    });
+
+    // ── Projected Future Timeline (monthly to 2030) ──
+    const futureTimeline: any[] = [];
+    let futureBtc = btcQty;
+    const now = new Date();
+    for (let i = 1; i <= Math.min(monthsTo2030, 60); i++) {
+      const futureDate = new Date(now.getFullYear(), now.getMonth() + i, 1);
+      futureBtc += effectiveMonthlyBtc;
+      futureTimeline.push({
+        month: futureDate.toISOString().slice(0, 10),
+        cumulative_btc: Math.round(futureBtc * 100000000) / 100000000,
+        projected: true,
+      });
+    }
+
+    // ── Income Allocation (from masterplan v2.1) ──
+    // Monthly income: OKU $6,750 + ForuAI $3,300 = $10,050 (Rp 165M)
+    // ForuAI cash ($2,310) → 100% BTC. ForuAI tokens ($990) → sell → BTC.
+    // OKU → expenses + wedding Rp 30M + war chest Rp 15M + surplus → BTC
     const monthlyIncomeUsd = 10050;
+    const allocBtcDca = 2841; // ForuAI cash $2,310 + OKU surplus ~$531
+    const allocWedding = 1829; // Rp 30M / 16,400
+    const allocWarChest = 915;  // Rp 15M / 16,400
+    const allocHealth = 244;    // Rp 4M / 16,400
+    const allocKeiko = 244;     // Rp 4M / 16,400 (wedding gold via Keiko)
+    const allocExpenses = monthlyIncomeUsd - allocBtcDca - allocWedding - allocWarChest - allocHealth - allocKeiko;
     const incomeAllocation = {
       monthly_income_usd: monthlyIncomeUsd,
       monthly_income_idr: monthlyIncomeUsd * IDR_PER_USD,
+      income_sources: [
+        { source: 'OKU Trade', usd: 6750, idr: 6750 * IDR_PER_USD, allocation: 'Expenses + Wedding + War Chest + Surplus → BTC' },
+        { source: 'ForuAI Cash', usd: 2310, idr: 2310 * IDR_PER_USD, allocation: '100% → BTC DCA' },
+        { source: 'ForuAI Tokens', usd: 990, idr: 990 * IDR_PER_USD, allocation: 'Sell immediately → BTC' },
+      ],
       breakdown: [
-        { category: 'BTC DCA', amount_usd: monthlyDcaAvg || 500, pct: 0 },
-        { category: 'Wedding Fund', amount_usd: 600, pct: 0 },
-        { category: 'War Chest', amount_usd: 300, pct: 0 },
-        { category: 'Cards', amount_usd: 200, pct: 0 },
-        { category: 'Living & Expenses', amount_usd: 0, pct: 0 },
+        { category: 'BTC DCA', amount_usd: allocBtcDca, pct: Math.round((allocBtcDca / monthlyIncomeUsd) * 10000) / 100, color: '#fbbf24' },
+        { category: 'Wedding Fund', amount_usd: allocWedding, pct: Math.round((allocWedding / monthlyIncomeUsd) * 10000) / 100, color: '#ec4899' },
+        { category: 'War Chest', amount_usd: allocWarChest, pct: Math.round((allocWarChest / monthlyIncomeUsd) * 10000) / 100, color: '#f97316' },
+        { category: 'Health & Fitness', amount_usd: allocHealth, pct: Math.round((allocHealth / monthlyIncomeUsd) * 10000) / 100, color: '#22c55e' },
+        { category: 'Keiko (Gold)', amount_usd: allocKeiko, pct: Math.round((allocKeiko / monthlyIncomeUsd) * 10000) / 100, color: '#06b6d4' },
+        { category: 'Living Expenses', amount_usd: allocExpenses, pct: Math.round((allocExpenses / monthlyIncomeUsd) * 10000) / 100, color: '#6b7280' },
       ],
     };
-    // Calculate living expenses as remainder
-    const allocatedUsd = incomeAllocation.breakdown.slice(0, 4).reduce((s, b) => s + b.amount_usd, 0);
-    incomeAllocation.breakdown[4].amount_usd = monthlyIncomeUsd - allocatedUsd;
-    // Calculate percentages
-    for (const b of incomeAllocation.breakdown) {
-      b.pct = Math.round((b.amount_usd / monthlyIncomeUsd) * 10000) / 100;
-    }
-    const savingsRate = Math.round(((monthlyIncomeUsd - incomeAllocation.breakdown[4].amount_usd) / monthlyIncomeUsd) * 10000) / 100;
+    const investmentUsd = allocBtcDca + allocWedding + allocWarChest;
+    const savingsRate = Math.round((investmentUsd / monthlyIncomeUsd) * 10000) / 100;
 
     res.json({
       btc: {
@@ -1256,14 +1310,38 @@ router.get('/analytics', async (_req: Request, res: Response) => {
       },
       projections_2030: {
         current_btc: btcQty,
-        monthly_accumulation: Math.round(recentMonthlyBtc * 100000000) / 100000000,
+        monthly_accumulation: Math.round(effectiveMonthlyBtc * 100000000) / 100000000,
         months_to_2030: monthsTo2030,
         projected_btc: Math.round(projectedBtcAt2030 * 100000000) / 100000000,
-        scenarios: projections,
+        masterplan_scenarios: btcScenarios,
+        price_scenarios: projections,
+        btc_ath: 126000,
       },
+      dca_timeline: dcaTimeline,
+      future_timeline: futureTimeline,
       income_allocation: {
         ...incomeAllocation,
         savings_rate_pct: savingsRate,
+      },
+      masterplan: {
+        btc_ath: 126000,
+        war_chest_thresholds: [
+          { drawdown_pct: 30, btc_price: Math.round(126000 * 0.70), deploy_pct: 25 },
+          { drawdown_pct: 40, btc_price: Math.round(126000 * 0.60), deploy_pct: 50 },
+          { drawdown_pct: 50, btc_price: Math.round(126000 * 0.50), deploy_pct: 100 },
+        ],
+        wedding_date: '2026-11-01',
+        wedding_target_idr: 350000000,
+        fire_sale_theory: 'AI destroys Indonesian middle class by 2030. Be the buyer.',
+        btc_2030_targets: { worst: 4.1, personal: 5.3, full: 11.7 },
+        btc_price_cycle: [
+          { period: 'Apr-Dec 2026', range: '$50K-70K', strategy: 'MAX ACCUMULATION' },
+          { period: '2027', range: '$40K-60K', strategy: 'BEAR BOTTOM' },
+          { period: 'Jan-Apr 2028', range: '$50K-70K', strategy: 'Pre-halving DCA' },
+          { period: 'May-Dec 2028', range: '$70K-100K', strategy: 'Post-halving' },
+          { period: '2029', range: '$150K-300K', strategy: 'Bull run' },
+          { period: '2030', range: '$250K-500K', strategy: 'Cycle peak' },
+        ],
       },
     });
   } catch (err) {
