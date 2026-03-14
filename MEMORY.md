@@ -107,7 +107,10 @@
 - Wedding fund had Rp 800K bank interest (not from deposits lol)
 - Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
 - 2030 target: 5-12 BTC, Rp 26B-192B net worth
-- Wedding fund target: Rp 350M by Oct 2026
+- Wedding DELAYED: Nov 2026 → **July 2027** (Keiko's decision — maximize bear market BTC)
+- Wedding fund PAUSED at Rp 150.7M until Jan 2027. Resume Rp 30M/mo → Rp 360.7M by Jun 2027
+- BTC BLITZ MODE: Mar-Dec 2026, redirect Rp 30M/mo wedding → BTC = $4,670/mo total DCA
+- Extra BTC from blitz: +0.28-0.37 BTC (worth Rp 1.3-1.8B at $300K)
 - Over-kredit house plan: sell to Dzikri → deploy equity → BTC
 - v1→v2 shift: removed Pokemon/One Piece/Gold diversification
 

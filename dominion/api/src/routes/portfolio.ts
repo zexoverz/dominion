@@ -1184,7 +1184,12 @@ router.get('/analytics', async (_req: Request, res: Response) => {
     // ── 2030 Projections (synced with masterplan v2.1) ──
     const monthsTo2030 = Math.max(0, (2030 - new Date().getFullYear()) * 12 + (0 - new Date().getMonth()));
     // Use masterplan monthly DCA rate: ~$2,841/mo at current prices
-    const masterplanMonthlyDca = 2841; // ForuAI cash $2,310 + OKU surplus ~$531
+    // BTC Blitz (Mar-Dec 2026): wedding Rp 30M redirected to BTC
+    // Normal: $2,841 (ForuAI cash $2,310 + OKU surplus ~$531)
+    // Blitz: +$1,829 (Rp 30M wedding redirect) = $4,670/mo
+    const now2 = new Date();
+    const isBlitzPhase = now2 < new Date('2027-01-01');
+    const masterplanMonthlyDca = isBlitzPhase ? 4670 : 2841;
     const estimatedAvgBtcPrice = 70000; // conservative bear market avg
     const masterplanMonthlyBtc = masterplanMonthlyDca / estimatedAvgBtcPrice;
     const effectiveMonthlyBtc = recentMonthlyBtc > 0 ? recentMonthlyBtc : masterplanMonthlyBtc;
@@ -1193,10 +1198,10 @@ router.get('/analytics', async (_req: Request, res: Response) => {
     // Masterplan scenarios: worst (4.1), personal (5.3), full (11.7)
     const priceTargets = [150000, 300000, 500000, 1000000];
     const btcScenarios = [
-      { label: 'Worst (salary only)', btc: 4.1 },
-      { label: 'Personal FORU', btc: 5.3 },
+      { label: 'Worst (salary only)', btc: 4.4 },
+      { label: 'Personal FORU', btc: 5.6 },
       { label: 'DCA projection', btc: Math.round(projectedBtcAt2030 * 10000) / 10000 },
-      { label: 'Full allocation', btc: 11.7 },
+      { label: 'Full allocation', btc: 12.0 },
     ];
     const projections = priceTargets.map(price => ({
       btc_price: price,
@@ -1243,8 +1248,10 @@ router.get('/analytics', async (_req: Request, res: Response) => {
     // ForuAI cash ($2,310) → 100% BTC. ForuAI tokens ($990) → sell → BTC.
     // OKU → expenses + wedding Rp 30M + war chest Rp 15M + surplus → BTC
     const monthlyIncomeUsd = 10050;
-    const allocBtcDca = 2841; // ForuAI cash $2,310 + OKU surplus ~$531
-    const allocWedding = 1829; // Rp 30M / 16,400
+    // BTC Blitz phase (Mar-Dec 2026): wedding paused, redirected to BTC
+    const blitzActive = new Date() < new Date('2027-01-01');
+    const allocBtcDca = blitzActive ? 4670 : 2841; // Blitz: +$1,829 wedding redirect
+    const allocWedding = blitzActive ? 0 : 1829; // PAUSED until Jan 2027
     const allocWarChest = 915;  // Rp 15M / 16,400
     const allocHealth = 244;    // Rp 4M / 16,400
     const allocKeiko = 244;     // Rp 4M / 16,400 (wedding gold via Keiko)
@@ -1330,8 +1337,13 @@ router.get('/analytics', async (_req: Request, res: Response) => {
           { drawdown_pct: 40, btc_price: Math.round(126000 * 0.60), deploy_pct: 50 },
           { drawdown_pct: 50, btc_price: Math.round(126000 * 0.50), deploy_pct: 100 },
         ],
-        wedding_date: '2026-11-01',
+        wedding_date: '2027-07-01',
         wedding_target_idr: 350000000,
+        wedding_fund_paused: blitzActive,
+        wedding_fund_resume: '2027-01-01',
+        btc_blitz_active: blitzActive,
+        btc_blitz_monthly_usd: 4670,
+        btc_blitz_period: 'Mar-Dec 2026',
         fire_sale_theory: 'AI destroys Indonesian middle class by 2030. Be the buyer.',
         btc_2030_targets: { worst: 4.1, personal: 5.3, full: 11.7 },
         btc_price_cycle: [

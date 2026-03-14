@@ -10,9 +10,12 @@
 | v1.0 | Oct 22, 2025 | Initial cycle-aware strategy |
 | v2.0 | Dec 13, 2025 | Bitcoin Maxi pivot, Fire Sale theory, math corrections |
 | v2.1 | Mar 6, 2026 | TGE date fix, health/fitness allocation, gold via Keiko |
-| **v2.2** | **Mar 14, 2026** | **Freelance allocation, TGE 50/20/30 split, Pokemon → sell → OP, wedding fund reconciliation** |
+| **v2.2** | **Mar 14, 2026** | **Wedding delayed Jul 2027, bear market BTC blitz, freelance allocation, TGE split, Pokemon → OP pivot** |
 
 ### March 14, 2026 Updates (v2.2)
+- 💒 **WEDDING DELAYED: Nov 2026 → July 2027** (Keiko's decision — maximize BTC bear accumulation)
+- 💍 Wedding fund PAUSED at Rp 150.7M — resume January 2027 (7 months × Rp 30M = Rp 360.7M by Jul 2027)
+- ₿ **BTC BLITZ MODE: Mar-Dec 2026** — redirect Rp 30M/mo wedding → BTC = $4,670/mo total DCA
 - 💵 ETHGlobal $1K landed: Rp 12M Zekrom recolor + Rp 2.2M Zoro event card + Rp 2.2M pending OP card
 - 💵 ForuAI leaderboard $2,500 landed: $500 THR + Rp 2M ETHJKT merch + Rp 24.45M wedding repay + Rp 6.35M Japan hotel
 - 💍 Wedding fund reconciled: actual Rp 126.3M (borrowed Rp 24.45M for Japan tickets + server/Jogja), repaid from $2,500
@@ -23,6 +26,7 @@
 - 🏴‍☠️ Portfolio pivot: Pokemon → sell for OP cards. Collection becomes pure One Piece
 - ✈️ Japan trip (May 2026): tickets Rp 12M + hotel Rp 6.35M + cards Rp 34-57M (depends on Pokemon sale)
 - 📊 Current BTC: 0.1677 BTC (updated Mar 7, 2026)
+- 📊 Projected BTC by Dec 2026: ~0.63-0.85 BTC (with wedding redirect + TGE + war chest deployments)
 
 ### March 2026 Updates (v2.1)
 - 🔄 ForuAI TGE: January 2026 → **March 12, 2026** (~$6,930 accumulated 7 months)
@@ -61,14 +65,15 @@
 
 All income streams convert to Bitcoin. No altcoins. No speculation. Institutional adoption (Harvard, BlackRock, US Strategic Reserve) provides floor. Bear markets are buying opportunities.
 
-### Key Numbers (March 2026)
+### Key Numbers (March 14, 2026)
 | Metric | Value |
 |--------|-------|
 | Current Net Worth | ~Rp 549M liquid + Rp 350M house equity |
 | Monthly Income | Rp 165M ($10,050) |
-| Monthly Investment | ~Rp 108M (post-TGE) |
-| Current BTC | 0.153 BTC (~$10,844 @ $70,875) |
-| Wedding Fund | Rp 150M (target Rp 350M by Oct 2026) |
+| **BTC Blitz DCA** | **Rp 76.6M/mo ($4,670) — Mar-Dec 2026** |
+| Current BTC | 0.1677 BTC |
+| Wedding Fund | Rp 150.7M — **PAUSED** (target Rp 350M by Jun 2027) |
+| Wedding Date | **July 2027** (delayed from Nov 2026) |
 | War Chest | Rp 31M |
 | 2030 Target | Rp 26B - 192B (depending on BTC price) |
 
@@ -157,10 +162,11 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | Basketball Private Training | Rp 1.6M/mo | 2hrs/week, 4x/month (solo drill with coach) |
 
 ### Investment Capacity
-| Period | Capacity | Notes |
-|--------|----------|-------|
-| Pre-TGE (now) | ~Rp 92M/mo | Without ForuAI token income |
-| Post-TGE (Mar 12+) | ~Rp 108M/mo | With token income flowing |
+| Period | BTC Capacity | Notes |
+|--------|-------------|-------|
+| **BTC Blitz (Mar-Dec 2026)** | **~Rp 76.6M/mo ($4,670)** | **Wedding paused + ForuAI cash + surplus** |
+| BTC Blitz + tokens | ~Rp 93M/mo ($5,670) | + ForuAI token sell |
+| Wedding rebuild (Jan-Jul 2027) | ~Rp 46.6M/mo ($2,841) | Wedding resumes, BTC DCA returns to normal |
 
 *Hidden alpha: Rp 11-12M surplus from under-spending personal budget*
 
@@ -261,12 +267,23 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | -40% from ATH (~$75K) | Deploy 50% war chest |
 | -50% from ATH (~$63K) | Deploy 100% war chest |
 
-### BTC Stack Projections (2030)
+### BTC Stack Projections (Updated v2.2 — with BTC Blitz)
+
+**Extra BTC from wedding redirect (10 months × $1,829/mo = $18,293):**
+| BTC Avg Price | Extra BTC | Value at $300K |
+|---|---|---|
+| $65K | +0.281 BTC | Rp 1.38B |
+| $55K (bear) | +0.333 BTC | Rp 1.64B |
+| $50K (bottom) | +0.366 BTC | Rp 1.80B |
+
+**2030 BTC Stack Projections (revised up):**
 | Scenario | BTC Stack | Notes |
 |----------|-----------|-------|
-| Worst (FORU = $0) | ~4.1 BTC | Salary DCA only |
-| Personal FORU only | ~5.3 BTC | + Personal tokens |
-| Full allocation | ~11.7 BTC | + Core tokens |
+| Worst (FORU = $0) | ~4.4 BTC | Salary DCA + wedding redirect |
+| Personal FORU only | ~5.6 BTC | + Personal tokens |
+| Full allocation | ~12.0 BTC | + Core tokens |
+
+*All scenarios improved by ~0.3 BTC from the wedding delay.*
 
 ---
 
@@ -309,24 +326,24 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | $500K | Rp 8.2B |
 | $1M | Rp 16.4B |
 
-### Scenario Matrix
-| BTC Price | 4.1 BTC (Worst) | 5.3 BTC (Personal) | 11.7 BTC (Full) |
+### Scenario Matrix (Updated v2.2 — with BTC Blitz bonus)
+| BTC Price | 4.4 BTC (Worst) | 5.6 BTC (Personal) | 12.0 BTC (Full) |
 |-----------|-----------------|--------------------|-----------------| 
-| $150K | Rp 10.1B | Rp 13B | Rp 28.8B |
-| $300K | Rp 20.2B | Rp 26.1B | Rp 57.6B |
-| $500K | Rp 33.6B | Rp 43.5B | Rp 95.9B |
-| $1M | Rp 67.2B | Rp 86.9B | Rp 191.9B |
+| $150K | Rp 10.8B | Rp 13.8B | Rp 29.5B |
+| $300K | Rp 21.6B | Rp 27.6B | Rp 59.0B |
+| $500K | Rp 36.1B | Rp 45.9B | Rp 98.4B |
+| $1M | Rp 72.2B | Rp 91.8B | Rp 196.8B |
 
 ### What It Means (Monthly Passive at 5% Yield)
 | Net Worth | Monthly Passive | vs Avg Indonesian |
 |-----------|-----------------|-------------------|
-| Rp 13B | Rp 54M/month | 11x |
-| Rp 26B | Rp 108M/month | 22x |
-| Rp 58B | Rp 242M/month | 48x |
-| Rp 96B | Rp 400M/month | 80x |
-| Rp 192B | Rp 800M/month | 160x |
+| Rp 10.8B | Rp 45M/month | 9x |
+| Rp 21.6B | Rp 90M/month | 18x |
+| Rp 45.9B | Rp 191M/month | 38x |
+| Rp 98.4B | Rp 410M/month | 82x |
+| Rp 196.8B | Rp 820M/month | 164x |
 
-**Even worst case (Rp 10B) = Financial freedom achieved.**
+**Even worst case (Rp 10.8B) = Financial freedom achieved. BTC Blitz adds ~Rp 700M-1.8B to every scenario.**
 
 ---
 
@@ -413,23 +430,36 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | OKU Trade | $6,750 (Rp 110.7M) | Expenses + Wedding + War Chest |
 
 **From OKU income (Rp 110.7M):**
+
+**Phase 1: BTC BLITZ (Mar-Dec 2026) — Wedding fund PAUSED:**
 | Category | Amount | Notes |
 |----------|--------|-------|
 | All Expenses | ~Rp 57M | Living + Dzikri + Keiko + Health |
-| Wedding Fund | Rp 30M | Cash/BBCA |
-| War Chest | Rp 15M | USDT (skipped some months — see below) |
-| Surplus | ~Rp 8.7M | → BTC when available, sometimes car/misc |
+| ~~Wedding Fund~~ | ~~Rp 30M~~ | **PAUSED** → redirected to BTC |
+| War Chest | Rp 15M | USDT (skipped Lebaran months) |
+| BTC (redirected wedding) | Rp 30M | Bear market accumulation |
+| Surplus | ~Rp 8.7M | → BTC |
+
+**Phase 2: Wedding Rebuild (Jan-Jul 2027):**
+| Category | Amount | Notes |
+|----------|--------|-------|
+| All Expenses | ~Rp 57M | Same |
+| Wedding Fund | Rp 30M | **RESUMED** — 7 months to target |
+| War Chest | Rp 15M | USDT |
+| Surplus | ~Rp 8.7M | → BTC |
 
 **Total BTC per month:**
 | Period | BTC DCA | Source |
 |--------|---------|--------|
-| Pre-TGE (now) | ~Rp 46.6M | ForuAI cash (37.9M) + OKU surplus (~8.7M) |
-| Post-TGE (Mar 12+) | ~Rp 63M+ | + token sell (~Rp 16.2M/mo) |
+| **BTC Blitz (Mar-Dec 2026)** | **~Rp 76.6M ($4,670)** | **ForuAI cash (37.9M) + wedding redirect (30M) + surplus (8.7M)** |
+| Post-TGE (tokens flowing) | ~Rp 93M+ ($5,670) | + token sell (~Rp 16.2M/mo) |
+| Wedding rebuild (Jan-Jul 2027) | ~Rp 46.6M ($2,841) | Back to normal DCA after wedding resumes |
 
 **Notes:**
 - OKU surplus is variable — some months goes to car maintenance (Zekrom), misc expenses
 - War chest Rp 15M skipped in months with religious obligations (Lebaran: zakat maal, THR, infaq/sodaqoh — investment for akhirat 🤲)
 - Post-TGE: ForuAI tokens sell 100% immediately → BTC on top of cash DCA
+- **Keiko approved the delay** — she sees the 100-200% collectibles ROI and trusts the strategy
 
 ### December 2025 Actions
 | Action | Amount | Timing |
@@ -480,14 +510,22 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 ## Part XI: Decision Framework
 
 ### Monthly Checklist
+
+**BTC Blitz Phase (Mar-Dec 2026):**
 - [ ] ForuAI cash ($2,310) → BTC immediately on payday
-- [ ] OKU surplus → BTC (variable, after expenses)
-- [ ] Allocate Rp 30M to wedding fund
+- [ ] OKU surplus (~$531) → BTC
+- [ ] ~~Wedding fund~~ → **Rp 30M → BTC** (redirected)
 - [ ] Add Rp 15M to war chest (USDT) — skip if Lebaran/religious obligations
 - [ ] Keiko handles gold from her Rp 4M
 - [ ] Sell any FORU tokens received → BTC immediately
 - [ ] Monitor BTC price for war chest deployment
 - [ ] Zakat maal + THR + infaq/sodaqoh during Ramadan/Lebaran 🤲
+- [ ] **Total BTC target: $4,670/mo minimum**
+
+**Wedding Rebuild Phase (Jan-Jul 2027):**
+- [ ] Resume Rp 30M/mo to wedding fund
+- [ ] Continue ForuAI cash → BTC
+- [ ] Wedding fund target: Rp 350M by June 2027
 
 ### Key Decision Rules
 | Trigger | Action |
@@ -514,15 +552,17 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | March 12 | ForuAI TGE → ~$6,930 accumulated tokens → Sell all → BTC |
 | Q2-Q4 | Bear market accumulation |
 | August | House fixed rate ends (consider over-kredit) |
-| October | Wedding fund complete (Rp 350M) |
-| **November** | **💒 WEDDING** |
+| ~~October~~ | ~~Wedding fund complete~~ **PAUSED — redirected to BTC** |
+| ~~November~~ | ~~WEDDING~~ **DELAYED to July 2027** |
 | November | ForuAI Core tokens unlock → Sell → BTC |
 
 ### 2027
-| Event | Action |
-|-------|--------|
-| Full year | Maximum BTC accumulation at bear bottom |
-| Target | Stack as much BTC as possible |
+| Date | Event |
+|------|-------|
+| January | Resume wedding fund (Rp 30M/mo) |
+| June | Wedding fund target Rp 360.7M ✅ |
+| **July** | **💒 WEDDING** |
+| H2 2027 | Maximum BTC accumulation at bear bottom |
 
 ### 2028
 | Event | Action |
@@ -629,15 +669,15 @@ Graham (Value) + Buffett (Contrarian) + Dalio (Cycles)
 | Core wealth | Bitcoin (100%) |
 | Altcoins | Sell all → BTC |
 | Speculation | NONE |
-| Wedding | Nov 2026 (Rp 350M saved) |
+| Wedding | **Jul 2027** (Rp 350M, paused until Jan 2027) |
 | 2030 crisis | Be the buyer |
 
 ### The Numbers
 | Metric | Target |
 |--------|--------|
-| 2030 BTC Stack | 5-12 BTC |
-| 2030 Net Worth | Rp 26B - 192B |
-| Monthly Passive | Rp 108M - 800M |
+| 2030 BTC Stack | 5.6-12 BTC (+0.3 from BTC Blitz) |
+| 2030 Net Worth | Rp 27.6B - 196.8B |
+| Monthly Passive | Rp 90M - 820M |
 | Status | Top 0.01% Indonesia |
 
 ### The Difference
@@ -695,7 +735,8 @@ Graham (Value) + Buffett (Contrarian) + Dalio (Cycles)
 **Muhammad Faisal Firdani**
 **Age 25 | Updated March 6, 2026**
 **Net Worth: ~Rp 549M liquid + Rp 350M house equity**
-**BTC Holdings: 0.153 BTC**
+**BTC Holdings: 0.1677 BTC**
+**BTC Blitz: $4,670/mo Mar-Dec 2026**
 **Target 2030: Rp 50B+**
 
 ---
