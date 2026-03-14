@@ -1192,7 +1192,8 @@ router.get('/analytics', async (_req: Request, res: Response) => {
     const masterplanMonthlyDca = isBlitzPhase ? 4670 : 2841;
     const estimatedAvgBtcPrice = 70000; // conservative bear market avg
     const masterplanMonthlyBtc = masterplanMonthlyDca / estimatedAvgBtcPrice;
-    const effectiveMonthlyBtc = recentMonthlyBtc > 0 ? recentMonthlyBtc : masterplanMonthlyBtc;
+    // During BTC Blitz, use masterplan rate (DCA log doesn't reflect new rate yet)
+    const effectiveMonthlyBtc = isBlitzPhase ? masterplanMonthlyBtc : (recentMonthlyBtc > 0 ? recentMonthlyBtc : masterplanMonthlyBtc);
     const projectedBtcAt2030 = btcQty + (effectiveMonthlyBtc * monthsTo2030);
     
     // Masterplan scenarios: worst (4.1), personal (5.3), full (11.7)
