@@ -132,6 +132,10 @@
 - Yuyu-tei is the price reference, x100 JPY→IDR conversion rate
 - Post-wedding (Nov 2026): Rp 1-2M/mo ongoing card budget from freed wedding allocation
 - Rule: never touch BTC DCA for cards, treat as entertainment not investment
+- NEW GOAL: collect ALL mini manga event art parallels (complete set)
+- Card appreciation rule: character > rarity. Only Luffy/Nami/Zoro/Hancock from early sets moon. Most SPs sit at ¥580 floor.
+- Pokemon slabs: SELLING to fund Japan OP haul. Portfolio pivoting to pure One Piece.
+- Faisal uses Bitget for BTC trading (not Indodax). Doesn't like Google Sheets.
 - Car plan: wait for 2028 bull run, sell 0.1 BTC at $300K for Rp 200M used car, hard cash
 
 ## Zexo's Quest System (Feb 16, 2026)
