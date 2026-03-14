@@ -151,10 +151,12 @@ export default function PortfolioDashboard() {
   const warChestAmt = warChest ? parseFloat(warChest.current_amount_idr) : 0;
 
   // War chest deployment thresholds
+  // War chest thresholds based on ATH ($126K) drawdown %
+  const btcATH = 126000;
   const warChestThresholds = [
-    { label: "Deploy 25%", btcBelow: 70000, pct: 25 },
-    { label: "Deploy 50%", btcBelow: 60000, pct: 50 },
-    { label: "Deploy 100%", btcBelow: 50000, pct: 100 },
+    { label: "Deploy 25%", btcBelow: Math.round(btcATH * 0.70), pct: 25 },
+    { label: "Deploy 50%", btcBelow: Math.round(btcATH * 0.60), pct: 50 },
+    { label: "Deploy 100%", btcBelow: Math.round(btcATH * 0.50), pct: 100 },
   ];
 
   // Allocation pie data
@@ -169,7 +171,7 @@ export default function PortfolioDashboard() {
     : summary.net_worth_usd;
 
   // Months remaining to wedding
-  const weddingDate = wedding?.target_date ? new Date(wedding.target_date) : new Date("2026-10-01");
+  const weddingDate = wedding?.target_date ? new Date(wedding.target_date) : new Date("2027-07-01");
   const now = new Date();
   const monthsRemaining = Math.max(0, (weddingDate.getFullYear() - now.getFullYear()) * 12 + weddingDate.getMonth() - now.getMonth());
   const monthlyNeeded = monthsRemaining > 0 ? (weddingTarget - weddingCurrent) / monthsRemaining : 0;

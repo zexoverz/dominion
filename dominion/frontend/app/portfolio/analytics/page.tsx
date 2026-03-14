@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
   const weddingCurrent = data.wedding?.current_idr || 0;
   const weddingTarget = data.wedding?.target_idr || 350000000;
   const weddingMonthsLeft = Math.max(0, Math.ceil(
-    (new Date(data.masterplan?.wedding_date || "2026-11-01").getTime() - Date.now()) / (30 * 24 * 60 * 60 * 1000)
+    (new Date(data.masterplan?.wedding_date || "2027-07-01").getTime() - Date.now()) / (30 * 24 * 60 * 60 * 1000)
   ));
   const weddingMonthlyNeeded = weddingMonthsLeft > 0 ? (weddingTarget - weddingCurrent) / weddingMonthsLeft : 0;
 
@@ -508,7 +508,7 @@ export default function AnalyticsPage() {
 
             <div className="mt-2 text-center">
               <p className="text-[9px] font-body text-rpg-borderMid">
-                Wedding: <span className="text-throne-goldLight">Nov 2026</span> with <span className="text-throne-goldLight">Keiko</span> 💒
+                Wedding: <span className="text-throne-goldLight">Jul 2027</span> with <span className="text-throne-goldLight">Keiko</span> 💒
               </p>
               {weddingMonthlyNeeded <= 30000000 ? (
                 <p className="text-[8px] font-pixel text-throne-green mt-1">✅ ON TRACK</p>
