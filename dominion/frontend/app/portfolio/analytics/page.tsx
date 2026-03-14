@@ -180,7 +180,7 @@ export default function AnalyticsPage() {
           📊 ANALYTICS & PROJECTIONS
         </h1>
         <p className="text-[9px] font-body text-rpg-borderMid">
-          Synced with Investment Master Plan v2.1 • Live BTC: {btcPrice > 0 ? fmtUsd(btcPrice) : "loading"} • ATH: {fmtUsd(btcATH)}
+          Synced with Investment Master Plan v2.2 • Live BTC: {btcPrice > 0 ? fmtUsd(btcPrice) : "loading"} • ATH: {fmtUsd(btcATH)}
         </p>
       </div>
 
@@ -682,7 +682,7 @@ export default function AnalyticsPage() {
           💱 $1 = Rp {IDR_PER_USD.toLocaleString()} • BTC: {btcPrice > 0 ? fmtUsd(btcPrice) : "loading"} via CoinGecko • ATH: {fmtUsd(btcATH)}
         </p>
         <p className="text-[7px] font-body text-rpg-borderMid/60">
-          Synced with Investment Master Plan v2.1 (Mar 6, 2026) • &quot;Stack sats. No speculation. See you at Rp 50 Billion.&quot;
+          Synced with Investment Master Plan v2.2 (Mar 14, 2026) • &quot;Stack sats. No speculation. See you at Rp 50 Billion.&quot;
         </p>
       </div>
     </div>

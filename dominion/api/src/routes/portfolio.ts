@@ -1181,7 +1181,7 @@ router.get('/analytics', async (_req: Request, res: Response) => {
       ? recentDca.reduce((s: number, d: any) => s + parseFloat(d.btc_acquired), 0) / recentDca.length
       : 0;
 
-    // ── 2030 Projections (synced with masterplan v2.1) ──
+    // ── 2030 Projections (synced with masterplan v2.2) ──
     const monthsTo2030 = Math.max(0, (2030 - new Date().getFullYear()) * 12 + (0 - new Date().getMonth()));
     // Use masterplan monthly DCA rate: ~$2,841/mo at current prices
     // BTC Blitz (Mar-Dec 2026): wedding Rp 30M redirected to BTC
@@ -1243,7 +1243,7 @@ router.get('/analytics', async (_req: Request, res: Response) => {
       });
     }
 
-    // ── Income Allocation (from masterplan v2.1) ──
+    // ── Income Allocation (from masterplan v2.2) ──
     // Monthly income: OKU $6,750 + ForuAI $3,300 = $10,050 (Rp 165M)
     // ForuAI cash ($2,310) → 100% BTC. ForuAI tokens ($990) → sell → BTC.
     // OKU → expenses + wedding Rp 30M + war chest Rp 15M + surplus → BTC
@@ -1371,7 +1371,7 @@ router.get('/masterplan', async (_req: Request, res: Response) => {
     
     // Read masterplan from reports directory (same path as reports.ts uses)
     const reportsDir = path.resolve(__dirname, '../../reports');
-    const masterplanPath = path.join(reportsDir, 'investment-masterplan-v2.1.md');
+    const masterplanPath = path.join(reportsDir, 'investment-masterplan-v2.2.md');
     
     if (!fs.existsSync(masterplanPath)) {
       return res.status(404).json({ error: 'Masterplan file not found', tried: masterplanPath });

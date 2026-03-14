@@ -268,7 +268,7 @@ export default function MasterplanPage() {
             📜 INVESTMENT MASTER PLAN
           </h1>
           <p className="text-[9px] font-body text-rpg-borderMid">
-            v2.1 — Bitcoin Maximalist Strategy 2025-2030
+            v2.2 — Bitcoin Maximalist Strategy 2025-2030
           </p>
         </div>
 
