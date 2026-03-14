@@ -1,4 +1,4 @@
-# 🔮 SEER Daily BTC Intelligence — March 13, 2026
+# 🔮 SEER Daily BTC Intelligence — March 14, 2026
 
 *Generated at 18:00 UTC by SEER Intelligence Engine*
 
@@ -8,27 +8,28 @@
 
 | Metric | Value |
 |--------|-------|
-| **BTC Price** | $71,049 |
-| **24h Change** | +1.12% |
-| **24h High** | $73,914 |
-| **24h Low** | $69,771 |
-| **24h Volume** | $2.55B |
+| **BTC Price** | $70,578 |
+| **24h Change** | -0.66% |
+| **Market Cap** | ~$1.39T |
+| **24h Volume** | $1.2B |
+| **24h High** | $71,491 |
+| **24h Low** | $70,317 |
 | **All-Time High** | $126,000 |
-| **Drawdown from ATH** | -43.6% |
-| **Fear & Greed Index** | 15/100 — Extreme Fear |
+| **Drawdown from ATH** | -44.0% |
+| **Fear & Greed Index** | 16/100 — Extreme Fear |
 
 ---
 
 ## 🎯 War Chest Protocol (v2.0)
 
-🟠 -40% TRIGGER HIT → Deploy 50% war chest
+🟠 **-40% TRIGGER HIT → Deploy 50% war chest**
 💎 DIAMOND HANDS MODE — This is what you trained for
 📊 Historically, buying at these levels = generational wealth
 
 **Your Rules (from Investment Master Plan v2.0):**
 - -30% from ATH → Deploy 25% war chest ✅ PASSED
-- -40% from ATH → Deploy 50% war chest ✅ ACTIVE NOW
-- -50% from ATH → Deploy 100% war chest (next trigger at ~$63,000)
+- **-40% from ATH → Deploy 50% war chest** ✅ ACTIVE (-44.0%)
+- -50% from ATH → Deploy 100% war chest (triggers at ~$63,000)
 - Monthly DCA: Rp 50M into BTC regardless of price
 - ForuAI tokens → sell immediately → BTC
 - NO ALTCOINS. EVER.
@@ -37,7 +38,7 @@
 
 ## 📰 Major BTC Headlines
 
-- *News feed unavailable — CryptoPanic API requires auth token update*
+- *Headlines unavailable — CoinGecko and CryptoPanic API rate-limited*
 
 ---
 
@@ -60,7 +61,7 @@
 
 **What TO do:**
 - ✅ Execute your DCA on schedule (Rp 50M/mo)
-- ✅ Deploy war chest at trigger levels
+- ✅ Deploy war chest at trigger levels — **-40% trigger is ACTIVE**
 - ✅ Convert ForuAI tokens → BTC immediately
 - ✅ Stack sats. Stay humble.
 
