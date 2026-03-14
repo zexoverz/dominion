@@ -92,13 +92,19 @@
 - Wedding fund: Rp 150M (target Rp 350M by Oct 2026, updated Mar 6)
 - Feb 2026 DCA executed (salary came Feb 1)
 - Mar 2026 DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K (ForuAI + OKU salary)
-- ForuAI tokens: sell 100% immediately → BTC, no hodling
-- ForuAI TGE: March 12, 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026)
+- ForuAI monthly tokens: sell 100% immediately → BTC, no hodling
+- ForuAI TGE: end of March 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026)
 - FORU salary tokens NOT released yet (team finalizing, expected end of March)
-- FORU distribution plan: 50% → BTC immediately, 20% hold for exchange listing pump, 30% → Japan trip card shopping ($2,079)
+- FORU distribution plan: 50% → BTC ($3,465), 20% hold for pump ($1,386), 30% → Japan OP cards ($2,079)
 - FORU exit triggers: TP at 2x, SL at -30%, HARD DEADLINE May 1 2026 sell all remaining
+- BTC-contingent: if BTC ≤ $65K cancel FORU hold → 70% BTC + 30% cards; if ≤ $60K deploy war chest
 - FORU tokenomics: 172% Y1 inflation, seed unlock Sep 2026, team unlock Mar 2027 — DO NOT BUY MORE
-- Japan trip: April-May 2026, card shopping budget from FORU entertainment allocation
+- Japan trip May 2026: tickets Rp 12M (repaid) + hotel Rp 6.35M + cards Rp 34-57M
+- Pokemon cards: ACTIVELY SELLING to fund Japan OP haul. Portfolio pivoting to pure One Piece.
+- ETHGlobal $1K landed Mar 14: Rp 12M Zekrom + Rp 2.2M Zoro card + Rp 2.2M pending OP card
+- ForuAI leaderboard $2,500 landed Mar 14: $500 THR + Rp 2M ETHJKT + Rp 24.45M wedding repay + Rp 6.35M Japan hotel
+- Wedding fund actual: Rp 126.3M → repaid Rp 24.45M from freelance → back to ~Rp 150.7M
+- Wedding fund had Rp 800K bank interest (not from deposits lol)
 - Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
 - 2030 target: 5-12 BTC, Rp 26B-192B net worth
 - Wedding fund target: Rp 350M by Oct 2026
