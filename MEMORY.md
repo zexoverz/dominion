@@ -12,7 +12,7 @@
 - Founded ETHJKT (Indonesia's largest Web3 dev community)
 - Built GrimSwap (ZK privacy DEX, ETHGlobal Top 10)
 - Bitcoin maximalist — NEVER altcoins (XPL -82% lesson)
-- Engaged to Keiko, wedding Nov 2026
+- Engaged to Keiko, wedding **Jul 2027** (delayed from Nov 2026 — bear market BTC accumulation)
 - Communication: direct, no-BS, mixes Indonesian/English slang
 
 ## Auth
@@ -66,53 +66,66 @@
 - EPS → EPF pipeline is his path to core contributor status
 - X growth: 200 → 1,258 followers in 1 week (content strategy working)
 
-## Investment Master Plan (v2.0 — source of truth)
+## Investment Master Plan (v2.2 — source of truth, updated Mar 14 2026)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
-- Local copy: dominion/reports/investment-masterplan-v2.1.md (latest), v2.md preserved as history
+- Local copy: dominion/reports/investment-masterplan-v2.2.md (latest)
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
-- Monthly: Rp 50M BTC DCA, Rp 30M wedding, Rp 15M war chest (skipped Lebaran months → zakat/THR/infaq), Rp 4M Keiko (she handles gold), Rp 4M health/fitness
-- Health: PT gym Rp 2.4M (3-4x/week) + basketball private Rp 1.6M (2hrs/week solo drill with coach)
-- ForuAI cash ($2,310) → 100% BTC every month. OKU covers everything else.
-- BTC DCA pre-TGE: ~Rp 46.6M/mo. Post-TGE: ~Rp 63M+ (tokens sell → BTC on top)
-- OKU surplus (~Rp 8.7M) variable — sometimes car (Zekrom) or misc
-- War chest Rp 15M skipped during Lebaran months (zakat maal + THR + infaq/sodaqoh)
-- Freelance income Dec-Feb 2026: ETHGlobal $1K (→ car recolor), LilStars $1.8K (→ war chest), ForuAI leaderboard $2.5K (unpaid, → war chest or Japan trip)
-- Car nickname: Zekrom (BMW E36 M52) — project car, coloring DP 5M paid, 12M remaining (from ETHGlobal $1K, arrives Mar 11)
-- OKU Top Performer #1: salary bumps to $8,730/mo (vs normal $6,750). Feb 2026 confirmed TP1.
-- OKU yearly bonus: $5K (Dec 2025 → used for iPhone 17 Pro Max, old iPhone 13 Pro → mom)
-- House reno (Dec 2025): garden, kanopi, keramik parking, kitchen roof. Total Rp 28M (Faisal 20M + Zikri 8M)
-- Kruu Jogja event (Nov 2025): Rp 6.1M via Revo (transport, villa, team)
-- Keiko actual spending: ~Rp 7.2M/mo avg (vs 4M budget) — the #1 budget leak
-- Spending analysis saved: dominion/reports/spending-analysis-nov25-feb26.md
-- War chest: Rp 31M (as of Mar 6, 2026)
-- War chest deployment: 25% at -30%, 50% at -40%, 100% at -50%
-- BTC ATH ~$126K; as of Feb 2026 BTC at ~$67K
-- Current BTC holdings: 0.1677 BTC (updated Mar 7, 2026 — Mar DCA: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K from ForuAI salary)
-- XPL: 3278 tokens (write-off, -82% lesson, just forget)
-- Wedding fund: Rp 150M (target Rp 350M by Oct 2026, updated Mar 6)
-- Feb 2026 DCA executed (salary came Feb 1)
-- Mar 2026 DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K (ForuAI + OKU salary)
-- ForuAI monthly tokens: sell 100% immediately → BTC, no hodling
-- ForuAI TGE: end of March 2026 — ~$6,930 accumulated (7mo Aug 2025→Mar 2026)
-- FORU salary tokens NOT released yet (team finalizing, expected end of March)
-- FORU distribution plan: 50% → BTC ($3,465), 20% hold for pump ($1,386), 30% → Japan OP cards ($2,079)
-- FORU exit triggers: TP at 2x, SL at -30%, HARD DEADLINE May 1 2026 sell all remaining
-- BTC-contingent: if BTC ≤ $65K cancel FORU hold → 70% BTC + 30% cards; if ≤ $60K deploy war chest
-- FORU tokenomics: 172% Y1 inflation, seed unlock Sep 2026, team unlock Mar 2027 — DO NOT BUY MORE
-- Japan trip May 2026: tickets Rp 12M (repaid) + hotel Rp 6.35M + cards Rp 34-57M
-- Pokemon cards: ACTIVELY SELLING to fund Japan OP haul. Portfolio pivoting to pure One Piece.
-- ETHGlobal $1K landed Mar 14: Rp 12M Zekrom + Rp 2.2M Zoro card + Rp 2.2M pending OP card
-- ForuAI leaderboard $2,500 landed Mar 14: $500 THR + Rp 2M ETHJKT + Rp 24.45M wedding repay + Rp 6.35M Japan hotel
-- Wedding fund actual: Rp 126.3M → repaid Rp 24.45M from freelance → back to ~Rp 150.7M
-- Wedding fund had Rp 800K bank interest (not from deposits lol)
-- Fire Sale Theory: AI destroys Indonesian middle class by 2030, be the buyer
-- 2030 target: 5-12 BTC, Rp 26B-192B net worth
-- Wedding DELAYED: Nov 2026 → **July 2027** (Keiko's decision — maximize bear market BTC)
-- Wedding fund PAUSED at Rp 150.7M until Jan 2027. Resume Rp 30M/mo → Rp 360.7M by Jun 2027
-- BTC BLITZ MODE: Mar-Dec 2026, redirect Rp 30M/mo wedding → BTC = $4,670/mo total DCA
-- Extra BTC from blitz: +0.28-0.37 BTC (worth Rp 1.3-1.8B at $300K)
+
+### Monthly Allocations (BTC Blitz Mode: Mar-Dec 2026)
+- **BTC DCA: $4,670/mo** (Rp 50M regular + Rp 30M redirected from wedding)
+- War chest: Rp 15M/mo (skipped Lebaran months → zakat/THR/infaq)
+- Keiko: Rp 4M budget (actual ~Rp 7.2M avg — #1 budget leak)
+- Health: Rp 4M (PT gym Rp 2.4M 3-4x/wk + basketball Rp 1.6M 2hrs/wk)
+- ForuAI cash ($2,310/mo) → 100% BTC every month
+- OKU surplus (~Rp 8.7M) variable — car/misc
+- Wedding fund: **PAUSED** at Rp 150.7M until Jan 2027, resume Rp 30M/mo → Rp 360.7M by Jun 2027
+
+### BTC Stack
+- Current holdings: 0.1677 BTC (as of Mar 7, 2026)
+- Mar DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K
+- BTC ATH: ~$126K | War chest triggers: -30% (25%), -40% (50%), -50% (100%)
+- War chest: Rp 31M (as of Mar 6)
+- XPL: 3278 tokens (write-off, -82% lesson, forget it)
+
+### FORU TGE (Mar 12, 2026)
+- TGE happened, tokens NOT distributed yet (end of March)
+- Accumulated: $6,930 (7mo Aug 2025 → Mar 2026)
+- FORU price at TGE: $0.03, dropped to $0.0184 (-39%), 172% Y1 inflation
+- Distribution plan: 50% BTC ($3,465) / 20% hold for pump ($1,386) / 30% Japan OP cards ($2,079)
+- Exit triggers: TP 2x, SL -30%, HARD DEADLINE May 1 sell all
+- BTC-contingent: ≤$65K cancel hold → 70% BTC + 30% cards; ≤$60K deploy war chest too
+- Smart exit: DCA sell in 3 tranches, trailing stop -20% from peak, time decay 14 flat days → sell
+- State: memory/foru-trade-state.json | Crons: FORU-exit-trigger, FORU-hard-deadline
+
+### Freelance Income (Dec 2025 - Mar 2026)
+- ETHGlobal $1K → ✅ RECEIVED: Rp 12M Zekrom recolor + Rp 2.2M Zoro card + Rp 2.2M pending OP card
+- LilStars $1.8K → ✅ RECEIVED: war chest
+- ForuAI ElizaOS Rep Leaderboard: $8K project, Faisal's share $2,500
+  - ✅ RECEIVED $2,500: $500 THR + Rp 2M ETHJKT merch + Rp 24.45M wedding repay + Rp 6.35M Japan hotel
+  - ⏳ Final invoice $3,200 due Mar 16 (billed via Revo's PT Inovasi Talenta Digital)
+- Wedding fund reconciled: was Rp 126.3M (borrowed Rp 24.45M for Japan tix + server + ETHJKT Jogja) → repaid from freelance → back to Rp 150.7M
+
+### Wedding
+- DELAYED: Nov 2026 → **July 2027** (Keiko agreed — maximize bear market BTC accumulation)
+- Fund PAUSED at Rp 150.7M. Resume Jan 2027, target Rp 360.7M by Jun 2027
+- Extra BTC from blitz: +0.28-0.37 BTC (Rp 1.3-1.8B at $300K)
+
+### 2030 Projections (revised up from wedding delay)
+- Worst case: 4.4 BTC | Personal: 5.6 BTC | Full: 12.0 BTC
+- Fire Sale Theory: AI destroys Indo middle class by 2030, be the buyer
+
+### Assets & Spending
+- Car: Zekrom (BMW E36 M52) — recolor DP 5M paid, 12M remaining, arrives Mar 11
+- OKU Top Performer #1: $8,730/mo (vs normal $6,750). Feb 2026 confirmed TP1.
+- OKU bonus: $5K (Dec 2025 → iPhone 17 Pro Max, old iPhone 13 Pro → mom)
+- House reno (Dec 2025): Rp 28M (Faisal 20M + Zikri 8M)
 - Over-kredit house plan: sell to Dzikri → deploy equity → BTC
-- v1→v2 shift: removed Pokemon/One Piece/Gold diversification
+
+### Self-Reward Haul (Mar 2026)
+- Garmin Vivoactive 5: Rp 2,599,000 (Ramadan sale 51% off, from Machtwatch TikTok)
+- Orient Bambino TAC00008W: negotiating ~Rp 2-2.2M (BNIB, FB Marketplace)
+- Seiko Presage Cocktail: deferred to Japan trip May 2026
+- Watch grail roadmap: Garmin → Orient → Seiko → Grand Seiko Green Birch (~Rp 100M) → Rolex Sub No-Date (BTC funded)
 
 ## Portfolio System (built Mar 12-13, 2026)
 - 4 frontend pages: /portfolio (dashboard), /collectibles, /analytics, /masterplan
@@ -122,21 +135,45 @@
 - Price history saved every scrape for charts
 - Remaining: Telegram sync, mobile polish, auth (~4h)
 
-## OP TCG Collecting (Mar 7, 2026)
-- Faisal wants to collect One Piece TCG cards (SP/manga art) — fun + speculative hold
+## OP TCG Collecting (updated Mar 14, 2026)
 - Thesis: OP manga ending soon → cards become legacy artifacts (like Pokemon Base Set)
-- Budget: Rp 20M from TGE token unlock (Mar 12) for Japan trip (May 2026)
-- Strategy: JP raw SP/manga singles from early sets (OP01-OP04), iconic characters only
-- PSA 10 slabs: ONLY for manga art & mini manga art (display/personal love pieces)
-- Raw singles: for SP, promo, alt art (no slab premium — 88% gem rate makes grading pointless)
-- Yuyu-tei is the price reference, x100 JPY→IDR conversion rate
-- Post-wedding (Nov 2026): Rp 1-2M/mo ongoing card budget from freed wedding allocation
-- Rule: never touch BTC DCA for cards, treat as entertainment not investment
+- Strategy: JP raw SP/manga singles from early sets, iconic characters only
+- PSA 10 slabs: ONLY for manga art & mini manga art (display/love pieces)
+- Raw singles: for SP, promo, alt art (no slab premium — 88% gem rate)
+- Yuyu-tei = price ceiling, SNKR Dunk = marketplace mid. Check BOTH, use lower as anchor.
 - NEW GOAL: collect ALL mini manga event art parallels (complete set)
-- Card appreciation rule: character > rarity. Only Luffy/Nami/Zoro/Hancock from early sets moon. Most SPs sit at ¥580 floor.
-- Pokemon slabs: SELLING to fund Japan OP haul. Portfolio pivoting to pure One Piece.
-- Faisal uses Bitget for BTC trading (not Indodax). Doesn't like Google Sheets.
-- Car plan: wait for 2028 bull run, sell 0.1 BTC at $300K for Rp 200M used car, hard cash
+- Card appreciation rule: character > rarity. Only Luffy/Nami/Zoro from early sets moon.
+- Pokemon: ACTIVELY SELLING (~$3,470 value, +87% ROI) to fund Japan OP haul
+- If Pokemon sold → Japan haul ~Rp 57M, TGE cards portion → BTC instead
+- If unsold → TGE 30% covers Japan cards (~Rp 34M)
+- Portfolio pivoting to pure One Piece collection
+- Rp 200M lifetime cap, ~Rp 26.5M spent so far, ~Rp 173.5M remaining
+- Opportunistic buys ONLY — no DCA, no scheduled. Grail-tier only.
+- NEVER touch BTC DCA for cards
+
+### OP TCG March 2026 Purchases
+| Date | Cards | Cost |
+|------|-------|------|
+| Mar 8 | 2nd Anniversary 9-card set | Rp 3,000,000 |
+| Mar 8 | Sabo SP + Buggy SP + Cross Guild + Luffy Nika (4 cards) | Rp 3,500,000 |
+| Mar 10 | Shanks ST16-004 PSA 10 | Rp 1,070,000 ($65) |
+| Mar 12 | Luffy OP07-109 PSA 10 | Rp 990,000 ($60) |
+| Mar 12 | Sanji Alt OP06-119 PSA 10 | Rp 640,000 ($39) |
+| Mar 14 | Zoro event card (from ETHGlobal $) | Rp 2,200,000 |
+| **TOTAL** | **18 cards** | **Rp 11,400,000** |
+| Pending | Luffy Gear 5 manga art OP09-078 | Rp 2,200,000 |
+
+### Japan Trip (Apr 20, 2026)
+- Tickets already bought (Rp 12M, repaid from freelance)
+- Hotel: Rp 6.35M (from ForuAI leaderboard $)
+- Card budget: Rp 34-57M (TGE + maybe Pokemon sale proceeds)
+- Meeting Keiko there, pre-wedding photos (maybe)
+- Buy JP singles at Yuyu-tei/Akihabara in person
+- Seiko Presage Cocktail shopping too
+
+### Other
+- Faisal uses Bitget for BTC (not Indodax). Hates Google Sheets.
+- Car plan: wait 2028 bull run, sell 0.1 BTC at $300K for Rp 200M used car
 
 ## Zexo's Quest System (Feb 16, 2026)
 - 3 active personal missions: EIP Quest (20 steps), OSS Quest (7 steps), Protocol Bootcamp (14 steps)

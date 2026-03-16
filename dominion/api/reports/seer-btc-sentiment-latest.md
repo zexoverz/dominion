@@ -1,4 +1,4 @@
-# 🔮 SEER Daily BTC Intelligence — March 15, 2026
+# 🔮 SEER Daily BTC Intelligence — March 16, 2026
 
 *Generated at 18:00 UTC by SEER Intelligence Engine*
 
@@ -8,19 +8,19 @@
 
 | Metric | Value |
 |--------|-------|
-| **BTC Price** | $71,832 |
-| **24h Change** | +1.75% |
-| **Market Cap** | $1.44T |
-| **24h Volume** | $21.1B |
+| **BTC Price** | $N/A |
+| **24h Change** | N/A% |
+| **Market Cap** | $N/A |
+| **24h Volume** | $N/A |
 | **All-Time High** | $126,000 |
-| **Drawdown from ATH** | -43.0% |
-| **Fear & Greed Index** | 15/100 — Extreme Fear |
+| **Drawdown from ATH** | -100.0% |
+| **Fear & Greed Index** | 23/100 — Extreme Fear |
 
 ---
 
 ## 🎯 War Chest Protocol (v2.0)
 
-🟠 -40% TRIGGER HIT → Deploy 50% war chest
+🔴 -50% TRIGGER HIT → Deploy 100% war chest
 💎 DIAMOND HANDS MODE — This is what you trained for
 📊 Historically, buying at these levels = generational wealth
 
@@ -36,8 +36,7 @@
 
 ## 📰 Major BTC Headlines
 
-- 🐂 **BULLISH** — Bitcoin beat the S&P 500, Nasdaq Composite and gold since the start of the Iran war *(CNBC)*
-- These 3 charts show Bitcoin's war-linked selloff keeps shrinking as Iran conflict worsens *(CoinDesk)*
+- *No major headlines available at this time*
 
 ---
 

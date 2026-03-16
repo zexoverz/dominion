@@ -8,35 +8,38 @@
 
 | Metric | Value |
 |--------|-------|
-| **BTC Price** | $N/A |
-| **24h Change** | N/A% |
-| **Market Cap** | $N/A |
-| **24h Volume** | $N/A |
+| **BTC Price** | $73,948 |
+| **24h Change** | +2.93% |
+| **24h High / Low** | $74,510 / $71,322 |
+| **24h Volume** | $1.94B |
 | **All-Time High** | $126,000 |
-| **Drawdown from ATH** | -100.0% |
+| **Drawdown from ATH** | -41.3% |
 | **Fear & Greed Index** | 23/100 — Extreme Fear |
 
 ---
 
 ## 🎯 War Chest Protocol (v2.0)
 
-🔴 -50% TRIGGER HIT → Deploy 100% war chest
-💎 DIAMOND HANDS MODE — This is what you trained for
-📊 Historically, buying at these levels = generational wealth
+🟡 -40% TRIGGER HIT → Deploy 50% war chest
+🔴 Next trigger: -50% ($63,000) → Deploy 100% war chest
+
+**Active Triggers:**
+- ✅ -30% ($88,200) — HIT — Deploy 25% war chest
+- ✅ -40% ($75,600) — HIT — Deploy 50% war chest
+- ⏳ -50% ($63,000) — Not yet — Deploy 100% war chest
 
 **Your Rules (from Investment Master Plan v2.0):**
-- -30% from ATH → Deploy 25% war chest
-- -40% from ATH → Deploy 50% war chest  
-- -50% from ATH → Deploy 100% war chest
 - Monthly DCA: Rp 50M into BTC regardless of price
 - ForuAI tokens → sell immediately → BTC
 - NO ALTCOINS. EVER.
 
 ---
 
-## 📰 Major BTC Headlines
+## 📰 Market Context
 
-- *No major headlines available at this time*
+- BTC bounced +2.93% today after touching $71,322 — showing buyer interest near the -42% drawdown zone
+- Fear & Greed at 23 (Extreme Fear) — historically a strong accumulation signal
+- Price holding above $73K after weeks of selling pressure
 
 ---
 
@@ -46,20 +49,13 @@
 
 **Why you HODL through the fear:**
 - BlackRock, Fidelity, and sovereign funds are accumulating at these levels
-- Bitcoin ETF inflows show institutional conviction hasn't wavered
 - Every previous -40%+ drawdown was followed by new ATH within 12-24 months
 - You're 25 with a 5-12 BTC target by 2030 — time is your greatest asset
-- The fire sale theory: AI destroys middle class → you buy their assets cheap
-
-**What NOT to do:**
-- ❌ Panic sell at the bottom
-- ❌ Chase altcoin pumps ("this time is different")
-- ❌ Skip your monthly DCA because "it might go lower"
-- ❌ Listen to CT doomers
+- The -40% war chest trigger is active — this is exactly what the plan was built for
 
 **What TO do:**
 - ✅ Execute your DCA on schedule (Rp 50M/mo)
-- ✅ Deploy war chest at trigger levels
+- ✅ Deploy 50% war chest at current levels (-40% trigger active)
 - ✅ Convert ForuAI tokens → BTC immediately
 - ✅ Stack sats. Stay humble.
 
