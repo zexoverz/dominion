@@ -91,9 +91,11 @@
 - TGE happened, tokens NOT distributed yet (end of March)
 - Accumulated: $6,930 (7mo Aug 2025 → Mar 2026)
 - FORU price at TGE: $0.03, dropped to $0.0184 (-39%), 172% Y1 inflation
-- Distribution plan: 50% BTC ($3,465) / 20% hold for pump ($1,386) / 30% Japan OP cards ($2,079)
+- Distribution plan REVISED: 80% BTC ($5,544) / 20% hold for pump ($1,386) / 0% cards
+- Japan cards now 100% funded by Pokemon slab sales (~$3,470 → ~Rp 57M)
+- TGE 30% that was for cards → redirected to BTC
 - Exit triggers: TP 2x, SL -30%, HARD DEADLINE May 1 sell all
-- BTC-contingent: ≤$65K cancel hold → 70% BTC + 30% cards; ≤$60K deploy war chest too
+- BTC-contingent: ≤$65K → 100% BTC (cancel hold); ≤$60K → 100% BTC + deploy war chest
 - Smart exit: DCA sell in 3 tranches, trailing stop -20% from peak, time decay 14 flat days → sell
 - State: memory/foru-trade-state.json | Crons: FORU-exit-trigger, FORU-hard-deadline
 
@@ -144,24 +146,21 @@
 - NEW GOAL: collect ALL mini manga event art parallels (complete set)
 - Card appreciation rule: character > rarity. Only Luffy/Nami/Zoro from early sets moon.
 - Pokemon: ACTIVELY SELLING (~$3,470 value, +87% ROI) to fund Japan OP haul
-- If Pokemon sold → Japan haul ~Rp 57M, TGE cards portion → BTC instead
-- If unsold → TGE 30% covers Japan cards (~Rp 34M)
+- Pokemon sale proceeds → Japan OP card fund (~Rp 57M)
+- TGE is now PURE BTC play (80/20 split, no card allocation)
+- If Pokemon unsold before Japan → reduce card budget to what's available from play money
 - Portfolio pivoting to pure One Piece collection
 - Rp 200M lifetime cap, ~Rp 26.5M spent so far, ~Rp 173.5M remaining
 - Opportunistic buys ONLY — no DCA, no scheduled. Grail-tier only.
 - NEVER touch BTC DCA for cards
 
 ### OP TCG March 2026 Purchases
-| Date | Cards | Cost |
-|------|-------|------|
-| Mar 8 | 2nd Anniversary 9-card set | Rp 3,000,000 |
-| Mar 8 | Sabo SP + Buggy SP + Cross Guild + Luffy Nika (4 cards) | Rp 3,500,000 |
-| Mar 10 | Shanks ST16-004 PSA 10 | Rp 1,070,000 ($65) |
-| Mar 12 | Luffy OP07-109 PSA 10 | Rp 990,000 ($60) |
-| Mar 12 | Sanji Alt OP06-119 PSA 10 | Rp 640,000 ($39) |
-| Mar 14 | Zoro event card (from ETHGlobal $) | Rp 2,200,000 |
-| **TOTAL** | **18 cards** | **Rp 11,400,000** |
-| Pending | Luffy Gear 5 manga art OP09-078 | Rp 2,200,000 |
+- Mar 8 — 2nd Anniversary 9-card set: Rp 3,000,000
+- Mar 8 — Sabo SP + Buggy SP + Cross Guild + Luffy Nika (4 cards): Rp 3,500,000
+- Mar 14 — Zoro event card (from ETHGlobal $): Rp 2,200,000
+- Mar 16 — Luffy Gear 5 Gomu Gomu no Giant mini manga art (OP09-078, PRB02): Rp 2,200,000 (Yuyu-tei ¥29,800 = Rp 2.98M, saved 26%)
+- **TOTAL: 15 cards, Rp 10,900,000**
+- NOTE: Shanks ST16, Luffy OP07, Sanji Alt OP06 PSA 10s were pre-owned, just added to tracker in Mar
 
 ### Japan Trip (Apr 20, 2026)
 - Tickets already bought (Rp 12M, repaid from freelance)

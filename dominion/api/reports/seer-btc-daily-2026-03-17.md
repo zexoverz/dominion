@@ -8,26 +8,24 @@
 
 | Metric | Value |
 |--------|-------|
-| **BTC Price** | $N/A |
-| **24h Change** | N/A% |
-| **Market Cap** | $N/A |
-| **24h Volume** | $N/A |
+| **BTC Price** | $74,519 |
+| **24h Volume** | ~$28.3M (Gemini) |
 | **All-Time High** | $126,000 |
-| **Drawdown from ATH** | -100.0% |
+| **Drawdown from ATH** | -40.9% |
 | **Fear & Greed Index** | 28/100 — Fear |
+| **Est. Market Cap** | ~$1.48T |
 
 ---
 
 ## 🎯 War Chest Protocol (v2.0)
 
-🔴 -50% TRIGGER HIT → Deploy 100% war chest
-💎 DIAMOND HANDS MODE — This is what you trained for
-📊 Historically, buying at these levels = generational wealth
+🟠 **-40% TRIGGER HIT → Deploy 50% war chest**
+📊 Drawdown at -40.9% from ATH — this is a significant accumulation zone.
 
 **Your Rules (from Investment Master Plan v2.0):**
-- -30% from ATH → Deploy 25% war chest
-- -40% from ATH → Deploy 50% war chest  
-- -50% from ATH → Deploy 100% war chest
+- -30% from ATH → Deploy 25% war chest ✅ PASSED
+- **-40% from ATH → Deploy 50% war chest** ⚠️ **ACTIVE NOW**
+- -50% from ATH → Deploy 100% war chest (triggers at ~$63,000)
 - Monthly DCA: Rp 50M into BTC regardless of price
 - ForuAI tokens → sell immediately → BTC
 - NO ALTCOINS. EVER.
@@ -36,7 +34,8 @@
 
 ## 📰 Major BTC Headlines
 
-- *No major headlines available at this time*
+- **Trump-Linked WLFI Governance Vote:** World Liberty Financial passed a 3-tier staking system requiring up to $5M WLFI lockup for top-level benefits — signals continued political-crypto convergence
+- **Fear & Greed at 28:** Market sentiment deep in "Fear" territory — historically a strong accumulation signal
 
 ---
 

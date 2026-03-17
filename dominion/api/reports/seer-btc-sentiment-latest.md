@@ -1,4 +1,4 @@
-# 🔮 SEER Daily BTC Intelligence — March 16, 2026
+# 🔮 SEER Daily BTC Intelligence — March 17, 2026
 
 *Generated at 18:00 UTC by SEER Intelligence Engine*
 
@@ -14,7 +14,7 @@
 | **24h Volume** | $N/A |
 | **All-Time High** | $126,000 |
 | **Drawdown from ATH** | -100.0% |
-| **Fear & Greed Index** | 23/100 — Extreme Fear |
+| **Fear & Greed Index** | 28/100 — Fear |
 
 ---
 
