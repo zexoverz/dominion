@@ -17,7 +17,7 @@
 - 💍 Wedding fund PAUSED at Rp 150.7M — resume January 2027 (7 months × Rp 30M = Rp 360.7M by Jul 2027)
 - ₿ **BTC BLITZ MODE: Mar-Dec 2026** — redirect Rp 30M/mo wedding → BTC = $4,670/mo total DCA
 - 💵 ETHGlobal $1K landed: Rp 12M Zekrom recolor + Rp 2.2M Zoro event card + Rp 2.2M pending OP card
-- 💵 ForuAI leaderboard $2,500 landed: $500 THR + Rp 2M ETHJKT merch + Rp 24.45M wedding repay + Rp 6.35M Japan hotel
+- 💵 ForuAI leaderboard $2,500 landed: $500 THR + Rp 2M ETHJKT merch + Rp 24.45M wedding repay + Rp 6.35M Japan hotel (remaining Rp 450K)
 - 💍 Wedding fund reconciled: actual Rp 126.3M (borrowed Rp 24.45M for Japan tickets + server/Jogja), repaid from $2,500
 - 🔄 ForuAI TGE strategy: 50% BTC / 20% FORU hold (pump gamble) / 30% Japan OP cards
 - 🔴 FORU exit triggers: TP at 2x, SL at -30%, HARD DEADLINE May 1 sell all → BTC
@@ -130,7 +130,8 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 | OKU Yearly Bonus | $5,000 | ✅ Received (Jan 2) | House reno, Zekrom, Jogja holiday, rest → BTC/war chest |
 | OKU TP1 Extra (Feb) | +$1,980 | ✅ Received | iPhone 17 Pro Max (pre-spent Dec, refilled by TP1) |
 | ETHGlobal Hackathon Win | $1,000 | ✅ Received (Mar 14) | Rp 12M Zekrom recolor + Rp 2.2M Zoro card + Rp 2.2M next OP card |
-| ForuAI Rep Leaderboard | $2,500 | ✅ Received (Mar 14) | $500 THR + Rp 2M ETHJKT + Rp 24.45M wedding repay + Rp 6.35M Japan hotel |
+| ForuAI Rep Leaderboard | $2,500 | ✅ Received (Mar 18) | $500 THR + Rp 2M ETHJKT + Rp 24.45M wedding repay + Rp 6.35M Japan hotel (~Rp 450K left) |
+| ForuAI ElizaOS Final | $3,200 | ✅ Received | Folded into FORU token bucket |
 | LilStars NFT Project | $1,800 | ✅ Received | → War chest (now Rp 31M) |
 | ForuAI TGE Token Unlock | ~$6,930 | ⏳ End Mar | 50% BTC + 20% FORU hold + 30% Japan OP cards |
 
@@ -179,7 +180,7 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 |-------|-------------|-------------|-------|
 | Bitcoin | ~$10,844 | ~Rp 177.8M | 0.153 BTC @ ~$70,875 |
 | One Piece Cards | $2,603 | Rp 42.7M | +113% ROI 🔥 (growing collection) |
-| Pokemon Cards | $1,508 | Rp 24.7M | 📢 SELLING → fund Japan OP haul |
+| Pokemon Cards (active) | ~$1,407 | ~Rp 23M | 📢 SELLING → fund Japan OP haul (2 sold, 1 new) |
 | USDT War Chest | ~$1,890 | Rp 31M | Deploy at dips |
 | Wedding Fund | ~$9,190 | Rp 150.7M | Repaid Rp 24.45M from freelance, back on track |
 | XPL | ~$571 | Rp 9.4M | -82% lesson 💀 (write-off) |

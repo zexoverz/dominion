@@ -103,8 +103,8 @@
 - ETHGlobal $1K → ✅ RECEIVED: Rp 12M Zekrom recolor + Rp 2.2M Zoro card + Rp 2.2M pending OP card
 - LilStars $1.8K → ✅ RECEIVED: war chest
 - ForuAI ElizaOS Rep Leaderboard: $8K project, Faisal's share $2,500
-  - ✅ RECEIVED $2,500: $500 THR + Rp 2M ETHJKT merch + Rp 24.45M wedding repay + Rp 6.35M Japan hotel
-  - ⏳ Final invoice $3,200 due Mar 16 (billed via Revo's PT Inovasi Talenta Digital)
+  - ✅ RECEIVED $2,500: $500 THR + Rp 2M ETHJKT merch + Rp 24.45M wedding repay + Rp 6.35M Japan hotel (~Rp 450K left)
+  - ✅ RECEIVED $3,200 final (via Revo's PT) → folded into FORU token bucket
 - Wedding fund reconciled: was Rp 126.3M (borrowed Rp 24.45M for Japan tix + server + ETHJKT Jogja) → repaid from freelance → back to Rp 150.7M
 
 ### Wedding
@@ -145,8 +145,13 @@
 - Yuyu-tei = price ceiling, SNKR Dunk = marketplace mid. Check BOTH, use lower as anchor.
 - NEW GOAL: collect ALL mini manga event art parallels (complete set)
 - Card appreciation rule: character > rarity. Only Luffy/Nami/Zoro from early sets moon.
-- Pokemon: ACTIVELY SELLING (~$3,470 value, +87% ROI) to fund Japan OP haul
-- Pokemon sale proceeds → Japan OP card fund (~Rp 57M)
+- Pokemon: ACTIVELY SELLING (2 sold Mar 18, 1 bought)
+  - SOLD: Charizard ex PSA 10 → Rp 8.2M (cost ~Rp 5.7M, profit ~Rp 2.5M)
+  - SOLD: N's Reshiram PSA 10 → Rp 800K (cost ~Rp 640K, profit ~Rp 160K)
+  - BOUGHT: Shining Magikarp 25th Anniv PSA 10 JP → Rp 4.2M
+  - Total realized: Rp 9M revenue, ~Rp 2.66M profit (+42%)
+  - Remaining active: Lugia V, Zekrom ex, Black Kyurem ex, Shining Magikarp + 2 EGS slabs
+- Pokemon sale proceeds → Japan OP card fund
 - TGE is now PURE BTC play (80/20 split, no card allocation)
 - If Pokemon unsold before Japan → reduce card budget to what's available from play money
 - Portfolio pivoting to pure One Piece collection

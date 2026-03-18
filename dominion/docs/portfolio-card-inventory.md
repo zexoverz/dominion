@@ -44,17 +44,25 @@
 
 **March 8 Subtotal: Rp 6.5M (~$396 USD)**
 
-## Pokemon Cards — From CSV (5 cards, ALL JP PSA 10)
+## Pokemon Cards — Active (JP PSA 10)
 
-| Card | Code | Set | Rarity | Cost USD | Market USD |
-|------|------|-----|--------|----------|-----------|
-| Lugia V | 110/098 | Paradigm Trigger | Secret Rare | $690 | $1,015.22 |
-| Zekrom ex | 174/086 | Black Bolt | Secret Rare | $450 | $510.79 |
-| Charizard ex | 349/190 | Shiny Treasure ex | Super Rare | $348 | $371.55 |
-| N's Reshiram | 109/100 | Battle Partners | Art Rare | $39 | $51.23 |
-| Black Kyurem ex | 077/064 | Paradise Dragona | Super Rare | $10 | $30 |
+| Card | Code | Set | Rarity | Cost USD | Market USD | Status |
+|------|------|-----|--------|----------|-----------|--------|
+| Lugia V | 110/098 | Paradigm Trigger | Secret Rare | $690 | $1,015.22 | HOLD |
+| Zekrom ex | 174/086 | Black Bolt | Secret Rare | $450 | $510.79 | HOLD |
+| Shining Magikarp | — | 25th Anniversary | — | Rp 4.2M (~$257) | TBD | NEW (Mar 18) |
+| Black Kyurem ex | 077/064 | Paradise Dragona | Super Rare | $10 | $30 | HOLD |
 
-**CSV Pokemon Subtotal: $1,537**
+**Active Pokemon Subtotal: ~$1,407**
+
+## Pokemon Cards — SOLD (Realized Gains)
+
+| Card | Code | Set | Grade | Cost | Sold Price | Profit | Date Sold |
+|------|------|-----|-------|------|-----------|--------|-----------|
+| Charizard ex | 349/190 | Shiny Treasure ex | PSA 10 | $348 (~Rp 5.7M) | Rp 8.2M (~$502) | Rp 2.5M (~$154) | Mar 18, 2026 |
+| N's Reshiram | 109/100 | Battle Partners | PSA 10 | $39 (~Rp 640K) | Rp 800K (~$49) | Rp 160K (~$10) | Mar 18, 2026 |
+
+**Total Realized: Rp 9M sold, ~Rp 2.66M profit (+42% avg)**
 
 ## Pokemon Cards — Additional Slabs (2 cards, Indonesian version, EGS graded)
 
@@ -67,9 +75,18 @@
 
 ## Summary
 - One Piece: 25 cards, ~$1,781 cost basis
-- Pokemon: 7 cards, ~$1,842 cost basis
-- **Total: 32 tracked cards** (+ binder raw singles TBD)
+- Pokemon (active): 4 cards, ~$1,407 cost basis
+- Pokemon (sold): 2 cards, Rp 9M revenue, ~Rp 2.66M profit
+- Pokemon (EGS graded): 2 cards, ~$305 cost basis
+- **Total active: 31 tracked cards** (+ binder raw singles TBD)
 - OP Budget: ~Rp 26.5M spent / Rp 200M cap
+
+## Realized Gains Tracker
+| Period | Cards Sold | Revenue | Cost Basis | Profit | ROI |
+|--------|-----------|---------|------------|--------|-----|
+| Mar 2026 | 2 (Charizard ex, N's Reshiram) | Rp 9M | ~Rp 6.34M | ~Rp 2.66M | +42% |
+
+*Track all card sales here. Pokemon sell-off funds Japan OP haul.*
 
 ## Price Sources (DO NOT use TCGPlayer)
 - Primary: Yuyu-tei (JP retail)

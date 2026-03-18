@@ -249,8 +249,13 @@
       "post": 83,
       "date": "2026-03-17",
       "slot": "malam"
+    },
+    {
+      "post": 88,
+      "date": "2026-03-18",
+      "slot": "siang"
     }
   ],
-  "nextMeme": 88,
-  "nextSubstance": 88
+  "nextMeme": 89,
+  "nextSubstance": 89
 }
