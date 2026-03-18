@@ -133,6 +133,21 @@ export async function getPortfolioMasterplan(password?: string) {
   return fetchAPI<any>(`/api/portfolio/masterplan${password ? `?password=${password}` : ''}`);
 }
 
+export function markCardSold(id: string, data: { sold_price_usd?: number; sold_price_idr?: number; sold_date?: string }) {
+  return fetch(`${API_BASE}/api/portfolio/cards/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'sold', ...data }),
+  }).then(res => {
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    return res.json();
+  });
+}
+
+export function getPortfolioRealizedGains() {
+  return fetchAPI<any>('/api/portfolio/cards/realized-gains');
+}
+
 export async function createProposal(data: Record<string, any>) {
   const res = await fetch(`${API_BASE}/api/proposals`, {
     method: 'POST',

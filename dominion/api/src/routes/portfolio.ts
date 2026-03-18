@@ -229,6 +229,55 @@ router.post('/seed', async (_req: Request, res: Response) => {
   }
 });
 
+// ── Status columns migration (Mark as Sold feature) ──
+router.post('/migrate-status', async (_req: Request, res: Response) => {
+  try {
+    await pool.query(`
+      ALTER TABLE portfolio_cards ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'listed', 'sold', 'keeper'));
+      ALTER TABLE portfolio_cards ADD COLUMN IF NOT EXISTS sold_price_usd DECIMAL(10,2);
+      ALTER TABLE portfolio_cards ADD COLUMN IF NOT EXISTS sold_price_idr DECIMAL(14,0);
+      ALTER TABLE portfolio_cards ADD COLUMN IF NOT EXISTS sold_date DATE;
+    `);
+    res.json({ success: true, message: 'Status columns added' });
+  } catch (err) {
+    console.error('Status migration error:', err);
+    res.status(500).json({ error: 'Migration failed', details: String(err) });
+  }
+});
+
+// ═══ GET /api/portfolio/cards/realized-gains ═══
+router.get('/cards/realized-gains', async (_req: Request, res: Response) => {
+  try {
+    const result = await pool.query("SELECT * FROM portfolio_cards WHERE status = 'sold' ORDER BY sold_date DESC");
+    const soldCards = result.rows;
+
+    let totalRevenueUsd = 0;
+    let totalCostUsd = 0;
+
+    for (const c of soldCards) {
+      const soldUsd = parseFloat(c.sold_price_usd || '0') || (parseFloat(c.sold_price_idr || '0') / IDR_PER_USD);
+      const costUsd = parseFloat(c.cost_usd || '0') || (parseFloat(c.cost_idr || '0') / IDR_PER_USD);
+      totalRevenueUsd += soldUsd;
+      totalCostUsd += costUsd;
+    }
+
+    const totalProfitUsd = totalRevenueUsd - totalCostUsd;
+    const totalProfitPct = totalCostUsd > 0 ? ((totalProfitUsd / totalCostUsd) * 100) : 0;
+
+    res.json({
+      total_sold: soldCards.length,
+      total_revenue_usd: Math.round(totalRevenueUsd * 100) / 100,
+      total_cost_usd: Math.round(totalCostUsd * 100) / 100,
+      total_profit_usd: Math.round(totalProfitUsd * 100) / 100,
+      total_profit_pct: Math.round(totalProfitPct * 100) / 100,
+      cards: soldCards,
+    });
+  } catch (err) {
+    console.error('GET /api/portfolio/cards/realized-gains error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // ═══ GET /api/portfolio/summary ═══
 router.get('/summary', async (_req: Request, res: Response) => {
   try {
@@ -325,12 +374,16 @@ router.post('/holdings', async (req: Request, res: Response) => {
 // ═══ GET /api/portfolio/cards ═══
 router.get('/cards', async (req: Request, res: Response) => {
   try {
-    const { franchise } = req.query;
+    const { franchise, status } = req.query;
     let query = 'SELECT * FROM portfolio_cards WHERE 1=1';
     const params: any[] = [];
     if (franchise) {
       params.push(franchise);
       query += ` AND franchise = $${params.length}`;
+    }
+    if (status) {
+      params.push(status);
+      query += ` AND status = $${params.length}`;
     }
     query += ' ORDER BY date_added DESC, card_name';
     const result = await pool.query(query, params);
@@ -723,7 +776,7 @@ router.patch('/cards/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const fields = req.body;
-    const allowed = ['card_name', 'card_code', 'set_name', 'rarity', 'grade', 'grading_company', 'cost_usd', 'cost_idr', 'current_price_usd', 'current_price_idr', 'image_url', 'price_source', 'notes', 'metadata'];
+    const allowed = ['card_name', 'card_code', 'set_name', 'rarity', 'grade', 'grading_company', 'cost_usd', 'cost_idr', 'current_price_usd', 'current_price_idr', 'image_url', 'price_source', 'notes', 'metadata', 'status', 'sold_price_usd', 'sold_price_idr', 'sold_date'];
     const updates: string[] = [];
     const values: any[] = [];
     

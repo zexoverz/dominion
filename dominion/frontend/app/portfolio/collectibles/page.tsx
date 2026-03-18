@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import PixelBorder from "../../../components/PixelBorder";
 import PixelProgress from "../../../components/PixelProgress";
-import { getPortfolioCards, getPortfolioCardPrices } from "../../../lib/api";
+import { getPortfolioCards, getPortfolioCardPrices, markCardSold, getPortfolioRealizedGains } from "../../../lib/api";
 
 const IDR_PER_USD = 16400;
 const OP_BUDGET_CAP_IDR = 200_000_000;
@@ -30,6 +30,10 @@ type Card = {
   notes: string | null;
   metadata: { price_url?: string; ebay_url?: string; snkr_url?: string; yuyu_tei_jpy?: number; snkr_dunk_jpy?: number; slab_price_usd?: number } | null;
   price_source: string | null;
+  status: 'active' | 'listed' | 'sold' | 'keeper';
+  sold_price_usd: string | null;
+  sold_price_idr: string | null;
+  sold_date: string | null;
 };
 
 function formatUsd(n: number) {
@@ -82,14 +86,25 @@ export default function CollectiblesPage() {
   const [sortBy, setSortBy] = useState<SortKey>("roi");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [realizedGains, setRealizedGains] = useState<any>(null);
 
-  useEffect(() => {
+  const loadCards = useCallback(() => {
     setLoading(true);
-    getPortfolioCards()
-      .then(setCards)
+    Promise.all([
+      getPortfolioCards(),
+      getPortfolioRealizedGains().catch(() => null),
+    ])
+      .then(([cardsData, gainsData]) => {
+        setCards(cardsData);
+        setRealizedGains(gainsData);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    loadCards();
+  }, [loadCards]);
 
   const filtered = useMemo(() => {
     let list = cards.filter((c) => c.franchise === tab);
@@ -240,6 +255,34 @@ export default function CollectiblesPage() {
         </PixelBorder>
       )}
 
+      {/* Realized Gains Summary */}
+      {realizedGains && realizedGains.total_sold > 0 && (
+        <PixelBorder className="p-3">
+          <p className="text-[8px] font-pixel text-rpg-borderMid mb-2">💰 REALIZED GAINS</p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 items-center">
+            <div>
+              <p className="text-[7px] font-pixel text-rpg-borderMid">REVENUE</p>
+              <p className="font-pixel text-[11px] text-throne-goldLight">{formatUsd(realizedGains.total_revenue_usd)}</p>
+            </div>
+            <div>
+              <p className="text-[7px] font-pixel text-rpg-borderMid">COST BASIS</p>
+              <p className="font-pixel text-[11px] text-rpg-border">{formatUsd(realizedGains.total_cost_usd)}</p>
+            </div>
+            <div>
+              <p className="text-[7px] font-pixel text-rpg-borderMid">PROFIT</p>
+              <p className={`font-pixel text-[11px] ${realizedGains.total_profit_usd >= 0 ? "text-throne-green" : "text-throne-red"}`}>
+                {realizedGains.total_profit_usd >= 0 ? "+" : ""}{formatUsd(realizedGains.total_profit_usd)}
+                {" "}({realizedGains.total_profit_pct >= 0 ? "+" : ""}{realizedGains.total_profit_pct.toFixed(1)}%)
+              </p>
+            </div>
+            <div>
+              <p className="text-[7px] font-pixel text-rpg-borderMid">CARDS SOLD</p>
+              <p className="font-pixel text-[11px] text-rpg-border">{realizedGains.total_sold}</p>
+            </div>
+          </div>
+        </PixelBorder>
+      )}
+
       {/* Sort Controls */}
       <div className="flex flex-wrap gap-2 items-center">
         <span className="text-[8px] font-pixel text-rpg-borderMid">SORT:</span>
@@ -285,7 +328,22 @@ export default function CollectiblesPage() {
                 ) : (
                   <span className="text-3xl opacity-50">{franchiseIcon(card.franchise)}</span>
                 )}
-                {card.language && (
+                {card.status === 'sold' && (
+                  <span className="absolute top-1 right-1 bg-red-600 text-white text-[7px] font-pixel px-1.5 py-0.5 border border-red-400/50 z-10">
+                    🔴 SOLD
+                  </span>
+                )}
+                {card.status === 'listed' && (
+                  <span className="absolute top-1 right-1 bg-yellow-600 text-white text-[7px] font-pixel px-1.5 py-0.5 border border-yellow-400/50 z-10">
+                    🟡 LISTED
+                  </span>
+                )}
+                {card.status === 'keeper' && (
+                  <span className="absolute top-1 right-1 bg-purple-600 text-white text-[7px] font-pixel px-1.5 py-0.5 border border-purple-400/50 z-10">
+                    🏆 KEEPER
+                  </span>
+                )}
+                {card.language && card.status !== 'sold' && card.status !== 'listed' && card.status !== 'keeper' && (
                   <span className="absolute top-1 right-1 bg-black/70 text-[7px] font-pixel px-1 py-0.5 text-throne-gold border border-rpg-borderMid/50">
                     {card.language}
                   </span>
@@ -356,6 +414,7 @@ export default function CollectiblesPage() {
         <CardDetailModal
           card={selectedCard}
           onClose={() => setSelectedCard(null)}
+          onRefresh={loadCards}
         />
       )}
 
@@ -436,9 +495,13 @@ function PriceHistoryChart({ prices }: { prices: { price_usd: string; recorded_a
 }
 
 // ═══ Card Detail Modal ═══
-function CardDetailModal({ card, onClose }: { card: Card; onClose: () => void }) {
+function CardDetailModal({ card, onClose, onRefresh }: { card: Card; onClose: () => void; onRefresh: () => void }) {
   const [priceHistory, setPriceHistory] = useState<any[]>([]);
   const [loadingPrices, setLoadingPrices] = useState(true);
+  const [showSoldForm, setShowSoldForm] = useState(false);
+  const [soldPriceIdr, setSoldPriceIdr] = useState("");
+  const [soldDate, setSoldDate] = useState(new Date().toISOString().split("T")[0]);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     setLoadingPrices(true);
@@ -585,6 +648,112 @@ function CardDetailModal({ card, onClose }: { card: Card; onClose: () => void })
               )}
             </div>
           </div>
+
+          {/* Mark as Sold / Sold Info */}
+          {card.status === 'sold' ? (
+            <div className="border border-red-500/30 bg-red-900/20 p-3">
+              <p className="text-[8px] font-pixel text-red-400 mb-2">🔴 SOLD</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-[7px] font-pixel text-rpg-borderMid">SOLD PRICE</p>
+                  <p className="font-pixel text-[11px] text-throne-goldLight">
+                    {card.sold_price_idr ? formatIdr(parseFloat(card.sold_price_idr)) : card.sold_price_usd ? formatUsd(parseFloat(card.sold_price_usd)) : "—"}
+                  </p>
+                  {card.sold_price_idr && (
+                    <p className="text-[8px] font-body text-rpg-borderMid">{formatUsd(parseFloat(card.sold_price_idr) / IDR_PER_USD)}</p>
+                  )}
+                </div>
+                <div className="text-right">
+                  <p className="text-[7px] font-pixel text-rpg-borderMid">SOLD DATE</p>
+                  <p className="font-pixel text-[10px] text-rpg-border">
+                    {card.sold_date ? new Date(card.sold_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"}
+                  </p>
+                </div>
+              </div>
+              {(() => {
+                const soldUsd = parseFloat(card.sold_price_usd || '0') || (parseFloat(card.sold_price_idr || '0') / IDR_PER_USD);
+                const realizedProfit = soldUsd - cost;
+                const realizedPct = cost > 0 ? ((realizedProfit / cost) * 100) : 0;
+                return (
+                  <div className="mt-2 pt-2 border-t border-red-500/20 flex justify-between items-center">
+                    <div>
+                      <span className="text-[7px] font-pixel text-rpg-borderMid">REALIZED P&L: </span>
+                      <span className={`font-pixel text-[10px] ${realizedProfit >= 0 ? "text-throne-green" : "text-throne-red"}`}>
+                        {realizedProfit >= 0 ? "+" : ""}{formatUsd(realizedProfit)}
+                      </span>
+                    </div>
+                    <span className={`font-pixel text-[12px] ${realizedPct >= 0 ? "text-throne-green" : "text-throne-red"}`}>
+                      {realizedPct >= 0 ? "▲" : "▼"} {realizedPct >= 0 ? "+" : ""}{realizedPct.toFixed(1)}%
+                    </span>
+                  </div>
+                );
+              })()}
+            </div>
+          ) : (
+            <div className="border border-rpg-borderMid/30 bg-rpg-borderDark/20 p-3">
+              {!showSoldForm ? (
+                <button
+                  onClick={() => setShowSoldForm(true)}
+                  className="w-full rpg-panel px-3 py-2 text-[9px] font-pixel text-throne-gold hover:text-throne-goldLight hover:bg-rpg-borderDark/50 transition-colors text-center"
+                >
+                  💰 MARK AS SOLD
+                </button>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-[8px] font-pixel text-throne-gold mb-2">💰 RECORD SALE</p>
+                  <div>
+                    <label className="text-[7px] font-pixel text-rpg-borderMid block mb-1">SOLD PRICE (IDR)</label>
+                    <input
+                      type="number"
+                      value={soldPriceIdr}
+                      onChange={(e) => setSoldPriceIdr(e.target.value)}
+                      placeholder="e.g. 500000"
+                      className="w-full bg-rpg-borderDark/50 border border-rpg-borderMid/40 text-rpg-border font-body text-[10px] px-2 py-1.5 focus:border-throne-gold/60 outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[7px] font-pixel text-rpg-borderMid block mb-1">SOLD DATE</label>
+                    <input
+                      type="date"
+                      value={soldDate}
+                      onChange={(e) => setSoldDate(e.target.value)}
+                      className="w-full bg-rpg-borderDark/50 border border-rpg-borderMid/40 text-rpg-border font-body text-[10px] px-2 py-1.5 focus:border-throne-gold/60 outline-none"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={async () => {
+                        if (!soldPriceIdr) return;
+                        setSubmitting(true);
+                        try {
+                          await markCardSold(card.id, {
+                            sold_price_idr: parseFloat(soldPriceIdr),
+                            sold_date: soldDate,
+                          });
+                          onRefresh();
+                          onClose();
+                        } catch (err) {
+                          console.error("Failed to mark as sold:", err);
+                        } finally {
+                          setSubmitting(false);
+                        }
+                      }}
+                      disabled={submitting || !soldPriceIdr}
+                      className="flex-1 rpg-panel px-3 py-1.5 text-[8px] font-pixel text-throne-green hover:bg-rpg-borderDark/50 transition-colors disabled:opacity-50"
+                    >
+                      {submitting ? "SAVING..." : "✅ CONFIRM SALE"}
+                    </button>
+                    <button
+                      onClick={() => setShowSoldForm(false)}
+                      className="rpg-panel px-3 py-1.5 text-[8px] font-pixel text-rpg-border hover:text-throne-red transition-colors"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Last Update Timestamp */}
           {lastUpdate && (
