@@ -153,8 +153,14 @@
   - KEEPERS: Lugia V PSA 10 ($690), Zekrom ex PSA 10 ($450), Shining Magikarp PSA 10 (Rp 4.2M)
   - Total realized: Rp 9M revenue, ~Rp 2.66M profit (+42%)
 - Card proceeds → grails only (OP or Pokemon trophy pieces)
-- TGE is now PURE BTC play (no card allocation from TGE)
+- TGE split: 50% BTC + 20% FORU hold + 30% Japan card fund (~Rp 34M)
 - Portfolio: curated grails collection (OP + Pokemon trophies), not mass collecting
+- Japan hunt plan saved: dominion/reports/japan-card-hunt-plan.md
+- #1 target: Munch Psyduck PSA 10 (~Rp 20-22M in-store, SM-P 286, JP exclusive 2018 museum collab)
+- Also buying: Magikarp AR Triplet Beat PSA 10 (~Rp 3.3M)
+- Van Gogh Pikachu: WAIT — at ATH, target buy at $1,800-2,000 dip Q3 2026
+- If TP1 April: bonus (~Rp 32M) goes to card haul → enables Charizard 151 SAR PSA 10 too
+- Umbreon VMAX Alt Art JP PSA 10 = ¥699K (~Rp 70M) — too expensive for now
 - Rp 200M lifetime cap, ~Rp 26.5M spent so far, ~Rp 173.5M remaining
 - Opportunistic buys ONLY — no DCA, no scheduled. Grail-tier only.
 - NEVER touch BTC DCA for cards
