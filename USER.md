@@ -8,7 +8,7 @@
 - **Timezone:** WIB (UTC+7)
 - **Religion:** Islam
 - **Language:** Indonesian (native), English (fluent)
-- **Fiancée:** Keiko (Japanese), wedding Nov 2026
+- **Fiancée:** Keiko (NOT Japanese — doesn't understand Japan, Faisal knows more), wedding Jul 2027
 - **Education:** Self-taught, no degree, 7+ years professional
 
 ## Work

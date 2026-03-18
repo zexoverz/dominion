@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@railway/cli": "^4.32.0",
     "pg": "^8.18.0",
     "playwright": "^1.58.2",
     "xlsx": "^0.18.5"
