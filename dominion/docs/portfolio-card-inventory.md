@@ -44,16 +44,23 @@
 
 **March 8 Subtotal: Rp 6.5M (~$396 USD)**
 
-## Pokemon Cards — Active (JP PSA 10)
+## Pokemon Cards — Keepers (Trophy Slabs, NOT FOR SALE)
 
 | Card | Code | Set | Rarity | Cost USD | Market USD | Status |
 |------|------|-----|--------|----------|-----------|--------|
-| Lugia V | 110/098 | Paradigm Trigger | Secret Rare | $690 | $1,015.22 | HOLD |
-| Zekrom ex | 174/086 | Black Bolt | Secret Rare | $450 | $510.79 | HOLD |
-| Shining Magikarp | — | 25th Anniversary | — | Rp 4.2M (~$257) | TBD | NEW (Mar 18) |
-| Black Kyurem ex | 077/064 | Paradise Dragona | Super Rare | $10 | $30 | HOLD |
+| Lugia V | 110/098 | Paradigm Trigger | Secret Rare | $690 | $1,015.22 | 🏆 KEEPER |
+| Zekrom ex | 174/086 | Black Bolt | Secret Rare | $450 | $510.79 | 🏆 KEEPER |
+| Shining Magikarp | — | 25th Anniversary JP | — | Rp 4.2M (~$257) | TBD | 🏆 KEEPER (Mar 18) |
 
-**Active Pokemon Subtotal: ~$1,407**
+## Pokemon Cards — Listed for Sale
+
+| Card | Code | Set | Grade | Cost | Status |
+|------|------|-----|-------|------|--------|
+| Mew ex SAR | 347/190 | Shiny Treasure ex (SV4a) ID | EGS 9 Mint | Rp 3.5M | 🟡 LISTED |
+| Gardevoir ex SAR | 348/190 | Shiny Treasure ex (SV4a) ID | EGS 9.5 Gem Mint | Rp 1.5M | 🟡 LISTED |
+| Black Kyurem ex | 077/064 | Paradise Dragona JP | PSA 10 | $10 | 🟡 LISTED |
+
+**Strategy: Sell mid-tier → fund grails (OP or Pokemon trophies). Keep trophy slabs forever.**
 
 ## Pokemon Cards — SOLD (Realized Gains)
 
@@ -75,11 +82,12 @@
 
 ## Summary
 - One Piece: 25 cards, ~$1,781 cost basis
-- Pokemon (active): 4 cards, ~$1,407 cost basis
-- Pokemon (sold): 2 cards, Rp 9M revenue, ~Rp 2.66M profit
-- Pokemon (EGS graded): 2 cards, ~$305 cost basis
+- Pokemon keepers: 3 cards, ~$1,397 cost basis (trophy slabs)
+- Pokemon listed: 3 cards, ~$315 cost basis (selling for grails)
+- Pokemon sold: 2 cards, Rp 9M revenue, ~Rp 2.66M profit
 - **Total active: 31 tracked cards** (+ binder raw singles TBD)
 - OP Budget: ~Rp 26.5M spent / Rp 200M cap
+- **Strategy: sell mid-tier → fund grails (OP or Pokemon trophies)**
 
 ## Realized Gains Tracker
 | Period | Cards Sold | Revenue | Cost Basis | Profit | ROI |

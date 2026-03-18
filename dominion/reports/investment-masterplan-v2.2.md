@@ -22,8 +22,9 @@
 - 🔄 ForuAI TGE strategy: 50% BTC / 20% FORU hold (pump gamble) / 30% Japan OP cards
 - 🔴 FORU exit triggers: TP at 2x, SL at -30%, HARD DEADLINE May 1 sell all → BTC
 - 🔄 BTC-contingent: if BTC ≤ $65K cancel FORU hold → 70% BTC + 30% cards; if ≤ $60K deploy war chest
-- ⚡ Pokemon cards: actively selling → fund Japan OP haul. If unsold, TGE 30% covers cards instead
-- 🏴‍☠️ Portfolio pivot: Pokemon → sell for OP cards. Collection becomes pure One Piece
+- ⚡ Pokemon mid-tier: selling → fund grails (OP or Pokemon trophies). Keepers: Lugia V, Zekrom ex, Shining Magikarp
+- 🏴‍☠️ Portfolio: curated grails collection (OP + Pokemon trophies), sell mid-tier to upgrade
+- 🃏 Mar 18 trades: Charizard ex sold Rp 8.2M, N's Reshiram sold Rp 800K, bought Shining Magikarp Rp 4.2M
 - ✈️ Japan trip (May 2026): tickets Rp 12M + hotel Rp 6.35M + cards Rp 34-57M (depends on Pokemon sale)
 - 📊 Current BTC: 0.1677 BTC (updated Mar 7, 2026)
 - 📊 Projected BTC by Dec 2026: ~0.63-0.85 BTC (with wedding redirect + TGE + war chest deployments)

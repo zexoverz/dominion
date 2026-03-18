@@ -145,16 +145,16 @@
 - Yuyu-tei = price ceiling, SNKR Dunk = marketplace mid. Check BOTH, use lower as anchor.
 - NEW GOAL: collect ALL mini manga event art parallels (complete set)
 - Card appreciation rule: character > rarity. Only Luffy/Nami/Zoro from early sets moon.
-- Pokemon: ACTIVELY SELLING (2 sold Mar 18, 1 bought)
-  - SOLD: Charizard ex PSA 10 → Rp 8.2M (cost ~Rp 5.7M, profit ~Rp 2.5M)
-  - SOLD: N's Reshiram PSA 10 → Rp 800K (cost ~Rp 640K, profit ~Rp 160K)
+- Pokemon strategy: sell mid-tier → fund grails (OP OR Pokemon), keep trophy slabs
+  - SOLD: Charizard ex PSA 10 → Rp 8.2M (profit ~Rp 2.5M)
+  - SOLD: N's Reshiram PSA 10 → Rp 800K (profit ~Rp 160K)
   - BOUGHT: Shining Magikarp 25th Anniv PSA 10 JP → Rp 4.2M
+  - LISTED: Mew ex SAR EGS 9 (Rp 3.5M), Gardevoir ex SAR EGS 9.5 (Rp 1.5M), Black Kyurem ex PSA 10 ($10)
+  - KEEPERS: Lugia V PSA 10 ($690), Zekrom ex PSA 10 ($450), Shining Magikarp PSA 10 (Rp 4.2M)
   - Total realized: Rp 9M revenue, ~Rp 2.66M profit (+42%)
-  - Remaining active: Lugia V, Zekrom ex, Black Kyurem ex, Shining Magikarp + 2 EGS slabs
-- Pokemon sale proceeds → Japan OP card fund
-- TGE is now PURE BTC play (80/20 split, no card allocation)
-- If Pokemon unsold before Japan → reduce card budget to what's available from play money
-- Portfolio pivoting to pure One Piece collection
+- Card proceeds → grails only (OP or Pokemon trophy pieces)
+- TGE is now PURE BTC play (no card allocation from TGE)
+- Portfolio: curated grails collection (OP + Pokemon trophies), not mass collecting
 - Rp 200M lifetime cap, ~Rp 26.5M spent so far, ~Rp 173.5M remaining
 - Opportunistic buys ONLY — no DCA, no scheduled. Grail-tier only.
 - NEVER touch BTC DCA for cards
