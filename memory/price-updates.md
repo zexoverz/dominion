@@ -27,3 +27,18 @@
   - Charizard ex (349/190): $481.73
   - Sanji Alt Art (OP06-119): $180.89
   - Gardevoir ex SAR (348/190): $177.55
+
+## 2026-03-19 06:02 UTC — Cron Price Update
+- **Status:** ✅ Success
+- **Updated:** 34 / 39 cards
+- **Errors:** None
+- **Notable prices:**
+  - Roronoa Zoro Flagship Battle (OP01-025): $2,490.08
+  - Lugia V (110/098): $1,698.87
+  - Zekrom ex (174/086): $915.32
+  - Charizard ex (349/190): $584.32
+  - Shining Magikarp Holo (010/025): $291.03
+  - Gomu Gomu no Giant Luffy G5 (OP09-078): $199.66
+  - Luffy-Tarou Alt Art (ST18-005): $173.68
+  - Ashura Ichibugin Zoro (OP12-037): $166.16
+  - Monkey D. Luffy One Piece Day (OP07-109): $140.37

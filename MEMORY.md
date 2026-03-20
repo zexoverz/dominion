@@ -56,15 +56,17 @@
 - OZ #6305 = best first PR target (30 min, EIP-2200 comment fix)
 - ethereum/tests #1498 BLOCKED (upstream not merged)
 
-## EIP Journey (started Feb 24, 2026)
-- First attended EIP Editing Office Hour #90 (Feb 24) — met Pooja Ranjan, Sam Wilson
-- Interested in contributing to ERC-8165 (Agentic Onchain Operations) by Qin Wang/CSIRO
-- ZK privacy angle is his unique value-add (GrimSwap experience)
-- Bootcamp restructured: 14 days → 8 weeks (realistic pace)
-- Currently Week 1 Day 5-6 of opcodes (mapping lookups done, function dispatcher next) — still stuck here as of Feb 27
-- Joined EPS 2026 (Ethereum Protocol Studies) — kicked off Feb 23, has crypto + zkEVM tracks
-- EPS → EPF pipeline is his path to core contributor status
-- X growth: 200 → 1,258 followers in 1 week (content strategy working)
+## EIP Journey (PAUSED — Mar 19, 2026)
+- Started Feb 24, 2026 — attended EIP Editing Office Hour #90, met Pooja Ranjan, Sam Wilson
+- Interested in ERC-8165 (Agentic Onchain Operations), ZK privacy angle
+- Was on Week 1 Day 5-6 of opcodes when paused
+- Joined EPS 2026 (Feb 23) — did not progress
+- EPS → EPF pipeline was the plan for core contributor status
+- **PAUSED by Faisal's decision** — too much on his plate (OKU, ForuAI, wedding, Japan trip)
+- 3 quests archived: EIP Quest, OSS Quest, Protocol Bootcamp
+- Finality Room (ETHJKT Phase 3) postponed indefinitely
+- Can unpause anytime — everything preserved
+- X growth: 200 → 1,258 followers in 1 week (content strategy was working)
 
 ## Investment Master Plan (v2.2 — source of truth, updated Mar 14 2026)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
