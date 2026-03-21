@@ -46,11 +46,5 @@ export {
 
 // Proposal generation
 export {
-  generateAllProposals,
-  generateProjectProposals,
-  submitProposal,
-  getProjects,
-  type GeneratedProposal,
-  type ProposalType,
-  type ProjectProfile,
+  generateProposals,
 } from './proposal-generator';

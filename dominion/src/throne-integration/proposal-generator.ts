@@ -241,7 +241,7 @@ export async function generateProposals(dryRun = false): Promise<string[]> {
 }
 
 // CLI entry point
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('proposal-generator.ts')) {
+if (require.main === module || process.argv[1]?.endsWith('proposal-generator.ts')) {
   const dryRun = process.argv.includes('--dry-run');
   generateProposals(dryRun).then(results => {
     console.log('📊 Proposal Generation Results:');

@@ -155,7 +155,7 @@ export class VoiceEvolutionService {
       const deltas: Partial<TraitValues> = {};
 
       for (const [trait, influence] of Object.entries(influences) as Array<[TraitName, number]>) {
-        if (trait === 'tension_proxy') continue; // special handling
+        if ((trait as string) === 'tension_proxy') continue; // special handling
 
         const baseValue = profile.baseTraits[trait];
         const currentValue = profile.currentTraits[trait];

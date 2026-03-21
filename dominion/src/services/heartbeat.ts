@@ -408,13 +408,13 @@ export class HeartbeatService {
     // Simple cost estimation based on trigger action type
     const actionType = trigger.action_config.action;
     
-    const costMap: Record<string, { tokens: number; costUsd: number }> = {
-      'create_proposal': { tokens: 500, costUsd: 0.02 },
-      'initiate_roundtable': { tokens: 300, costUsd: 0.015 },
-      'send_notification': { tokens: 100, costUsd: 0.005 }
+    const costMap: Record<string, { tokens: number; cost: number; costUsd: number }> = {
+      'create_proposal': { tokens: 500, cost: 0.02, costUsd: 0.02 },
+      'initiate_roundtable': { tokens: 300, cost: 0.015, costUsd: 0.015 },
+      'send_notification': { tokens: 100, cost: 0.005, costUsd: 0.005 }
     };
     
-    return costMap[actionType] || { tokens: 200, costUsd: 0.01 };
+    return costMap[actionType] || { tokens: 200, cost: 0.01, costUsd: 0.01 };
   }
 
   /**

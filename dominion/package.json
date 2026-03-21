@@ -12,7 +12,9 @@
     "db:reset": "npm run db:schema && npm run db:seed"
   },
   "dependencies": {
-    "pg": "^8.18.0"
+    "@types/uuid": "^10.0.0",
+    "pg": "^8.18.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
