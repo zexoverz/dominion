@@ -42,3 +42,18 @@
   - Luffy-Tarou Alt Art (ST18-005): $173.68
   - Ashura Ichibugin Zoro (OP12-037): $166.16
   - Monkey D. Luffy One Piece Day (OP07-109): $140.37
+
+---
+
+### 2026-03-22 06:02 UTC — Cron Price Update
+- **Status:** ✅ Success
+- **Updated:** 23 / 39 cards
+- **Errors:** None
+- **Source:** yuyu-tei
+- **Notable prices:**
+  - Gomu Gomu no Giant Luffy G5 (OP09-078): $199.66
+  - Ashura Ichibugin Zoro Parallel (OP12-037): $166.16
+  - 5x Gorosei Red Parallels (OP13): $119.26 each
+  - Sabo Wanted Poster SPC (OP13-120): $85.76
+  - Buggy Wanted Poster SPC (OP09-051): $66.87
+  - Cross Guild Parallel (OP09-057): $66.87
