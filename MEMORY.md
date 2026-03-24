@@ -86,7 +86,8 @@
 - Current holdings: 0.1677 BTC (as of Mar 7, 2026)
 - Mar DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K
 - BTC ATH: ~$126K | War chest triggers: -30% (25%), -40% (50%), -50% (100%)
-- War chest: Rp 31M (as of Mar 6)
+- War chest: Rp 29.5M (as of Mar 24 — spent Rp 1.5M on Snorlax 151 PSA 10, Enel + Sanji still negotiating)
+- Card collection tracker: dominion/reports/cards-collection.md
 - XPL: 3278 tokens (write-off, -82% lesson, forget it)
 
 ### FORU TGE (Mar 12, 2026)
