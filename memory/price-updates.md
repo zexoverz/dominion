@@ -57,3 +57,19 @@
   - Sabo Wanted Poster SPC (OP13-120): $85.76
   - Buggy Wanted Poster SPC (OP09-051): $66.87
   - Cross Guild Parallel (OP09-057): $66.87
+
+### 2026-03-25 06:02 UTC — Cron Price Update
+- **Status:** ✅ Success
+- **Updated:** 23 / 40 cards
+- **Errors:** None
+- **Source:** yuyu-tei
+- **Notable prices:**
+  - Gomu Gomu no Giant Luffy G5 (OP09-078): $199.66
+  - Ashura Ichibugin Zoro Parallel (OP12-037): $166.16
+  - 5x Gorosei Red Parallels (OP13): $119.26 each
+  - Sabo Wanted Poster SPC (OP13-120): $85.76
+  - Buggy Wanted Poster SPC (OP09-051): $66.87
+  - Cross Guild Parallel (OP09-057): $66.87
+  - Ace 2nd Anniversary (OP02-013): $46.77
+  - Kamusari Shanks Parallel (OP13-076): $40.07
+  - Luffy 2nd Anniversary (ST10-Promo): $40.07

@@ -1,6 +1,6 @@
 # 🃏 Zexo's Card Collection
 
-*Last updated: 2026-03-24*
+*Last updated: 2026-03-25*
 
 ## Collection Strategy
 - **PSA 10 slabs** → manga art characters only (display/grail pieces)
@@ -17,15 +17,13 @@
 | 1 | Luffy Gear 5 Gum Gum | OP TCG | Mini Manga (JP) | Raw | — | Pre-Mar 2026 | Mini manga collection |
 | 2 | Zoro | OP TCG | Mini Manga (JP) | Raw | — | Pre-Mar 2026 | Mini manga collection |
 | 3 | Snorlax Art Rare #181/165 sv2a | Pokemon 151 (JP) | Art Rare | PSA 10 | Rp 1,500,000 | 2026-03-24 | Sleeping art 😴. Above eBay median (~$63) but fair for local market |
+| 4 | Enel Raigō OP15-077 | OP TCG OP15 | Mini Manga Parallel (JP) | Raw | Rp 2,000,000 | 2026-03-25 | Sold out on yuyu-tei (¥19,800). Left edge whitening — fine for raw display |
 
 ---
 
 ## In Progress 🔄
 
-| Card | Set | Type | Status | Target Price | Notes |
-|------|-----|------|--------|-------------|-------|
-| Enel Raigō (雷龍) OP15-077 | OP TCG OP15 | Mini Manga Parallel (JP) | Negotiating | Rp 1,900,000 | Sold out on Yuyu-tei (¥19,800). Has left edge whitening — fine for raw |
-| Sanji Boeuf Burst OP12-060 | OP TCG OP12 | Mini Manga Alt Art (ENG) | Negotiating | Rp 1,300,000 target | Pricecharting avg ~$81 ungraded. Push for 1.3M, max 1.4M |
+*(Nothing currently in progress)*
 
 ---
 
@@ -40,9 +38,10 @@
 | Date | Card | Amount (IDR) | Source |
 |------|------|-------------|--------|
 | 2026-03-24 | Snorlax PSA 10 | 1,500,000 | War chest |
+| 2026-03-25 | Enel Raigō OP15-077 | 2,000,000 | War chest |
 
-**Total spent:** Rp 1,500,000
-**War chest impact:** Rp 31M → Rp 29.5M
+**Total spent:** Rp 3,500,000
+**War chest impact:** Rp 31M → Rp 27.5M
 
 ---
 
