@@ -10,7 +10,7 @@ import {
   BarChart, Bar, Cell, Legend, ComposedChart, Line,
 } from "recharts";
 
-const IDR_PER_USD = 16400;
+const IDR_PER_USD = 16800;
 
 function fmtUsd(n: number) {
   if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(2) + "B";

@@ -6,7 +6,7 @@ import * as path from 'path';
 
 const router = Router();
 
-const IDR_PER_USD = 16400;
+const IDR_PER_USD = 16800;
 const JPY_TO_USD = 0.0067; // ~150 JPY per USD
 
 // ── Auth Middleware ──
@@ -445,7 +445,7 @@ router.post('/smart-add', async (req: Request, res: Response) => {
     }
 
     const JPY_TO_USD = 0.0067;
-    const IDR_PER_USD = 16400;
+    const IDR_PER_USD = 16800;
     const isOnePiece = franchise === 'one_piece';
     const isPSA10 = grade === 'PSA 10';
     const isSlab = isPSA10 || (grade && grade !== 'Raw');

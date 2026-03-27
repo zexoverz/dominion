@@ -6,7 +6,7 @@ import PixelBorder from "../../../components/PixelBorder";
 import PixelProgress from "../../../components/PixelProgress";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "https://dominion-api-production.up.railway.app";
-const IDR_PER_USD = 16400;
+const IDR_PER_USD = 16800;
 
 async function getMasterplan() {
   const res = await fetch(`${API}/api/portfolio/masterplan`);

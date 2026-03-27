@@ -10,7 +10,15 @@
 | v1.0 | Oct 22, 2025 | Initial cycle-aware strategy |
 | v2.0 | Dec 13, 2025 | Bitcoin Maxi pivot, Fire Sale theory, math corrections |
 | v2.1 | Mar 6, 2026 | TGE date fix, health/fitness allocation, gold via Keiko |
-| **v2.2** | **Mar 14, 2026** | **Freelance allocation, TGE 50/20/30 split, Pokemon → sell → OP, wedding fund reconciliation** |
+| v2.2 | Mar 14, 2026 | Freelance allocation, TGE 50/20/30 split, Pokemon → sell → OP, wedding fund reconciliation |
+| **v2.3** | **Mar 27, 2026** | **Wedding fund STOPPED → redirected to BTC. Salary cycle clarified: ForuAI always lands first = start of new month cycle.** |
+
+### March 27, 2026 Updates (v2.3)
+- 💒 **Wedding fund Rp 30M/mo STOPPED** — redirected to BTC DCA
+- 📊 New monthly BTC capacity: ~Rp 76.6M (pre-TGE), ~Rp 93M+ (post-TGE)
+- 🔄 Salary cycle clarified: ForuAI always lands FIRST = start of new month cycle
+- 🟠 Apr cycle started: ForuAI $2,309 → 0.03481 BTC @ $66.2K (Mar 27)
+- 📊 Updated BTC: 0.20251 BTC (crossed 0.2 milestone!)
 
 ### March 14, 2026 Updates (v2.2)
 - 💵 ETHGlobal $1K landed: Rp 12M Zekrom recolor + Rp 2.2M Zoro event card + Rp 2.2M pending OP card
@@ -66,10 +74,10 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 |--------|-------|
 | Current Net Worth | ~Rp 549M liquid + Rp 350M house equity |
 | Monthly Income | Rp 165M ($10,050) |
-| Monthly Investment | ~Rp 108M (post-TGE) |
-| Current BTC | 0.153 BTC (~$10,844 @ $70,875) |
-| Wedding Fund | Rp 150M (target Rp 350M by Oct 2026) |
-| War Chest | Rp 31M |
+| Monthly BTC Investment | ~Rp 80M (v2.3) / ~Rp 97M w/ tokens |
+| Current BTC | 0.20251 BTC (~$13,400 @ $66,264) |
+| Wedding Fund | Rp 150.7M (FROZEN — v2.3) |
+| War Chest | Rp 26.8M |
 | 2030 Target | Rp 26B - 192B (depending on BTC price) |
 
 ### The Thesis
@@ -102,13 +110,14 @@ All income streams convert to Bitcoin. No altcoins. No speculation. Institutiona
 
 ## Part II: Income & Expenses
 
-### Monthly Income: Rp 165M ($10,050)
+### Monthly Income: Rp 169M ($10,050)
+*Exchange rate: Rp 16,800/USD (updated Mar 27, 2026)*
 | Source | USD | IDR |
 |--------|-----|-----|
-| OKU Trade | $6,750 | Rp 110.7M |
-| ForuAI Cash | $2,310 | Rp 37.9M |
-| ForuAI Tokens | $990 | Rp 16.2M |
-| **Total** | **$10,050** | **Rp 164.8M** |
+| OKU Trade | $6,750 | Rp 113M |
+| ForuAI Cash | $2,310 | Rp 39M |
+| ForuAI Tokens | $990 | Rp 16.6M |
+| **Total** | **$10,050** | **Rp 168.8M** |
 
 ### OKU Salary Tiers
 | Tier | Monthly USD | Monthly IDR | Trigger |
@@ -406,25 +415,27 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 
 ### Monthly Allocation (Updated March 2026)
 
-**Income split:**
+**Income split (@ Rp 16,800/USD):**
 | Source | Amount | Goes To |
 |--------|--------|---------|
-| ForuAI Cash | $2,310 (Rp 37.9M) | 100% → BTC DCA |
-| OKU Trade | $6,750 (Rp 110.7M) | Expenses + Wedding + War Chest |
+| ForuAI Cash | $2,310 (Rp 39M) | 100% → BTC DCA |
+| OKU Trade | $6,750 (Rp 113M) | Expenses + War Chest + BTC |
 
 **From OKU income (Rp 110.7M):**
 | Category | Amount | Notes |
 |----------|--------|-------|
 | All Expenses | ~Rp 57M | Living + Dzikri + Keiko + Health |
-| Wedding Fund | Rp 30M | Cash/BBCA |
+| ~~Wedding Fund~~ | ~~Rp 30M~~ | **STOPPED (v2.3)** — redirected to BTC |
+| BTC DCA (ex-wedding) | Rp 30M | New since v2.3 — was wedding fund |
 | War Chest | Rp 15M | USDT (skipped some months — see below) |
 | Surplus | ~Rp 8.7M | → BTC when available, sometimes car/misc |
 
-**Total BTC per month:**
+**Total BTC per month (updated v2.3, @ Rp 16,800/USD):**
 | Period | BTC DCA | Source |
 |--------|---------|--------|
-| Pre-TGE (now) | ~Rp 46.6M | ForuAI cash (37.9M) + OKU surplus (~8.7M) |
-| Post-TGE (Mar 12+) | ~Rp 63M+ | + token sell (~Rp 16.2M/mo) |
+| Pre-v2.3 | ~Rp 50M | ForuAI cash (39M) + OKU surplus (~11M) |
+| **v2.3 (Apr 2026+)** | **~Rp 80M** | ForuAI cash (39M) + ex-wedding (30M) + OKU surplus (~11M) |
+| v2.3 + tokens | **~Rp 97M+** | + token sell (~Rp 16.6M/mo) |
 
 **Notes:**
 - OKU surplus is variable — some months goes to car maintenance (Zekrom), misc expenses
@@ -438,6 +449,20 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | OKU Bonus → Wedding | $2,500 | Dec 30 |
 | Continue DCA | Rp 50M | Dec 29/30 |
 
+### April 2026 Actions (v2.3)
+| Action | Amount | Timing |
+|--------|--------|--------|
+| ✅ ForuAI cash → BTC | 0.03481 BTC @ $66,264 ($2,309 = Rp 39M) | Mar 27 (Apr cycle Day 1) |
+| ⏳ OKU salary lands | Rp 113M ($6,750) | ~Apr 1 |
+| ⏳ Ex-wedding → BTC | Rp 30M | After OKU lands |
+| ⏳ OKU surplus → BTC | ~Rp 11M | After OKU lands |
+| ⏳ War chest refill | +Rp 15M → ~Rp 41.8M total | After OKU lands |
+| ⏳ War chest deploy decision | Rp 41.8M if BTC ≤$66K | After refill |
+| ⏳ FORU tokens distribution | ~$6,930 | Pending — sell → BTC |
+| ⏳ FORU hard deadline | May 1 — sell ALL remaining | Monitor |
+| ⏳ Sell Pokemon slabs | ~$3,470 | Before May — fund Japan OP haul |
+| **Apr BTC target** | **~Rp 80M (~0.072 BTC)** | + war chest + tokens if available |
+
 ### March 2026 Actions
 | Action | Amount | Timing |
 |--------|--------|--------|
@@ -445,9 +470,9 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | ✅ ForuAI leaderboard received | $2,500 | Mar 14 — THR + wedding repay + Japan hotel |
 | ✅ Mar DCA #1 | 0.0146 BTC at $67.9K | Completed |
 | ✅ Mar DCA #2 | 0.0203 BTC at $65K | Completed |
-| ⏳ ForuAI TGE unlock | ~$6,930 | End March — 50% BTC / 20% hold / 30% cards |
+| ✅ Mar DCA #3 | 0.03481 BTC at $66.2K | Completed (ForuAI — counted as Apr cycle) |
+| ⏳ ForuAI TGE unlock | ~$6,930 | End March — 80% BTC / 20% hold (revised) |
 | ⏳ Sell Pokemon slabs | ~$3,470 | Before May — fund Japan OP haul |
-| Continue monthly DCA | Rp 50M | Mar 29/30 |
 
 ### ForuAI Token Strategy (Updated Mar 14, 2026)
 - **Personal tokens (TGE end March 2026):** ~$6,930 accumulated (7 months)
@@ -480,9 +505,9 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 ## Part XI: Decision Framework
 
 ### Monthly Checklist
-- [ ] ForuAI cash ($2,310) → BTC immediately on payday
+- [ ] ForuAI cash ($2,310) → BTC immediately on payday ← **THIS IS DAY 1 OF NEW CYCLE**
 - [ ] OKU surplus → BTC (variable, after expenses)
-- [ ] Allocate Rp 30M to wedding fund
+- [ ] ~~Allocate Rp 30M to wedding fund~~ **STOPPED v2.3** → Rp 30M now → BTC
 - [ ] Add Rp 15M to war chest (USDT) — skip if Lebaran/religious obligations
 - [ ] Keiko handles gold from her Rp 4M
 - [ ] Sell any FORU tokens received → BTC immediately

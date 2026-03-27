@@ -6,7 +6,7 @@ import PixelBorder from "../../../components/PixelBorder";
 import PixelProgress from "../../../components/PixelProgress";
 import { getPortfolioCards, getPortfolioCardPrices, markCardSold, getPortfolioRealizedGains } from "../../../lib/api";
 
-const IDR_PER_USD = 16400;
+const IDR_PER_USD = 16800;
 const OP_BUDGET_CAP_IDR = 200_000_000;
 const OP_SPENT_IDR = 26_500_000;
 

@@ -68,25 +68,27 @@
 - Can unpause anytime — everything preserved
 - X growth: 200 → 1,258 followers in 1 week (content strategy was working)
 
-## Investment Master Plan (v2.2 — source of truth, updated Mar 14 2026)
+## Investment Master Plan (v2.3 — source of truth, updated Mar 27 2026)
 - Repo: zexoverz/Investment-masterplan-zexo-2030 (private)
-- Local copy: dominion/reports/investment-masterplan-v2.2.md (latest)
+- Local copy: dominion/reports/investment-masterplan-v2.1.md (latest, now at v2.3)
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
 
-### Monthly Allocations (BTC Blitz Mode: Mar-Dec 2026)
-- **BTC DCA: $4,670/mo** (Rp 50M regular + Rp 30M redirected from wedding)
+### Monthly Allocations (v2.3 — Apr 2026+, @ Rp 16,800/USD)
+- **Salary cycle: ForuAI lands FIRST = Day 1 of new month cycle**
+- ForuAI cash ($2,310/mo = Rp 39M) → 100% BTC immediately (first of the month)
+- OKU ($6,750 = Rp 113M) → expenses + war chest + BTC (ex-wedding Rp 30M now → BTC)
+- **BTC DCA total: ~Rp 80M/mo** (ForuAI 39M + ex-wedding 30M + OKU surplus ~11M)
+- With tokens: **~Rp 97M/mo**
 - War chest: Rp 15M/mo (skipped Lebaran months → zakat/THR/infaq)
 - Keiko: Rp 4M budget (actual ~Rp 7.2M avg — #1 budget leak)
 - Health: Rp 4M (PT gym Rp 2.4M 3-4x/wk + basketball Rp 1.6M 2hrs/wk)
-- ForuAI cash ($2,310/mo) → 100% BTC every month
-- OKU surplus (~Rp 8.7M) variable — car/misc
-- Wedding fund: **PAUSED** at Rp 150.7M until Jan 2027, resume Rp 30M/mo → Rp 360.7M by Jun 2027
+- Wedding fund: **STOPPED** (v2.3) — Rp 30M/mo redirected to BTC. Current balance frozen at ~Rp 150.7M
 
 ### BTC Stack
-- Current holdings: 0.1677 BTC (as of Mar 7, 2026)
-- Mar DCA completed: 0.0146 BTC at $67.9K + 0.0203 BTC at $65K
+- Current holdings: 0.20251 BTC (as of Mar 27, 2026)
+- Mar DCA: 0.0146 BTC @ $67.9K + 0.0203 BTC @ $65K + 0.03481 BTC @ $66.2K (ForuAI $2,309)
 - BTC ATH: ~$126K | War chest triggers: -30% (25%), -40% (50%), -50% (100%)
-- War chest: Rp 29.5M (as of Mar 24 — spent Rp 1.5M on Snorlax 151 PSA 10, Enel + Sanji still negotiating)
+- War chest: Rp 26.8M (as of Mar 27 — Faisal confirmed current balance)
 - Card collection tracker: dominion/reports/cards-collection.md
 - XPL: 3278 tokens (write-off, -82% lesson, forget it)
 

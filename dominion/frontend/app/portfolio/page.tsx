@@ -23,7 +23,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const IDR_PER_USD = 16400;
+const IDR_PER_USD = 16800;
 const COLORS = ["#fbbf24", "#22c55e", "#ec4899", "#f97316", "#06b6d4", "#6b21a8", "#3b82f6"];
 
 function formatUsd(n: number) {
