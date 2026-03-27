@@ -467,10 +467,11 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 #### April Card Haul (Japan Trip — Rp 54M budget)
 | Card | Est. Price | Priority |
 |------|-----------|----------|
-| Munch Psyduck PSA 10 (SM-P 286) | Rp 20-22M | 🔴 Grail #1 |
-| Sanji Manga Art PSA 10 (OP06-119) | Rp 24M | 🔴 Grail #2 |
-| Mini manga raw singles ×3-5 | Rp 8M | 🟡 Collection fill |
-| **Total** | **~Rp 54M** | |
+| Sanji Manga Art PSA 10 (OP06-119) | Rp 24M | 🔴 Grail #1 |
+| Luffy New Emperor Manga PSA 10 (OP09-119) | Rp 28-35M (in-store hunt) | 🔴 Grail #2 |
+| Mini manga raw singles ×2-3 | Rp 4-6M | 🟡 Collection fill |
+| **Total** | **~Rp 56-65M** | |
+| Backup: OP09 raw (¥170K) + Shanks OP01 PSA 10 (¥200K) if no OP09 PSA 10 in-store |
 | 🎯 2029 GRAIL: Silver/Gold Luffy 3rd Anniversary | ¥570K-1.5M | Buy from BTC profits |
 
 ### March 2026 Actions

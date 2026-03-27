@@ -8,57 +8,49 @@
 | **Card budget** | **Rp 54M** | |
 | **If Pokemon sells + TP1** | **Rp 90M+** | |
 
-## Pokemon Hunt List
-
-### 🔴 PRIORITY BUYS (Rp 54M budget)
+## 🔴 PRIORITY BUYS — Japan Trip (Rp 54M budget)
 | Card | Code | Grade | Target Price | Where to Look | Priority |
 |------|------|-------|-------------|---------------|----------|
-| **Munch Psyduck** | SM-P 286 | PSA 10 | ¥200-220K (~Rp 20-22M) | Mandarake, Surugaya, Card Rush | 🔴 GRAIL #1 |
-| **Sanji Manga Art (コミパラ)** | OP06-119 SEC-SP | PSA 10 | ¥240K (~Rp 24M) | Mandarake Nakano, Card Rush | 🔴 GRAIL #2 |
-| **Mini Manga raw singles ×3-5** | Various | Raw | ¥10-20K each (~Rp 1-2M) | Yuyu-tei physical, Surugaya | 🟡 Collection fill |
+| **Sanji Manga Art (コミパラ)** | OP06-119 SEC-SP | PSA 10 | ¥192-240K (~Rp 24M) | Mandarake Nakano, Card Rush | 🔴 GRAIL #1 |
+| **Luffy New Emperor Manga (コミパラ)** | OP09-119 SEC-SP | PSA 10 | ~¥280-350K (~Rp 28-35M) in-store | Mandarake Nakano, Card Rush, Surugaya | 🔴 GRAIL #2 |
+| **Mini Manga raw singles ×2-3** | Various | Raw | ¥10-20K each (~Rp 1-2M) | Yuyu-tei physical, Surugaya | 🟡 Collection fill |
+
+### ⚠️ BACKUP (if OP09-119 コミパラ PSA 10 not found in-store)
+| Card | Code | Grade | Target Price | Notes |
+|------|------|-------|-------------|-------|
+| Luffy New Emperor Manga RAW | OP09-119 SEC-SP | Raw | ¥170K (~Rp 17M) | Grade yourself later via PSA |
+| Shanks Manga PSA 10 | OP01-120 SEC-SP | PSA 10 | ¥200K (~Rp 20M) | OG first set, use remaining budget |
 
 ### 🟡 OPPORTUNISTIC (only if budget left over or Pokemon sells)
 | Card | Code | Grade | Target Price | Where to Look | Priority |
 |------|------|-------|-------------|---------------|----------|
-| Magikarp AR (Triplet Beat) | SV1a 080/073 | PSA 10 | ¥33K (~Rp 3.3M) | SNKR Dunk / JP store | 🟡 If spare |
-| Charizard ex SAR (151) | SV2a 201/165 | PSA 10 | ¥124K (~Rp 12.4M) | Any store | 🟡 Only if TP1 bonus |
+| Munch Psyduck | SM-P 286 | PSA 10 | ¥200-220K (~Rp 20-22M) | Mandarake, Surugaya | 🟡 No rush, flat price |
+| Van Gogh Pikachu | - | PSA 10 | ¥180-200K | Any store | 🟡 No rush |
 
-### 🎯 2029 GRAIL LIST (buy from BTC profits post-bull)
+### 🎯 FUTURE GRAIL ROADMAP
 | Card | Current Price | Buy When |
 |------|-------------|----------|
+| Gear 5 Luffy Manga PSA 10 (OP05-119) | ¥860K-1.5M (Rp 86-150M) | 2027 (freed wedding allocation) |
+| Shanks Manga PSA 10 (OP01-120) | ¥200K (Rp 20M) | 2027 (cheap pickup) |
+| Sogeking Manga PSA 10 (OP03-122) | ¥100K (Rp 10M) | 2027 (cheapest manga) |
+| Other character mangas | ¥50-200K each | 2027-2028 (one per month) |
 | Silver 3rd Anniversary Luffy PSA 10 | ¥570-700K (Rp 57-70M) | 2029 BTC bull |
 | Gold 3rd Anniversary Luffy PSA 10 | ¥1.45-1.98M (Rp 145-198M) | 2029-2030 BTC peak |
-| Van Gogh Pikachu PSA 10 | ¥180-200K target | Q3 2026 bear dip |
 
-### WAIT LIST (DO NOT BUY NOW)
-| Card | Current Price | Target Buy Price | When |
-|------|-------------|-----------------|------|
-| Van Gogh Pikachu PSA 10 | ¥350K+ (~Rp 35M) | ¥180-200K (~Rp 18-20M) | Q3 2026 (bear dip) |
-
-## One Piece Hunt List
-
-### JP STORE TARGETS
-| Card Type | Budget | Where to Look |
-|-----------|--------|---------------|
-| Manga art parallels (early sets OP01-OP04) | Rp 5-10M | Yuyu-tei physical, Card Rush |
-| Gear 5 SP cards | Rp 5-10M | Any OP TCG store |
-| Mini manga event art parallels | Rp 2-5M | Surugaya, Mandarake |
-
-## Budget Split (Final — Mar 27 decision)
+## Budget Split (Final v2 — Mar 27 decision)
 
 ### Base Budget: Rp 54M (from FORU 47%)
 | Item | Allocation |
 |------|-----------|
-| Munch Psyduck PSA 10 | Rp 20-22M |
 | Sanji Manga Art PSA 10 (OP06-119) | Rp 24M |
-| Mini manga raw singles ×3-5 | Rp 8M |
+| Luffy New Emperor Manga PSA 10 (OP09-119) | Rp 28-35M |
+| Mini manga raw singles ×2-3 | Rp 4-6M |
 
 ### If Pokemon sells + TP1: +Rp 37M extra
 | Item | Allocation |
 |------|-----------|
-| Magikarp AR PSA 10 | Rp 3.3M |
-| More OP manga singles | Rp 15-20M |
-| Charizard 151 SAR PSA 10 | Rp 12.4M (stretch) |
+| More OP manga PSA 10s (Shanks, Sogeking) | Rp 20-30M |
+| Munch Psyduck PSA 10 | Rp 20-22M |
 
 ## KEEPER COLLECTION (Never Sell)
 - 🏆 Lugia V PSA 10 ($690 cost)

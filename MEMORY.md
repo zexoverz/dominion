@@ -97,9 +97,21 @@
 - Accumulated: $6,930 (7mo Aug 2025 → Mar 2026)
 - FORU price at TGE: $0.03, dropped to $0.0184 (-39%), 172% Y1 inflation
 - Distribution plan FINAL (Mar 27): 37% BTC (Rp 43M) / 47% cards (Rp 54M) / 16% hold (Rp 19M)
-- Japan cards: Munch Psyduck PSA 10 (Rp 22M) + Sanji Manga PSA 10 OP06-119 (Rp 24M) + mini manga raw ×3-5 (Rp 8M)
-- 2029 grail: Silver/Gold 3rd Anniversary Luffy (¥570K-1.98M) — buy from BTC profits
-- Silver Luffy considered but rejected: BTC beats cards 2-3x on ROI, "stack now flex later"
+- Japan cards FINAL: Sanji Manga PSA 10 OP06-119 (Rp 24M) + Luffy New Emperor Manga PSA 10 OP09-119 (Rp 28-35M in-store) + mini manga raw ×2-3 (Rp 4-6M)
+- Backup: if no OP09 PSA 10 in-store → buy OP09 raw (¥170K) + Shanks OP01 PSA 10 (¥200K)
+- Dropped Munch Psyduck from Japan haul (no time pressure, museum collabs can wait)
+- Grail roadmap: 2026 Japan (Sanji+Luffy OP09) → 2027 (Gear 5 manga + Shanks + Sogeking) → 2029 (Gold Luffy from BTC profits)
+- Key insight: OP manga cards have time pressure (manga ending), museum collabs (Psyduck, Van Gogh Pika) don't
+- Faisal prefers PSA 10 slabs for grails (bad at evaluating raw card condition)
+- SNKR Dunk API works for search/listings, NO sold history endpoint
+- OP09-119 コミパラ: raw ¥170K, no PSA 10 listed online — must hunt in-store
+- Complete manga PSA 10 set goal: Shanks(OP01) Sogeking(OP03) Luffy G5(OP05) Sanji(OP06) Luffy Emperor(OP09) + others
+
+### April Allocation Summary (Final Mar 27)
+- OKU (Rp 113M): expenses 57M + wedding repay 12M + war chest 15M + Japan trip 17.6M + BTC 11.4M
+- FORU (Rp 116M): cards 47% (54M) + BTC 37% (43M) + hold 16% (19M)
+- Total April BTC: Rp 93.4M = ~0.084 BTC (projected stack end Apr: ~0.287 BTC)
+- Wedding fund: withdrew 12M for Lebaran/Keiko bday/Zekrom → now Rp 138M, repaying from OKU
 - Exit triggers: TP 2x, SL -30%, HARD DEADLINE May 1 sell all
 - BTC-contingent: ≤$65K → 100% BTC (cancel hold); ≤$60K → 100% BTC + deploy war chest
 - Smart exit: DCA sell in 3 tranches, trailing stop -20% from peak, time decay 14 flat days → sell
