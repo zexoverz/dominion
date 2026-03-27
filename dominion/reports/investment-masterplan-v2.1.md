@@ -449,19 +449,29 @@ At $300K BTC: 0.6 BTC = $180K = Rp 2.95B
 | OKU Bonus → Wedding | $2,500 | Dec 30 |
 | Continue DCA | Rp 50M | Dec 29/30 |
 
-### April 2026 Actions (v2.3)
+### April 2026 Actions (v2.3 — Final Plan)
 | Action | Amount | Timing |
 |--------|--------|--------|
 | ✅ ForuAI cash → BTC | 0.03481 BTC @ $66,264 ($2,309 = Rp 39M) | Mar 27 (Apr cycle Day 1) |
 | ⏳ OKU salary lands | Rp 113M ($6,750) | ~Apr 1 |
-| ⏳ Ex-wedding → BTC | Rp 30M | After OKU lands |
-| ⏳ OKU surplus → BTC | ~Rp 11M | After OKU lands |
-| ⏳ War chest refill | +Rp 15M → ~Rp 41.8M total | After OKU lands |
-| ⏳ War chest deploy decision | Rp 41.8M if BTC ≤$66K | After refill |
-| ⏳ FORU tokens distribution | ~$6,930 | Pending — sell → BTC |
-| ⏳ FORU hard deadline | May 1 — sell ALL remaining | Monitor |
-| ⏳ Sell Pokemon slabs | ~$3,470 | Before May — fund Japan OP haul |
-| **Apr BTC target** | **~Rp 80M (~0.072 BTC)** | + war chest + tokens if available |
+| ⏳ Repay wedding fund | Rp 12M (back to ~Rp 150M) | From OKU |
+| ⏳ War chest refill | Rp 15M → ~Rp 41.8M total | From OKU |
+| ⏳ Japan trip expenses | Rp 17.6M (budget mode) | From OKU |
+| ⏳ OKU remainder → BTC | Rp 11.4M | After above |
+| ⏳ FORU tokens → 47% cards | Rp 54M (Japan card haul) | When distributed |
+| ⏳ FORU tokens → 37% BTC | Rp 43M | When distributed |
+| ⏳ FORU tokens → 16% hold | Rp 19M (pump gamble, May 1 deadline) | Hold until exit trigger |
+| ⏳ FORU hard deadline | May 1 — sell ALL remaining FORU → BTC | Monitor |
+| **Apr BTC target** | **~Rp 93.4M (~0.084 BTC)** | ForuAI + OKU + FORU |
+
+#### April Card Haul (Japan Trip — Rp 54M budget)
+| Card | Est. Price | Priority |
+|------|-----------|----------|
+| Munch Psyduck PSA 10 (SM-P 286) | Rp 20-22M | 🔴 Grail #1 |
+| Sanji Manga Art PSA 10 (OP06-119) | Rp 24M | 🔴 Grail #2 |
+| Mini manga raw singles ×3-5 | Rp 8M | 🟡 Collection fill |
+| **Total** | **~Rp 54M** | |
+| 🎯 2029 GRAIL: Silver/Gold Luffy 3rd Anniversary | ¥570K-1.5M | Buy from BTC profits |
 
 ### March 2026 Actions
 | Action | Amount | Timing |

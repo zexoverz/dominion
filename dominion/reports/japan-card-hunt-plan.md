@@ -1,27 +1,34 @@
 # Japan Card Hunt Plan — April 20, 2026
 
-## Budget Sources
+## Budget Sources (Updated Mar 27, 2026)
 | Source | Amount | Status |
 |--------|--------|--------|
-| FORU TGE 30% card allocation | ~Rp 34M | ⏳ Waiting TGE end March |
-| Pokemon sales (Mew/Gardevoir/Kyurem) | ~Rp 5.5M | 🟡 Listed |
-| OKU Top Performer 1 bonus (if achieved April) | TBD (~$1,980 extra = ~Rp 32M) | ⏳ Dynamic |
-| **Base budget** | **~Rp 39.5M** | |
-| **If TP1 April** | **~Rp 71.5M** | |
+| FORU tokens 47% → cards | ~Rp 54M | ⏳ Waiting FORU distribution |
+| Pokemon sales (Mew/Gardevoir/Kyurem) | ~Rp 5.5M | 🟡 Listed (bonus if sold) |
+| **Card budget** | **Rp 54M** | |
+| **If Pokemon sells + TP1** | **Rp 90M+** | |
 
 ## Pokemon Hunt List
 
-### CONFIRMED BUY
-| Card | Code | Grade | Target Price | Source | Priority |
-|------|------|-------|-------------|--------|----------|
-| Magikarp AR (Triplet Beat) | SV1a 080/073 | PSA 10 | ¥33K (~Rp 3.3M) | SNKR Dunk / JP store | 🔴 BUY |
-
-### JAPAN IN-STORE HUNT
+### 🔴 PRIORITY BUYS (Rp 54M budget)
 | Card | Code | Grade | Target Price | Where to Look | Priority |
 |------|------|-------|-------------|---------------|----------|
-| **Munch Psyduck** | SM-P 286 | PSA 10 | ¥200-220K (~Rp 20-22M) | Mandarake, Surugaya, Card Rush | 🔴 #1 PRIORITY |
-| Charizard ex SAR (151) | SV2a 201/165 | PSA 10 | ¥124K (~Rp 12.4M) | Any store | 🟡 If budget allows |
-| Kanazawa Pikachu | S-P 144 (stamped) | PSA 10 | ¥74K (~Rp 7.4M) | Mandarake, Surugaya | 🟡 Opportunistic |
+| **Munch Psyduck** | SM-P 286 | PSA 10 | ¥200-220K (~Rp 20-22M) | Mandarake, Surugaya, Card Rush | 🔴 GRAIL #1 |
+| **Sanji Manga Art (コミパラ)** | OP06-119 SEC-SP | PSA 10 | ¥240K (~Rp 24M) | Mandarake Nakano, Card Rush | 🔴 GRAIL #2 |
+| **Mini Manga raw singles ×3-5** | Various | Raw | ¥10-20K each (~Rp 1-2M) | Yuyu-tei physical, Surugaya | 🟡 Collection fill |
+
+### 🟡 OPPORTUNISTIC (only if budget left over or Pokemon sells)
+| Card | Code | Grade | Target Price | Where to Look | Priority |
+|------|------|-------|-------------|---------------|----------|
+| Magikarp AR (Triplet Beat) | SV1a 080/073 | PSA 10 | ¥33K (~Rp 3.3M) | SNKR Dunk / JP store | 🟡 If spare |
+| Charizard ex SAR (151) | SV2a 201/165 | PSA 10 | ¥124K (~Rp 12.4M) | Any store | 🟡 Only if TP1 bonus |
+
+### 🎯 2029 GRAIL LIST (buy from BTC profits post-bull)
+| Card | Current Price | Buy When |
+|------|-------------|----------|
+| Silver 3rd Anniversary Luffy PSA 10 | ¥570-700K (Rp 57-70M) | 2029 BTC bull |
+| Gold 3rd Anniversary Luffy PSA 10 | ¥1.45-1.98M (Rp 145-198M) | 2029-2030 BTC peak |
+| Van Gogh Pikachu PSA 10 | ¥180-200K target | Q3 2026 bear dip |
 
 ### WAIT LIST (DO NOT BUY NOW)
 | Card | Current Price | Target Buy Price | When |
@@ -37,22 +44,21 @@
 | Gear 5 SP cards | Rp 5-10M | Any OP TCG store |
 | Mini manga event art parallels | Rp 2-5M | Surugaya, Mandarake |
 
-## Budget Split Scenarios
+## Budget Split (Final — Mar 27 decision)
 
-### Scenario A: Base Budget (Rp 39.5M)
+### Base Budget: Rp 54M (from FORU 47%)
+| Item | Allocation |
+|------|-----------|
+| Munch Psyduck PSA 10 | Rp 20-22M |
+| Sanji Manga Art PSA 10 (OP06-119) | Rp 24M |
+| Mini manga raw singles ×3-5 | Rp 8M |
+
+### If Pokemon sells + TP1: +Rp 37M extra
 | Item | Allocation |
 |------|-----------|
 | Magikarp AR PSA 10 | Rp 3.3M |
-| Munch Psyduck PSA 10 | Rp 20-22M |
-| OP manga/G5 cards | Rp 14-16M |
-
-### Scenario B: With TP1 Bonus (Rp 71.5M)
-| Item | Allocation |
-|------|-----------|
-| Magikarp AR PSA 10 | Rp 3.3M |
-| Munch Psyduck PSA 10 | Rp 20-22M |
-| Charizard 151 SAR PSA 10 | Rp 12-13M |
-| OP manga/G5 cards | Rp 33-36M |
+| More OP manga singles | Rp 15-20M |
+| Charizard 151 SAR PSA 10 | Rp 12.4M (stretch) |
 
 ## KEEPER COLLECTION (Never Sell)
 - 🏆 Lugia V PSA 10 ($690 cost)

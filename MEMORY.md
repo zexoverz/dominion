@@ -96,9 +96,10 @@
 - TGE happened, tokens NOT distributed yet (end of March)
 - Accumulated: $6,930 (7mo Aug 2025 → Mar 2026)
 - FORU price at TGE: $0.03, dropped to $0.0184 (-39%), 172% Y1 inflation
-- Distribution plan REVISED: 80% BTC ($5,544) / 20% hold for pump ($1,386) / 0% cards
-- Japan cards now 100% funded by Pokemon slab sales (~$3,470 → ~Rp 57M)
-- TGE 30% that was for cards → redirected to BTC
+- Distribution plan FINAL (Mar 27): 37% BTC (Rp 43M) / 47% cards (Rp 54M) / 16% hold (Rp 19M)
+- Japan cards: Munch Psyduck PSA 10 (Rp 22M) + Sanji Manga PSA 10 OP06-119 (Rp 24M) + mini manga raw ×3-5 (Rp 8M)
+- 2029 grail: Silver/Gold 3rd Anniversary Luffy (¥570K-1.98M) — buy from BTC profits
+- Silver Luffy considered but rejected: BTC beats cards 2-3x on ROI, "stack now flex later"
 - Exit triggers: TP 2x, SL -30%, HARD DEADLINE May 1 sell all
 - BTC-contingent: ≤$65K → 100% BTC (cancel hold); ≤$60K → 100% BTC + deploy war chest
 - Smart exit: DCA sell in 3 tranches, trailing stop -20% from peak, time decay 14 flat days → sell
