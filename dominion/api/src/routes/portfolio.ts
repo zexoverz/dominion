@@ -1037,12 +1037,47 @@ router.post('/update-prices', async (req: Request, res: Response) => {
               source = 'snkrdunk';
             }
           }
-        } else if (!isSlab && isOnePiece && meta.yuyu_tei_jpy) {
-          // ═══ ONE PIECE RAW SINGLES: ALWAYS Yuyu-tei ═══
-          newYuyuJpy = meta.yuyu_tei_jpy;
-          newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
-          newPriceIdr = meta.yuyu_tei_jpy * 100;
-          source = 'yuyu-tei';
+        } else if (!isSlab && isOnePiece && (meta.price_url || meta.yuyu_tei_jpy)) {
+          // ═══ ONE PIECE RAW SINGLES: ALWAYS Yuyu-tei (live scrape if URL available) ═══
+          let scraped = false;
+          if (meta.price_url) {
+            try {
+              // Scrape the set page to get live price for this card
+              // price_url format: https://yuyu-tei.jp/sell/opc/card/op15/10093
+              const urlMatch = meta.price_url.match(/\/sell\/opc\/card\/([^/]+)\/(\d+)/);
+              if (urlMatch) {
+                const setCode = urlMatch[1];
+                const cardId = urlMatch[2];
+                const setUrl = `https://yuyu-tei.jp/sell/opc/s/${setCode}`;
+                const setRes = await fetch(setUrl, {
+                  headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+                });
+                if (setRes.ok) {
+                  const html = await setRes.text();
+                  // Find price for this specific card ID
+                  const priceRegex = new RegExp(`card/${setCode}/${cardId}[\\s\\S]*?(\\d{1,3}(?:,\\d{3})*)\\s*円`, 'g');
+                  const priceMatch = priceRegex.exec(html);
+                  if (priceMatch) {
+                    const liveJpy = parseInt(priceMatch[1].replace(/,/g, ''));
+                    if (liveJpy > 0) {
+                      newYuyuJpy = liveJpy;
+                      newPriceUsd = liveJpy * JPY_TO_USD;
+                      newPriceIdr = liveJpy * 100;
+                      source = 'yuyu-tei';
+                      scraped = true;
+                    }
+                  }
+                }
+              }
+            } catch (e) { /* Yuyu-tei scrape failed, fall back to cached */ }
+          }
+          // Fallback to cached price if scrape failed
+          if (!scraped && meta.yuyu_tei_jpy) {
+            newYuyuJpy = meta.yuyu_tei_jpy;
+            newPriceUsd = meta.yuyu_tei_jpy * JPY_TO_USD;
+            newPriceIdr = meta.yuyu_tei_jpy * 100;
+            source = 'yuyu-tei';
+          }
         } else if (!isSlab && !isOnePiece && card.card_code) {
           // ═══ POKEMON RAW SINGLES: SNKR Dunk ranked products ═══
           const keyword = encodeURIComponent(card.card_code);
