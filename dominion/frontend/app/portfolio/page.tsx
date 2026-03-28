@@ -205,6 +205,11 @@ export default function PortfolioDashboard() {
             📈 ANALYTICS
           </span>
         </Link>
+        <Link href="/portfolio/ledger">
+          <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
+            📒 LEDGER
+          </span>
+        </Link>
         <Link href="/portfolio/masterplan">
           <span className="rpg-panel px-3 py-2 font-pixel text-[8px] text-rpg-border hover:text-throne-gold transition-colors">
             📜 MASTERPLAN

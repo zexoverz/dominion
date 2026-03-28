@@ -150,19 +150,10 @@ export default function Dashboard() {
               />
             ))
           ) : (
-            <>
-              <MissionProgressLive
-                missionName="Deploy the Watchtower"
-                initialProgress={65}
-                color="#fbbf24"
-                className="mb-4"
-              />
-              <MissionProgressLive
-                missionName="Shadow Protocol Alpha"
-                initialProgress={90}
-                color="#94a3b8"
-              />
-            </>
+            <div className="rpg-panel p-4 text-center">
+              <p className="font-pixel text-[9px] text-rpg-borderMid">No active missions.</p>
+              <p className="font-body text-[8px] text-rpg-borderMid mt-1">The generals await orders.</p>
+            </div>
           )}
         </div>
       </div>
