@@ -14,6 +14,7 @@ const navItems = [
   { href: "/reports", label: "INTEL", shortLabel: "INTEL", icon: "📜" },
   { href: "/logs", label: "LOG", shortLabel: "LOG", icon: "📋" },
   { href: "/portfolio", label: "PORTFOLIO", shortLabel: "VAULT", icon: "💰" },
+  { href: "/portfolio/ledger", label: "LEDGER", shortLabel: "LEDGER", icon: "📒" },
 ];
 
 export default function Sidebar() {

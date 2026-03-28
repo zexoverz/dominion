@@ -1,229 +1,292 @@
 {
-  "timestamp": "2026-03-13T06:01:28.439Z",
+  "timestamp": "2026-03-28T06:01:34.364Z",
   "prices": {
+    "8b3a17a0-cd25-43e1-97dd-d396661e6805": {
+      "name": "Enel Raigō (Mini Manga Parallel)",
+      "code": "OP15-077",
+      "price_usd": 132.66,
+      "price_idr": 1980000,
+      "updated": "2026-03-28T06:00:27.491Z"
+    },
+    "f2337ff2-e8b4-4ab8-9c94-2c1bd33aded0": {
+      "name": "Snorlax (Art Rare)",
+      "code": "181/165",
+      "price_usd": 73.71,
+      "price_idr": 1100100,
+      "updated": "2026-03-28T06:00:26.872Z"
+    },
+    "07bfc9c2-5554-4f46-9076-46934453ba60": {
+      "name": "Shining Magikarp",
+      "code": "25th-anniversary",
+      "price_usd": 0,
+      "price_idr": 0,
+      "updated": "2026-03-18T07:59:44.363Z"
+    },
+    "c44475b2-bf00-4790-829a-c7d2b66a91ad": {
+      "name": "Shining Magikarp Holo",
+      "code": "010/025",
+      "price_usd": 342.22,
+      "price_idr": 5107800,
+      "updated": "2026-03-28T06:00:26.142Z"
+    },
+    "35e52c72-c350-4997-8680-41345116e7b2": {
+      "name": "Gomu Gomu no Giant (Luffy Gear 5 Mini Manga Art Parallel)",
+      "code": "OP09-078",
+      "price_usd": 199.66,
+      "price_idr": 2980000,
+      "updated": "2026-03-28T06:00:28.530Z"
+    },
+    "12ce0cff-ae36-49a9-bf2b-43d234dc0dd5": {
+      "name": "Ashura Ichibugin (Zoro Parallel)",
+      "code": "OP12-037",
+      "price_usd": 166.16,
+      "price_idr": 2480000,
+      "updated": "2026-03-28T06:00:27.283Z"
+    },
+    "4a99ee5d-5cd3-4eb9-8213-058a279c410e": {
+      "name": "Kamusari - Shanks (Parallel)",
+      "code": "OP13-076",
+      "price_usd": 40.07,
+      "price_idr": 598000,
+      "updated": "2026-03-28T06:00:26.560Z"
+    },
+    "e983af59-9472-43cb-8622-224b09c03dd9": {
+      "name": "Sanji (Ultimate Deck Art)",
+      "code": "ST10-004",
+      "price_usd": 17.42,
+      "price_idr": 260000,
+      "updated": "2026-03-28T06:00:27.078Z"
+    },
+    "e37101c7-32a3-4c5e-8d76-4f570daa7b5b": {
+      "name": "Zacian V SAR",
+      "code": "225/172",
+      "price_usd": 9.72,
+      "price_idr": 145000,
+      "updated": "2026-03-28T06:00:34.545Z"
+    },
     "e18e408f-af9f-41e4-b135-98e403c38543": {
       "name": "Monkey D. Luffy (One Piece Day)",
       "code": "OP07-109",
-      "price_usd": 120.6,
-      "price_idr": 1800000,
-      "updated": "2026-03-13T06:00:49.524Z"
+      "price_usd": 140.01,
+      "price_idr": 2089700,
+      "updated": "2026-03-28T06:00:28.840Z"
     },
     "7dd63082-ad81-46cf-96bb-40069a093a51": {
       "name": "Sanji (Alternate Art)",
       "code": "OP06-119",
-      "price_usd": 180.89,
-      "price_idr": 2699900,
-      "updated": "2026-03-13T06:00:55.032Z"
+      "price_usd": 65.66,
+      "price_idr": 980000,
+      "updated": "2026-03-28T06:00:35.789Z"
     },
     "19ae5d6e-3f27-49f0-8f07-b35bc5919927": {
       "name": "Shanks (Special Alt Art)",
       "code": "ST16-004",
-      "price_usd": 53.6,
-      "price_idr": 800000,
-      "updated": "2026-03-13T06:00:49.210Z"
+      "price_usd": 69.64,
+      "price_idr": 1039400,
+      "updated": "2026-03-28T06:00:29.154Z"
     },
     "ecd63888-d3e1-4dab-81c0-e33469fc815d": {
       "name": "Ace (2nd Anniversary)",
       "code": "OP02-013",
-      "price_usd": 670,
-      "price_idr": 10000000,
-      "updated": "2026-03-13T06:00:51.901Z"
+      "price_usd": 46.77,
+      "price_idr": 698000,
+      "updated": "2026-03-28T06:00:30.507Z"
     },
     "316b73fc-fbbe-4f42-8c89-d5f485f35e52": {
       "name": "Big Mom (2nd Anniversary)",
       "code": "BigMom-Promo",
       "price_usd": 6.57,
       "price_idr": 98000,
-      "updated": "2026-03-13T06:00:54.068Z"
+      "updated": "2026-03-28T06:00:31.124Z"
     },
     "3cee8722-59df-4d8a-85dc-01f42ed43313": {
       "name": "Buggy Wanted Poster (SPC)",
       "code": "OP09-051",
-      "price_usd": 46.9,
-      "price_idr": 700000,
-      "updated": "2026-03-13T06:00:54.711Z"
+      "price_usd": 66.87,
+      "price_idr": 998000,
+      "updated": "2026-03-28T06:00:26.355Z"
     },
     "895acced-e379-4902-982b-ee0ffa7c2cf5": {
       "name": "Cross Guild (Parallel)",
       "code": "OP09-057",
-      "price_usd": 53.6,
-      "price_idr": 800000,
-      "updated": "2026-03-13T06:00:56.028Z"
+      "price_usd": 66.87,
+      "price_idr": 998000,
+      "updated": "2026-03-28T06:00:35.483Z"
     },
     "fb298d89-f438-4ef5-8bcc-d957d1e22f22": {
       "name": "Kaya (2nd Anniversary)",
       "code": "Kaya-Promo",
       "price_usd": 13.27,
       "price_idr": 198000,
-      "updated": "2026-03-13T06:00:53.454Z"
+      "updated": "2026-03-28T06:00:30.713Z"
     },
     "8a45b87e-f1ea-4fa8-a6c5-95722411547d": {
       "name": "Luffy (2nd Anniversary)",
       "code": "ST10-Promo",
       "price_usd": 40.07,
       "price_idr": 598000,
-      "updated": "2026-03-13T06:00:52.212Z"
+      "updated": "2026-03-28T06:00:29.887Z"
     },
     "371ffb2b-8b38-4376-8b1e-f48f832d08fa": {
       "name": "Luffy Nika (SEC-P)",
       "code": "EB04-061",
-      "price_usd": 14.74,
-      "price_idr": 220000,
-      "updated": "2026-03-13T06:00:56.350Z"
+      "price_usd": 23.32,
+      "price_idr": 348000,
+      "updated": "2026-03-28T06:00:33.719Z"
     },
     "b289c403-c0de-495d-a920-ae28cfddb83a": {
       "name": "Rosinante (2nd Anniversary)",
       "code": "Rosi-Promo",
       "price_usd": 11.93,
       "price_idr": 178000,
-      "updated": "2026-03-13T06:00:53.753Z"
+      "updated": "2026-03-28T06:00:30.920Z"
     },
     "eea898fc-f81e-4c11-926d-8f5f5bb0c059": {
       "name": "Sabo (2nd Anniversary)",
       "code": "Sabo-Promo",
       "price_usd": 16.62,
       "price_idr": 248000,
-      "updated": "2026-03-13T06:00:53.149Z"
+      "updated": "2026-03-28T06:00:31.536Z"
     },
     "fc9b559d-7978-436e-b7f6-b7ded86c5160": {
       "name": "Sabo Wanted Poster (SPC)",
       "code": "OP13-120",
-      "price_usd": 53.59,
-      "price_idr": 799900,
-      "updated": "2026-03-13T06:00:54.392Z"
+      "price_usd": 85.76,
+      "price_idr": 1280000,
+      "updated": "2026-03-28T06:00:31.742Z"
     },
     "1bdc50f8-3770-4473-8ad3-8636d97545d7": {
       "name": "Sanji (2nd Anniversary)",
       "code": "Sanji-Promo",
       "price_usd": 13.27,
       "price_idr": 198000,
-      "updated": "2026-03-13T06:00:55.662Z"
+      "updated": "2026-03-28T06:00:34.956Z"
     },
     "7252f413-87aa-45d9-91a9-8029f4533269": {
       "name": "Shabondy Event (2nd Anniversary)",
       "code": "Event-Promo",
       "price_usd": 16.62,
       "price_idr": 248000,
-      "updated": "2026-03-13T06:00:52.842Z"
+      "updated": "2026-03-28T06:00:30.092Z"
     },
     "e147614e-8181-4820-989f-e9dea0fb69f4": {
       "name": "Zoro (2nd Anniversary)",
       "code": "OP01-Promo",
-      "price_usd": 33.37,
-      "price_idr": 498000,
-      "updated": "2026-03-13T06:00:52.531Z"
+      "price_usd": 26.67,
+      "price_idr": 398000,
+      "updated": "2026-03-28T06:00:31.330Z"
     },
     "9e362e0b-6c4f-4671-b6ea-1a9a79895f0f": {
       "name": "Roronoa Zoro (Flagship Battle)",
       "code": "OP01-025",
-      "price_usd": 2211,
-      "price_idr": 33000000,
-      "updated": "2026-03-13T06:00:48.585Z"
+      "price_usd": 2470.73,
+      "price_idr": 36876500,
+      "updated": "2026-03-28T06:00:29.476Z"
     },
     "36e8f941-b553-4a37-a1ed-b7b80f3bdad0": {
       "name": "Imu (Parallel)",
       "code": "OP13-079",
-      "price_usd": 6.7,
-      "price_idr": 100000,
-      "updated": "2026-03-13T06:00:51.586Z"
+      "price_usd": 9.92,
+      "price_idr": 148000,
+      "updated": "2026-03-28T06:00:30.301Z"
     },
     "6a5eb0db-b864-4fdc-a65e-ff8220fd94a2": {
       "name": "Luffy-Tarou (Special Alt Art)",
       "code": "ST18-005",
-      "price_usd": 73.7,
-      "price_idr": 1100000,
-      "updated": "2026-03-13T06:00:48.896Z"
+      "price_usd": 165.07,
+      "price_idr": 2463800,
+      "updated": "2026-03-28T06:00:28.124Z"
     },
     "2a83abca-26a4-4f60-a67e-ebc3decbe16a": {
       "name": "Sanji (Parallel)",
       "code": "PRB01-001",
-      "price_usd": 83.75,
-      "price_idr": 1250000,
-      "updated": "2026-03-13T06:00:49.839Z"
+      "price_usd": 75.95,
+      "price_idr": 1133600,
+      "updated": "2026-03-28T06:00:27.810Z"
     },
     "95e7bb21-1246-4188-9966-77465f2b9093": {
       "name": "St. Ethanbaron V. Nusjuro (Red Parallel)",
       "code": "OP13-080",
-      "price_usd": 8.71,
-      "price_idr": 130000,
-      "updated": "2026-03-13T06:00:50.166Z"
+      "price_usd": 119.26,
+      "price_idr": 1780000,
+      "updated": "2026-03-28T06:00:31.948Z"
     },
     "378e4d3c-6077-46fe-bb14-a291bd8820b8": {
       "name": "St. Jaygarcia Saturn (Red Parallel)",
       "code": "OP13-083",
-      "price_usd": 13.4,
-      "price_idr": 200000,
-      "updated": "2026-03-13T06:00:50.572Z"
+      "price_usd": 119.26,
+      "price_idr": 1780000,
+      "updated": "2026-03-28T06:00:32.156Z"
     },
     "2dd72162-55d8-46b0-a542-97714dde99ed": {
       "name": "St. Marcus Mars (Red Parallel)",
       "code": "OP13-091",
-      "price_usd": 10.05,
-      "price_idr": 150000,
-      "updated": "2026-03-13T06:00:50.888Z"
+      "price_usd": 119.26,
+      "price_idr": 1780000,
+      "updated": "2026-03-28T06:00:32.692Z"
     },
     "edfbafae-25cd-4de0-9c53-203c596b5b8a": {
       "name": "St. Shepherd Ju Peter (Red Parallel)",
       "code": "OP13-084",
-      "price_usd": 134,
-      "price_idr": 2000000,
-      "updated": "2026-03-13T06:00:51.203Z"
+      "price_usd": 119.26,
+      "price_idr": 1780000,
+      "updated": "2026-03-28T06:00:29.682Z"
     },
     "cbf8fde5-27ad-45be-ac32-33f5c04ec5be": {
       "name": "St. Topman Warcury (Red Parallel)",
       "code": "OP13-089",
-      "price_usd": 6.7,
-      "price_idr": 100000,
-      "updated": "2026-03-13T06:00:55.356Z"
+      "price_usd": 119.26,
+      "price_idr": 1780000,
+      "updated": "2026-03-28T06:00:34.750Z"
     },
     "c38832cc-30e3-46ad-9173-fac5e9b0e3c9": {
       "name": "Black Kyurem ex",
       "code": "077/064",
-      "price_usd": 30.15,
-      "price_idr": 450000,
-      "updated": "2026-03-13T06:00:58.206Z"
+      "price_usd": 66.24,
+      "price_idr": 988700,
+      "updated": "2026-03-18T07:59:28.821Z"
     },
     "47e35e00-b102-4fc3-8a6d-69357741ef68": {
       "name": "Charizard ex",
       "code": "349/190",
-      "price_usd": 481.73,
-      "price_idr": 7190000,
-      "updated": "2026-03-13T06:00:57.522Z"
+      "price_usd": 568.94,
+      "price_idr": 8491700,
+      "updated": "2026-03-28T06:00:35.277Z"
     },
     "c40dd579-858d-43ca-8171-0e2fcaebbd88": {
       "name": "Gardevoir ex SAR",
       "code": "348/190",
-      "price_usd": 177.55,
-      "price_idr": 2650000,
-      "updated": "2026-03-13T06:00:58.842Z"
+      "price_usd": 105.46,
+      "price_idr": 1574000,
+      "updated": "2026-03-18T07:59:28.747Z"
     },
     "1a218281-deb8-474c-aef1-2dc1ee10803e": {
       "name": "Lugia V",
       "code": "110/098",
-      "price_usd": 43.55,
-      "price_idr": 650000,
-      "updated": "2026-03-13T06:00:56.679Z"
+      "price_usd": 1449.93,
+      "price_idr": 21640800,
+      "updated": "2026-03-28T06:00:36.104Z"
     },
     "ea277667-4ed9-4aa7-9112-7ecc95c9877f": {
       "name": "Mew ex SAR",
       "code": "347/190",
-      "price_usd": 793.95,
-      "price_idr": 11850000,
-      "updated": "2026-03-13T06:00:58.522Z"
+      "price_usd": 185.25,
+      "price_idr": 2765000,
+      "updated": "2026-03-18T07:59:28.674Z"
     },
     "d1d94eb2-44aa-48b2-9541-9ea7193192d1": {
       "name": "N's Reshiram",
       "code": "109/100",
-      "price_usd": 56.95,
-      "price_idr": 850000,
-      "updated": "2026-03-13T06:00:57.896Z"
+      "price_usd": 87.58,
+      "price_idr": 1307100,
+      "updated": "2026-03-28T06:00:33.012Z"
     },
     "190b2619-eb1d-428d-b33d-d83317d01b97": {
       "name": "Zekrom ex",
       "code": "174/086",
-      "price_usd": 723.6,
-      "price_idr": 10800000,
-      "updated": "2026-03-13T06:00:56.997Z"
+      "price_usd": 822.76,
+      "price_idr": 12280000,
+      "updated": "2026-03-28T06:00:34.031Z"
     }
   }
 }

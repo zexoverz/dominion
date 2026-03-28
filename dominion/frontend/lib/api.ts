@@ -148,6 +148,23 @@ export function getPortfolioRealizedGains() {
   return fetchAPI<any>('/api/portfolio/cards/realized-gains');
 }
 
+// ═══ MAMMON Ledger API ═══
+
+export async function getLedger(month?: string, category?: string) {
+  const params = new URLSearchParams();
+  if (month) params.set('month', month);
+  if (category) params.set('category', category);
+  const qs = params.toString();
+  return fetchAPI<any[]>(`/api/portfolio/ledger${qs ? `?${qs}` : ''}`);
+}
+
+export async function getLedgerSummary(month?: string) {
+  const params = new URLSearchParams();
+  if (month) params.set('month', month);
+  const qs = params.toString();
+  return fetchAPI<any>(`/api/portfolio/ledger/summary${qs ? `?${qs}` : ''}`);
+}
+
 export async function createProposal(data: Record<string, any>) {
   const res = await fetch(`${API_BASE}/api/proposals`, {
     method: 'POST',

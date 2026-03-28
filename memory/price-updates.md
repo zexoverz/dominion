@@ -73,3 +73,12 @@
   - Ace 2nd Anniversary (OP02-013): $46.77
   - Kamusari Shanks Parallel (OP13-076): $40.07
   - Luffy 2nd Anniversary (ST10-Promo): $40.07
+
+---
+
+### 2026-03-28 06:02 UTC — Cron Price Update
+- **Status:** ✅ Success
+- **Updated:** 37 / 41 cards
+- **Sources:** Yuyu-tei (24), SNKRDUNK (13)
+- **Errors:** 0
+- **Note:** 4 cards not returned in results (likely no price found or delisted)

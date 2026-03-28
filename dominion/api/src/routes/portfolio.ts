@@ -1504,4 +1504,313 @@ router.get('/masterplan', async (_req: Request, res: Response) => {
   }
 });
 
+// ═══ MAMMON'S FINANCIAL LEDGER ═══
+
+// Migration: create ledger table
+router.post('/ledger/migrate', async (_req: Request, res: Response) => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS portfolio_ledger (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        month DATE NOT NULL,
+        category TEXT NOT NULL CHECK (category IN (
+          'btc_dca', 'war_chest', 'wedding', 'health', 'keiko',
+          'expenses', 'freelance', 'cards', 'car', 'other',
+          'income_oku', 'income_forurai', 'income_freelance', 'token_sale'
+        )),
+        description TEXT NOT NULL,
+        amount_idr DECIMAL(14,0) NOT NULL DEFAULT 0,
+        amount_usd DECIMAL(10,2) NOT NULL DEFAULT 0,
+        btc_amount DECIMAL(12,8),
+        btc_price_usd DECIMAL(14,2),
+        direction TEXT NOT NULL DEFAULT 'out' CHECK (direction IN ('in', 'out')),
+        status TEXT NOT NULL DEFAULT 'planned' CHECK (status IN ('planned', 'done', 'skipped')),
+        agent_id TEXT DEFAULT 'MAMMON',
+        notes TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+      CREATE INDEX IF NOT EXISTS idx_ledger_month ON portfolio_ledger(month DESC);
+      CREATE INDEX IF NOT EXISTS idx_ledger_category ON portfolio_ledger(category);
+    `);
+    res.json({ success: true, message: 'Ledger table created' });
+  } catch (err) {
+    console.error('Ledger migration error:', err);
+    res.status(500).json({ error: 'Migration failed', details: String(err) });
+  }
+});
+
+// GET /api/portfolio/ledger — list entries, optional month filter
+router.get('/ledger', async (req: Request, res: Response) => {
+  try {
+    const { month, category, status } = req.query;
+    let query = 'SELECT * FROM portfolio_ledger WHERE 1=1';
+    const params: any[] = [];
+    
+    if (month) {
+      // month format: YYYY-MM
+      params.push(`${month}-01`);
+      query += ` AND month = $${params.length}::date`;
+    }
+    if (category) {
+      params.push(category);
+      query += ` AND category = $${params.length}`;
+    }
+    if (status) {
+      params.push(status);
+      query += ` AND status = $${params.length}`;
+    }
+    query += ' ORDER BY month DESC, created_at DESC';
+    
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('GET /api/portfolio/ledger error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/portfolio/ledger/summary — monthly summary with budget vs actual
+router.get('/ledger/summary', async (req: Request, res: Response) => {
+  try {
+    const { month } = req.query;
+    const targetMonth = month ? `${month}-01` : new Date().toISOString().slice(0, 7) + '-01';
+    
+    // Get all entries for the month
+    const entries = await pool.query(
+      'SELECT * FROM portfolio_ledger WHERE month = $1::date ORDER BY created_at',
+      [targetMonth]
+    );
+    
+    // Get fund balances
+    const funds = await pool.query('SELECT * FROM portfolio_fund_tracker');
+    const warChest = funds.rows.find((f: any) => f.fund_type === 'war_chest');
+    const wedding = funds.rows.find((f: any) => f.fund_type === 'wedding');
+    
+    // Get BTC holdings
+    const btcRes = await pool.query("SELECT quantity FROM portfolio_holdings WHERE symbol = 'BTC' LIMIT 1");
+    const btcQty = btcRes.rows[0] ? parseFloat(btcRes.rows[0].quantity) : 0;
+    
+    // Get DCA log for the month
+    const dcaRes = await pool.query(
+      'SELECT * FROM portfolio_dca_log WHERE month = $1::date',
+      [targetMonth]
+    );
+
+    // Budget plan (from masterplan v2.2)
+    const now = new Date(targetMonth);
+    const isBlitz = now < new Date('2027-01-01');
+    const isLebaran = [3, 4].includes(now.getMonth()); // Ramadan months (approx Mar-Apr)
+    
+    const budget = {
+      income: {
+        oku: { label: 'OKU Trade', usd: 6750, idr: 6750 * IDR_PER_USD },
+        forurai_cash: { label: 'ForuAI Cash', usd: 2310, idr: 2310 * IDR_PER_USD },
+        forurai_tokens: { label: 'ForuAI Tokens', usd: 990, idr: 990 * IDR_PER_USD },
+        total_usd: 10050,
+        total_idr: 10050 * IDR_PER_USD,
+      },
+      allocations: [
+        { category: 'btc_dca', label: 'BTC DCA', budgeted_idr: isBlitz ? 78000000 : 50000000, budgeted_usd: isBlitz ? 4670 : 2976, note: isBlitz ? 'BTC Blitz (wedding paused)' : 'Normal DCA' },
+        { category: 'wedding', label: 'Wedding Fund', budgeted_idr: isBlitz ? 0 : 30000000, budgeted_usd: isBlitz ? 0 : 1786, note: isBlitz ? 'PAUSED until Jan 2027' : 'Rp 30M/mo' },
+        { category: 'war_chest', label: 'War Chest', budgeted_idr: isLebaran ? 0 : 15000000, budgeted_usd: isLebaran ? 0 : 893, note: isLebaran ? 'Skipped (Lebaran — zakat/THR)' : 'Rp 15M/mo' },
+        { category: 'health', label: 'Health & Fitness', budgeted_idr: 4000000, budgeted_usd: 238, note: 'PT gym + basketball' },
+        { category: 'keiko', label: 'Keiko (Gold)', budgeted_idr: 4000000, budgeted_usd: 238, note: 'She handles gold buying' },
+        { category: 'expenses', label: 'Living Expenses', budgeted_idr: 0, budgeted_usd: 0, note: 'Remainder from OKU' },
+      ],
+      btc_blitz_active: isBlitz,
+      war_chest_skipped: isLebaran,
+    };
+
+    // Calculate actuals from entries
+    const actuals: Record<string, { spent_idr: number; spent_usd: number; btc: number; entries: any[] }> = {};
+    for (const entry of entries.rows) {
+      const cat = entry.category;
+      if (!actuals[cat]) actuals[cat] = { spent_idr: 0, spent_usd: 0, btc: 0, entries: [] };
+      if (entry.status === 'done') {
+        actuals[cat].spent_idr += parseFloat(entry.amount_idr) || 0;
+        actuals[cat].spent_usd += parseFloat(entry.amount_usd) || 0;
+        actuals[cat].btc += parseFloat(entry.btc_amount) || 0;
+      }
+      actuals[cat].entries.push(entry);
+    }
+    
+    // Also add DCA log data as actuals
+    for (const dca of dcaRes.rows) {
+      if (!actuals['btc_dca']) actuals['btc_dca'] = { spent_idr: 0, spent_usd: 0, btc: 0, entries: [] };
+      actuals['btc_dca'].spent_usd += parseFloat(dca.amount_usd) || 0;
+      actuals['btc_dca'].spent_idr += parseFloat(dca.amount_idr) || 0;
+      actuals['btc_dca'].btc += parseFloat(dca.btc_acquired) || 0;
+    }
+
+    // Income actuals
+    const incomeEntries = entries.rows.filter((e: any) => e.direction === 'in' && e.status === 'done');
+    const totalIncomeUsd = incomeEntries.reduce((s: number, e: any) => s + parseFloat(e.amount_usd || '0'), 0);
+    const totalIncomeIdr = incomeEntries.reduce((s: number, e: any) => s + parseFloat(e.amount_idr || '0'), 0);
+
+    const allocationsWithActuals = budget.allocations.map(alloc => ({
+      ...alloc,
+      actual_idr: actuals[alloc.category]?.spent_idr || 0,
+      actual_usd: actuals[alloc.category]?.spent_usd || 0,
+      btc_acquired: actuals[alloc.category]?.btc || 0,
+      entries: actuals[alloc.category]?.entries || [],
+      on_track: (actuals[alloc.category]?.spent_idr || 0) >= alloc.budgeted_idr * 0.8,
+    }));
+
+    res.json({
+      month: targetMonth,
+      budget,
+      allocations: allocationsWithActuals,
+      income: {
+        budgeted_usd: budget.income.total_usd,
+        budgeted_idr: budget.income.total_idr,
+        actual_usd: totalIncomeUsd,
+        actual_idr: totalIncomeIdr,
+        entries: incomeEntries,
+      },
+      balances: {
+        btc: btcQty,
+        war_chest_idr: warChest ? parseFloat(warChest.current_amount_idr) : 0,
+        wedding_idr: wedding ? parseFloat(wedding.current_amount_idr) : 0,
+      },
+      all_entries: entries.rows,
+      dca_log: dcaRes.rows,
+    });
+  } catch (err) {
+    console.error('GET /api/portfolio/ledger/summary error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/portfolio/ledger — add entry
+router.post('/ledger', async (req: Request, res: Response) => {
+  try {
+    const { month, category, description, amount_idr, amount_usd, btc_amount, btc_price_usd, direction, status, agent_id, notes } = req.body;
+    if (!month || !category || !description) {
+      return res.status(400).json({ error: 'Required: month, category, description' });
+    }
+    const result = await pool.query(`
+      INSERT INTO portfolio_ledger (month, category, description, amount_idr, amount_usd, btc_amount, btc_price_usd, direction, status, agent_id, notes)
+      VALUES ($1::date, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      RETURNING *
+    `, [
+      `${month}-01`, category, description,
+      amount_idr || 0, amount_usd || 0,
+      btc_amount || null, btc_price_usd || null,
+      direction || 'out', status || 'done',
+      agent_id || 'MAMMON', notes || null
+    ]);
+    res.json(result.rows[0]);
+  } catch (err: any) {
+    console.error('POST /api/portfolio/ledger error:', err);
+    res.status(500).json({ error: 'Internal server error', details: err?.message });
+  }
+});
+
+// PATCH /api/portfolio/ledger/:id — update entry
+router.patch('/ledger/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const allowed = ['description', 'amount_idr', 'amount_usd', 'btc_amount', 'btc_price_usd', 'direction', 'status', 'notes', 'category'];
+    const updates: string[] = ['updated_at = NOW()'];
+    const values: any[] = [];
+    
+    for (const key of allowed) {
+      if (req.body[key] !== undefined) {
+        values.push(req.body[key]);
+        updates.push(`${key} = $${values.length}`);
+      }
+    }
+    if (values.length === 0) return res.status(400).json({ error: 'No fields to update' });
+    
+    values.push(id);
+    const result = await pool.query(
+      `UPDATE portfolio_ledger SET ${updates.join(', ')} WHERE id = $${values.length} RETURNING *`,
+      values
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Entry not found' });
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('PATCH /api/portfolio/ledger error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// DELETE /api/portfolio/ledger/:id
+router.delete('/ledger/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('DELETE FROM portfolio_ledger WHERE id = $1 RETURNING id', [id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Entry not found' });
+    res.json({ deleted: true });
+  } catch (err) {
+    console.error('DELETE /api/portfolio/ledger error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/portfolio/ledger/seed-month — MAMMON seeds a month's planned allocations
+router.post('/ledger/seed-month', async (req: Request, res: Response) => {
+  try {
+    const { month } = req.body; // YYYY-MM
+    if (!month) return res.status(400).json({ error: 'Required: month (YYYY-MM)' });
+    
+    const monthDate = `${month}-01`;
+    const now = new Date(monthDate);
+    const isBlitz = now < new Date('2027-01-01');
+    const isLebaran = [3, 4].includes(now.getMonth());
+    const monthName = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    
+    // Check if already seeded
+    const existing = await pool.query(
+      'SELECT COUNT(*)::int as count FROM portfolio_ledger WHERE month = $1::date',
+      [monthDate]
+    );
+    if (parseInt(existing.rows[0].count) > 0) {
+      return res.json({ success: true, message: `${monthName} already has ${existing.rows[0].count} entries`, skipped: true });
+    }
+    
+    const entries = [
+      // Income
+      { cat: 'income_oku', desc: `OKU Trade salary — ${monthName}`, idr: 6750 * IDR_PER_USD, usd: 6750, dir: 'in', status: 'planned' },
+      { cat: 'income_forurai', desc: `ForuAI salary (cash) — ${monthName}`, idr: 2310 * IDR_PER_USD, usd: 2310, dir: 'in', status: 'planned' },
+      { cat: 'income_forurai', desc: `ForuAI tokens → sell → BTC — ${monthName}`, idr: 990 * IDR_PER_USD, usd: 990, dir: 'in', status: 'planned' },
+      // Allocations
+      { cat: 'btc_dca', desc: `ForuAI cash → BTC DCA`, idr: 2310 * IDR_PER_USD, usd: 2310, dir: 'out', status: 'planned' },
+      { cat: 'btc_dca', desc: `OKU surplus → BTC DCA`, idr: isBlitz ? 30000000 : 8700000, usd: isBlitz ? 1786 : 518, dir: 'out', status: 'planned' },
+    ];
+    
+    if (isBlitz) {
+      entries.push({ cat: 'btc_dca', desc: 'Wedding redirect → BTC (Blitz)', idr: 30000000, usd: 1786, dir: 'out', status: 'planned' });
+    } else {
+      entries.push({ cat: 'wedding', desc: 'Wedding fund contribution', idr: 30000000, usd: 1786, dir: 'out', status: 'planned' });
+    }
+    
+    if (!isLebaran) {
+      entries.push({ cat: 'war_chest', desc: 'War chest contribution', idr: 15000000, usd: 893, dir: 'out', status: 'planned' });
+    } else {
+      entries.push({ cat: 'other', desc: 'Zakat maal + THR + infaq (Lebaran)', idr: 15000000, usd: 893, dir: 'out', status: 'planned' });
+    }
+    
+    entries.push(
+      { cat: 'health', desc: 'PT gym (Rp 2.4M) + basketball coaching (Rp 1.6M)', idr: 4000000, usd: 238, dir: 'out', status: 'planned' },
+      { cat: 'keiko', desc: 'Keiko allocation (gold)', idr: 4000000, usd: 238, dir: 'out', status: 'planned' },
+    );
+    
+    let inserted = 0;
+    for (const e of entries) {
+      await pool.query(`
+        INSERT INTO portfolio_ledger (month, category, description, amount_idr, amount_usd, direction, status, agent_id)
+        VALUES ($1::date, $2, $3, $4, $5, $6, $7, 'MAMMON')
+      `, [monthDate, e.cat, e.desc, e.idr, e.usd, e.dir, e.status]);
+      inserted++;
+    }
+    
+    res.json({ success: true, message: `MAMMON seeded ${inserted} entries for ${monthName}`, inserted });
+  } catch (err: any) {
+    console.error('POST /api/portfolio/ledger/seed-month error:', err);
+    res.status(500).json({ error: 'Seed failed', details: err?.message });
+  }
+});
+
 export default router;
