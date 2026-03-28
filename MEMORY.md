@@ -32,7 +32,7 @@
 - Closed loop: Proposals → Missions → Steps → Events → back
 - Deployed on Railway (project: handsome-mercy), 4 services: OpenClaw, frontend, API, PostgreSQL
 - ALL 3 PHASES COMPLETE — all 7 generals operational
-- 18,000+ lines of code, 80+ files, 9 frontend routes
+- 20,000+ lines of code, 90+ files, 7 main frontend routes (restructured Mar 28)
 - First live mission completed: SEER Bitcoin DeFi Analysis
 - Cron jobs: daily briefing, weekly security, weekly finance, daily BTC intelligence (08:00 WIB)
 - Full autonomous pipeline: Proposal → Roundtable Debate → Auto-Approve → Mission → Execute → Report → Notify
@@ -41,11 +41,20 @@
 - PHANTOM security scans: 13-point API/SSL/CORS health checks
 - Roundtable debates: generals discuss proposals in character before voting
 - Notification system: queued JSON files, dispatched by heartbeat via Telegram
-- 13+ reports in Intel page (auto-detected by date pattern)
+- 112+ reports in Library page (searchable, filterable by general/category)
 - All frontend pages wired to real API data (no more mock-only)
+- MAMMON financial ledger: monthly budget vs actual tracking, salary cycle awareness
+- Opportunities page: income simulator, skill market values, hackathon radar, monetization ideas
 - Phase A (Smart): AI-powered mission execution + roundtable debates via Claude sub-agents
 - Phase B (Useful): daily briefing, WRAITH-EYE monitoring, EIP tracker, portfolio tracker
 - Phase C (Beautiful): throne room speech bubbles, general lore profiles, BTC ticker, treasury charts
+- Phase D (Bloomberg): full nav restructure Mar 28 — 7 pages: Dashboard, Vault, Library, Opportunities, Command, Analytics, Generals
+  - Killed: Castle View, Cost/Treasury, standalone Logs/Missions/Roundtable
+  - Dashboard = Bloomberg terminal (BTC live, treasury, salary countdown, cards P&L, generals, key dates)
+  - Vault = unified portfolio with tabs (overview, cards, ledger, masterplan)
+  - Library = 112+ reports searchable with inline reader
+  - Opportunities = income simulator + skill market + hackathons + jobs + monetization
+  - Command = merged admin + missions + roundtable + intel
 - ETHJKT curriculum: Phase 2 gaps identified (Week 4-5), Phase 3 designed (hackathon-ready)
 - "Logic Nolep" → "Arcane Quest" rebrand pushed to 7 live ETHJKT repos
 - 33 checkpoints shipped in single async session (Feb 14, 2026)
