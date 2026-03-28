@@ -25,6 +25,7 @@ const spriteMap: Record<string, React.FC<SpriteProps>> = {
   echo: EchoSprite,
   mammon: MammonSprite,
   'wraith-eye': WraithEyeSprite,
+  'wraith_eye': WraithEyeSprite,
   wraithEye: WraithEyeSprite,
   wraitheye: WraithEyeSprite,
 };

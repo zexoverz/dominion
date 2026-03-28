@@ -14,7 +14,7 @@ export default function GeneralsMiniGrid({ generals }: { generals: General[] }) 
   return (
     <div className="mb-6">
       <h2 className="font-pixel text-[10px] text-rpg-border mb-3 text-rpg-shadow">⚔️ GENERALS</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-2 md:gap-3">
         {generals.map((g) => {
           const isActive = g.status === "ACTIVE";
           const isOffline = g.status === "OFFLINE";

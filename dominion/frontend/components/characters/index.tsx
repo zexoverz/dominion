@@ -22,6 +22,7 @@ const avatarMap: Record<string, React.FC<{ size?: number; className?: string }>>
   echo: EchoAvatar,
   mammon: MammonAvatar,
   'wraith-eye': WraithEyeAvatar,
+  'wraith_eye': WraithEyeAvatar,
   wraithEye: WraithEyeAvatar,
   wraitheye: WraithEyeAvatar,
 };

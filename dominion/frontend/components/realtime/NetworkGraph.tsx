@@ -3,25 +3,26 @@
 import { useState, useEffect } from "react";
 
 const NODES = [
-  { id: "throne", emoji: "👑", name: "THRONE", color: "#fbbf24", x: 50, y: 15 },
-  { id: "seer", emoji: "🔮", name: "SEER", color: "#a78bfa", x: 20, y: 45 },
-  { id: "phantom", emoji: "👻", name: "PHANTOM", color: "#94a3b8", x: 80, y: 45 },
-  { id: "warden", emoji: "🛡️", name: "WARDEN", color: "#60a5fa", x: 10, y: 80 },
-  { id: "herald", emoji: "📯", name: "HERALD", color: "#f97316", x: 50, y: 85 },
-  { id: "forge", emoji: "⚒️", name: "FORGE", color: "#ef4444", x: 90, y: 80 },
-  { id: "cipher", emoji: "🗝️", name: "CIPHER", color: "#22d3ee", x: 50, y: 55 },
+  { id: "throne", emoji: "👑", name: "THRONE", color: "#fbbf24", x: 50, y: 10 },
+  { id: "seer", emoji: "🔮", name: "SEER", color: "#a78bfa", x: 20, y: 35 },
+  { id: "phantom", emoji: "👻", name: "PHANTOM", color: "#94a3b8", x: 80, y: 35 },
+  { id: "grimoire", emoji: "📜", name: "GRIMOIRE", color: "#60a5fa", x: 10, y: 65 },
+  { id: "echo", emoji: "🔊", name: "ECHO", color: "#f97316", x: 38, y: 75 },
+  { id: "mammon", emoji: "💰", name: "MAMMON", color: "#eab308", x: 62, y: 75 },
+  { id: "wraith_eye", emoji: "👁️", name: "WRAITH-EYE", color: "#22d3ee", x: 90, y: 65 },
 ];
 
 const CONNECTIONS = [
   { from: "throne", to: "seer", active: true },
   { from: "throne", to: "phantom", active: true },
-  { from: "throne", to: "herald", active: false },
+  { from: "throne", to: "mammon", active: true },
+  { from: "throne", to: "echo", active: true },
   { from: "seer", to: "phantom", active: true },
-  { from: "seer", to: "cipher", active: false },
-  { from: "phantom", to: "cipher", active: false },
-  { from: "warden", to: "throne", active: false },
-  { from: "forge", to: "phantom", active: false },
-  { from: "herald", to: "seer", active: false },
+  { from: "seer", to: "grimoire", active: true },
+  { from: "phantom", to: "wraith_eye", active: true },
+  { from: "grimoire", to: "echo", active: true },
+  { from: "mammon", to: "wraith_eye", active: true },
+  { from: "mammon", to: "seer", active: true },
 ];
 
 interface DataPacket {
@@ -36,7 +37,7 @@ export default function NetworkGraph({ className = "" }: { className?: string })
   const [activeConns, setActiveConns] = useState(CONNECTIONS.map((c) => c.active));
   const [packets, setPackets] = useState<DataPacket[]>([]);
   const [packetId, setPacketId] = useState(0);
-  const [roundtable, setRoundtable] = useState<string[]>(["throne", "seer", "phantom"]);
+  const [roundtable, setRoundtable] = useState<string[]>(["throne", "seer", "phantom", "grimoire", "echo", "mammon", "wraith_eye"]);
   const [rtPulse, setRtPulse] = useState(false);
 
   // Toggle connections randomly
@@ -153,7 +154,7 @@ export default function NetworkGraph({ className = "" }: { className?: string })
         {/* Node labels (HTML overlay) */}
         {NODES.map((node) => {
           const isRt = roundtable.includes(node.id);
-          const isActive = node.id === "throne" || node.id === "seer" || node.id === "phantom";
+          const isActive = true; // All 7 generals operational
           return (
             <div
               key={node.id}

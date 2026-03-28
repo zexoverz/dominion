@@ -82,33 +82,24 @@ export default function Dashboard() {
       {/* ═══ GENERALS MINI GRID ═══ */}
       <GeneralsMiniGrid generals={generals} />
 
-      {/* ═══ CHAPTER TITLE: PHASE 1 ═══ */}
+      {/* ═══ THE SEVEN GENERALS ═══ */}
       <div className="mb-6 text-center py-4" style={{
         background: 'linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.08) 20%, rgba(251,191,36,0.12) 50%, rgba(251,191,36,0.08) 80%, transparent 100%)',
         borderTop: '2px solid #5a4a3a',
         borderBottom: '2px solid #5a4a3a',
       }}>
-        <p className="font-pixel text-[7px] text-rpg-borderMid mb-1 tracking-[6px]">CHAPTER</p>
+        <p className="font-pixel text-[7px] text-rpg-borderMid mb-1 tracking-[6px]">THE DOMINION</p>
         <h2 className="font-pixel text-[14px] text-throne-gold text-glow-gold chapter-title">
-          ⚔️ PHASE 1 ⚔️
+          ⚔️ ALL GENERALS OPERATIONAL ⚔️
         </h2>
-        <p className="font-pixel text-[8px] text-throne-goldDark mt-1 tracking-wider">THE FIRST THREE</p>
-        <div className="flex justify-center gap-6 mt-4 items-end">
-          {generals.slice(0, 3).map((g) => (
+        <p className="font-pixel text-[8px] text-throne-goldDark mt-1 tracking-wider">7 / 7 ONLINE</p>
+        <div className="flex justify-center gap-4 md:gap-6 mt-4 items-end flex-wrap">
+          {generals.map((g) => (
             <div key={g.id} className="text-center">
-              {getGeneralSprite(g.id, g.status === 'ACTIVE' ? 'working' : 'idle', 56) || (
+              {getGeneralSprite(g.id, g.status === 'ACTIVE' ? 'working' : 'idle', 48) || (
                 <span className="text-2xl">{g.emoji}</span>
               )}
               <p className="font-pixel text-[7px] mt-1 text-rpg-shadow" style={{ color: g.color }}>{g.name}</p>
-            </div>
-          ))}
-          <div className="border-l-2 border-rpg-borderDark hidden md:block" />
-          {generals.slice(3).map((g) => (
-            <div key={g.id} className="text-center opacity-25 grayscale hidden md:block">
-              {getGeneralSprite(g.id, 'idle', 48) || (
-                <span className="text-2xl">{g.emoji}</span>
-              )}
-              <p className="font-pixel text-[7px] mt-1 text-rpg-borderMid">{g.name}</p>
             </div>
           ))}
         </div>

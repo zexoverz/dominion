@@ -77,19 +77,15 @@ export default function Sidebar() {
           <div className="rpg-panel p-3">
             <p className="text-[8px] font-pixel text-throne-gold mb-2 text-rpg-shadow">PHASE</p>
             <div className="flex items-center gap-2 mb-2">
-              <span className="font-pixel text-[14px] text-throne-goldLight text-glow-gold">01</span>
+              <span className="font-pixel text-[14px] text-throne-goldLight text-glow-gold">7/7</span>
               <div className="flex-1">
-                <p className="font-pixel text-[8px] text-rpg-border">THE FIRST</p>
-                <p className="font-pixel text-[7px] text-rpg-borderMid">THREE</p>
+                <p className="font-pixel text-[8px] text-rpg-border">ALL GENERALS</p>
+                <p className="font-pixel text-[7px] text-rpg-borderMid">OPERATIONAL</p>
               </div>
             </div>
             <div className="flex gap-1 mt-2 flex-wrap">
-              {["👑", "🔮", "👻"].map((e) => (
+              {["👑", "🔮", "👻", "📜", "🔊", "💰", "👁️"].map((e) => (
                 <span key={e} className="text-sm" style={{ filter: 'drop-shadow(0 0 2px rgba(251,191,36,0.3))' }}>{e}</span>
-              ))}
-              <span className="text-[8px] text-rpg-borderMid mx-1">│</span>
-              {["🛡️", "📯", "⚒️", "🗝️"].map((e) => (
-                <span key={e} className="text-sm opacity-25 grayscale">{e}</span>
               ))}
             </div>
           </div>
