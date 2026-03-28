@@ -1,17 +1,17 @@
 {
   "lastChecks": {
-    "api_health": 1774670478,
-    "proposals": 1774670478,
-    "missions": 1774670478,
-    "costs": 1774670478,
+    "api_health": 1774682305,
+    "proposals": 1774682305,
+    "missions": 1774682305,
+    "costs": 1774682305,
     "briefing": 1774854060,
-    "proposal_gen": 1774670478,
-    "magicians": 1774670478,
-    "budget": 1774670478,
-    "heartbeat": 1774670478
+    "proposal_gen": 1774944000,
+    "magicians": 1774944000,
+    "budget": 1774682305,
+    "heartbeat": 1774682305
   },
   "lastBriefingDate": "2026-03-27",
   "consecutiveApiFailures": 0,
-  "lastHeartbeat": 1774670478,
-  "lastProposalGen": 1774670478
+  "lastHeartbeat": 1774682305,
+  "lastProposalGen": 1774944000
 }

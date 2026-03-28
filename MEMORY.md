@@ -74,7 +74,12 @@
 - Pure BTC maxi — everything → Bitcoin, no alts, no collectibles, no gold
 
 ### Monthly Allocations (v2.3 — Apr 2026+, @ Rp 16,800/USD)
-- **Salary cycle: ForuAI lands FIRST = Day 1 of new month cycle**
+- **⚠️ SALARY CYCLE — CRITICAL: Month X allocation uses Month X-1 salary!**
+  - OKU salary lands 1st of the month (Feb salary → Mar 1 → covers March allocations)
+  - ForuAI salary lands EARLY (~25th-27th) → immediately 100% → BTC DCA for NEXT month
+  - Example: ForuAI Feb salary lands Feb 26 → DCA'd → counts as March cycle
+  - Example: ForuAI Mar salary lands Mar 27 → DCA'd → counts as APRIL cycle Day 1
+  - So by end of month, the NEXT month's ForuAI DCA is already done, just waiting OKU on 1st
 - ForuAI cash ($2,310/mo = Rp 39M) → 100% BTC immediately (first of the month)
 - OKU ($6,750 = Rp 113M) → expenses + war chest + BTC (ex-wedding Rp 30M now → BTC)
 - **BTC DCA total: ~Rp 80M/mo** (ForuAI 39M + ex-wedding 30M + OKU surplus ~11M)
