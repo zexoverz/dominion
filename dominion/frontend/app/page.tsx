@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { generals as mockGenerals } from "../lib/mock-data";
-import { getGenerals, getMissions, getDailyCosts, getPortfolioSummary, getPortfolioFunds, getLedgerSummary } from "../lib/api";
+import { getGenerals, getMissions, getDailyCosts, getPortfolioSummary, getPortfolioFunds, getPortfolioHoldings, getLedgerSummary } from "../lib/api";
 import { mergeGenerals } from "../lib/merge-generals";
 import { getGeneralSprite } from "../components/sprites";
 import Link from "next/link";
@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [portfolio, setPortfolio] = useState<any>(null);
   const [funds, setFunds] = useState<any[]>([]);
   const [ledger, setLedger] = useState<any>(null);
+  const [holdings, setHoldings] = useState<any[]>([]);
   const [missions, setMissions] = useState<any[]>([]);
   const [costToday, setCostToday] = useState(0);
   const [flash, setFlash] = useState(false);
@@ -70,6 +71,7 @@ export default function Dashboard() {
     getMissions().then(d => setMissions(d || [])).catch(() => {});
     getDailyCosts().then(d => { const t = (d||[]).reduce((s:number,c:any) => s+parseFloat(c.cost_usd||"0"),0); setCostToday(t); }).catch(() => {});
     getPortfolioSummary().then(setPortfolio).catch(() => {});
+    getPortfolioHoldings().then(d => setHoldings(d||[])).catch(() => {});
     getPortfolioFunds().then(d => setFunds(d||[])).catch(() => {});
     // Current month ledger
     const now = new Date();
@@ -77,7 +79,9 @@ export default function Dashboard() {
     getLedgerSummary(m).then(setLedger).catch(() => {});
   }, []);
 
-  const btcHoldings = portfolio ? parseFloat(portfolio.allocations?.Bitcoin || 0) / (btc?.price || 66000) : 0.20251;
+  const btcFromHoldings = holdings.find((h: any) => h.symbol === "BTC");
+  const btcHoldings = btcFromHoldings ? parseFloat(btcFromHoldings.quantity) : 0.20251;
+  const btcCostBasis = btcFromHoldings ? parseFloat(btcFromHoldings.cost_basis_usd || "0") : 13400;
   const btcValue = btcHoldings * (btc?.price || 0);
   const warChest = funds.find((f:any) => f.fund_type === "war_chest");
   const wedding = funds.find((f:any) => f.fund_type === "wedding");
@@ -190,6 +194,12 @@ export default function Dashboard() {
           <div className="flex gap-4 mt-1">
             <span className="font-pixel text-[9px] text-throne-goldLight">{formatUsd(btcValue)}</span>
             <span className="font-pixel text-[7px] text-rpg-borderMid">{formatIdr(btcValue * IDR_PER_USD)}</span>
+          </div>
+          <div className="flex gap-4 mt-1">
+            <span className="font-pixel text-[7px] text-rpg-borderMid">AVG: {formatUsd(btcCostBasis > 0 && btcHoldings > 0 ? btcCostBasis / btcHoldings : 0)}</span>
+            <span className={`font-pixel text-[7px] ${btcValue - btcCostBasis >= 0 ? "text-green-400" : "text-red-400"}`}>
+              P&L: {btcValue - btcCostBasis >= 0 ? "+" : ""}{formatUsd(btcValue - btcCostBasis)}
+            </span>
           </div>
           <div className="mt-3 flex items-center gap-2">
             <span className="font-pixel text-[7px] text-rpg-borderMid">2030 TARGET: 5 BTC</span>
