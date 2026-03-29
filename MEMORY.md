@@ -245,6 +245,17 @@
 - Service IDs: API=fea5bbc3, Frontend=973035e7, Postgres=b422d873, OpenClaw=b0853454
 - Environment ID: ad89fb04-6c5f-42a6-9e81-020a7c218315
 
+## Coding Standard (Mar 29, 2026)
+- NEW RULE: THRONE never hand-codes features — always delegate to sub-agents
+- `sessions_spawn` with `runtime: "subagent"` is our coding agent system
+- PHANTOM always gets `anthropic/claude-opus-4-6` (Opus) for security work
+- All other generals use default model (Sonnet)
+- Claude Code CLI installed at /home/openclaw/.npm-global/bin/claude (v2.1.87) but needs separate auth (not usable with our OAuth/Max plan)
+- dispatch-missions.sh now outputs `model` field for PHANTOM missions
+- Coding standard doc: dominion/src/throne-integration/CODING-STANDARD.md
+- PHANTOM agent config: dominion/src/generals/phantom/AGENT-CONFIG.md
+- Phase D roadmap: GitHub integration → X/Twitter → Intel Pipeline → Comms Hub → Content Engine
+
 ## Key Lessons
 - Cron jobs: do NOT set model field — "sonnet" alias doesn't resolve. Omit model entirely to use default.
 - Sub-agent model: "anthropic/claude-sonnet-4" does NOT resolve (FailoverError). Omit model param entirely for sub-agents to use default.

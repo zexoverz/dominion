@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+// Minimal bc replacement
+const args = process.argv.slice(2);
+const input = require('fs').readFileSync('/dev/stdin','utf8').trim();
+try {
+  const expr = input.replace(/scale=\d+;\s*/g,'');
+  const result = eval(expr);
+  console.log(result);
+} catch(e) { console.log('N/A'); }

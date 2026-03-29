@@ -29,15 +29,27 @@ for trigger in "$TRIGGERS_DIR"/*.trigger; do
   
   LABEL=$(echo "${AGENT_ID}-mission-${MISSION_ID}" | cut -c1-40)
   
+  # Determine model override per general
+  # PHANTOM always gets Opus for security-critical work
+  MODEL=""
+  case "$AGENT_ID" in
+    phantom) MODEL="anthropic/claude-opus-4-6" ;;
+    *) MODEL="" ;;  # default model for all others
+  esac
+
   # Output as JSON for THRONE to parse and spawn
   python3 -c "
 import json
-print(json.dumps({
+d = {
     'mission_id': '$MISSION_ID',
     'agent_id': '$AGENT_ID',
     'prompt_file': '$PROMPT_FILE',
-    'label': '$LABEL'
-}))
+    'label': '$LABEL',
+}
+model = '$MODEL'
+if model:
+    d['model'] = model
+print(json.dumps(d))
 "
   
   # Mark as dispatched
