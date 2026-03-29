@@ -359,9 +359,14 @@
       "post": 25,
       "date": "2026-03-28",
       "slot": "malam"
+    },
+    {
+      "post": 10,
+      "date": "2026-03-29",
+      "slot": "siang"
     }
   ],
-  "nextMeme": 10,
+  "nextMeme": 11,
   "nextSubstance": 26,
   "note": "Posts 46-90 exhausted. Now using original v2 posts 1-38. Memes: #1-15, Substance: #16-38."
 }

@@ -250,7 +250,15 @@
 - `sessions_spawn` with `runtime: "subagent"` is our coding agent system
 - PHANTOM always gets `anthropic/claude-opus-4-6` (Opus) for security work
 - All other generals use default model (Sonnet)
-- Claude Code CLI installed at /home/openclaw/.npm-global/bin/claude (v2.1.87) but needs separate auth (not usable with our OAuth/Max plan)
+- Claude Code CLI installed at /home/openclaw/.npm-global/bin/claude (v2.1.87)
+- ACP (Agent Coding Protocol) FULLY SET UP (Mar 29, 2026)
+- acpx plugin installed + loaded, backend: acpx v0.1.15
+- Auth: reuses OpenClaw's OAuth token (sk-ant-oat01-*) via ANTHROPIC_API_KEY env var
+- Config: approve-all permissions, claude as default agent
+- acpx binary: /home/openclaw/acpx-install/node_modules/.bin/acpx
+- Sessions spawn via: sessions_spawn(runtime:"acp", agentId:"claude")
+- Allowed agents: pi, claude, codex, opencode, gemini, kimi
+- KEY: acpx needs --auth-policy skip + ANTHROPIC_API_KEY env var to work in container
 - dispatch-missions.sh now outputs `model` field for PHANTOM missions
 - Coding standard doc: dominion/src/throne-integration/CODING-STANDARD.md
 - PHANTOM agent config: dominion/src/generals/phantom/AGENT-CONFIG.md

@@ -1,0 +1,5 @@
+{
+  "defaultAgent": "claude",
+  "defaultPermissions": "approve-all",
+  "authPolicy": "skip"
+}
