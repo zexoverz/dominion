@@ -16,10 +16,15 @@
 - Communication: direct, no-BS, mixes Indonesian/English slang
 
 ## Auth
-- Using Claude Max plan with setup token (OAuth) — DO NOT change auth settings
+- Two Claude Max Plan accounts with setup tokens (OAuth) for failover
+  - Slot 1 (primary): ffirdani@gfxlabs.io
+  - Slot 2 (backup): faisalfirdani01@gmail.com
 - Config mode: "token" (already set during onboard)
-- No per-token billing, flat monthly cost
-- All agents run free on this subscription
+- No per-token billing, flat monthly cost per account
+- Auto-rotation: when one account hits rate limits, THRONE auto-switches to the other
+- Token rotation script: `src/throne-integration/rotate-token.sh`
+- Token rotation service: `src/services/token-rotator.ts`
+- Railway env vars: `CLAUDE_SETUP_TOKEN_1`, `CLAUDE_SETUP_TOKEN_2`
 
 ## Frontend Design
 - Pixel art RPG aesthetic (SNES/GBA style)

@@ -73,6 +73,13 @@ export interface DominionEvent {
   timestamp?: string;
 }
 
+export interface TokenRotationResult {
+  rotated: boolean;
+  reason?: string;
+  activeSlot: number;
+  activeAccount: string;
+}
+
 export interface HeartbeatReport {
   timestamp: string;
   proposalsReviewed: number;
@@ -81,6 +88,7 @@ export interface HeartbeatReport {
   agentsSpawned: string[];
   dailyCosts: DailyCosts | null;
   budgetStatus: 'ok' | 'warning' | 'critical';
+  tokenRotation?: TokenRotationResult;
   errors: string[];
   summary: string;
 }
@@ -329,6 +337,23 @@ export async function runHeartbeat(): Promise<HeartbeatReport> {
     timestamp,
   });
 
+  // 0. Check token health — rotate if rate-limited
+  let tokenRotation: TokenRotationResult | undefined;
+  try {
+    const { checkAndRotate } = await import('../services/token-rotator');
+    tokenRotation = await checkAndRotate();
+    if (tokenRotation.rotated) {
+      await logEvent({
+        generalId: 'THRONE',
+        type: 'token-rotated',
+        message: `🔄 Token rotated: now using slot ${tokenRotation.activeSlot} (${tokenRotation.activeAccount})`,
+        data: tokenRotation as unknown as Record<string, unknown>,
+      });
+    }
+  } catch (err) {
+    errors.push(`Token rotation check failed: ${err}`);
+  }
+
   // 1. Review proposals
   const proposalResult = await reviewProposals();
   errors.push(...proposalResult.errors);
@@ -357,6 +382,9 @@ export async function runHeartbeat(): Promise<HeartbeatReport> {
   if (budgetResult.status !== 'ok') {
     parts.push(`Budget: ${budgetResult.status.toUpperCase()}`);
   }
+  if (tokenRotation?.rotated) {
+    parts.push(`🔄 Token rotated → ${tokenRotation.activeAccount}`);
+  }
   if (errors.length > 0) {
     parts.push(`${errors.length} errors`);
   }
@@ -373,6 +401,7 @@ export async function runHeartbeat(): Promise<HeartbeatReport> {
     agentsSpawned: missionResult.spawned,
     dailyCosts: budgetResult.costs,
     budgetStatus: budgetResult.status,
+    tokenRotation,
     errors,
     summary,
   };
@@ -401,6 +430,15 @@ export function formatHeartbeatReport(report: HeartbeatReport): string {
 
   if (report.agentsSpawned.length > 0) {
     lines.push(`🚀 Agents Spawned: ${report.agentsSpawned.join(', ')}`);
+  }
+
+  if (report.tokenRotation) {
+    const tr = report.tokenRotation;
+    if (tr.rotated) {
+      lines.push(`🔄 Token Rotated: now using ${tr.activeAccount} (${tr.reason})`);
+    } else {
+      lines.push(`🔑 Token: slot ${tr.activeSlot} (${tr.activeAccount})`);
+    }
   }
 
   if (report.dailyCosts) {
