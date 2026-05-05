@@ -7,8 +7,9 @@ import { useState } from "react";
 const navItems = [
   { href: "/", label: "DASHBOARD", shortLabel: "HOME", icon: "👑" },
   { href: "/vault", label: "VAULT", shortLabel: "VAULT", icon: "💰" },
-  { href: "/library", label: "LIBRARY", shortLabel: "LIBRARY", icon: "📚" },
+  { href: "/library", label: "LIBRARY", shortLabel: "LIB", icon: "📚" },
   { href: "/opportunities", label: "OPPORTUNITIES", shortLabel: "OPPS", icon: "🔍" },
+  { href: "/jastip-tcg", label: "JASTIP TCG", shortLabel: "TCG", icon: "🃏" },
   { href: "/command", label: "COMMAND", shortLabel: "CMD", icon: "⚔️" },
   { href: "/analytics", label: "ANALYTICS", shortLabel: "CHART", icon: "📊" },
   { href: "/generals", label: "GENERALS", shortLabel: "TEAM", icon: "👥" },
@@ -90,10 +91,10 @@ export default function Sidebar() {
         </div>
       </nav>
 
-      {/* Mobile bottom nav — single row, 7 items */}
+      {/* Mobile bottom nav — 8 items */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-rpg-panel safe-bottom"
         style={{ borderTop: '3px solid #8b7355' }}>
-        <div className="grid grid-cols-7 w-full">
+        <div className="grid grid-cols-8 w-full">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
             return (
@@ -105,7 +106,7 @@ export default function Sidebar() {
                       : "text-rpg-borderMid"
                   }`}
                 >
-                  <span className="text-base mb-0.5">{item.icon}</span>
+                  <span className="text-sm mb-0.5">{item.icon}</span>
                   <span className="text-[5px] font-pixel leading-tight">{item.shortLabel}</span>
                 </div>
               </Link>
